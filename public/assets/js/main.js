@@ -1,114 +1,148 @@
-jQuery(function ($) {
+document.addEventListener('DOMContentLoaded', function() {
   /******************* */
   /* ハンバーガーメニュー*/
   /******************* */
-  $("#js-hamburger-menu").on("click", function () {
-    $(".sp-nav").toggleClass("active");
-    $(".hamburger-menu").toggleClass("hamburger-menu--open");
-  });
+  const hamburgerMenu = document.getElementById('js-hamburger-menu');
+  if (hamburgerMenu) {
+    hamburgerMenu.addEventListener('click', function() {
+      const spNav = document.querySelector('.sp-nav');
+      const hamburgerMenuEl = document.querySelector('.hamburger-menu');
+      
+      if (spNav) spNav.classList.toggle('active');
+      if (hamburgerMenuEl) hamburgerMenuEl.classList.toggle('hamburger-menu--open');
+    });
+  }
 
   /******************* */
   /*  アンカーリンク     */
   /******************* */
 
-  $(function () {
-    $("body,html").stop().scrollTop(0);
-    var hash = window.location.hash;
-    if (hash !== void 0 && hash !== "") {
-      // 動的コンテンツの読み込み完了を待つ
-      function scrollToHash() {
-        var target = $(hash);
-        if (target.length > 0) {
-          var speed = 800; // ミリ秒
-          var position = target.offset().top - 80; // ヘッダーの高さ70pxをずらす
-          $("body,html").animate({ scrollTop: position }, speed, "swing");
-        } else {
-          // 要素が見つからない場合は少し待ってリトライ
-          setTimeout(scrollToHash, 100);
-        }
+  // ページトップにスクロール
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+  
+  const hash = window.location.hash;
+  if (hash && hash !== '') {
+    // 動的コンテンツの読み込み完了を待つ
+    function scrollToHash() {
+      const target = document.querySelector(hash);
+      if (target) {
+        const position = target.getBoundingClientRect().top + window.pageYOffset - 80;
+        window.scrollTo({
+          top: position,
+          behavior: 'smooth'
+        });
+      } else {
+        setTimeout(scrollToHash, 100);
       }
-      
-      // DOM読み込み完了後に実行
-      $(window).on('load', function() {
-        setTimeout(scrollToHash, 200); // 追加の待機時間
-      });
     }
-  });
+    
+    window.addEventListener('load', function() {
+      setTimeout(scrollToHash, 200);
+    });
+  }
   /******************* */
   /*  ページ内スクロール  */
   /******************* */
 
-  $(function () {
-    // #で始まるアンカーをクリックした場合に処理
-    $('a[href^="#"]').click(function () {
-      // スクロールの速度
-      var speed = 600; // ミリ秒
-      // アンカーの値取得
-      var href = $(this).attr("href");
-      // 移動先を取得
-      var target = $(href == "#" || href == "" ? "html" : href);
+  // #で始まるアンカーをクリックした場合に処理
+  document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
       
-      // 動的コンテンツの読み込み完了を待つ
+      const href = this.getAttribute('href');
+      const target = href === '#' || href === '' ? document.documentElement : document.querySelector(href);
+      
       function scrollToTarget() {
-        if (target.length > 0) {
-          // 移動先を数値で取得（ヘッダーの高さを考慮）
-          var position = target.offset().top - 80;
-          // スムーススクロール
-          $("body,html").animate({ scrollTop: position }, speed, "swing");
+        if (target) {
+          const rect = target.getBoundingClientRect();
+          const position = rect.top + window.pageYOffset - 80;
+          
+          window.scrollTo({
+            top: position,
+            behavior: 'smooth'
+          });
         } else {
-          // 要素が見つからない場合は少し待ってリトライ
           setTimeout(scrollToTarget, 50);
         }
       }
       
       scrollToTarget();
-      $(".sp-nav").removeClass("active");
-      $(".hamburger-menu").removeClass("hamburger-menu--open");
-      return false;
+      
+      // ハンバーガーメニューを閉じる
+      const spNav = document.querySelector('.sp-nav');
+      const hamburgerMenu = document.querySelector('.hamburger-menu');
+      if (spNav) spNav.classList.remove('active');
+      if (hamburgerMenu) hamburgerMenu.classList.remove('hamburger-menu--open');
     });
   });
   /******************* */
   /* header mix-blend */
   /******************* */
-  $(function () {
-    var fvHeight = $(".hero").outerHeight();
-    var headerHeight = $(".pageheader").outerHeight();
-
-    if ($("#top").length === 0) {
-      $(window).on("scroll", function () {
-        if ($(this).scrollTop() > headerHeight) {
-          $(".header").addClass("active");
-          $(".hamburger-menu").addClass("active");
-        } else {
-          $(".header").removeClass("active");
-          $(".hamburger-menu").removeClass("active");
-        }
-      });
+  
+  const heroEl = document.querySelector('.hero');
+  const pageheaderEl = document.querySelector('.pageheader');
+  const topEl = document.getElementById('top');
+  const headerEl = document.querySelector('.header');
+  const hamburgerMenuEl = document.querySelector('.hamburger-menu');
+  const heroSubTitleEl = document.querySelector('.hero-sub-title');
+  
+  const fvHeight = heroEl ? heroEl.offsetHeight : 0;
+  const headerHeight = pageheaderEl ? pageheaderEl.offsetHeight : 0;
+  
+  function handleScroll() {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    
+    if (!topEl) {
+      // topページ以外
+      if (scrollTop > headerHeight) {
+        if (headerEl) headerEl.classList.add('active');
+        if (hamburgerMenuEl) hamburgerMenuEl.classList.add('active');
+      } else {
+        if (headerEl) headerEl.classList.remove('active');
+        if (hamburgerMenuEl) hamburgerMenuEl.classList.remove('active');
+      }
     } else {
-      $(window).on("scroll", function () {
-        if ($(this).scrollTop() > fvHeight) {
-          $(".header").addClass("active");
-          $(".hamburger-menu").addClass("active");
-          $(".hero-sub-title").addClass("none");
-        } else {
-          $(".header").removeClass("active");
-          $(".hamburger-menu").removeClass("active");
-          $(".hero-sub-title").removeClass("none");
-        }
-      });
+      // topページ
+      if (scrollTop > fvHeight) {
+        if (headerEl) headerEl.classList.add('active');
+        if (hamburgerMenuEl) hamburgerMenuEl.classList.add('active');
+        if (heroSubTitleEl) heroSubTitleEl.classList.add('none');
+      } else {
+        if (headerEl) headerEl.classList.remove('active');
+        if (hamburgerMenuEl) hamburgerMenuEl.classList.remove('active');
+        if (heroSubTitleEl) heroSubTitleEl.classList.remove('none');
+      }
     }
-  });
+  }
+  
+  window.addEventListener('scroll', handleScroll);
   /******************* */
   /* planタブ切り替え */
   /******************* */
-  $(function () {
-    $(".plan-tab__item").each(function (index) {
-      $(this).on("click", function () {
-        $(".plan-tab__item").removeClass("active");
-        $(this).addClass("active");
-        $(".plan-main__item").removeClass("active");
-        $(".plan-main__item").eq(index).addClass("active");
+  
+  const planTabItems = document.querySelectorAll('.plan-tab__item');
+  const planMainItems = document.querySelectorAll('.plan-main__item');
+  
+  planTabItems.forEach(function(item, index) {
+    item.addEventListener('click', function() {
+      // すべてのタブからactiveクラスを削除
+      planTabItems.forEach(function(tab) {
+        tab.classList.remove('active');
       });
+      
+      // クリックしたタブにactiveクラスを追加
+      this.classList.add('active');
+      
+      // すべてのメインアイテムからactiveクラスを削除
+      planMainItems.forEach(function(mainItem) {
+        mainItem.classList.remove('active');
+      });
+      
+      // 対応するメインアイテムにactiveクラスを追加
+      if (planMainItems[index]) {
+        planMainItems[index].classList.add('active');
+      }
     });
   });
 });
