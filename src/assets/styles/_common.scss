@@ -202,7 +202,11 @@ img {
     position: relative;
     padding: 100px 0 120px;
     text-align: center;
-    background-image: url(/assets/images/challenges-bg__img.png);
+    background-image: url(/assets/images/challenges-bg__img.webp);
+    background-image: image-set(
+      url(/assets/images/challenges-bg__img.webp) type("image/webp"),
+      url(/assets/images/challenges-bg__img.png) type("image/png")
+    );
     background-position: top;
     background-size: cover;
     background-repeat: no-repeat;
@@ -476,7 +480,11 @@ img {
     position: relative;
     padding: 100px 0 100px;
     text-align: center;
-    background-image: url(/assets/images/challenges-bg__img.png);
+    background-image: url(/assets/images/challenges-bg__img.webp);
+    background-image: image-set(
+      url(/assets/images/challenges-bg__img.webp) type("image/webp"),
+      url(/assets/images/challenges-bg__img.png) type("image/png")
+    );
     background-position: top;
     background-size: cover;
     background-repeat: no-repeat;

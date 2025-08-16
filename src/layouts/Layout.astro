@@ -24,6 +24,7 @@ const scriptHtml = `
     <!-- SEO基本 -->
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
     <link rel="canonical" href={`https://dddynamis.com${Astro.url.pathname}`} />
 
     <!-- OGP -->
@@ -39,6 +40,17 @@ const scriptHtml = `
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
+    <!-- Preconnect for Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- Google Fonts with font-display=swap -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+    
+    <!-- Preconnect for Adobe Fonts -->
+    <link rel="preconnect" href="https://use.typekit.net" />
+    <link rel="dns-prefetch" href="https://use.typekit.net" />
+    
     <link rel="stylesheet" href="https://use.typekit.net/xzb4efj.css" />
   </head>
   <body>

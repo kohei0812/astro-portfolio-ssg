@@ -7,11 +7,18 @@ import sitemap from "@astrojs/sitemap";
 export default defineConfig({
   output: "static", // SSG（静的サイト生成）に変更
   site: "https://dddynamis.com",
-  integrations: [react(), sitemap()],
+  integrations: [
+    react(), 
+    sitemap({
+      changefreq: 'weekly',
+      priority: 0.7,
+      lastmod: new Date(),
+    })
+  ],
   compressHTML: false,
   vite: {
     build: {
-      minify: false,
+      minify: true,
     }
   }
 });

@@ -14,7 +14,11 @@
       &-bg {
         width: 100%;
         aspect-ratio: 1/1;
-        background-image: url(/assets/images/plan-bg.jpg);
+        background-image: url(/assets/images/plan-bg.webp);
+        background-image: image-set(
+          url(/assets/images/plan-bg.webp) type("image/webp"),
+          url(/assets/images/plan-bg.jpg) type("image/jpeg")
+        );
         background-size: cover;
         background-repeat: no-repeat;
         background-position: top;
@@ -333,7 +337,11 @@
       &-bg {
         width: 500%;
         aspect-ratio: 1/1;
-        background-image: url(/assets/images/plan-bg.jpg);
+        background-image: url(/assets/images/plan-bg.webp);
+        background-image: image-set(
+          url(/assets/images/plan-bg.webp) type("image/webp"),
+          url(/assets/images/plan-bg.jpg) type("image/jpeg")
+        );
         background-size: cover;
         background-repeat: no-repeat;
         background-position: top;

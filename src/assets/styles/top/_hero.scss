@@ -6,7 +6,11 @@
   #top {
     .hero {
       height: 100vh;
-      background-image: url(/assets/images/hero.jpg);
+      background-image: url(/assets/images/hero.webp);
+      background-image: image-set(
+        url(/assets/images/hero.webp) type("image/webp"),
+        url(/assets/images/hero.jpg) type("image/jpeg")
+      );
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center;
@@ -76,7 +80,11 @@
   #top {
     .hero {
       height: 100vh;
-      background-image: url(/assets/images/hero-sp.png);
+      background-image: url(/assets/images/hero-sp.webp);
+      background-image: image-set(
+        url(/assets/images/hero-sp.webp) type("image/webp"),
+        url(/assets/images/hero-sp.png) type("image/png")
+      );
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center;
