@@ -1,0 +1,49 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Post from "../components/work-archive/Post";
+import Music from "../components/work-archive/Music";
+---
+
+<Layout title="Dynamis | 制作実績">
+  <!-- main -->
+  <main id="work-archive" class="work-archive" role="main">
+    <div class="pageheader">
+      <h1 class="pageheader-ttl">
+        <span class="eng">Works</span>
+        制作実績
+      </h1>
+    </div>
+    <nav aria-label="パンくずリスト" class="breadcrumb">
+      <div class="container">
+        <ol
+          itemscope
+          itemtype="https://schema.org/BreadcrumbList"
+          class="breadcrumb-list"
+        >
+          <li
+            class="breadcrumb-list__item"
+            itemprop="itemListElement"
+            itemscope
+            itemtype="https://schema.org/ListItem"
+          >
+            <a itemprop="item" href="/">
+              <span itemprop="name">ホーム</span>
+            </a>
+            <meta itemprop="position" content="1" />
+          </li>
+          <li
+            class="breadcrumb-list__item"
+            itemprop="itemListElement"
+            itemscope
+            itemtype="https://schema.org/ListItem"
+          >
+            <span itemprop="name">制作実績</span>
+            <meta itemprop="position" content="2" />
+          </li>
+        </ol>
+      </div>
+    </nav>
+    <Post client:load />
+    <Music client:load />
+  </main>
+</Layout>

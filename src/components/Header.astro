@@ -1,0 +1,146 @@
+---
+//src/components/Header.astro
+const currentPath = Astro.url.pathname;
+const isTopPage = currentPath === "/";
+
+// トップページでは#リンク、他ページでは/付きリンクを使用
+const profileLink = isTopPage ? "#profile" : "/#profile";
+const planLink = isTopPage ? "#plan" : "/#plan";
+const contactLink = isTopPage ? "#contact" : "/#contact";
+---
+
+<!-- fixed --><!-- loader -->
+<div class="loader-wrapper" role="presentation">
+  <div class="loader" aria-hidden="true"></div>
+</div>
+<!-- sp-nav -->
+<nav class="sp-nav" id="sp-nav" aria-label="スマートフォン用ナビゲーション">
+  <ul class="menu">
+    <li class="menu__item">
+      <a href="/" class="menu__link">トップ</a>
+    </li>
+    <li class="menu__item">
+      <a href={profileLink} class="menu__link">プロフィール</a>
+    </li>
+    <li class="menu__item">
+      <a href="/work-archive" class="menu__link">制作実績</a>
+    </li>
+    <li class="menu__item">
+      <a href={planLink} class="menu__link">料金プラン</a>
+    </li>
+    <li class="menu__item">
+      <a href={contactLink} class="menu__link">お問い合わせ</a>
+    </li>
+  </ul>
+  <ul class="sp-sns" aria-label="SNSリンク">
+    <li class="sp-sns__item">
+      <a
+        href="https://www.facebook.com/profile.php?id=100003251432034&locale=ja_JP"
+        target="_blank"
+        class="sp-sns__link"
+        aria-label="facebook"
+      >
+        <picture>
+          <source srcset="/assets/images/facebook.webp" type="image/webp" />
+          <img
+            src="/assets/images/facebook.png"
+            width="32"
+            height="32"
+            loading="lazy"
+            decoding="async"
+            alt="facebook"
+          />
+        </picture>
+      </a>
+    </li>
+    <li class="sp-sns__item">
+      <a
+        href="https://www.instagram.com/paimanpsycho/"
+        target="_blank"
+        class="sp-sns__link"
+        aria-label="instagram"
+      >
+        <picture>
+          <source srcset="/assets/images/instagram.webp" type="image/webp" />
+          <img
+            src="/assets/images/instagram.png"
+            width="26"
+            height="26"
+            loading="lazy"
+            decoding="async"
+            alt="instagram"
+          />
+        </picture>
+      </a>
+    </li>
+    <li class="sp-sns__item">
+      <a
+        href="https://x.com/dj_cherrrrryboy"
+        target="_blank"
+        class="sp-sns__link"
+        aria-label="x"
+      >
+        <picture>
+          <source srcset="/assets/images/x.webp" type="image/webp" />
+          <img
+            src="/assets/images/x.png"
+            width="26"
+            height="26"
+            loading="lazy"
+            decoding="async"
+            alt="x"
+          />
+        </picture>
+      </a>
+    </li>
+  </ul>
+</nav>
+<!-- humburger -->
+<button
+  class="hamburger-menu"
+  id="js-hamburger-menu"
+  aria-label="メニューを開く"
+  aria-expanded="false"
+  aria-controls="sp-nav"
+>
+  <span class="hamburger-menu__bar"></span>
+  <span class="hamburger-menu__bar"></span>
+  <span class="hamburger-menu__bar"></span>
+</button>
+<!-- header -->
+<header class="header" id="header" role="banner">
+  <div class="container">
+    <a href="/" class="header-logo" aria-label="トップページへ">
+      <picture>
+        <source srcset="/assets/images/logo.webp" type="image/webp" />
+        <img
+          src="/assets/images/logo.png"
+          width="140"
+          height="50"
+          loading="lazy"
+          decoding="async"
+          alt="Dynamis"
+        />
+      </picture>
+    </a>
+    <nav class="header-nav" aria-label="メインナビゲーション">
+      <ul class="menu">
+        <li class="menu__item">
+          <a href="/" class="menu__link">トップ</a>
+        </li>
+        <li class="menu__item">
+          <a href={profileLink} class="menu__link">プロフィール</a>
+        </li>
+        <li class="menu__item">
+          <a href="/work-archive" class="menu__link">制作実績</a>
+        </li>
+        <li class="menu__item">
+          <a href={planLink} class="menu__link">料金プラン</a>
+        </li>
+        <li class="menu__item">
+          <a href={contactLink} class="menu__link">お問い合わせ</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>

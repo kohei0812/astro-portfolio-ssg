@@ -1,0 +1,145 @@
+@use "../variables" as v;
+/*****************/
+/*** hero***/
+/*****************/
+@media screen and (min-width: 769px) {
+  #top {
+    .hero {
+      height: 100vh;
+      background-image: url(/assets/images/hero.jpg);
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      overflow: hidden;
+      width: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+
+      .container {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        position: relative;
+      }
+
+      &-ttl {
+        font-size: 6.4rem;
+        line-height: 1.6;
+        color: white;
+        font-weight: bold;
+      }
+
+      &-sub-title {
+        position: absolute;
+        bottom: 45px;
+        left: 0;
+        color: rgba(195, 206, 224, .3);
+        font-weight: bold;
+        white-space: nowrap;
+        width: 100vw;
+        overflow: hidden;
+
+        &.none {
+          color: v.$color-primary;
+        }
+
+        .hero-text-swiper {
+          width: 100%;
+          height: auto;
+        }
+
+        .swiper-wrapper {
+          transition-timing-function: linear;
+        }
+
+        .swiper-slide {
+          width: auto;
+          margin-right: 20px;
+        }
+
+        .scroll-content {
+          font-size: 4rem;
+          white-space: nowrap;
+        }
+
+        span {
+          display: block;
+          font-size: 3.2rem;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #top {
+    .hero {
+      height: 100vh;
+      background-image: url(/assets/images/hero-sp.png);
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      overflow: hidden;
+      width: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+
+      .container {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        position: relative;
+      }
+
+      &-ttl {
+        margin-top: 25vh;
+        font-size: 3.6rem;
+        line-height: 1.6;
+        color: white;
+        font-weight: bold;
+        letter-spacing: .1em;
+      }
+
+      &-sub-title {
+        position: absolute;
+        bottom: 50px;
+        left: 20px;
+        color: rgba(195, 206, 224, .3);
+        font-weight: bold;
+        white-space: nowrap;
+        width: calc(100vw - 40px);
+        overflow: hidden;
+
+        &.none {
+           color: v.$color-primary;
+        }
+
+        .hero-text-swiper {
+          width: 100%;
+          height: auto;
+        }
+
+        .swiper-wrapper {
+          transition-timing-function: linear;
+        }
+
+        .swiper-slide {
+          width: auto;
+          margin-right: 20px;
+        }
+
+        .scroll-content {
+          font-size: 2.4rem;
+          white-space: nowrap;
+        }
+
+        span {
+          display: block;
+          font-size: 1.6rem;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,211 @@
+---
+// @ts-nocheck
+// ContactForm.astro
+// Google FormのURLとフィールドIDを設定
+const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSeXiuJHv_FYyBJgWE7kPXfCa6T1ZoeJfHqUFT0TWXtE-F4RvQ/formResponse";
+// 実際のGoogle FormのフィールドIDに置き換えてください
+const FIELD_IDS = {
+  name: "entry.1805615363",
+  email: "entry.321316906", 
+  subject: "entry.29458855",
+  message: "entry.1810273391"
+};
+---
+
+<section class="contact-form" id="contact">
+  <div class="container">
+    <h2 class="contact-form__title">お問い合わせ</h2>
+    <p class="contact-form__desc">
+      お気軽にお問い合わせください。通常24時間以内にご返信いたします。
+    </p>
+    
+    <form 
+      class="contact-form__form" 
+      action={GOOGLE_FORM_URL}
+      method="POST"
+      target="hidden_iframe"
+      id="contact-form"
+    >
+      <div class="form-group">
+        <label for="name" class="form-label">お名前 <span class="required">*</span></label>
+        <input 
+          type="text" 
+          id="name" 
+          name={FIELD_IDS.name}
+          class="form-input" 
+          required 
+          minlength="2"
+          maxlength="50"
+          placeholder="山田太郎"
+          aria-describedby="name-help"
+        >
+        <small id="name-help" class="form-help">2文字以上50文字以内で入力してください</small>
+      </div>
+      
+      <div class="form-group">
+        <label for="email" class="form-label">メールアドレス <span class="required">*</span></label>
+        <input 
+          type="email" 
+          id="email" 
+          name={FIELD_IDS.email}
+          class="form-input" 
+          required 
+          placeholder="example@email.com"
+          aria-describedby="email-help"
+        >
+        <small id="email-help" class="form-help">返信用のメールアドレスを入力してください</small>
+      </div>
+      
+      <div class="form-group">
+        <label for="subject" class="form-label">件名 <span class="required">*</span></label>
+        <input 
+          type="text" 
+          id="subject" 
+          name={FIELD_IDS.subject}
+          class="form-input" 
+          required 
+          minlength="5"
+          maxlength="100"
+          placeholder="お問い合わせの件名をご入力ください"
+          aria-describedby="subject-help"
+        >
+        <small id="subject-help" class="form-help">5文字以上100文字以内で入力してください</small>
+      </div>
+      
+      <div class="form-group">
+        <label for="message" class="form-label">お問い合わせ内容 <span class="required">*</span></label>
+        <textarea 
+          id="message" 
+          name={FIELD_IDS.message}
+          class="form-textarea" 
+          required 
+          minlength="10"
+          maxlength="2000"
+          rows="6"
+          placeholder="お問い合わせ内容を詳しくご記入ください"
+          aria-describedby="message-help"
+        ></textarea>
+        <small id="message-help" class="form-help">10文字以上2000文字以内で詳しくご記入ください</small>
+      </div>
+      
+      <!-- ハニーポットフィールド（スパム対策） -->
+      <div style="position: absolute; left: -9999px; visibility: hidden;">
+        <label for="website">このフィールドは空のままにしてください</label>
+        <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+      </div>
+      
+      <button type="submit" class="form-submit" id="submit-btn">送信する</button>
+    </form>
+    
+    <!-- 送信完了メッセージ -->
+    <div class="form-success" id="form-success" style="display: none;">
+      <h3>送信完了</h3>
+      <p>お問い合わせありがとうございました。<br>24時間以内にご返信いたします。</p>
+    </div>
+    
+    <!-- Google Form送信用の隠しiframe -->
+    <iframe name="hidden_iframe" style="display: none;"></iframe>
+  </div>
+</section>
+
+<script>
+  // フォーム送信後の処理
+  document.addEventListener('DOMContentLoaded', function() {
+    const contactForm = document.getElementById('contact-form');
+    const formSuccess = document.getElementById('form-success');
+    const submitBtn = document.getElementById('submit-btn');
+    
+    // 送信回数制限（1日1回）
+    const checkSubmissionLimit = () => {
+      const lastSubmission = localStorage.getItem('lastFormSubmission');
+      const now = new Date().getTime();
+      const oneDay = 24 * 60 * 60 * 1000;
+      
+      if (lastSubmission && (now - parseInt(lastSubmission)) < oneDay) {
+        return false;
+      }
+      return true;
+    };
+    
+    // カスタムバリデーション
+    const validateForm = () => {
+      const nameEl = document.getElementById('name') as HTMLInputElement;
+      const emailEl = document.getElementById('email') as HTMLInputElement;
+      const subjectEl = document.getElementById('subject') as HTMLInputElement;
+      const messageEl = document.getElementById('message') as HTMLTextAreaElement;
+      const honeypotEl = document.getElementById('website') as HTMLInputElement;
+      
+      if (!nameEl || !emailEl || !subjectEl || !messageEl || !honeypotEl) {
+        return false;
+      }
+      
+      const name = nameEl.value.trim();
+      const email = emailEl.value.trim();
+      const subject = subjectEl.value.trim();
+      const message = messageEl.value.trim();
+      const honeypot = honeypotEl.value;
+      
+      // ハニーポットチェック（botが入力していないか）
+      if (honeypot !== '') {
+        alert('スパムの可能性があります。送信を中止しました。');
+        return false;
+      }
+      
+      // 文字数チェック
+      if (name.length < 2 || name.length > 50) {
+        alert('お名前は2文字以上50文字以内で入力してください。');
+        return false;
+      }
+      
+      if (subject.length < 5 || subject.length > 100) {
+        alert('件名は5文字以上100文字以内で入力してください。');
+        return false;
+      }
+      
+      if (message.length < 10 || message.length > 2000) {
+        alert('お問い合わせ内容は10文字以上2000文字以内で入力してください。');
+        return false;
+      }
+      
+      // メール形式チェック
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        alert('正しいメールアドレスを入力してください。');
+        return false;
+      }
+      
+      // 送信回数制限チェック
+      if (!checkSubmissionLimit()) {
+        alert('1日に1回まで送信可能です。時間をおいて再度お試しください。');
+        return false;
+      }
+      
+      return true;
+    };
+    
+    if (contactForm) {
+      contactForm.addEventListener('submit', function(e) {
+        // バリデーションチェック
+        if (!validateForm()) {
+          e.preventDefault();
+          return false;
+        }
+        
+        // 送信ボタンを無効化
+        if (submitBtn) {
+          (submitBtn as HTMLButtonElement).disabled = true;
+          submitBtn.textContent = '送信中...';
+        }
+        
+        // 送信時刻を記録
+        localStorage.setItem('lastFormSubmission', new Date().getTime().toString());
+        
+        // フォームを隠して完了メッセージを表示
+        setTimeout(function() {
+          if (contactForm) contactForm.style.display = 'none';
+          if (formSuccess) formSuccess.style.display = 'block';
+        }, 1000);
+      });
+    }
+  });
+</script>

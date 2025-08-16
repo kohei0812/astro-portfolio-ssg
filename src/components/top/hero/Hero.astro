@@ -1,0 +1,13 @@
+---
+//src/components/top/Hero.astro
+import HeroTextSwiper from './HeroTextSwiper.jsx';
+---
+<section class="hero" id="hero" aria-labelledby="hero-heading">
+  <div class="container">
+    <p class="hero-ttl">
+      想いを響かせ、<br />
+      未来を創る
+    </p>
+  </div>
+  <HeroTextSwiper client:load />
+</section>

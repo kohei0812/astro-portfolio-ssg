@@ -1,0 +1,70 @@
+---
+//src/components/top/Challenges.astro
+---
+
+<section
+  class="challenges"
+  id="challenges"
+  aria-labelledby="challenges-heading"
+>
+  <picture class="challenges-bg">
+    <source
+      media="(min-width: 769px)"
+      srcset="/assets/images/challenges-bg.webp"
+      type="image/webp"
+    />
+    <source
+      media="(min-width: 769px)"
+      srcset="/assets/images/challenges-bg.jpg"
+    />
+    <source srcset="/assets/images/challenges-bgSP.webp" type="image/webp" />
+    <img
+      src="/assets/images/challenges-bgSP.jpg"
+      alt="背景画像"
+      width="1000"
+      height="2000"
+      loading="lazy"
+      decoding="async"
+    />
+  </picture>
+  <h2 class="challenges-ttl eng" id="challenges-heading">Your Challenges</h2>
+  <div class="container">
+    <p class="challenges-sub">こんなお悩みありませんか？</p>
+    <ul class="challenges-list">
+      <li class="challenges-list__item">
+        <p>
+          ホームページを作ったものの、<br />デザインが素人感満載で不安・・・
+        </p>
+      </li>
+      <li class="challenges-list__item">
+        <p>
+          何年も更新されていないサイトに、<br />お客様が来ているか心配
+        </p>
+      </li>
+      <li class="challenges-list__item">
+        <p>
+          外国人観光客向けに英語対応をしたいけど<br />方法がわからない
+        </p>
+      </li>
+      <li class="challenges-list__item">
+        <p>アクセス数や問い合わせが伸び悩んでいる理由がわからない</p>
+      </li>
+      <li class="challenges-list__item">
+        <p>
+          自分で更新するつもりだったけど、<br />忙しくて結局放置中
+        </p>
+      </li>
+      <li class="challenges-list__item">
+        <p>制作会社に聞きづらい小さな相談を気軽に相談できる相手がいない</p>
+      </li>
+    </ul>
+    <p class="challenges-catch">
+      そのお悩み、<br />
+      まるっと<br class="sp_only" />お任せください！
+    </p>
+    <div class="challenges-cta cta">
+      <p class="cta-p">無料で相談してみる</p>
+      <a href="#contact" class="cta-link">詳しくはこちら</a>
+    </div>
+  </div>
+</section>

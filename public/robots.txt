@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://dddynamis.com/sitemap-index.xml

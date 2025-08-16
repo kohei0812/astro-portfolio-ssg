@@ -1,0 +1,19 @@
+---
+//src/components/top/Works.astro
+import LeftWork from "./LeftWork";
+import RightWork from "./RightWork";
+---
+
+<section class="works" id="works" aria-labelledby="works-heading">
+  <div class="container">
+    <h2 class="works-ttl section-ttl eng" id="works-heading">Works</h2>
+    <div class="works-archive">
+      <LeftWork client:load />
+      <RightWork client:load />
+    </div>
+    <a href="/work-archive" class="works-link">一覧はこちら</a>
+    <p class="works-caption">
+      上記実績以外にもコーダーとして下請け案件がほとんどのため掲載できない実績が多数ございます
+    </p>
+  </div>
+</section>

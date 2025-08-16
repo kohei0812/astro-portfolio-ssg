@@ -1,0 +1,326 @@
+@use "../variables" as v;
+/*****************/
+/*** work***/
+/*****************/
+@media screen and (min-width: 769px) {
+    #top {
+        .works {
+            background-color: v.$color-primary;
+            padding-top: 76px;
+            padding-bottom: 63px;
+
+            .container {
+                position: relative;
+            }
+
+            &-ttl {
+                left: 0;
+                top: 0;
+            }
+
+            &-archive {
+                margin: 84px auto 0;
+                width: 1000px;
+                display: flex;
+                justify-content: space-between;
+                align-items: stretch;
+                transform: skew(-22.5deg);
+
+                &__item {
+                    width: 50%;
+                    height: 420px;
+                    transform: scale(1.15);
+
+                    .slider {
+                        &-link {
+                            &__thumb {
+                                transform: skew(22.5deg);
+
+                                img {
+                                    width: 100%;
+                                }
+                            }
+
+                            &__cat {
+                                small {
+                                    padding: 8px 10px;
+                                    background-color: v.$color-accent;
+                                    position: relative;
+                                    font-size: 1.4rem;
+                                    margin-left: 25px;
+
+                                    &:before {
+                                        content: "×";
+                                        color: v.$color-accent;
+                                        position: absolute;
+                                        left: -15px;
+                                        top: 50%;
+                                        transform: translateY(-50%);
+                                        font-weight: bold;
+                                        font-size: 1.4rem;
+                                    }
+
+                                    span {
+                                        transform: skew(22.5deg);
+                                        color: white;
+                                        text-align: center;
+                                        font-weight: bold;
+                                    }
+
+                                }
+
+                                small:first-child {
+                                    margin-left: 0;
+
+                                    &::before {
+                                        display: none;
+                                    }
+                                }
+                            }
+
+                            &__ttl {
+                                transform: skew(22.5deg);
+                                font-size: 1.8rem;
+                                color: white;
+                                font-weight: bold;
+                            }
+                        }
+
+                        &.left {
+                            .slider-link__cat {
+                                margin-top: 20px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: flex-end;
+                                margin-right: 8%;
+                            }
+
+                            .slider-link__ttl {
+                                margin-top: 20px;
+                                text-align: end;
+                                margin-right: 8%;
+                            }
+                        }
+
+                        &.right {
+                            .slider-item {
+                                display: flex;
+                                flex-direction: column;
+                                justify-content: flex-end;
+                            }
+
+                            .slider-link__cat {
+                                margin-bottom: 20px;
+                                display: flex;
+                                align-items: center;
+                                margin-left: 8%;
+                            }
+
+                            .slider-link__ttl {
+                                margin-bottom: 20px;
+                                margin-left: 8%;
+                            }
+                        }
+                    }
+                }
+            }
+
+            &-link {
+                width: 300px;
+                height: 60px;
+                margin: 100px auto 0;
+                line-height: 60px;
+                background-color: #ffd814;
+                color: v.$color-primary;
+                text-align: center;
+                font-size: 2rem;
+                font-weight: bold;
+                border-radius: 5px;
+
+                &:hover {
+                    opacity: 1;
+                    background-color: v.$color-primary;
+                    color: #ffd814;
+                    border: 1px solid #ffd814;
+                }
+            }
+
+            &-caption {
+                margin-top: 50px;
+                font-size: 1.6rem;
+                font-weight: bold;
+                text-align: center;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    #top {
+        .works {
+            background-color: v.$color-primary;
+            padding-top: 25px;
+            padding-bottom: 23px;
+
+            .container {
+                position: relative;
+            }
+
+            &-ttl {
+                left: 0;
+                top: 60px;
+            }
+
+            &-archive {
+                margin: 0 auto;
+
+                &__item {
+                    margin: 0 auto;
+                    transform: skew(-22.5deg);
+                    margin-right: 3%;
+                    margin-left: 3%;
+
+                    .slider {
+
+                        &-link {
+                            display: flex;
+                            flex-direction: column;
+
+                            &__thumb {
+                                transform: skew(22.5deg);
+
+                                img {
+                                    width: 100%;
+                                }
+                            }
+
+                            &__cat {
+                                small {
+                                    padding: 5px 10px;
+                                    background-color: v.$color-accent;
+                                    position: relative;
+                                    font-size: 1.4rem;
+                                    margin-left: 25px;
+
+                                    &:before {
+                                        content: "×";
+                                        color: v.$color-accent;
+                                        position: absolute;
+                                        left: -15px;
+                                        top: 50%;
+                                        transform: translateY(-50%);
+                                        font-weight: bold;
+                                        font-size: 1.4rem;
+                                    }
+
+                                    span {
+                                        transform: skew(22.5deg);
+                                        color: white;
+                                        text-align: center;
+                                        font-weight: bold;
+                                    }
+
+                                }
+
+                                small:first-child {
+                                    margin-left: 0;
+
+                                    &::before {
+                                        display: none;
+                                    }
+                                }
+                            }
+
+                            &__ttl {
+                                transform: skew(22.5deg);
+                                font-size: 1.8rem;
+                                color: white;
+                                font-weight: bold;
+                                white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                            }
+                        }
+
+                        &.left {
+                            margin-left:3%;
+
+                            .slider-link__cat {
+                                margin-top: 20px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: flex-end;
+                                margin-right: 15%;
+                            }
+
+                            .slider-link__ttl {
+                                line-height: 1.6;
+                                margin-top: 18px;
+                                text-align: end;
+                                margin-right: 15%;
+                            }
+
+                            .slider-link__thumb {
+                                margin: 18px auto;
+                                margin-left: auto;
+                                margin-right: 0;
+                            }
+                        }
+
+                        &.right {
+                            margin-top: 30px;
+                            margin-left: 2%;
+
+                            .slider-item {
+                                display: flex;
+                                flex-direction: column;
+                            }
+
+                            .slider-link__cat {
+                                margin-bottom: 20px;
+                              display: flex;
+                                align-items: center;
+                                justify-content: flex-end;
+                               margin-right: 15%;
+                            }
+
+                            .slider-link__ttl {
+                                line-height: 1.6;
+                                margin-bottom: 20px;
+                                  text-align: end;
+                               margin-right: 15%;
+                            }
+                        }
+                    }
+                }
+            }
+
+            &-link {
+                width: 250px;
+                height: 50px;
+                margin: 50px auto 0;
+                line-height: 50px;
+                background-color: #ffd814;
+                color: v.$color-primary;
+                text-align: center;
+                font-size: 1.6rem;
+                font-weight: bold;
+                border-radius: 5px;
+
+                &:hover {
+                    opacity: 1;
+                    background-color: v.$color-primary;
+                    color: #ffd814;
+                    border: 1px solid #ffd814;
+                }
+            }
+
+            &-caption {
+                margin-top: 25px;
+                font-size: 1.4rem;
+                font-weight: bold;
+                line-height: 1.6;
+            }
+        }
+    }
+}

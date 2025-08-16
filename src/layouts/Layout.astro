@@ -1,0 +1,50 @@
+---
+// Layout.astro
+const {
+  title = "Document",
+  description = "「伝えたい想い」をカタチに。ホームページ制作でお悩みの方へ、丁寧なヒアリングと提案で理想を実現します。まずはお気軽にお問い合わせください。",
+  ogImage = "/ogp.png",
+} = Astro.props;
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import "../assets/styles/style.scss";
+const scriptHtml = `
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="/assets/js/main.js"></script>
+`;
+---
+
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- SEO基本 -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={`https://dddynamis.com${Astro.url.pathname}`} />
+
+    <!-- OGP -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content={`https://dddynamis.com${Astro.url.pathname}`}
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <link rel="stylesheet" href="https://use.typekit.net/xzb4efj.css" />
+  </head>
+  <body>
+    <Header />
+    <slot />
+    <Footer />
+    <div set:html={scriptHtml} />
+  </body>
+</html>

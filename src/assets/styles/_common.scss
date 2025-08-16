@@ -1,0 +1,743 @@
+@use "variables" as v;
+/*****************/
+/**** reset *****/
+/*****************/
+
+/*
+  Josh's Custom CSS Reset
+  https://www.joshwcomeau.com/css/custom-css-reset/
+*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+  line-height: 1;
+}
+
+#root,
+#__next {
+  isolation: isolate;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  color: white;
+  font-family: "Noto Sans JP", "Noto Sans", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+}
+
+a {
+  display: block;
+  text-decoration: none;
+  transition: opacity 0.6s ease;
+
+  &:hover {
+    opacity: 0.6;
+  }
+}
+
+ul {
+  padding: 0;
+
+  li {
+    list-style: none;
+  }
+}
+
+img {
+  height: auto;
+  display: block;
+}
+
+/*****************/
+/****   font *****/
+/*****************/
+
+.desc {
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+  font-weight: 500;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.eng {
+  font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+@media screen and (min-width: 769px) {
+
+  /*****************/
+  /***parts***/
+  /*****************/
+  .sp_only {
+    display: none !important;
+  }
+
+  a[href*="tel"] {
+    pointer-events: none;
+  }
+
+  section {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .container {
+    width: 100%;
+    margin: 0 auto;
+    max-width: 1110px;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .section-ttl {
+    writing-mode: vertical-lr;
+    font-size: 17rem;
+    color: rgba(255, 255, 255, .1);
+    position: absolute;
+  }
+
+  .cta {
+    max-width: 956px;
+    width: 90%;
+    background-color: black;
+    padding-top: 52px;
+    padding-bottom: 48px;
+
+    &-p {
+      font-size: 3.6rem;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    &-link {
+      margin: 40px auto 0;
+      width: 418px;
+      height: 62px;
+      border-radius: 7px;
+      color: white;
+      font-size: 2rem;
+      text-align: center;
+      background-color: #FF8533;
+      line-height: 62px;
+      position: relative;
+      font-weight: bold;
+
+      &:after {
+        content: "";
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-top: 2px solid white;
+        border-right: 2px solid white;
+        top: 50%;
+        right: 20px;
+        transform: translateY(-50%) rotate(45deg);
+      }
+
+      &:hover {
+        opacity: 1;
+        background-color: white;
+        color: #FF8533;
+
+        &:after {
+          border-color: #FF8533;
+        }
+      }
+    }
+
+  }
+
+  /*****************/
+  /*** pageheader***/
+  /*****************/
+  .pageheader {
+    position: relative;
+    padding: 100px 0 120px;
+    text-align: center;
+    background-image: url(/assets/images/challenges-bg__img.png);
+    background-position: top;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    &-ttl {
+      font-size: 2rem;
+      background-color: v.$color-secondary;
+      padding: 20px 50px;
+      display: inline-block;
+      font-weight: bold;
+
+      .eng {
+        display: block;
+        margin-bottom: 15px;
+        font-size: 3.5rem;
+      }
+    }
+  }
+
+  /*****************/
+  /*** breadcrumb***/
+  /*****************/
+  .breadcrumb {
+
+    padding-top: 10px;
+    padding-bottom: 10px;
+    position: relative;
+
+    &-list {
+      display: flex;
+      list-style: none;
+      padding: 0;
+
+      &__item {
+        font-size: 1.4rem;
+        margin-right: 15px;
+        display: flex;
+        align-items: center;
+
+        &:before {
+          content: ">";
+          margin-right: 15px;
+          display: inline-block;
+        }
+
+        a {
+          color: white;
+          text-decoration: underline;
+        }
+
+        &:first-child {
+          &::before {
+            display: none;
+          }
+        }
+      }
+
+    }
+  }
+
+  /*****************/
+  /*** fixed***/
+  /*****************/
+  .sp-nav {
+    display: none;
+  }
+
+  .hamburger-menu {
+    display: none;
+  }
+
+  /*****************/
+  /*** header***/
+  /*****************/
+  .header {
+    height: 100px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 101;
+
+    &.active {
+      mix-blend-mode: exclusion;
+    }
+
+    .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 100%;
+    }
+
+    &-logo {
+      width: 140px;
+    }
+
+    &-nav {
+      ul {
+        display: flex;
+        justify-content: flex-end;
+
+        li {
+          margin-right: 10%;
+
+          a {
+            font-size: 1.6rem;
+            color: white;
+            white-space: nowrap;
+            font-weight: bold;
+          }
+
+          &:last-child {
+            margin-right: 0;
+          }
+        }
+
+      }
+    }
+  }
+
+  /*****************/
+  /*** footer***/
+  /*****************/
+  .footer {
+    background-color: black;
+    padding-top: 35px;
+    padding-bottom: 28px;
+    position: relative;
+
+    &-logo {
+      margin: 30px auto 0;
+      width: 170px;
+    }
+
+    &-social {
+      margin-top: 28px;
+      display: flex;
+      justify-content: center;
+
+      &__item {
+        margin-right: 35px;
+
+        &.facebook {
+          a {
+            width: 26px;
+            img{
+              width: 100%;
+              height: auto;
+            }
+          }
+        }
+
+        &.instagram {
+          a {
+            width: 26px;
+            img{
+              width: 100%;
+              height: auto;
+            }
+          }
+        }
+
+        &.twitter {
+          a {
+            width: 25px;
+          }
+        }
+      }
+
+      li:last-child {
+        margin-right: 0;
+      }
+    }
+
+    &-copyright {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 1.2rem;
+      display: block;
+    }
+  }
+
+}
+
+@media screen and (max-width: 768px) {
+
+  /*****************/
+  /***parts***/
+  /*****************/
+  .pc_only {
+    display: none !important;
+  }
+
+  section {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .container {
+    width: 100%;
+    margin: 0 auto;
+    max-width: 1110px;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .section-ttl {
+    writing-mode: vertical-lr;
+    font-size: 15rem;
+    color: rgba(255, 255, 255, .1);
+    position: absolute;
+  }
+
+  .cta {
+    max-width: 956px;
+    width: 100%;
+    background-color: black;
+    padding-top: 52px;
+    padding-bottom: 69px;
+
+    &-p {
+      font-size: 2rem;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    &-link {
+      margin: 35px auto 0;
+      width: 90%;
+      max-width: 330px;
+      height: 62px;
+      border-radius: 7px;
+      color: white;
+      font-size: 2rem;
+      text-align: center;
+      background-color: #FF8533;
+      line-height: 62px;
+      position: relative;
+      font-weight: bold;
+
+      &:after {
+        content: "";
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-top: 2px solid white;
+        border-right: 2px solid white;
+        top: 50%;
+        right: 20px;
+        transform: translateY(-50%) rotate(45deg);
+      }
+
+      &:hover {
+        opacity: 1;
+        background-color: white;
+        color: #FF8533;
+
+        &:after {
+          border-color: #FF8533;
+        }
+      }
+    }
+
+  }
+
+  /*****************/
+  /*** pageheader***/
+  /*****************/
+  .pageheader {
+    position: relative;
+    padding: 100px 0 100px;
+    text-align: center;
+    background-image: url(/assets/images/challenges-bg__img.png);
+    background-position: top;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    &-ttl {
+      font-size: 1.6rem;
+      background-color: v.$color-secondary;
+      padding: 20px 50px;
+      display: inline-block;
+      font-weight: bold;
+
+      .eng {
+        display: block;
+        margin-bottom: 15px;
+        font-size: 2.5rem;
+      }
+    }
+  }
+
+  /*****************/
+  /*** breadcrumb***/
+  /*****************/
+  .breadcrumb {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    position: relative;
+
+    &-list {
+      display: flex;
+      flex-wrap: wrap;
+      list-style: none;
+      padding: 0;
+
+      &__item {
+        font-size: 1.2rem;
+        margin-right: 15px;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+
+        &:before {
+          content: ">";
+          margin-right: 15px;
+          display: inline-block;
+        }
+
+        a {
+          color: white;
+          text-decoration: underline;
+        }
+
+        &:first-child {
+          &::before {
+            display: none;
+          }
+        }
+      }
+
+    }
+  }
+
+  /*****************/
+  /*** fixed***/
+  /*****************/
+  .sp-nav {
+    position: fixed;
+    z-index: 101;
+    top: 0;
+    right: 0;
+    max-width: 400px;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(15, 24, 38, .9);
+    padding: 50px 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transform: translateX(100%);
+    transition: all .6s ease;
+
+    &.active {
+      transform: translateX(0);
+    }
+
+    .menu {
+      border-top: 1px solid #ccc;
+      width: 100%;
+
+      li {
+
+        padding-top: 20px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #ccc;
+
+        a {
+          color: white;
+          font-size: 1.6rem;
+          text-align: center;
+        }
+      }
+    }
+
+    .sp-sns {
+      margin-top: 50px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+
+      &__item {
+        width: 26px;
+        margin-left: 40px;
+      }
+      li:first-child{
+        margin-left:0;
+        width: 32px;
+      }
+    }
+  }
+
+  .hamburger-menu {
+    width: 50px;
+    height: 50px;
+    position: fixed;
+    border: none;
+    background: transparent;
+    appearance: none;
+    padding: 0;
+    cursor: pointer;
+    top: 15px;
+    right: 5px;
+    z-index: 102;
+
+    &.active {
+      mix-blend-mode: exclusion;
+    }
+  }
+
+  .hamburger-menu__bar {
+    display: inline-block;
+    width: 44%;
+    height: 2px;
+    background: white;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: .5s;
+  }
+
+  .hamburger-menu__bar:first-child {
+    top: 16px;
+  }
+
+  .hamburger-menu__bar:nth-child(2) {
+    top: 24px;
+  }
+
+  .hamburger-menu__bar:last-child {
+    top: 32px;
+  }
+
+  .hamburger-menu--open .hamburger-menu__bar {
+    top: 50%;
+  }
+
+  .hamburger-menu--open .hamburger-menu__bar:first-child {
+    transform: translateX(-50%) translateY(-50%) rotate(45deg);
+  }
+
+  .hamburger-menu--open .hamburger-menu__bar:last-child {
+    transform: translateX(-50%) translateY(-50%) rotate(-45deg);
+  }
+
+  .hamburger-menu--open .hamburger-menu__bar:nth-child(2) {
+    display: none;
+  }
+
+  /*****************/
+  /*** header***/
+  /*****************/
+  .header {
+    height: 100px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 101;
+
+    &.active {
+      mix-blend-mode: exclusion;
+    }
+
+    .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 100%;
+    }
+
+    &-logo {
+      width: 120px;
+    }
+
+    &-nav {
+      display: none;
+
+    }
+  }
+
+  /*****************/
+  /*** footer***/
+  /*****************/
+  .footer {
+    background-color: black;
+    padding-top: 35px;
+    padding-bottom: 44px;
+    position: relative;
+
+    &-logo {
+      margin: 0 auto;
+      width: 140px;
+    }
+
+    &-social {
+      margin-top: 28px;
+      display: flex;
+      justify-content: center;
+
+      &__item {
+        margin-right: 35px;
+
+        &.facebook {
+          a {
+            width: 32px;
+          }
+        }
+
+        &.instagram {
+          a {
+            width: 26px;
+          }
+        }
+
+        &.twitter {
+          a {
+            width: 25px;
+          }
+        }
+      }
+
+      li:last-child {
+        margin-right: 0;
+      }
+    }
+
+    &-copyright {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 1.2rem;
+      display: block;
+    }
+  }
+
+}

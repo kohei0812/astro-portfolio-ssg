@@ -1,0 +1,70 @@
+---
+//src/components/Footer.astro
+---
+
+<footer class="footer" id="footer" role="contentinfo">
+  <picture class="footer-logo">
+    <source srcset="/assets/images/logo.webp" type="image/webp" />
+    <img src="/assets/images/logo.png" alt="Dynamis" />
+  </picture>
+  <ul class="footer-social" aria-label="フッターSNSリンク">
+    <li class="footer-social__item facebook">
+      <a
+        href="https://www.facebook.com/profile.php?id=100003251432034&locale=ja_JP"
+        target="_blank"
+        class="footer-social__link"
+      >
+        <picture>
+          <source srcset="/assets/images/facebook.webp" type="image/webp" />
+          <img
+            src="/assets/images/facebook.png"
+            width="26"
+            height="26"
+            loading="lazy"
+            decoding="async"
+            alt="facebook"
+          />
+        </picture>
+      </a>
+    </li>
+    <li class="footer-social__item instagram">
+      <a
+        href="https://www.instagram.com/paimanpsycho/"
+        target="_blank"
+        class="footer-social__link"
+      >
+        <picture>
+          <source srcset="/assets/images/instagram.webp" type="image/webp" />
+          <img
+            src="/assets/images/instagram.png"
+            width="26"
+            height="26"
+            loading="lazy"
+            decoding="async"
+            alt="instagram"
+          />
+        </picture>
+      </a>
+    </li>
+    <li class="footer-social__item twitter">
+      <a
+        href="https://x.com/dj_cherrrrryboy"
+        target="_blank"
+        class="footer-social__link"
+      >
+        <picture>
+          <source srcset="/assets/images/x.webp" type="image/webp" />
+          <img
+            src="/assets/images/x.png"
+            width="25"
+            height="25"
+            loading="lazy"
+            decoding="async"
+            alt="x"
+          />
+        </picture>
+      </a>
+    </li>
+  </ul>
+  <small class="footer-copyright"> &copy;dynamis</small>
+</footer>

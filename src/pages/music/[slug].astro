@@ -1,0 +1,88 @@
+---
+// @ts-nocheck
+import Layout from "../../layouts/Layout.astro";
+import { getMusic, getMusicBySlug } from "../../lib/microcms.js";
+
+export const prerender = true; // SSG化：ビルド時に静的生成する
+
+// SSG用のgetStaticPaths関数
+export async function getStaticPaths() {
+  const response = await getMusic();
+  
+  return response.contents.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const categories = post.category || [];
+---
+
+<Layout title={post.title}>
+  <main id="single">
+    <div class="pageheader">
+      <p class="pageheader-ttl">
+        <span class="eng">Works</span>
+        制作実績
+      </p>
+    </div>
+    <nav aria-label="パンくずリスト" class="breadcrumb">
+      <div class="container">
+        <ol
+          itemscope
+          itemtype="https://schema.org/BreadcrumbList"
+          class="breadcrumb-list"
+        >
+          <li
+            class="breadcrumb-list__item"
+            itemprop="itemListElement"
+            itemscope
+            itemtype="https://schema.org/ListItem"
+          >
+            <a itemprop="item" href="/">
+              <span itemprop="name">ホーム</span>
+            </a>
+            <meta itemprop="position" content="1" />
+          </li>
+          <li
+            class="breadcrumb-list__item"
+            itemprop="itemListElement"
+            itemscope
+            itemtype="https://schema.org/ListItem"
+          >
+            <a itemprop="item" href="/work-archive">
+              <span itemprop="name">制作実績</span>
+            </a>
+            <meta itemprop="position" content="2" />
+          </li>
+          <li
+            class="breadcrumb-list__item"
+            itemprop="itemListElement"
+            itemscope
+            itemtype="https://schema.org/ListItem"
+          >
+            <span itemprop="name">{post.title}</span>
+            <meta itemprop="position" content="3" />
+          </li>
+        </ol>
+      </div>
+    </nav>
+    <article id="post" class="post">
+      <div class="container">
+        <h1>{post.title}</h1>
+        {
+          categories.length > 0 && (
+            <ul class="category">
+              {categories.map((cat) => (
+                <li class="category-item">{cat.name}</li>
+              ))}
+            </ul>
+          )
+        }
+        <div class="content" set:html={post.content} />
+        <a href="/work-archive" class="to-archive">一覧に戻る</a>
+      </div>
+    </article>
+  </main>
+</Layout>

@@ -1,0 +1,34 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Hero from "../components/top/hero/Hero.astro";
+import Challenges from "../components/top/Challenges.astro";
+import Profile from "../components/top/Profile.astro";
+import Works from "../components/top/works/Works.astro";
+import Plan from "../components/top/Plan.astro";
+import ContactForm from "../components/ContactForm.jsx";
+---
+
+<Layout
+  title="Dynamis | フロントエンドエンジニア川端康平のポートフォリオサイトです。"
+>
+  <!-- 構造化データ（JSON-LD） -->
+  <script
+    is:inline
+    type="application/ld+json"
+    set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      name: "Dynamis",
+      url: "https://dddynamis.com/",
+    })}
+  />
+  <!-- main -->
+  <main id="top" role="main">
+    <Hero />
+    <Challenges />
+    <Profile />
+    <Works />
+    <Plan />
+    <ContactForm client:load/>
+  </main>
+</Layout>
