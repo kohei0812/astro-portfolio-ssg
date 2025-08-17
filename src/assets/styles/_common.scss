@@ -61,6 +61,7 @@ h6 {
 
 html {
   font-size: 62.5%;
+  height: auto;
 }
 
 /* Noto Sans JP as primary font */
@@ -72,7 +73,7 @@ html {
 body {
   color: white;
   font-family: var(--body-font);
-  font-display: swap;
+  height: auto;
 }
 
 /* Prevent layout shift by setting consistent font metrics */
