@@ -19,6 +19,7 @@ export default defineConfig({
   vite: {
     build: {
       minify: true,
+      cssCodeSplit: false,
       rollupOptions: {
         output: {
           manualChunks: {
