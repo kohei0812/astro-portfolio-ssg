@@ -42,12 +42,14 @@ const scriptHtml = `
     <style is:inline>
       :root{--body-font:"Noto Sans JP","Hiragino Sans","Yu Gothic UI","Meiryo",sans-serif}
       body{color:white;font-family:var(--body-font);margin:0}
-      .hero{position:fixed;top:0;left:0;width:100%;height:100vh;background-image:url(/assets/images/hero.webp);background-size:cover;background-position:center;background-repeat:no-repeat;overflow:hidden;z-index:1}
+      .hero{position:fixed;top:0;left:0;width:100%;height:100vh;overflow:hidden;z-index:1}
       .hero .container{height:100%;display:flex;align-items:center;position:relative;max-width:1110px;margin:0 auto;padding:0 15px}
       .hero-ttl{min-height:205px;opacity:0;transition:opacity 0.8s ease}
       .hero-ttl.show{opacity:1}
-      .hero-ttl h1{font-size:4.5rem;font-weight:bold;line-height:1.2;margin:0}
-      @media (max-width:768px){.hero{background-image:url(/assets/images/hero-sp.webp)}.hero-ttl{margin-top:25vh;min-height:115px}.hero-ttl h1{font-size:2.5rem}}
+      .hero-ttl{font-size:6.4rem;font-weight:bold;line-height:1.6;margin:0}
+      .hero-bg{position: absolute;top: 0;left: 0;width: 100%;height: 100%;}
+      .hero-bg img{width: 100%;height: 100%;object-fit: cover;}
+      @media (max-width:768px){.hero-ttl{margin-top:25vh;min-height:115px}.hero-ttl{font-size:3.6rem}}
     </style>
     
     <!-- Preconnect for Google Fonts -->

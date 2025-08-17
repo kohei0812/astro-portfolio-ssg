@@ -3,11 +3,24 @@
 import HeroTextSwiper from './HeroTextSwiper.jsx';
 ---
 <section class="hero" id="hero" aria-labelledby="hero-heading">
+  <picture class="hero-bg">
+    <source media="(min-width: 769px)" srcset="/assets/images/hero.webp" type="image/webp" />
+    <source media="(min-width: 769px)" srcset="/assets/images/hero.jpg" />
+    <source srcset="/assets/images/hero-sp.webp" type="image/webp" />
+    <img
+      src="/assets/images/hero-sp.png"
+      alt="背景画像"
+      width="375"
+      height="665"
+      loading="eager"
+      decoding="async"
+    />
+  </picture>
   <div class="container">
-    <div class="hero-ttl fadeInTrigger" id="hero-ttl">
-      <h1>想いを響かせ、<br>
-        未来を創る</h1>
-    </div>
+    <p class="hero-ttl fadeInTrigger" id="hero-ttl">
+      想いを響かせ、<br>
+        未来を創る
+    </p>
   </div>
   <HeroTextSwiper client:load />
 </section>

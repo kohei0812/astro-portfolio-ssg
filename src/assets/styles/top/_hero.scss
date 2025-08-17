@@ -1,16 +1,22 @@
-
 @use "../variables" as v;
+
+:root {
+  --hero-h: 100vh;
+}
+
+@supports (height: 100dvh) {
+  :root {
+    --hero-h: 100dvh;
+  }
+}
+
 /*****************/
 /*** hero***/
 /*****************/
 @media screen and (min-width: 769px) {
   #top {
     .hero {
-      height: 100vh;
-      background-image: url(/assets/images/hero.webp);
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center;
+      height: var(--hero-h);
       overflow: hidden;
       width: 100%;
       position: fixed;
@@ -24,16 +30,26 @@
         position: relative;
       }
 
+
+      &-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+
       &-ttl {
         min-height: 205px;
         contain: layout;
-        
-        img {
-          width:420px;
-          height: auto;
-          max-width: 100%;
-          display: block;
-        }
+        font-size: 6.4rem;
+
       }
 
       &-sub-title {
@@ -82,11 +98,7 @@
 @media screen and (max-width: 768px) {
   #top {
     .hero {
-      height: 100vh;
-      background-image: url(/assets/images/hero-sp.webp);
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center;
+      height: var(--hero-h);
       overflow: hidden;
       width: 100%;
       position: fixed;
@@ -100,17 +112,25 @@
         position: relative;
       }
 
+      &-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+
       &-ttl {
         margin-top: 25vh;
         min-height: 115px;
         contain: layout;
-        
-        img {
-          width: 250px;
-          height: auto;
-          max-width: 100%;
-          display: block;
-        }
+        font-size: 3.6rem;
       }
 
       &-sub-title {
@@ -125,7 +145,7 @@
         height: 40px;
 
         &.none {
-           color: v.$color-primary;
+          color: v.$color-primary;
         }
 
         .hero-text-swiper {
