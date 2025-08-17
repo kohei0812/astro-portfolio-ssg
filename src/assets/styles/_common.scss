@@ -266,14 +266,22 @@ h6,
     position: relative;
     padding: 100px 0 120px;
     text-align: center;
-    background-image: url(/assets/images/challenges-bg__img.webp);
-    background-image: image-set(url(/assets/images/challenges-bg__img.webp) type("image/webp"),
-        url(/assets/images/challenges-bg__img.png) type("image/png"));
-    background-position: top;
-    background-size: cover;
-    background-repeat: no-repeat;
+   
+    picture{
+      width: 100%;
+      height: 100%;
+      position:absolute;
+      top: 0;
+      left: 0;
+      img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
 
     &-ttl {
+      position:relative;
       font-size: 2rem;
       background-color: v.$color-secondary;
       padding: 20px 50px;
@@ -556,14 +564,21 @@ h6,
     position: relative;
     padding: 100px 0 100px;
     text-align: center;
-    background-image: url(/assets/images/challenges-bg__img.webp);
-    background-image: image-set(url(/assets/images/challenges-bg__img.webp) type("image/webp"),
-        url(/assets/images/challenges-bg__img.png) type("image/png"));
-    background-position: top;
-    background-size: cover;
-    background-repeat: no-repeat;
-
+   
+    picture{
+      width: 100%;
+      height: 100%;
+      position:absolute;
+      top: 0;
+      left: 0;
+      img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
     &-ttl {
+      position:relative;
       font-size: 1.6rem;
       background-color: v.$color-secondary;
       padding: 20px 50px;
