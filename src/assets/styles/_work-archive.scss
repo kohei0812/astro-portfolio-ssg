@@ -2,8 +2,6 @@
 @media screen and (min-width: 769px) {
     .work-archive {
         background-color: v.$color-primary;
-        content-visibility: auto;
-        contain-intrinsic-size: 1px 1200px;
 
         &-section {
 
@@ -129,8 +127,6 @@
 @media screen and (max-width: 768px) {
     .work-archive {
         background-color: v.$color-primary;
-        content-visibility: auto;
-        contain-intrinsic-size: 1px 1200px;
 
         &-section {
             position: relative;
