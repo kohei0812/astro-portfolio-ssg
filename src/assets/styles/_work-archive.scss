@@ -2,6 +2,8 @@
 @media screen and (min-width: 769px) {
     .work-archive {
         background-color: v.$color-primary;
+        content-visibility: auto;
+        contain-intrinsic-size: 1px 1200px;
 
         &-section {
 
@@ -43,7 +45,8 @@
             display: flex;
             flex-wrap: wrap;
             min-height: 651px;
-            &.music{
+
+            &.music {
                 min-height: 326px;
             }
         }
@@ -54,9 +57,10 @@
             margin-bottom: 50px;
 
             &__thumb {
-               img{
-                width: 100%;
-               }
+                img {
+                    width: 100%;
+                }
+
                 .visually-hidden {
                     position: absolute;
                     width: 1px;
@@ -90,7 +94,7 @@
                         margin-right: 15px;
                         display: inline-block;
                         top: 50%;
-                        left: -15px;
+                        left: -18px;
                         transform: translateY(-50%);
                     }
 
@@ -125,6 +129,8 @@
 @media screen and (max-width: 768px) {
     .work-archive {
         background-color: v.$color-primary;
+        content-visibility: auto;
+        contain-intrinsic-size: 1px 1200px;
 
         &-section {
             position: relative;
@@ -157,20 +163,22 @@
             margin: 30px auto 0;
             max-width: 400px;
             min-height: 1271px;
-            &.music{
+
+            &.music {
                 min-height: 946px;
             }
         }
 
         &-item {
-            padding-bottom:30px;
+            padding-bottom: 30px;
             margin-bottom: 30px;
             border-bottom: 1px solid white;
 
             &__thumb {
-                img{
+                img {
                     width: 100%;
                 }
+
                 .visually-hidden {
                     position: absolute;
                     width: 1px;
@@ -186,7 +194,8 @@
             &__cat {
                 display: flex;
                 margin-top: 15px;
-                margin-left:2%;
+                margin-left: 2%;
+
                 small {
                     font-size: 1.4rem;
                     margin-right: 22px;
