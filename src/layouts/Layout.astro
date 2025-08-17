@@ -124,9 +124,14 @@ const scriptHtml = `
     <!-- Preconnect for Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
+    <!-- Preconnect for microCMS Images CDN (LCP画像の握手を前倒し) -->
+    <link
+      rel="preconnect"
+      href="https://images.microcms-assets.io"
+      crossorigin
+    />
     <!-- Image Preload（LCP安定のため imagesrcset/imagesizes 指定） -->
-     <link
+    <link
       rel="preload"
       as="image"
       href="/assets/images/hero.webp"

@@ -14,7 +14,7 @@ export default function Post() {
             <div className="container">
                 <h2 className="work-archive-ttl post"><p>一般企業様</p></h2>
                 <ul className="work-archive-list post">
-                    {posts.map(post => {
+                    {posts.map((post, i) => {
                         const thumbnail = post.eyecatch?.url || '/default.jpg';
                         const mc = (url, p) => {
                             const u = new URL(url);
@@ -26,11 +26,10 @@ export default function Post() {
                             `${mc(thumbnail, { w, h: Math.round(w / 2), fit: 'crop', fm: 'webp', q: 75 })} ${w}w`
                         ).join(', ');
                         const src = mc(thumbnail, { w: 300, h: 150, fit: 'crop', fm: 'webp', q: 75 });
-                        const sizes =
-                            '(min-width: 1110px) 345px, '
-                        '(min-width: 769px) calc((100vw - 30px) * 0.32), '
-                        '(max-width: 430px) calc(100vw - 30px), '
-                        '400px';
+                        // fold内（PCは3枚並び）だけ eager + 高優先度
+                        const isATF = i < 3;
+                        // sizes は固定文字列（連結で切れないように）
+                        const sizes = '(min-width: 1110px) 345px, (min-width: 769px) calc((100vw - 30px) * 0.32), (max-width: 430px) calc(100vw - 30px), 400px';
                         return (
                             <li key={post.id} className="work-archive-item">
                                 <article>
@@ -40,9 +39,9 @@ export default function Post() {
                                                 src={src}
                                                 srcSet={srcSet}
                                                 sizes={sizes}
-                                                width="200"
-                                                height="100"
-                                                loading="lazy"
+                                                width="200" height="100"
+                                                loading={isATF ? 'eager' : 'lazy'}
+                                                fetchpriority={isATF ? 'high' : 'auto'}
                                                 decoding="async"
                                                 alt={post.title.replace(/<[^>]*>/g, '') || 'サムネイル画像'}
                                             />
