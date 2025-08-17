@@ -25,11 +25,13 @@
                 justify-content: space-between;
                 align-items: stretch;
                 transform: skew(-22.5deg);
+                min-height: 420px;
 
                 &__item {
                     width: 50%;
                     height: 420px;
                     transform: scale(1.15);
+                    contain: layout;
 
                     .slider {
                         &-link {
@@ -173,12 +175,14 @@
 
             &-archive {
                 margin: 0 auto;
+                min-height: 300px;
 
                 &__item {
                     margin: 0 auto;
                     transform: skew(-22.5deg);
                     margin-right: 3%;
                     margin-left: 3%;
+                    min-height: 150px;
 
                     .slider {
 

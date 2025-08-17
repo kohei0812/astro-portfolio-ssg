@@ -70,9 +70,12 @@
       &-main {
         margin-top: 50px;
         background-color: white;
+        min-height: 600px;
+        contain: layout;
 
         &__item {
           display: none;
+          min-height: 600px;
 
           &.active.plan-create {
             display: flex;
@@ -394,9 +397,11 @@
       &-main {
         margin-top: 36px;
         background-color: white;
+        min-height: 800px;
 
         &__item {
           display: none;
+          min-height: 800px;
 
           &.active.plan-create {
             display: block;

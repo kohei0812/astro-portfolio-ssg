@@ -46,6 +46,7 @@
         white-space: nowrap;
         width: 100vw;
         overflow: hidden;
+        height: 64px;
 
         &.none {
           color: v.$color-primary;
@@ -125,6 +126,7 @@
         white-space: nowrap;
         width: calc(100vw - 40px);
         overflow: hidden;
+        height: 40px;
 
         &.none {
            color: v.$color-primary;

@@ -38,21 +38,13 @@ const scriptHtml = `
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-    <!-- Critical CSS for immediate rendering -->
+    <!-- Critical CSS for immediate rendering - Optimized for speed -->
     <style is:inline>
       body{color:white;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Hiragino Sans","Yu Gothic UI","Meiryo",sans-serif}
       .hero{position:fixed;top:0;left:0;width:100%;height:100vh;background-image:url(/assets/images/hero.webp);background-size:cover;background-position:center;background-repeat:no-repeat;overflow:hidden;z-index:1}
       .hero .container{height:100%;display:flex;align-items:center;position:relative;max-width:1110px;margin:0 auto;padding:0 15px}
-      .hero-ttl{font-size:6.4rem;line-height:1.6;color:white;font-weight:bold;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Hiragino Sans","Yu Gothic UI","Meiryo",sans-serif;min-height:205px;contain:layout}
-      .hero-sub-title{position:absolute;bottom:45px;left:0;color:rgba(195,206,224,.3);font-weight:bold;white-space:nowrap;width:100vw;overflow:hidden;height:64px}
-      .hero-text-swiper{width:100%;height:auto}
-      .scroll-content{font-size:4rem;white-space:nowrap}
-      .scroll-content .eng{display:block;font-size:3.2rem}
-      .works-archive{margin:84px auto 0;width:1000px;display:flex;justify-content:space-between;align-items:stretch;transform:skew(-22.5deg);min-height:420px}
-      .works-archive__item{width:50%;height:420px;transform:scale(1.15);contain:layout}
-      .plan-main{margin-top:50px;background-color:white;min-height:600px;contain:layout}
-      .plan-main__item{min-height:600px}
-      @media (max-width:768px){.hero{background-image:url(/assets/images/hero-sp.webp)}.hero-ttl{font-size:3.6rem;margin-top:25vh;letter-spacing:.1em;min-height:115px}.hero-sub-title{bottom:50px;left:20px;width:calc(100vw - 40px);height:40px}.scroll-content{font-size:2.4rem}.scroll-content .eng{font-size:1.6rem}.works-archive{margin:0 auto;width:100%;min-height:300px}.works-archive__item{margin:0 auto;transform:skew(-22.5deg);margin-right:3%;margin-left:3%;height:auto;min-height:150px}.plan-main{margin-top:36px;min-height:800px}.plan-main__item{min-height:800px}}
+      .hero-ttl{font-size:6.4rem;line-height:1.6;color:white;font-weight:bold;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Hiragino Sans","Yu Gothic UI","Meiryo",sans-serif}
+      @media (max-width:768px){.hero{background-image:url(/assets/images/hero-sp.webp)}.hero-ttl{font-size:3.6rem;margin-top:25vh;letter-spacing:.1em}}
     </style>
     
     <!-- Preconnect for Google Fonts -->
