@@ -75,9 +75,10 @@ body {
   font-family: 'Noto Sans JP Fallback';
   src: local('Hiragino Kaku Gothic ProN'), local('Yu Gothic'), local('Meiryo'), local('sans-serif');
   font-display: swap;
-  ascent-override: 120%;
-  descent-override: 30%;
+  ascent-override: 105%;
+  descent-override: 27%;
   line-gap-override: 0%;
+  size-adjust: 100%;
 }
 
 @font-face {
