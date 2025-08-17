@@ -35,7 +35,7 @@ export default function Post() {
                         // CSSに一致するsizes（固定文字列で安全に）
                         const sizes = '(min-width: 1110px) 345px, (min-width: 769px) calc((100vw - 30px) * 0.32), (max-width: 430px) calc(100vw - 30px), 400px';
                         return (
-                            <li key={post.id} className="work-archive-item">
+                            <li key={post.id} className="work-archive-item fadeInTrigger">
                                 <article>
                                     <a href={`/posts/${post.slug}/`}>
                                         <figure className="work-archive-item__thumb">
