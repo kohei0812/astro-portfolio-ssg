@@ -4,7 +4,8 @@
         background-color: v.$color-primary;
 
         &-section {
-
+            content-visibility: auto;
+            contain-intrinsic-size: 1px 1200px;
             position: relative;
 
             &.music {
@@ -130,6 +131,8 @@
 
         &-section {
             position: relative;
+            content-visibility: auto;
+            contain-intrinsic-size: 1px 1200px;
 
             &.music {
                 .container {
