@@ -51,7 +51,7 @@ export default function HeroTextSwiper() {
   }, []);
 
   return (
-    <div className="hero-sub-title">
+    <div className="hero-sub-title fadeInTrigger">
       <div className="swiper hero-text-swiper" ref={sliderRef}>
         <div className="swiper-wrapper">
           <div className="swiper-slide">
