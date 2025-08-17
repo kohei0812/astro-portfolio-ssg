@@ -23,29 +23,37 @@ export default function Music() {
                             return u.toString();
                         };
                         // 幅記述子（CSSに合わせて実表示幅をカバー）
+                        // 幅記述子（CSSに合わせて実表示幅をカバー）
                         const widths = [200, 300, 346, 400, 520, 680];
-                        const srcSet = widths.map(w =>
-                            `${mc(thumbnail, { w, h: Math.round(w / 2), fit: 'crop', fm: 'webp', q: 75 })} ${w}w`
+                        const srcsetAvif = widths.map(w =>
+                            `${mc(thumbnail, { fm: 'avif', w, h: Math.round(w / 2), fit: 'crop', q: 65 })} ${w}w`
                         ).join(', ');
-                        // 既定src（何でもOK。比率用に200x100を維持）
-                        const src = mc(thumbnail, { w: 300, h: 150, fit: 'crop', fm: 'webp', q: 75 });
-                        // CSSに一致するsizes
+                        const srcsetWebp = widths.map(w =>
+                            `${mc(thumbnail, { fm: 'webp', w, h: Math.round(w / 2), fit: 'crop', q: 75 })} ${w}w`
+                        ).join(', ');
+                        const srcJpg = mc(thumbnail, { fm: 'jpg', w: 300, h: 150, fit: 'crop', q: 75 });
+                        // fold内（PCは3枚並び）だけ eager + 高優先度
                         const isATF = i < 3;
+                        // CSSに一致するsizes（固定文字列で安全に）
                         const sizes = '(min-width: 1110px) 345px, (min-width: 769px) calc((100vw - 30px) * 0.32), (max-width: 430px) calc(100vw - 30px), 400px';
                         return (
                             <li key={post.id} className="work-archive-item">
                                 <article>
                                     <a href={`/music/${post.slug}/`}>
                                         <figure className="work-archive-item__thumb">
-                                            <img
-                                                src={src}
-                                                srcSet={srcSet}
-                                                sizes={sizes}
-                                                width="200" height="100"
-                                                loading={isATF ? 'eager' : 'lazy'}
-                                                fetchpriority={isATF ? 'high' : 'auto'}
-                                                decoding="async"
-                                                alt={post.title.replace(/<[^>]*>/g, '') || 'サムネイル画像'} />
+                                            <picture>
+                                                <source type="image/avif" srcSet={srcsetAvif} sizes={sizes} />
+                                                <source type="image/webp" srcSet={srcsetWebp} sizes={sizes} />
+                                                <img
+                                                    src={srcJpg}
+                                                    sizes={sizes}
+                                                    width="200" height="100"
+                                                    loading={isATF ? 'eager' : 'lazy'}
+                                                    fetchpriority={isATF ? 'high' : 'auto'}
+                                                    decoding="async"
+                                                    alt={post.title.replace(/<[^>]*>/g, '') || 'サムネイル画像'}
+                                                />
+                                            </picture>
                                             <figcaption className="visually-hidden" dangerouslySetInnerHTML={{ __html: post.title }} />
                                         </figure>
                                         {post.category?.length > 0 && (

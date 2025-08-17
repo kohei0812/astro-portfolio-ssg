@@ -22,29 +22,36 @@ export default function Post() {
                             return u.toString();
                         };
                         const widths = [200, 300, 346, 400, 520, 680];
-                        const srcSet = widths.map(w =>
-                            `${mc(thumbnail, { w, h: Math.round(w / 2), fit: 'crop', fm: 'webp', q: 75 })} ${w}w`
+                        // 幅ベースsrcset（AVIF / WebP / JPEG フォールバック）
+                        const srcsetAvif = widths.map(w =>
+                            `${mc(thumbnail, { fm: 'avif', w, h: Math.round(w / 2), fit: 'crop', q: 65 })} ${w}w`
                         ).join(', ');
-                        const src = mc(thumbnail, { w: 300, h: 150, fit: 'crop', fm: 'webp', q: 75 });
+                        const srcsetWebp = widths.map(w =>
+                            `${mc(thumbnail, { fm: 'webp', w, h: Math.round(w / 2), fit: 'crop', q: 75 })} ${w}w`
+                        ).join(', ');
+                        const srcJpg = mc(thumbnail, { fm: 'jpg', w: 300, h: 150, fit: 'crop', q: 75 });
                         // fold内（PCは3枚並び）だけ eager + 高優先度
                         const isATF = i < 3;
-                        // sizes は固定文字列（連結で切れないように）
+                        // CSSに一致するsizes（固定文字列で安全に）
                         const sizes = '(min-width: 1110px) 345px, (min-width: 769px) calc((100vw - 30px) * 0.32), (max-width: 430px) calc(100vw - 30px), 400px';
                         return (
                             <li key={post.id} className="work-archive-item">
                                 <article>
                                     <a href={`/posts/${post.slug}/`}>
                                         <figure className="work-archive-item__thumb">
-                                            <img
-                                                src={src}
-                                                srcSet={srcSet}
-                                                sizes={sizes}
-                                                width="200" height="100"
-                                                loading={isATF ? 'eager' : 'lazy'}
-                                                fetchpriority={isATF ? 'high' : 'auto'}
-                                                decoding="async"
-                                                alt={post.title.replace(/<[^>]*>/g, '') || 'サムネイル画像'}
-                                            />
+                                            <picture>
+                                                <source type="image/avif" srcSet={srcsetAvif} sizes={sizes} />
+                                                <source type="image/webp" srcSet={srcsetWebp} sizes={sizes} />
+                                                <img
+                                                    src={srcJpg}
+                                                    sizes={sizes}
+                                                    width="200" height="100"
+                                                    loading={isATF ? 'eager' : 'lazy'}
+                                                    fetchpriority={isATF ? 'high' : 'auto'}
+                                                    decoding="async"
+                                                    alt={post.title.replace(/<[^>]*>/g, '') || 'サムネイル画像'}
+                                                />
+                                            </picture>
                                             <figcaption className="visually-hidden" dangerouslySetInnerHTML={{ __html: post.title }} />
                                         </figure>
                                         {post.category && (
