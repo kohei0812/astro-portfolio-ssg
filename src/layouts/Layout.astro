@@ -38,9 +38,10 @@ const scriptHtml = `
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-    <!-- Critical CSS for immediate rendering - Optimized for speed -->
+    <!-- Critical CSS for immediate rendering with system fonts -->
     <style is:inline>
-      body{color:white;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Hiragino Sans","Yu Gothic UI","Meiryo",sans-serif}
+      :root{--body-font:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Hiragino Sans","Yu Gothic UI","Meiryo","Helvetica Neue",Arial,sans-serif}
+      body{color:white;font-family:var(--body-font);margin:0}
       .hero{position:fixed;top:0;left:0;width:100%;height:100vh;background-image:url(/assets/images/hero.webp);background-size:cover;background-position:center;background-repeat:no-repeat;overflow:hidden;z-index:1}
       .hero .container{height:100%;display:flex;align-items:center;position:relative;max-width:1110px;margin:0 auto;padding:0 15px}
       .hero-ttl{min-height:205px}
@@ -52,13 +53,12 @@ const scriptHtml = `
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     
-    <!-- LCP Background Image Preload for fastest rendering -->
+    <!-- LCP Hero Title Image Preload - HIGHEST PRIORITY -->
+    <link rel="preload" as="image" href="/assets/images/hero-title.webp" type="image/webp" fetchpriority="high" />
+    
+    <!-- Background Image Preload -->
     <link rel="preload" as="image" href="/assets/images/hero.webp" type="image/webp" media="(min-width: 769px)" />
     <link rel="preload" as="image" href="/assets/images/hero-sp.webp" type="image/webp" media="(max-width: 768px)" />
-    
-    <!-- Hero Title Image Preload -->
-    <link rel="preload" as="image" href="/assets/images/hero-title.webp" type="image/webp" />
-    <link rel="preload" as="image" href="/assets/images/hero-title.png" />
     
     <!-- Google Fonts with font-display swap for immediate fallback -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
