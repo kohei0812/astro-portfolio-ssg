@@ -52,7 +52,11 @@ const scriptHtml = `
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     
-    <!-- LCP Image Preload for fastest rendering -->
+    <!-- LCP Background Image Preload for fastest rendering -->
+    <link rel="preload" as="image" href="/assets/images/hero.webp" type="image/webp" media="(min-width: 769px)" />
+    <link rel="preload" as="image" href="/assets/images/hero-sp.webp" type="image/webp" media="(max-width: 768px)" />
+    
+    <!-- Hero Title Image Preload -->
     <link rel="preload" as="image" href="/assets/images/hero-title.webp" type="image/webp" />
     <link rel="preload" as="image" href="/assets/images/hero-title.png" />
     
