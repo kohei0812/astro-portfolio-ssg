@@ -38,11 +38,18 @@ const scriptHtml = `
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
+    <!-- Critical CSS for immediate rendering -->
+    <style is:inline>
+      body{color:white;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Hiragino Sans","Yu Gothic UI","Meiryo",sans-serif}
+      .hero{position:fixed;top:0;left:0;width:100%;height:100vh;background-image:url(/assets/images/hero.webp);background-size:cover;background-position:center;background-repeat:no-repeat;overflow:hidden;z-index:1}
+      .hero .container{height:100%;display:flex;align-items:center;position:relative;max-width:1110px;margin:0 auto;padding:0 15px}
+      .hero-ttl{font-size:6.4rem;line-height:1.6;color:white;font-weight:bold;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Hiragino Sans","Yu Gothic UI","Meiryo",sans-serif}
+      @media (max-width:768px){.hero{background-image:url(/assets/images/hero-sp.webp)}.hero-ttl{font-size:3.6rem;margin-top:25vh;letter-spacing:.1em}}
+    </style>
+    
     <!-- Preconnect for Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    
-    
     
     <!-- Google Fonts with minimal character set for better performance -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
