@@ -34,6 +34,8 @@
         font-weight: bold;
         font-family: "Noto Sans JP", "Noto Sans JP Fallback", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         font-display: swap;
+        min-height: 205px;
+        contain: layout;
       }
 
       &-sub-title {
@@ -112,6 +114,8 @@
         letter-spacing: .1em;
         font-family: "Noto Sans JP", "Noto Sans JP Fallback", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         font-display: swap;
+        min-height: 115px;
+        contain: layout;
       }
 
       &-sub-title {
