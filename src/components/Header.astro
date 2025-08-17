@@ -8,6 +8,7 @@ const profileLink = isTopPage ? "#profile" : "/#profile";
 const planLink = isTopPage ? "#plan" : "/#plan";
 const contactLink = isTopPage ? "#contact" : "/#contact";
 ---
+
 <!-- sp-nav -->
 <nav class="sp-nav" id="sp-nav" aria-label="スマートフォン用ナビゲーション">
   <ul class="menu">
@@ -107,12 +108,20 @@ const contactLink = isTopPage ? "#contact" : "/#contact";
   <div class="container">
     <a href="/" class="header-logo" aria-label="トップページへ">
       <picture>
-        <source srcset="/assets/images/logo.webp" type="image/webp" />
+        <source
+          type="image/avif"
+          srcset="/assets/images/logo-140.avif 140w, /assets/images/logo-280.avif 280w"
+        />
+        <source
+          type="image/webp"
+          srcset="/assets/images/logo-140.webp 140w, /assets/images/logo-280.webp 280w"
+        />
         <img
-          src="/assets/images/logo.png"
+          src="/assets/images/logo-140.png"
+          srcset="/assets/images/logo-140.png 140w, /assets/images/logo-280.png 280w"
+          sizes="140px"
           width="140"
           height="46"
-          loading="eager"
           decoding="async"
           fetchpriority="low"
           alt="Dynamis"

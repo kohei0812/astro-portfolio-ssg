@@ -126,28 +126,20 @@ const scriptHtml = `
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
     <!-- Image Preload（LCP安定のため imagesrcset/imagesizes 指定） -->
-    + <link
+     <link
       rel="preload"
       as="image"
-      +
       href="/assets/images/hero.webp"
-      +
       imagesrcset="/assets/images/hero.webp 1x, /assets/images/hero@2x.webp 2x"
-      +
       imagesizes="100vw"
-      +
       media="(min-width:769px)"
     />
-    + <link
+    <link
       rel="preload"
       as="image"
-      +
       href="/assets/images/hero-sp.webp"
-      +
       imagesrcset="/assets/images/hero-sp.webp 640w, /assets/images/hero-sp@2x.webp 1280w"
-      +
       imagesizes="100vw"
-      +
       media="(max-width:768px)"
     />
 
