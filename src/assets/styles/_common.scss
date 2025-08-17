@@ -65,8 +65,8 @@ html {
 
 /* System font stack for immediate rendering */
 :root {
-  --body-font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, 
-               "Hiragino Sans", "Yu Gothic UI", "Meiryo", "Helvetica Neue", Arial, sans-serif;
+  --body-font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Hiragino Sans", "Yu Gothic UI", "Meiryo", "Helvetica Neue", Arial, sans-serif;
   --heading-font: "Noto Sans JP", var(--body-font);
 }
 
@@ -124,7 +124,13 @@ img {
 /*****************/
 
 /* Apply Noto Sans JP only to headings for performance */
-h1, h2, h3, h4, h5, h6, .section-ttl {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.section-ttl {
   font-family: var(--heading-font);
   font-weight: 700;
 }
@@ -235,10 +241,8 @@ h1, h2, h3, h4, h5, h6, .section-ttl {
     padding: 100px 0 120px;
     text-align: center;
     background-image: url(/assets/images/challenges-bg__img.webp);
-    background-image: image-set(
-      url(/assets/images/challenges-bg__img.webp) type("image/webp"),
-      url(/assets/images/challenges-bg__img.png) type("image/png")
-    );
+    background-image: image-set(url(/assets/images/challenges-bg__img.webp) type("image/webp"),
+        url(/assets/images/challenges-bg__img.png) type("image/png"));
     background-position: top;
     background-size: cover;
     background-repeat: no-repeat;
@@ -368,6 +372,7 @@ h1, h2, h3, h4, h5, h6, .section-ttl {
     padding-top: 35px;
     padding-bottom: 28px;
     position: relative;
+    z-index: 50;
 
     &-logo {
       margin: 30px auto 0;
@@ -385,7 +390,8 @@ h1, h2, h3, h4, h5, h6, .section-ttl {
         &.facebook {
           a {
             width: 26px;
-            img{
+
+            img {
               width: 100%;
               height: auto;
             }
@@ -395,7 +401,8 @@ h1, h2, h3, h4, h5, h6, .section-ttl {
         &.instagram {
           a {
             width: 26px;
-            img{
+
+            img {
               width: 100%;
               height: auto;
             }
@@ -513,10 +520,8 @@ h1, h2, h3, h4, h5, h6, .section-ttl {
     padding: 100px 0 100px;
     text-align: center;
     background-image: url(/assets/images/challenges-bg__img.webp);
-    background-image: image-set(
-      url(/assets/images/challenges-bg__img.webp) type("image/webp"),
-      url(/assets/images/challenges-bg__img.png) type("image/png")
-    );
+    background-image: image-set(url(/assets/images/challenges-bg__img.webp) type("image/webp"),
+        url(/assets/images/challenges-bg__img.png) type("image/png"));
     background-position: top;
     background-size: cover;
     background-repeat: no-repeat;
@@ -630,8 +635,9 @@ h1, h2, h3, h4, h5, h6, .section-ttl {
         width: 26px;
         margin-left: 40px;
       }
-      li:first-child{
-        margin-left:0;
+
+      li:first-child {
+        margin-left: 0;
         width: 32px;
       }
     }
@@ -734,6 +740,7 @@ h1, h2, h3, h4, h5, h6, .section-ttl {
     padding-top: 35px;
     padding-bottom: 44px;
     position: relative;
+    z-index: 50;
 
     &-logo {
       margin: 0 auto;
