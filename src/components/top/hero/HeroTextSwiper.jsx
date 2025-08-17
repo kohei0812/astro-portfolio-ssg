@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import Swiper from 'swiper';
 import { Autoplay } from 'swiper/modules';
-import 'swiper/css';
+import 'swiper/css/bundle';
 
 export default function HeroTextSwiper() {
   const sliderRef = useRef(null);

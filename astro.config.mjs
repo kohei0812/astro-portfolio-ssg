@@ -19,6 +19,16 @@ export default defineConfig({
   vite: {
     build: {
       minify: true,
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            'swiper': ['swiper']
+          }
+        }
+      }
+    },
+    optimizeDeps: {
+      include: ['swiper', 'swiper/modules']
     }
   }
 });
