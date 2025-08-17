@@ -5,9 +5,56 @@ import Music from "../components/work-archive/Music";
 ---
 
 <Layout title="Dynamis | 制作実績">
+  <style slot="head" is:inline>
+    .pageheader {
+      /* 初期は背景なし＝テキストを即描画してLCP短縮 */
+      background-image: none;
+      background-color: #0f1826;
+      background-position: top center;
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+    .pageheader-ttl {
+      contain: paint;
+      isolation: isolate;
+    }
+    /* 折返し下の描画を後ろ倒し（任意で調整） */
+    .work-archive-section {
+      content-visibility: auto;
+      contain-intrinsic-size: 1px 800px;
+    }
+  </style>
+  <script slot="head" is:inline>
+    (function () {
+      const setBg = () => {
+        const el = document.querySelector(".pageheader");
+        if (!el) return;
+        const webp = el.dataset.bg;
+        const png = el.dataset.bgFallback;
+        const val = png
+          ? `image-set(url(${webp}) type("image/webp") 1x, url(${png}) type("image/png") 1x)`
+          : `url(${webp})`;
+        // inline style で上書き（!important不要）
+        el.style.setProperty("background-image", val);
+      };
+      const run = () => {
+        if ("requestIdleCallback" in window)
+          requestIdleCallback(setBg, { timeout: 1500 });
+        else setTimeout(setBg, 1200);
+      };
+      if (
+        document.readyState === "complete" ||
+        document.readyState === "interactive"
+      ) {
+        run();
+      } else {
+        addEventListener("DOMContentLoaded", run, { once: true });
+      }
+    })();
+  </script>
   <!-- main -->
   <main id="work-archive" class="work-archive" role="main">
-    <div class="pageheader">
+    <div class="pageheader" data-bg="/assets/images/challenges-bg__img.webp">
       <h1 class="pageheader-ttl">
         <span class="eng">Works</span>
         制作実績
