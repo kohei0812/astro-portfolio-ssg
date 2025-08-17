@@ -37,12 +37,25 @@ export default function LeftWork() {
     });
   };
 
+  // Debounced resize handler to prevent excessive re-initialization
+  const handleResize = useRef(null);
+  
   // 初回・リサイズ時に Swiper 再構築
   useEffect(() => {
     if (posts.length > 0) {
       initSwiper();
-      window.addEventListener('resize', initSwiper);
-      return () => window.removeEventListener('resize', initSwiper);
+      
+      // Debounce resize to prevent layout shifts
+      const debouncedResize = () => {
+        if (handleResize.current) clearTimeout(handleResize.current);
+        handleResize.current = setTimeout(initSwiper, 150);
+      };
+      
+      window.addEventListener('resize', debouncedResize);
+      return () => {
+        window.removeEventListener('resize', debouncedResize);
+        if (handleResize.current) clearTimeout(handleResize.current);
+      };
     }
   }, [posts]);
 
