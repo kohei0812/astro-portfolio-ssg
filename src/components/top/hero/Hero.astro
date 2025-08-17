@@ -1,10 +1,15 @@
 ---
 //src/components/top/Hero.astro
-import HeroTextSwiper from './HeroTextSwiper.jsx';
+import HeroTextSwiper from "./HeroTextSwiper.jsx";
 ---
+
 <section class="hero" id="hero" aria-labelledby="hero-heading">
   <picture class="hero-bg">
-    <source media="(min-width: 769px)" srcset="/assets/images/hero.webp" type="image/webp" />
+    <source
+      media="(min-width: 769px)"
+      srcset="/assets/images/hero.webp"
+      type="image/webp"
+    />
     <source media="(min-width: 769px)" srcset="/assets/images/hero.jpg" />
     <source srcset="/assets/images/hero-sp.webp" type="image/webp" />
     <img
@@ -14,12 +19,13 @@ import HeroTextSwiper from './HeroTextSwiper.jsx';
       height="665"
       loading="eager"
       decoding="async"
+      fetchpriority="high"
     />
   </picture>
   <div class="container">
     <p class="hero-ttl fadeInTrigger" id="hero-ttl">
-      想いを響かせ、<br>
-        未来を創る
+      想いを響かせ、<br />
+      未来を創る
     </p>
   </div>
   <HeroTextSwiper client:load />
