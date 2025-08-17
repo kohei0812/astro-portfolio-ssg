@@ -43,8 +43,9 @@ const scriptHtml = `
       body{color:white;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Hiragino Sans","Yu Gothic UI","Meiryo",sans-serif}
       .hero{position:fixed;top:0;left:0;width:100%;height:100vh;background-image:url(/assets/images/hero.webp);background-size:cover;background-position:center;background-repeat:no-repeat;overflow:hidden;z-index:1}
       .hero .container{height:100%;display:flex;align-items:center;position:relative;max-width:1110px;margin:0 auto;padding:0 15px}
-      .hero-ttl{font-size:6.4rem;line-height:1.6;color:white;font-weight:bold;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Hiragino Sans","Yu Gothic UI","Meiryo",sans-serif}
-      @media (max-width:768px){.hero{background-image:url(/assets/images/hero-sp.webp)}.hero-ttl{font-size:3.6rem;margin-top:25vh;letter-spacing:.1em}}
+      .hero-ttl{min-height:205px}
+      .hero-ttl img{width:auto;height:auto;max-width:100%;display:block}
+      @media (max-width:768px){.hero{background-image:url(/assets/images/hero-sp.webp)}.hero-ttl{margin-top:25vh;min-height:115px}}
     </style>
     
     <!-- Preconnect for Google Fonts -->
