@@ -38,34 +38,144 @@ const scriptHtml = `
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-    <!-- Critical CSS for immediate rendering with Noto Sans JP -->
+    <!-- Critical CSS (CLS/LCP対策) -->
     <style is:inline>
-      :root{--body-font:"Noto Sans JP","Hiragino Sans","Yu Gothic UI","Meiryo",sans-serif}
-      body{color:white;font-family:var(--body-font);margin:0}
-      .hero{position:fixed;top:0;left:0;width:100%;height:100vh;overflow:hidden;z-index:1}
-      .hero .container{height:100%;display:flex;align-items:center;position:relative;max-width:1110px;margin:0 auto;padding:0 15px}
-      .hero-ttl{min-height:205px;opacity:0;transition:opacity 0.8s ease}
-      .hero-ttl.show{opacity:1}
-      .hero-ttl{font-size:6.4rem;font-weight:bold;line-height:1.6;margin:0}
-      .hero-bg{position: absolute;top: 0;left: 0;width: 100%;height: 100%;}
-      .hero-bg img{width: 100%;height: 100%;object-fit: cover;}
-      @media (max-width:768px){.hero-ttl{margin-top:25vh;min-height:115px}.hero-ttl{font-size:3.6rem}}
+      :root {
+        --body-font: system-ui, -apple-system, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, "Noto Sans JP", "Hiragino Sans",
+          "Yu Gothic UI", "Meiryo", sans-serif;
+      }
+      :root {
+        --hero-h: 100vh;
+      }
+      @supports (height: 100dvh) {
+        :root {
+          --hero-h: 100dvh;
+        }
+      }
+      body {
+        color: #fff;
+        font-family: var(--body-font);
+        margin: 0;
+      }
+      .hero {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: var(--hero-h);
+        overflow: hidden;
+        z-index: 1;
+      }
+      .hero .container {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        position: relative;
+        max-width: 1110px;
+        margin: 0 auto;
+        padding: 0 15px;
+      }
+      .hero-ttl {
+        min-height: 205px;
+        opacity: 0;
+        transition: opacity 0.8s ease;
+      }
+      .hero-ttl.show {
+        opacity: 1;
+      }
+      .hero-ttl {
+        font-size: 6.4rem;
+        font-weight: bold;
+        line-height: 1.6;
+        margin: 0;
+      }
+      .hero-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+      .hero-bg img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      @media (max-width: 768px) {
+        .hero-ttl {
+          margin-top: 25vh;
+          min-height: 115px;
+        }
+        .hero-ttl {
+          font-size: 3.6rem;
+        }
+      }
+      .challenges,
+      .plan,
+      .profile,
+      .works,
+      #contact,
+      footer {
+        content-visibility: auto;
+        contain-intrinsic-size: 1px 1200px;
+      }
     </style>
-    
     <!-- Preconnect for Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    
-    
-    <!-- Image Preload -->
-    <link rel="preload" as="image" href="/assets/images/hero.webp" type="image/webp" media="(min-width: 769px)" />
-    <link rel="preload" as="image" href="/assets/images/hero-sp.webp" type="image/webp" media="(max-width: 768px)" />
-    
+
+    <!-- Image Preload（LCP安定のため imagesrcset/imagesizes 指定） -->
+    + <link
+      rel="preload"
+      as="image"
+      +
+      href="/assets/images/hero.webp"
+      +
+      imagesrcset="/assets/images/hero.webp 1x, /assets/images/hero@2x.webp 2x"
+      +
+      imagesizes="100vw"
+      +
+      media="(min-width:769px)"
+    />
+    + <link
+      rel="preload"
+      as="image"
+      +
+      href="/assets/images/hero-sp.webp"
+      +
+      imagesrcset="/assets/images/hero-sp.webp 640w, /assets/images/hero-sp@2x.webp 1280w"
+      +
+      imagesizes="100vw"
+      +
+      media="(max-width:768px)"
+    />
+
     <!-- Google Fonts with font-display swap for immediate fallback -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
-    <noscript><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700&display=swap" rel="stylesheet" /></noscript>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
-    <noscript><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" /></noscript>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700&display=swap"
+      rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript
+      ><link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700&display=swap"
+        rel="stylesheet"
+      /></noscript
+    >
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+      rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript
+      ><link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+        rel="stylesheet"
+      /></noscript
+    >
   </head>
   <body>
     <Header />

@@ -8,11 +8,6 @@ const profileLink = isTopPage ? "#profile" : "/#profile";
 const planLink = isTopPage ? "#plan" : "/#plan";
 const contactLink = isTopPage ? "#contact" : "/#contact";
 ---
-
-<!-- fixed --><!-- loader -->
-<div class="loader-wrapper" role="presentation">
-  <div class="loader" aria-hidden="true"></div>
-</div>
 <!-- sp-nav -->
 <nav class="sp-nav" id="sp-nav" aria-label="スマートフォン用ナビゲーション">
   <ul class="menu">
@@ -119,6 +114,7 @@ const contactLink = isTopPage ? "#contact" : "/#contact";
           height="46"
           loading="eager"
           decoding="async"
+          fetchpriority="low"
           alt="Dynamis"
         />
       </picture>
