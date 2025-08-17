@@ -117,6 +117,29 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   window.addEventListener('scroll', handleScroll);
+  
+  /******************* */
+  /* hero-ttl フェードイン */
+  /******************* */
+  
+  const heroTtlEl = document.getElementById('hero-ttl');
+  
+  function handleHeroTtlFade() {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    
+    if (heroTtlEl) {
+      if (scrollTop > 0) {
+        heroTtlEl.classList.add('show');
+      } else {
+        heroTtlEl.classList.remove('show');
+      }
+    }
+  }
+  
+  window.addEventListener('scroll', handleHeroTtlFade);
+  // 初期表示時にもチェック
+  handleHeroTtlFade();
+  
   /******************* */
   /* planタブ切り替え */
   /******************* */

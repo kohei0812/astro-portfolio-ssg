@@ -4,28 +4,8 @@ import HeroTextSwiper from './HeroTextSwiper.jsx';
 ---
 <section class="hero" id="hero" aria-labelledby="hero-heading">
   <div class="container">
-    <div class="hero-ttl">
-      <picture>
-        <source 
-          srcset="/assets/images/hero-title.webp" 
-          type="image/webp"
-          media="(min-width: 769px)"
-        />
-        <source 
-          srcset="/assets/images/hero-title.webp" 
-          type="image/webp"
-          media="(max-width: 768px)"
-        />
-        <img 
-          src="/assets/images/hero-title.png" 
-          alt="想いを響かせ、未来を創る" 
-          width="420" 
-          height="130"
-          loading="eager"
-          decoding="sync"
-          fetchpriority="high"
-        />
-      </picture>
+    <div class="hero-ttl" id="hero-ttl">
+      <h1>想いを響かせ、未来を創る</h1>
     </div>
   </div>
   <HeroTextSwiper client:load />
