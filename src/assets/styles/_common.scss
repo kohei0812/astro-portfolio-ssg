@@ -174,6 +174,7 @@ h6,
     opacity: 1;
   }
 }
+
 @media screen and (min-width: 769px) {
 
   /*****************/
@@ -362,8 +363,11 @@ h6,
     }
 
     &-logo {
-      font-size:3rem;
+      font-size: 3rem;
       color: white;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, "Noto Sans JP", "Hiragino Sans",
+        "Yu Gothic UI", "Meiryo", sans-serif;
     }
 
     &-nav {
@@ -403,8 +407,11 @@ h6,
     &-logo {
       margin: 30px auto 0;
       text-align: center;
-      font-size:3rem;
+      font-size: 3rem;
       color: white;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, "Noto Sans JP", "Hiragino Sans",
+        "Yu Gothic UI", "Meiryo", sans-serif;
     }
 
     &-social {
@@ -751,8 +758,11 @@ h6,
     }
 
     &-logo {
-      font-size:2.4rem;
+      font-size: 2.4rem;
       color: white;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, "Noto Sans JP", "Hiragino Sans",
+        "Yu Gothic UI", "Meiryo", sans-serif;
     }
 
     &-nav {
@@ -774,8 +784,11 @@ h6,
     &-logo {
       margin: 0 auto;
       text-align: center;
-      font-size:2.4rem;
+      font-size: 2.4rem;
       color: white;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, "Noto Sans JP", "Hiragino Sans",
+        "Yu Gothic UI", "Meiryo", sans-serif;
     }
 
     &-social {
