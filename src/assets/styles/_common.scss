@@ -148,6 +148,31 @@ h6,
   font-family: 'Montserrat', 'Montserrat Fallback', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
+/*****************/
+/****   animation *****/
+/*****************/
+.fadeInTrigger,
+.fadeUpTrigger,
+.fadeDownTrigger {
+  opacity: 0;
+}
+
+.fadeIn {
+  animation-name: fadeInAnime;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  opacity: 0;
+}
+
+@keyframes fadeInAnime {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
 @media screen and (min-width: 769px) {
 
   /*****************/
