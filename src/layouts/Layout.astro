@@ -52,7 +52,11 @@ const scriptHtml = `
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     
-    <!-- Google Fonts with minimal character set for better performance -->
+    <!-- LCP Image Preload for fastest rendering -->
+    <link rel="preload" as="image" href="/assets/images/hero-title.webp" type="image/webp" />
+    <link rel="preload" as="image" href="/assets/images/hero-title.png" />
+    
+    <!-- Google Fonts with font-display swap for immediate fallback -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
     <noscript><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700&display=swap" rel="stylesheet" /></noscript>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
