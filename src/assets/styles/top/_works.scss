@@ -8,6 +8,7 @@
             background-color: v.$color-primary;
             padding-top: 76px;
             padding-bottom: 63px;
+            z-index: 50;
 
             .container {
                 position: relative;
@@ -163,6 +164,7 @@
             background-color: v.$color-primary;
             padding-top: 25px;
             padding-bottom: 23px;
+            z-index: 50;
 
             .container {
                 position: relative;
@@ -247,7 +249,7 @@
                         }
 
                         &.left {
-                            margin-left:3%;
+                            margin-left: 3%;
 
                             .slider-link__cat {
                                 margin-top: 20px;
@@ -282,17 +284,17 @@
 
                             .slider-link__cat {
                                 margin-bottom: 20px;
-                              display: flex;
+                                display: flex;
                                 align-items: center;
                                 justify-content: flex-end;
-                               margin-right: 15%;
+                                margin-right: 15%;
                             }
 
                             .slider-link__ttl {
                                 line-height: 1.6;
                                 margin-bottom: 20px;
-                                  text-align: end;
-                               margin-right: 15%;
+                                text-align: end;
+                                margin-right: 15%;
                             }
                         }
                     }

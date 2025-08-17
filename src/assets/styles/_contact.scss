@@ -1,6 +1,7 @@
  #contact {
    padding: 80px 0;
    background-color: #172439;
+   z-index: 50;
 
    .section-ttl {
      font-weight: bold;
@@ -25,7 +26,7 @@
    .contact-form__form {
      max-width: 600px;
      margin: 0 auto;
-     position:relative;
+     position: relative;
    }
 
    .form-group {
@@ -111,33 +112,37 @@
  }
 
  @media screen and (max-width: 768px) {
-  #contact {
-   .contact-form {
-     padding: 60px 0;
-   }
+   #contact {
+     z-index: 50;
 
-   .contact-form__title {
-     font-size: 3.2rem;
-   }
-
-   .form-input,
-   .form-textarea {
-     padding: 12px;
-     font-size: 1.4rem;
-     background-color: rgba(255, 255, 255, 1);
-     color: #333;
-     &::placeholder {
-       color:#333;
+     .contact-form {
+       padding: 60px 0;
      }
-      &:focus {
+
+     .contact-form__title {
+       font-size: 3.2rem;
+     }
+
+     .form-input,
+     .form-textarea {
+       padding: 12px;
+       font-size: 1.4rem;
        background-color: rgba(255, 255, 255, 1);
+       color: #333;
+
+       &::placeholder {
+         color: #333;
+       }
+
+       &:focus {
+         background-color: rgba(255, 255, 255, 1);
+       }
      }
-   }
 
-   .form-submit {
-     padding: 15px;
-     font-size: 1.6rem;
-   }
+     .form-submit {
+       padding: 15px;
+       font-size: 1.6rem;
+     }
 
+   }
  }
-}

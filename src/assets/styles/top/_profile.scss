@@ -10,6 +10,7 @@
       background-color: v.$color-primary;
       position: relative;
       overflow: hidden;
+      z-index: 50;
 
       &-bg {
         width: 2000px;
@@ -81,6 +82,7 @@
       background-color: v.$color-primary;
       position: relative;
       overflow: hidden;
+      z-index: 50;
 
       &-bg {
         width: 1000px;
@@ -89,6 +91,7 @@
         top: 0;
         left: 50%;
         transform: translateX(-50%);
+
         img {
           max-width: none;
         }

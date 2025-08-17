@@ -11,6 +11,7 @@
             overflow: hidden;
             padding-top: 45px;
             padding-bottom: 130px;
+            z-index: 50;
 
             &-bg {
                 position: absolute;
@@ -18,7 +19,8 @@
                 left: 50%;
                 width: 2000px;
                 transform: translateX(-50%);
-                img{
+
+                img {
                     width: 2000px;
                     max-width: none;
                 }
@@ -119,13 +121,15 @@
             overflow: hidden;
             padding-top: 45px;
             padding-bottom: 130px;
+            z-index: 50;
 
             &-bg {
                 position: absolute;
                 top: 0;
                 left: 50%;
                 transform: translateX(-50%);
-                img{
+
+                img {
                     max-width: none;
                 }
             }
