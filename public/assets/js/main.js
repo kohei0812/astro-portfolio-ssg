@@ -1,126 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
   /******************* */
-  /* Page Loader */
-  /******************* */
-  function hideLoader() {
-    const loader = document.getElementById('page-loader');
-    if (loader) {
-      loader.classList.add('hidden');
-      setTimeout(() => {
-        loader.style.display = 'none';
-      }, 500);
-    }
-  }
-
-  // フォント読み込み完了とすべてのリソース読み込み完了を待つ
-  function waitForResourcesAndFonts() {
-    const promises = [];
-    
-    // Google Fonts読み込み完了を待つ
-    function waitForGoogleFonts() {
-      return new Promise((resolve) => {
-        // 指定フォントがロードされているかチェック
-        const fontFamilies = ['Noto Sans JP', 'Montserrat'];
-        let loadedFonts = 0;
-        const totalFonts = fontFamilies.length;
-
-        function checkFont(family) {
-          if ('fonts' in document) {
-            // FontFaceの読み込み状態を確認
-            document.fonts.ready.then(() => {
-              const canvas = document.createElement('canvas');
-              const context = canvas.getContext('2d');
-              
-              // フォント適用前後でテキスト幅を比較
-              context.font = '12px monospace';
-              const fallbackWidth = context.measureText('test').width;
-              
-              context.font = `12px "${family}", monospace`;
-              const fontWidth = context.measureText('test').width;
-              
-              if (fontWidth !== fallbackWidth || document.fonts.check(`12px "${family}"`)) {
-                loadedFonts++;
-                if (loadedFonts === totalFonts) {
-                  resolve();
-                }
-              } else {
-                // 再チェック（最大10回）
-                let attempts = 0;
-                const interval = setInterval(() => {
-                  attempts++;
-                  context.font = `12px "${family}", monospace`;
-                  const currentWidth = context.measureText('test').width;
-                  
-                  if (currentWidth !== fallbackWidth || document.fonts.check(`12px "${family}"`)) {
-                    clearInterval(interval);
-                    loadedFonts++;
-                    if (loadedFonts === totalFonts) {
-                      resolve();
-                    }
-                  } else if (attempts >= 10) {
-                    clearInterval(interval);
-                    loadedFonts++;
-                    if (loadedFonts === totalFonts) {
-                      resolve();
-                    }
-                  }
-                }, 100);
-              }
-            });
-          } else {
-            loadedFonts++;
-            if (loadedFonts === totalFonts) {
-              resolve();
-            }
-          }
-        }
-
-        fontFamilies.forEach(checkFont);
-      });
-    }
-
-    promises.push(waitForGoogleFonts());
-    
-    // 画像やその他のリソース読み込み完了を待つ
-    const images = document.querySelectorAll('img');
-    images.forEach(img => {
-      if (!img.complete) {
-        promises.push(new Promise(resolve => {
-          img.onload = img.onerror = resolve;
-        }));
-      }
-    });
-
-    // フォールバックタイマー（最大3秒）
-    const fallbackTimer = new Promise(resolve => {
-      setTimeout(resolve, 3000);
-    });
-    promises.push(fallbackTimer);
-
-    // すべて完了後にloaderを非表示
-    Promise.race(promises).then(() => {
-      setTimeout(hideLoader, 300);
-    }).catch(() => {
-      hideLoader();
-    });
-  }
-
-  // ページロード完了後に実行
-  if (document.readyState === 'complete') {
-    waitForResourcesAndFonts();
-  } else {
-    window.addEventListener('load', waitForResourcesAndFonts);
-  }
-
-  // 緊急フォールバック（5秒後に強制非表示）
-  setTimeout(() => {
-    const loader = document.getElementById('page-loader');
-    if (loader && !loader.classList.contains('hidden')) {
-      console.warn('Loader fallback triggered');
-      hideLoader();
-    }
-  }, 5000);
-  /******************* */
   /* ハンバーガーメニュー*/
   /******************* */
   const hamburgerMenu = document.getElementById("js-hamburger-menu");
@@ -250,13 +129,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function fadeAnime() {
     const triggers = document.querySelectorAll(".fadeInTrigger");
+    const scroll = window.scrollY; // window.scrollTop() の代わり
+    const windowHeight = window.innerHeight;
 
     triggers.forEach((elem) => {
-      elem.classList.add("fadeIn");
+      const elemPos = elem.getBoundingClientRect().top + scroll - 100;
+
+      // 「window.scrollTop() が 0 以上」条件を先に付ける
+      if (scroll > 0 && scroll >= elemPos - windowHeight) {
+        elem.classList.add("fadeIn");
+      }
     });
   }
 
-  // ページ読み込み時にのみ実行
+  // スクロール時に実行
+  window.addEventListener("scroll", fadeAnime);
+  // ページ読み込み時にも一度実行
   window.addEventListener("load", fadeAnime);
 
   /******************* */
