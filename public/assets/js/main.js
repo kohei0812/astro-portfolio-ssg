@@ -16,10 +16,70 @@ document.addEventListener("DOMContentLoaded", function () {
   function waitForResourcesAndFonts() {
     const promises = [];
     
-    // フォント読み込み完了を待つ
-    if ('fonts' in document) {
-      promises.push(document.fonts.ready);
+    // Google Fonts読み込み完了を待つ
+    function waitForGoogleFonts() {
+      return new Promise((resolve) => {
+        // 指定フォントがロードされているかチェック
+        const fontFamilies = ['Noto Sans JP', 'Montserrat'];
+        let loadedFonts = 0;
+        const totalFonts = fontFamilies.length;
+
+        function checkFont(family) {
+          if ('fonts' in document) {
+            // FontFaceの読み込み状態を確認
+            document.fonts.ready.then(() => {
+              const canvas = document.createElement('canvas');
+              const context = canvas.getContext('2d');
+              
+              // フォント適用前後でテキスト幅を比較
+              context.font = '12px monospace';
+              const fallbackWidth = context.measureText('test').width;
+              
+              context.font = `12px "${family}", monospace`;
+              const fontWidth = context.measureText('test').width;
+              
+              if (fontWidth !== fallbackWidth || document.fonts.check(`12px "${family}"`)) {
+                loadedFonts++;
+                if (loadedFonts === totalFonts) {
+                  resolve();
+                }
+              } else {
+                // 再チェック（最大10回）
+                let attempts = 0;
+                const interval = setInterval(() => {
+                  attempts++;
+                  context.font = `12px "${family}", monospace`;
+                  const currentWidth = context.measureText('test').width;
+                  
+                  if (currentWidth !== fallbackWidth || document.fonts.check(`12px "${family}"`)) {
+                    clearInterval(interval);
+                    loadedFonts++;
+                    if (loadedFonts === totalFonts) {
+                      resolve();
+                    }
+                  } else if (attempts >= 10) {
+                    clearInterval(interval);
+                    loadedFonts++;
+                    if (loadedFonts === totalFonts) {
+                      resolve();
+                    }
+                  }
+                }, 100);
+              }
+            });
+          } else {
+            loadedFonts++;
+            if (loadedFonts === totalFonts) {
+              resolve();
+            }
+          }
+        }
+
+        fontFamilies.forEach(checkFont);
+      });
     }
+
+    promises.push(waitForGoogleFonts());
     
     // 画像やその他のリソース読み込み完了を待つ
     const images = document.querySelectorAll('img');
@@ -31,9 +91,17 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
 
+    // フォールバックタイマー（最大3秒）
+    const fallbackTimer = new Promise(resolve => {
+      setTimeout(resolve, 3000);
+    });
+    promises.push(fallbackTimer);
+
     // すべて完了後にloaderを非表示
-    Promise.all(promises).then(() => {
-      setTimeout(hideLoader, 300); // 300ms後に非表示（UX向上）
+    Promise.race(promises).then(() => {
+      setTimeout(hideLoader, 300);
+    }).catch(() => {
+      hideLoader();
     });
   }
 
@@ -43,6 +111,15 @@ document.addEventListener("DOMContentLoaded", function () {
   } else {
     window.addEventListener('load', waitForResourcesAndFonts);
   }
+
+  // 緊急フォールバック（5秒後に強制非表示）
+  setTimeout(() => {
+    const loader = document.getElementById('page-loader');
+    if (loader && !loader.classList.contains('hidden')) {
+      console.warn('Loader fallback triggered');
+      hideLoader();
+    }
+  }, 5000);
   /******************* */
   /* ハンバーガーメニュー*/
   /******************* */
