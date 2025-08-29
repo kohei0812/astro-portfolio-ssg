@@ -1,5 +1,49 @@
 document.addEventListener("DOMContentLoaded", function () {
   /******************* */
+  /* Page Loader */
+  /******************* */
+  function hideLoader() {
+    const loader = document.getElementById('page-loader');
+    if (loader) {
+      loader.classList.add('hidden');
+      setTimeout(() => {
+        loader.style.display = 'none';
+      }, 500);
+    }
+  }
+
+  // フォント読み込み完了とすべてのリソース読み込み完了を待つ
+  function waitForResourcesAndFonts() {
+    const promises = [];
+    
+    // フォント読み込み完了を待つ
+    if ('fonts' in document) {
+      promises.push(document.fonts.ready);
+    }
+    
+    // 画像やその他のリソース読み込み完了を待つ
+    const images = document.querySelectorAll('img');
+    images.forEach(img => {
+      if (!img.complete) {
+        promises.push(new Promise(resolve => {
+          img.onload = img.onerror = resolve;
+        }));
+      }
+    });
+
+    // すべて完了後にloaderを非表示
+    Promise.all(promises).then(() => {
+      setTimeout(hideLoader, 300); // 300ms後に非表示（UX向上）
+    });
+  }
+
+  // ページロード完了後に実行
+  if (document.readyState === 'complete') {
+    waitForResourcesAndFonts();
+  } else {
+    window.addEventListener('load', waitForResourcesAndFonts);
+  }
+  /******************* */
   /* ハンバーガーメニュー*/
   /******************* */
   const hamburgerMenu = document.getElementById("js-hamburger-menu");
