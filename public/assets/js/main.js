@@ -129,22 +129,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function fadeAnime() {
     const triggers = document.querySelectorAll(".fadeInTrigger");
-    const scroll = window.scrollY; // window.scrollTop() の代わり
-    const windowHeight = window.innerHeight;
 
     triggers.forEach((elem) => {
-      const elemPos = elem.getBoundingClientRect().top + scroll - 100;
-
-      // 「window.scrollTop() が 0 以上」条件を先に付ける
-      if (scroll > 0 && scroll >= elemPos - windowHeight) {
-        elem.classList.add("fadeIn");
-      }
+      elem.classList.add("fadeIn");
     });
   }
 
-  // スクロール時に実行
-  window.addEventListener("scroll", fadeAnime);
-  // ページ読み込み時にも一度実行
+  // ページ読み込み時にのみ実行
   window.addEventListener("load", fadeAnime);
 
   /******************* */

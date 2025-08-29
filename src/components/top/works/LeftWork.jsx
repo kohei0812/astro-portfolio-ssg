@@ -4,6 +4,13 @@ import { Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import { getBlogs } from '../../../lib/microcms.js';
 
+// iOS Safari 判定
+const isIOSSafari = () => {
+  if (typeof window === 'undefined') return false;
+  const ua = window.navigator.userAgent;
+  return /iPad|iPhone|iPod/.test(ua) && /Safari/.test(ua) && !/CriOS|FxiOS/.test(ua);
+};
+
 export default function LeftWork() {
   const [posts, setPosts] = useState([]);
   const sliderRef = useRef(null);
@@ -80,7 +87,7 @@ export default function LeftWork() {
                 <div className="slider-link__thumb">
                   <img src={thumbnail} width="200"
                     height="200"
-                    loading="lazy"
+                    loading={isIOSSafari() ? 'eager' : 'lazy'}
                     decoding="async" alt={post.title.replace(/<[^>]*>/g, '') || 'サムネイル画像'} />
                 </div>
                 {post.category && (
