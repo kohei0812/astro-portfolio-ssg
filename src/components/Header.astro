@@ -1,34 +1,56 @@
 ---
 //src/components/Header.astro
 const currentPath = Astro.url.pathname;
-const isTopPage = currentPath === "/";
+const isEnglish = currentPath.startsWith('/en');
+const isTopPage = currentPath === "/" || currentPath === "/en/";
+
+// ロケールに応じたベースパス
+const basePath = isEnglish ? "/en" : "";
 
 // トップページでは#リンク、他ページでは/付きリンクを使用
-const profileLink = isTopPage ? "#profile" : "/#profile";
-const planLink = isTopPage ? "#plan" : "/#plan";
-const contactLink = isTopPage ? "#contact" : "/#contact";
+const profileLink = isTopPage ? `${basePath}#profile` : `${basePath}/#profile`;
+const planLink = isTopPage ? `${basePath}#plan` : `${basePath}/#plan`;
+const contactLink = isTopPage ? `${basePath}#contact` : `${basePath}/#contact`;
+
+// 言語切替用URL生成
+const getLanguageToggleUrl = () => {
+  if (isEnglish) {
+    // EN → JA: /en を削除
+    return currentPath.replace(/^\/en(\/|$)/, '/') || '/';
+  } else {
+    // JA → EN: /en を追加
+    return currentPath === '/' ? '/en/' : `/en${currentPath}`;
+  }
+};
+
+const languageToggleUrl = getLanguageToggleUrl();
+const currentLanguage = isEnglish ? 'EN' : 'JA';
+const toggleLanguage = isEnglish ? 'JA' : 'EN';
 ---
 
 <!-- sp-nav -->
-<nav class="sp-nav" id="sp-nav" aria-label="スマートフォン用ナビゲーション">
+<nav class="sp-nav" id="sp-nav" aria-label={isEnglish ? "Mobile Navigation" : "スマートフォン用ナビゲーション"}>
   <ul class="menu">
     <li class="menu__item">
-      <a href="/" class="menu__link">トップ</a>
+      <a href={`${basePath}/`} class="menu__link">{isEnglish ? "Top" : "トップ"}</a>
     </li>
     <li class="menu__item">
-      <a href={profileLink} class="menu__link">プロフィール</a>
+      <a href={profileLink} class="menu__link">{isEnglish ? "Profile" : "プロフィール"}</a>
     </li>
     <li class="menu__item">
-      <a href="/work-archive" class="menu__link">制作実績</a>
+      <a href={`${basePath}/work-archive`} class="menu__link">{isEnglish ? "Works" : "制作実績"}</a>
     </li>
     <li class="menu__item">
-      <a href={planLink} class="menu__link">料金プラン</a>
+      <a href={planLink} class="menu__link">{isEnglish ? "Plans" : "料金プラン"}</a>
     </li>
     <li class="menu__item">
-      <a href={contactLink} class="menu__link">お問い合わせ</a>
+      <a href={contactLink} class="menu__link">{isEnglish ? "Contact" : "お問い合わせ"}</a>
+    </li>
+    <li class="menu__item">
+      <a href={languageToggleUrl} class="menu__link language-toggle">{toggleLanguage}</a>
     </li>
   </ul>
-  <ul class="sp-sns" aria-label="SNSリンク">
+  <ul class="sp-sns" aria-label={isEnglish ? "SNS Links" : "SNSリンク"}>
     <li class="sp-sns__item">
       <a
         href="https://www.facebook.com/profile.php?id=100003251432034&locale=ja_JP"
@@ -106,25 +128,28 @@ const contactLink = isTopPage ? "#contact" : "/#contact";
 <!-- header -->
 <header class="header" id="header" role="banner">
   <div class="container">
-    <a href="/" class="header-logo" aria-label="トップページへ">
+    <a href="/" class="header-logo" aria-label={isEnglish ? "To Top Page" : "トップページへ"}>
       Dynamis
     </a>
-    <nav class="header-nav" aria-label="メインナビゲーション">
+    <nav class="header-nav" aria-label={isEnglish ? "Main Navigation" : "メインナビゲーション"}>
       <ul class="menu">
         <li class="menu__item">
-          <a href="/" class="menu__link">トップ</a>
+          <a href={`${basePath}/`} class="menu__link">{isEnglish ? "Top" : "トップ"}</a>
         </li>
         <li class="menu__item">
-          <a href={profileLink} class="menu__link">プロフィール</a>
+          <a href={profileLink} class="menu__link">{isEnglish ? "Profile" : "プロフィール"}</a>
         </li>
         <li class="menu__item">
-          <a href="/work-archive" class="menu__link">制作実績</a>
+          <a href={`${basePath}/work-archive`} class="menu__link">{isEnglish ? "Works" : "制作実績"}</a>
         </li>
         <li class="menu__item">
-          <a href={planLink} class="menu__link">料金プラン</a>
+          <a href={planLink} class="menu__link">{isEnglish ? "Plans" : "料金プラン"}</a>
         </li>
         <li class="menu__item">
-          <a href={contactLink} class="menu__link">お問い合わせ</a>
+          <a href={contactLink} class="menu__link">{isEnglish ? "Contact" : "お問い合わせ"}</a>
+        </li>
+        <li class="menu__item">
+          <a href={languageToggleUrl} class="menu__link language-toggle">{toggleLanguage}</a>
         </li>
       </ul>
     </nav>

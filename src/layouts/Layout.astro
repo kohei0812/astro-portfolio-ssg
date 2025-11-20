@@ -4,7 +4,26 @@ const {
   title = "Document",
   description = "「伝えたい想い」をカタチに。ホームページ制作でお悩みの方へ、丁寧なヒアリングと提案で理想を実現します。まずはお気軽にお問い合わせください。",
   ogImage = "/ogp.png",
+  lang = "ja",
 } = Astro.props;
+
+// 現在のパス取得
+const currentPath = Astro.url.pathname;
+const isEnglish = lang === "en";
+
+// 言語切替用URL生成
+const getAlternateLanguageUrl = (targetLang: string) => {
+  if (targetLang === "en") {
+    // JA → EN: /en を追加
+    return currentPath === '/' ? '/en/' : `/en${currentPath}`;
+  } else {
+    // EN → JA: /en を削除
+    return currentPath.replace(/^\/en(\/|$)/, '/') || '/';
+  }
+};
+
+// og:localeの設定
+const ogLocale = isEnglish ? "en_US" : "ja_JP";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import "../assets/styles/style.scss";
@@ -13,7 +32,7 @@ const scriptHtml = `
 `;
 ---
 
-<html lang="ja">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -30,11 +49,17 @@ const scriptHtml = `
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content={ogLocale} />
     <meta
       property="og:url"
       content={`https://dddynamis.com${Astro.url.pathname}`}
     />
     <meta name="twitter:card" content="summary_large_image" />
+    
+    <!-- hreflang -->
+    <link rel="alternate" hreflang="ja" href={`https://dddynamis.com${getAlternateLanguageUrl("ja")}`} />
+    <link rel="alternate" hreflang="en" href={`https://dddynamis.com${getAlternateLanguageUrl("en")}`} />
+    <link rel="alternate" hreflang="x-default" href={`https://dddynamis.com${getAlternateLanguageUrl("ja")}`} />
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 

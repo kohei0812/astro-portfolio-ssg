@@ -1,35 +1,35 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import Post from "../components/work-archive/Post";
-import Music from "../components/work-archive/Music";
-import { getBlogs, getMusic } from "../lib/microcms.js";
+import Layout from "../../layouts/Layout.astro";
+import Post from "../../components/work-archive/Post";
+import Music from "../../components/work-archive/Music";
+import { getBlogsEn, getMusicEn } from "../../lib/microcms.js";
 
 let blogPosts = [];
 let musicPosts = [];
 
 try {
   const [blogsData, musicData] = await Promise.all([
-    getBlogs({ limit: 100 }),
-    getMusic({ limit: 100 })
+    getBlogsEn({ limit: 100 }),
+    getMusicEn({ limit: 100 })
   ]);
   blogPosts = blogsData.contents || [];
   musicPosts = musicData.contents || [];
 } catch (error) {
-  console.error('Error fetching work archive data:', error);
+  console.error('Error fetching English work archive data:', error);
 }
 ---
 
-<Layout title="Dynamis | 制作実績">
+<Layout title="Dynamis | Works" lang="en">
   
   <!-- main -->
   <main id="work-archive" class="work-archive" role="main">
     <div class="pageheader" data-bg="/assets/images/challenges-bg__img.webp">
       <h1 class="pageheader-ttl">
         <span class="eng">Works</span>
-        制作実績
+        Portfolio
       </h1>
     </div>
-    <nav aria-label="パンくずリスト" class="breadcrumb">
+    <nav aria-label="Breadcrumb navigation" class="breadcrumb">
       <div class="container">
         <ol
           itemscope
@@ -42,8 +42,8 @@ try {
             itemscope
             itemtype="https://schema.org/ListItem"
           >
-            <a itemprop="item" href="/">
-              <span itemprop="name">ホーム</span>
+            <a itemprop="item" href="/en/">
+              <span itemprop="name">Home</span>
             </a>
             <meta itemprop="position" content="1" />
           </li>
@@ -53,13 +53,13 @@ try {
             itemscope
             itemtype="https://schema.org/ListItem"
           >
-            <span itemprop="name">制作実績</span>
+            <span itemprop="name">Works</span>
             <meta itemprop="position" content="2" />
           </li>
         </ol>
       </div>
     </nav>
-    <Post posts={blogPosts} basePath="" />
-    <Music posts={musicPosts} basePath="" />
+    <Post posts={blogPosts} basePath="/en" />
+    <Music posts={musicPosts} basePath="/en" />
   </main>
 </Layout>

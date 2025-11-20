@@ -1,6 +1,7 @@
 ---
 //src/components/top/Hero.astro
 import HeroTextSwiper from "./HeroTextSwiper.jsx";
+const isEnglish = Astro.url.pathname.startsWith('/en');
 ---
 
 <section class="hero" id="hero" aria-labelledby="hero-heading">
@@ -14,7 +15,7 @@ import HeroTextSwiper from "./HeroTextSwiper.jsx";
     <source srcset="/assets/images/hero-sp.webp" type="image/webp" />
     <img
       src="/assets/images/hero-sp.png"
-      alt="背景画像"
+      alt={isEnglish ? 'Background image' : '背景画像'}
       width="375"
       height="665"
       loading="eager"
@@ -24,8 +25,17 @@ import HeroTextSwiper from "./HeroTextSwiper.jsx";
   </picture>
   <div class="container">
     <p class="hero-ttl fadeInTrigger" id="hero-ttl">
-      想いを響かせ、<br />
-      未来を創る
+      {isEnglish ? (
+        <>
+          Resonating thoughts,<br />
+          Creating the future
+        </>
+      ) : (
+        <>
+          想いを響かせ、<br />
+          未来を創る
+        </>
+      )}
     </p>
   </div>
   <HeroTextSwiper client:load />

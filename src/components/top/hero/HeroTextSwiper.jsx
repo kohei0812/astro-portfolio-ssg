@@ -6,6 +6,9 @@ import 'swiper/css/bundle';
 export default function HeroTextSwiper() {
   const sliderRef = useRef(null);
   const swiperInstance = useRef(null);
+  
+  // 現在の言語を判定
+  const isEnglish = typeof window !== 'undefined' && window.location.pathname.startsWith('/en');
 
   // Swiper初期化処理
   const initSwiper = () => {
@@ -56,20 +59,26 @@ export default function HeroTextSwiper() {
         <div className="swiper-wrapper">
           <div className="swiper-slide">
             <h1 className="scroll-content">
-              フロントエンドエンジニア川端康平のポートフォリオサイトです。 
-              <span className="eng">This is the portfolio site of Kohei Kawabata, a front-end engineer.</span>
+              {isEnglish 
+                ? "This is the portfolio site of Kohei Kawabata, a front-end engineer."
+                : "フロントエンドエンジニア川端康平のポートフォリオサイトです。"
+              }
             </h1>
           </div>
           <div className="swiper-slide">
             <div className="scroll-content">
-              フロントエンドエンジニア川端康平のポートフォリオサイトです。 
-              <span className="eng">This is the portfolio site of Kohei Kawabata, a front-end engineer.</span>
+              {isEnglish 
+                ? "This is the portfolio site of Kohei Kawabata, a front-end engineer."
+                : "フロントエンドエンジニア川端康平のポートフォリオサイトです。"
+              }
             </div>
           </div>
           <div className="swiper-slide">
             <div className="scroll-content">
-              フロントエンドエンジニア川端康平のポートフォリオサイトです。 
-              <span className="eng">This is the portfolio site of Kohei Kawabata, a front-end engineer.</span>
+              {isEnglish 
+                ? "This is the portfolio site of Kohei Kawabata, a front-end engineer."
+                : "フロントエンドエンジニア川端康平のポートフォリオサイトです。"
+              }
             </div>
           </div>
         </div>

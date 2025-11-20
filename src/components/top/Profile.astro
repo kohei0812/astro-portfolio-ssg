@@ -1,5 +1,6 @@
 ---
 //src/components/top/Profile.astro
+const isEnglish = Astro.url.pathname.startsWith('/en');
 ---
 
 <section class="profile" id="profile" aria-labelledby="profile-heading">
@@ -9,7 +10,7 @@
     <source srcset="/assets/images/profile-bgSP.webp" type="image/webp" />
     <img
       src="/assets/images/profile-bgSP.jpg"
-      alt="背景画像"
+      alt={isEnglish ? "Background image" : "背景画像"}
       width="1000"
       height="800"
       loading="lazy"
@@ -32,20 +33,28 @@
             height="200"
             loading="lazy"
             decoding="async"
-            alt="顔写真"
+            alt={isEnglish ? "Profile photo" : "顔写真"}
           />
         </picture>
       </div>
       <p class="profile-main__right desc">
-        神戸大学法学部卒業後、新卒でSIerに営業職で入社するものの、レールに乗った人生の在り方に疑問を感じ退職。<br
-        /><br />
-        その後、バンド活動をしながらバーテンダーや植木職人を経て37歳の時にWebエンジニアになることを決意し、フィリピンに英語IT留学をする。<br
-        />
-        帰国後はフリーランスWebエンジニアとして活動する傍ら、地元の会社で1人クリエティブ兼情シスや事業の立ち上げを任されたり、現在は福祉事業の中でプログラミング教材の開発にも携わっています。<br
-        /><br />
-        制作においては、クライアントの想いを形にすること、その先のユーザーに寄り添った提案を心がけています。<br
-        />
-        これからも常に挑戦する気持ちを忘れず、活動していきたいと思います。
+        {isEnglish ? (
+          <>
+            After graduating from Kobe University Faculty of Law, I joined a SIer company as a sales representative, but I questioned the conventional path of life and left the company.<br /><br />
+            After that, while doing band activities, I worked as a bartender and a gardener, and at the age of 37, I decided to become a web engineer and went to the Philippines for English IT study abroad.<br />
+            After returning to Japan, while working as a freelance web engineer, I was entrusted with creative and IT system management at a local company and business startups. Currently, I am also involved in developing programming materials in the welfare business.<br /><br />
+            In production, I strive to give shape to clients' thoughts and make proposals that are considerate of the users beyond.<br />
+            I want to continue my activities without forgetting the spirit of always challenging myself.
+          </>
+        ) : (
+          <>
+            神戸大学法学部卒業後、新卒でSIerに営業職で入社するものの、レールに乗った人生の在り方に疑問を感じ退職。<br /><br />
+            その後、バンド活動をしながらバーテンダーや植木職人を経て37歳の時にWebエンジニアになることを決意し、フィリピンに英語IT留学をする。<br />
+            帰国後はフリーランスWebエンジニアとして活動する傍ら、地元の会社で1人クリエティブ兼情シスや事業の立ち上げを任されたり、現在は福祉事業の中でプログラミング教材の開発にも携わっています。<br /><br />
+            制作においては、クライアントの想いを形にすること、その先のユーザーに寄り添った提案を心がけています。<br />
+            これからも常に挑戦する気持ちを忘れず、活動していきたいと思います。
+          </>
+        )}
       </p>
     </div>
   </div>

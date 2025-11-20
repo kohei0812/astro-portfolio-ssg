@@ -1,6 +1,8 @@
 import { useState, useRef } from 'react';
 
 export default function ContactForm() {
+  // 現在の言語を判定
+  const isEnglish = typeof window !== 'undefined' && window.location.pathname.startsWith('/en');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -45,37 +47,37 @@ export default function ContactForm() {
     
     // ハニーポットチェック
     if (honeypotRef.current && honeypotRef.current.value !== '') {
-      alert('スパムの可能性があります。送信を中止しました。');
+      alert(isEnglish ? 'Possible spam detected. Submission cancelled.' : 'スパムの可能性があります。送信を中止しました。');
       return false;
     }
     
     // 名前チェック
     if (!formData.name.trim()) {
-      newErrors.name = 'お名前は必須です';
+      newErrors.name = isEnglish ? 'Name is required' : 'お名前は必須です';
     } else if (formData.name.trim().length < 2 || formData.name.trim().length > 50) {
-      newErrors.name = 'お名前は2文字以上50文字以内で入力してください';
+      newErrors.name = isEnglish ? 'Name must be between 2 and 50 characters' : 'お名前は2文字以上50文字以内で入力してください';
     }
     
     // メールチェック
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!formData.email.trim()) {
-      newErrors.email = 'メールアドレスは必須です';
+      newErrors.email = isEnglish ? 'Email is required' : 'メールアドレスは必須です';
     } else if (!emailRegex.test(formData.email.trim())) {
-      newErrors.email = '正しいメールアドレスを入力してください';
+      newErrors.email = isEnglish ? 'Please enter a valid email address' : '正しいメールアドレスを入力してください';
     }
     
     // 件名チェック
     if (!formData.subject.trim()) {
-      newErrors.subject = '件名は必須です';
+      newErrors.subject = isEnglish ? 'Subject is required' : '件名は必須です';
     } else if (formData.subject.trim().length < 5 || formData.subject.trim().length > 100) {
-      newErrors.subject = '件名は5文字以上100文字以内で入力してください';
+      newErrors.subject = isEnglish ? 'Subject must be between 5 and 100 characters' : '件名は5文字以上100文字以内で入力してください';
     }
     
     // メッセージチェック
     if (!formData.message.trim()) {
-      newErrors.message = 'お問い合わせ内容は必須です';
+      newErrors.message = isEnglish ? 'Message is required' : 'お問い合わせ内容は必須です';
     } else if (formData.message.trim().length < 10 || formData.message.trim().length > 2000) {
-      newErrors.message = 'お問い合わせ内容は10文字以上2000文字以内で入力してください';
+      newErrors.message = isEnglish ? 'Message must be between 10 and 2000 characters' : 'お問い合わせ内容は10文字以上2000文字以内で入力してください';
     }
     
     // 送信回数制限チェック
@@ -84,7 +86,7 @@ export default function ContactForm() {
     const oneDay = 24 * 60 * 60 * 1000;
     
     if (lastSubmission && (now - parseInt(lastSubmission)) < oneDay) {
-      alert('1日に1回まで送信可能です。時間をおいて再度お試しください。');
+      alert(isEnglish ? 'You can submit once per day. Please try again later.' : '1日に1回まで送信可能です。時間をおいて再度お試しください。');
       return false;
     }
     
@@ -126,7 +128,7 @@ export default function ContactForm() {
       
     } catch (error) {
       console.error('送信エラー:', error);
-      alert('送信に失敗しました。時間をおいて再度お試しください。');
+      alert(isEnglish ? 'Submission failed. Please try again later.' : '送信に失敗しました。時間をおいて再度お試しください。');
     } finally {
       setIsSubmitting(false);
     }
@@ -139,16 +141,25 @@ export default function ContactForm() {
         <div className="container">
           <div className="success-message">
             <div className="success-icon">✓</div>
-            <h2>送信完了</h2>
+            <h2>{isEnglish ? 'Submission Complete' : '送信完了'}</h2>
             <p>
-              お問い合わせありがとうございました。<br />
-              通常24時間以内にご返信いたします。
+              {isEnglish ? (
+                <>
+                  Thank you for your inquiry.<br />
+                  We will usually reply within 24 hours.
+                </>
+              ) : (
+                <>
+                  お問い合わせありがとうございました。<br />
+                  通常24時間以内にご返信いたします。
+                </>
+              )}
             </p>
             <button 
               className="back-button"
               onClick={() => setIsSubmitted(false)}
             >
-              新しいお問い合わせ
+              {isEnglish ? 'New Inquiry' : '新しいお問い合わせ'}
             </button>
           </div>
         </div>
@@ -161,9 +172,12 @@ export default function ContactForm() {
       <div className="container">
         <span className="section-ttl eng">Contact</span>
         <div className="form-header">
-          <h2 className="contact-form__title">お問い合わせ</h2>
+          <h2 className="contact-form__title">{isEnglish ? 'Contact' : 'お問い合わせ'}</h2>
           <p className="contact-form__desc">
-            お気軽にお問い合わせください。通常24時間以内にご返信いたします。
+            {isEnglish 
+              ? 'Please feel free to contact us. We will usually reply within 24 hours.' 
+              : 'お気軽にお問い合わせください。通常24時間以内にご返信いたします。'
+            }
           </p>
         </div>
         
@@ -185,7 +199,7 @@ export default function ContactForm() {
           <div className="form-grid">
             <div className="form-group">
               <label htmlFor="name" className="form-label">
-                お名前 <span className="required">*</span>
+                {isEnglish ? 'Name' : 'お名前'} <span className="required">*</span>
               </label>
               <input
                 type="text"
@@ -194,14 +208,14 @@ export default function ContactForm() {
                 value={formData.name}
                 onChange={handleChange}
                 className={`form-input ${errors.name ? 'error' : ''}`}
-                placeholder="山田太郎"
+                placeholder={isEnglish ? 'Taro Yamada' : '山田太郎'}
               />
               {errors.name && <span className="error-message">{errors.name}</span>}
             </div>
             
             <div className="form-group">
               <label htmlFor="email" className="form-label">
-                メールアドレス <span className="required">*</span>
+                {isEnglish ? 'Email Address' : 'メールアドレス'} <span className="required">*</span>
               </label>
               <input
                 type="email"
@@ -218,7 +232,7 @@ export default function ContactForm() {
           
           <div className="form-group">
             <label htmlFor="subject" className="form-label">
-              件名 <span className="required">*</span>
+              {isEnglish ? 'Subject' : '件名'} <span className="required">*</span>
             </label>
             <input
               type="text"
@@ -227,14 +241,14 @@ export default function ContactForm() {
               value={formData.subject}
               onChange={handleChange}
               className={`form-input ${errors.subject ? 'error' : ''}`}
-              placeholder="お問い合わせの件名をご入力ください"
+              placeholder={isEnglish ? 'Please enter the subject of your inquiry' : 'お問い合わせの件名をご入力ください'}
             />
             {errors.subject && <span className="error-message">{errors.subject}</span>}
           </div>
           
           <div className="form-group">
             <label htmlFor="message" className="form-label">
-              お問い合わせ内容 <span className="required">*</span>
+              {isEnglish ? 'Message' : 'お問い合わせ内容'} <span className="required">*</span>
             </label>
             <textarea
               id="message"
@@ -243,11 +257,11 @@ export default function ContactForm() {
               onChange={handleChange}
               className={`form-textarea ${errors.message ? 'error' : ''}`}
               rows="6"
-              placeholder="お問い合わせ内容を詳しくご記入ください"
+              placeholder={isEnglish ? 'Please provide details about your inquiry' : 'お問い合わせ内容を詳しくご記入ください'}
             />
             {errors.message && <span className="error-message">{errors.message}</span>}
             <div className="character-count">
-              {formData.message.length}/2000文字
+              {formData.message.length}/2000{isEnglish ? ' characters' : '文字'}
             </div>
           </div>
           
@@ -259,10 +273,10 @@ export default function ContactForm() {
             {isSubmitting ? (
               <>
                 <span className="spinner"></span>
-                送信中...
+                {isEnglish ? 'Sending...' : '送信中...'}
               </>
             ) : (
-              '送信する'
+              isEnglish ? 'Send' : '送信する'
             )}
           </button>
         </form>

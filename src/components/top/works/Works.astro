@@ -2,18 +2,54 @@
 //src/components/top/Works.astro
 import LeftWork from "./LeftWork";
 import RightWork from "./RightWork";
+import { getBlogs, getMusic, getBlogsEn, getMusicEn } from "../../../lib/microcms.js";
+
+const { basePath = "" } = Astro.props;
+
+// Determine which functions to use based on the current page
+const isEnglish = Astro.url.pathname.startsWith('/en');
+
+let blogPosts = [];
+let musicPosts = [];
+
+try {
+  if (isEnglish) {
+    // For English pages, use English endpoints
+    const [blogsData, musicData] = await Promise.all([
+      getBlogsEn({ limit: 20 }),
+      getMusicEn({ limit: 20 })
+    ]);
+    blogPosts = blogsData.contents || [];
+    musicPosts = musicData.contents || [];
+  } else {
+    // For Japanese pages, use Japanese endpoints
+    const [blogsData, musicData] = await Promise.all([
+      getBlogs({ limit: 20 }),
+      getMusic({ limit: 20 })
+    ]);
+    blogPosts = blogsData.contents || [];
+    musicPosts = musicData.contents || [];
+  }
+} catch (error) {
+  console.error('Error fetching works data:', error);
+}
 ---
 
 <section class="works" id="works" aria-labelledby="works-heading">
   <div class="container">
     <h2 class="works-ttl section-ttl eng" id="works-heading">Works</h2>
     <div class="works-archive fadeInTrigger">
-      <LeftWork client:load />
-      <RightWork client:load />
+      <LeftWork client:load posts={blogPosts} basePath={basePath} />
+      <RightWork client:load posts={musicPosts} basePath={basePath} />
     </div>
-    <a href="/work-archive" class="works-link">一覧はこちら</a>
+    <a href={`${basePath}/work-archive`} class="works-link">
+      {isEnglish ? "View All" : "一覧はこちら"}
+    </a>
     <p class="works-caption">
-      上記実績以外にもコーダーとして下請け案件がほとんどのため掲載できない実績が多数ございます
+      {isEnglish 
+        ? "In addition to the above works, I have many other projects that cannot be displayed publicly as they are mostly subcontractor projects as a coder."
+        : "上記実績以外にもコーダーとして下請け案件がほとんどのため掲載できない実績が多数ございます"
+      }
     </p>
   </div>
 </section>

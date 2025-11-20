@@ -1,5 +1,6 @@
 ---
 //src/components/top/Challenges.astro
+const isEnglish = Astro.url.pathname.startsWith('/en');
 ---
 
 <section
@@ -20,7 +21,7 @@
     <source srcset="/assets/images/challenges-bgSP.webp" type="image/webp" />
     <img
       src="/assets/images/challenges-bgSP.jpg"
-      alt="背景画像"
+      alt={isEnglish ? "Background image" : "背景画像"}
       width="1000"
       height="2000"
       loading="lazy"
@@ -29,42 +30,68 @@
   </picture>
   <h2 class="challenges-ttl eng" id="challenges-heading">Your Challenges</h2>
   <div class="container">
-    <p class="challenges-sub">こんなお悩みありませんか？</p>
+    <p class="challenges-sub">
+      {isEnglish ? "Do you have any of these concerns?" : "こんなお悩みありませんか？"}
+    </p>
     <ul class="challenges-list">
       <li class="challenges-list__item">
         <p>
-          ホームページを作ったものの、<br />デザインが素人感満載で不安・・・
+          {isEnglish 
+            ? "You've created a website, but you're worried about the unprofessional design..." 
+            : "ホームページを作ったものの、<br />デザインが素人感満載で不安・・・"
+          }
         </p>
       </li>
       <li class="challenges-list__item">
         <p>
-          何年も更新されていないサイトに、<br />お客様が来ているか心配
+          {isEnglish 
+            ? "You're concerned about whether customers are visiting your outdated site..." 
+            : "何年も更新されていないサイトに、<br />お客様が来ているか心配"
+          }
         </p>
       </li>
       <li class="challenges-list__item">
         <p>
-          外国人観光客向けに英語対応をしたいけど<br />方法がわからない
+          {isEnglish 
+            ? "You want to add English support for foreign tourists but don't know how..." 
+            : "外国人観光客向けに英語対応をしたいけど<br />方法がわからない"
+          }
         </p>
-      </li>
-      <li class="challenges-list__item">
-        <p>アクセス数や問い合わせが伸び悩んでいる理由がわからない</p>
       </li>
       <li class="challenges-list__item">
         <p>
-          自分で更新するつもりだったけど、<br />忙しくて結局放置中
+          {isEnglish 
+            ? "You don't understand why your site traffic and inquiries aren't growing..." 
+            : "アクセス数や問い合わせが伸び悩んでいる理由がわからない"
+          }
         </p>
       </li>
       <li class="challenges-list__item">
-        <p>制作会社に聞きづらい小さな相談を気軽に相談できる相手がいない</p>
+        <p>
+          {isEnglish 
+            ? "You planned to update it yourself but have been too busy and neglected it..." 
+            : "自分で更新するつもりだったけど、<br />忙しくて結局放置中"
+          }
+        </p>
+      </li>
+      <li class="challenges-list__item">
+        <p>
+          {isEnglish 
+            ? "You don't have someone you can easily consult about small questions that are hard to ask production companies..." 
+            : "制作会社に聞きづらい小さな相談を気軽に相談できる相手がいない"
+          }
+        </p>
       </li>
     </ul>
     <p class="challenges-catch">
-      そのお悩み、<br />
-      まるっと<br class="sp_only" />お任せください！
+      {isEnglish 
+        ? "Leave all those worries to us!" 
+        : <>そのお悩み、<br />まるっと<br class="sp_only" />お任せください！</>
+      }
     </p>
     <div class="challenges-cta cta">
-      <p class="cta-p">無料で相談してみる</p>
-      <a href="#contact" class="cta-link">詳しくはこちら</a>
+      <p class="cta-p">{isEnglish ? "Get a free consultation" : "無料で相談してみる"}</p>
+      <a href="#contact" class="cta-link">{isEnglish ? "Learn more" : "詳しくはこちら"}</a>
     </div>
   </div>
 </section>

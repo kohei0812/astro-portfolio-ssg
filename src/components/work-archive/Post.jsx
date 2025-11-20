@@ -1,25 +1,22 @@
-import { useEffect, useState } from 'react';
-import { getBlogs } from '../../lib/microcms.js';
-
-export default function Post() {
-    const [posts, setPosts] = useState([]);
-
-    useEffect(() => {
-        getBlogs()
-            .then(data => setPosts(data.contents))
-            .catch(err => console.error(err));
-    }, []);
+export default function Post({ posts, basePath = "" }) {
+    const isEnglish = basePath.startsWith('/en');
+    
     return (
         <section className="work-archive-section post" id="work-archive-section">
             <div className="container">
-                <h2 className="work-archive-ttl post"><p>一般企業様</p></h2>
+                <h2 className="work-archive-ttl post"><p>{isEnglish ? "General Companies" : "一般企業様"}</p></h2>
                 <ul className="work-archive-list post">
                     {posts.map((post, i) => {
-                        const thumbnail = post.eyecatch?.url || '/default.jpg';
+                        const thumbnail = post.eyecatch?.url || 'https://via.placeholder.com/400x200';
                         const mc = (url, p) => {
-                            const u = new URL(url);
-                            Object.entries(p).forEach(([k, v]) => u.searchParams.set(k, String(v)));
-                            return u.toString();
+                            try {
+                                const u = new URL(url);
+                                Object.entries(p).forEach(([k, v]) => u.searchParams.set(k, String(v)));
+                                return u.toString();
+                            } catch (error) {
+                                console.error('Invalid URL:', url);
+                                return url; // Return original URL if parsing fails
+                            }
                         };
                         const widths = [200, 300, 346, 400, 520, 680];
                         // 幅ベースsrcset（AVIF / WebP / JPEG フォールバック）
@@ -37,7 +34,7 @@ export default function Post() {
                         return (
                             <li key={post.id} className="work-archive-item fadeInTrigger">
                                 <article>
-                                    <a href={`/posts/${post.slug}/`}>
+                                    <a href={`${basePath}/posts/${post.slug}/`}>
                                         <figure className="work-archive-item__thumb">
                                             <picture>
                                                 <source type="image/avif" srcSet={srcsetAvif} sizes={sizes} />
@@ -49,7 +46,7 @@ export default function Post() {
                                                     loading={isATF ? 'eager' : 'lazy'}
                                                     fetchpriority={isATF ? 'high' : 'auto'}
                                                     decoding="async"
-                                                    alt={post.title.replace(/<[^>]*>/g, '') || 'サムネイル画像'}
+                                                    alt={post.title.replace(/<[^>]*>/g, '') || (isEnglish ? 'Thumbnail image' : 'サムネイル画像')}
                                                 />
                                             </picture>
                                             <figcaption className="visually-hidden" dangerouslySetInnerHTML={{ __html: post.title }} />

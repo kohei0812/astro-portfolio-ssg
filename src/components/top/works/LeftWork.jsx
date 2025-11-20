@@ -1,8 +1,7 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import Swiper from 'swiper';
 import { Autoplay } from 'swiper/modules';
 import 'swiper/css';
-import { getBlogs } from '../../../lib/microcms.js';
 
 // iOS Safari 判定
 const isIOSSafari = () => {
@@ -11,16 +10,9 @@ const isIOSSafari = () => {
   return /iPad|iPhone|iPod/.test(ua) && /Safari/.test(ua) && !/CriOS|FxiOS/.test(ua);
 };
 
-export default function LeftWork() {
-  const [posts, setPosts] = useState([]);
+export default function LeftWork({ posts, basePath = "" }) {
   const sliderRef = useRef(null);
   const swiperInstance = useRef(null);
-
-  useEffect(() => {
-    getBlogs()
-      .then(data => setPosts(data.contents))
-      .catch(err => console.error(err));
-  }, []);
 
   // Swiper初期化処理（direction変更対応）
   const initSwiper = () => {
@@ -70,11 +62,11 @@ export default function LeftWork() {
     <div className="works-archive__item left swiper" ref={sliderRef}>
       <div className="slider left swiper-wrapper">
         {posts.map(post => {
-          const thumbnail = post.eyecatch?.url || '/default.jpg';
+          const thumbnail = post.eyecatch?.url || 'https://via.placeholder.com/400x200';
 
           return (
             <div key={post.id} className="slider-item swiper-slide">
-              <a href={`/posts/${post.slug}/`} className="slider-link">
+              <a href={`${basePath}/posts/${post.slug}/`} className="slider-link">
                 {post.category && (
                   <div className="slider-link__cat sp_only">
                     <small><span>{post.category.name}</span></small>

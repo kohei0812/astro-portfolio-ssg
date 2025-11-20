@@ -1,36 +1,37 @@
 ---
 //src/components/top/Plan.astro
+const isEnglish = Astro.url.pathname.startsWith('/en');
 ---
 <section class="plan" id="plan" aria-labelledby="plan-heading">
   <div class="plan-bg"></div>
   <div class="container">
     <h2 class="plan-ttl section-ttl eng" id="plan-heading">plan</h2>
     <div class="plan-tab">
-      <div class="plan-tab__item left active"><p>制作会社向け</p></div>
+      <div class="plan-tab__item left active"><p>{isEnglish ? 'For Production Companies' : '制作会社向け'}</p></div>
       <div class="plan-tab__item right">
-        <p>一般・ライブハウス向け</p>
+        <p>{isEnglish ? 'For General & Live Houses' : '一般・ライブハウス向け'}</p>
       </div>
     </div>
     <div class="plan-main">
       <div class="plan-create plan-main__item active">
         <div class="plan-create__item left">
           <div class="lancers">
-            <h3 class="lancers-ttl">Lancersでの評価</h3>
+            <h3 class="lancers-ttl">{isEnglish ? 'Evaluation on Lancers' : 'Lancersでの評価'}</h3>
             <ul class="lancers-list">
-              <li class="lancers-list__item item01">納期厳守</li>
-              <li class="lancers-list__item item02">素早い対応と密な連絡</li>
-              <li class="lancers-list__item item03">高い品質</li>
+              <li class="lancers-list__item item01">{isEnglish ? 'Deadline Adherence' : '納期厳守'}</li>
+              <li class="lancers-list__item item02">{isEnglish ? 'Quick Response & Close Communication' : '素早い対応と密な連絡'}</li>
+              <li class="lancers-list__item item03">{isEnglish ? 'High Quality' : '高い品質'}</li>
             </ul>
             <p class="lancers-sub">
-              多数の実績があり、ご評価を頂いております。
+              {isEnglish ? 'I have many achievements and have received high evaluations.' : '多数の実績があり、ご評価を頂いております。'}
             </p>
             <div class="lancers-profile">
-              <h3 class="lancers-profile__ttl">Lancersプロフィール</h3>
+              <h3 class="lancers-profile__ttl">{isEnglish ? 'Lancers Profile' : 'Lancersプロフィール'}</h3>
               <picture>
                 <source srcset="/assets/images/lancers-qr.webp" type="image/webp" />
                 <img
                   src="/assets/images/lancers-qr.png"
-                  alt="LancersプロフィールQRコード"
+                  alt={isEnglish ? 'Lancers Profile QR Code' : 'LancersプロフィールQRコード'}
                   width="150"
                   height="150"
                   loading="lazy"
@@ -40,7 +41,7 @@
             </div>
           </div>
           <div class="languages">
-            <h3 class="languages-ttl">対応言語</h3>
+            <h3 class="languages-ttl">{isEnglish ? 'Technologies' : '対応言語'}</h3>
             <ul class="languages-list">
               <li class="languages-list__item">HTML5</li>
               <li class="languages-list__item">CSS3</li>
@@ -52,7 +53,7 @@
             </ul>
           </div>
           <div class="enviroments">
-            <h3 class="enviroments-ttl">サーバー環境・使用ツールなど</h3>
+            <h3 class="enviroments-ttl">{isEnglish ? 'Server Environment & Tools' : 'サーバー環境・使用ツールなど'}</h3>
             <ul class="enviroments-list">
               <li class="enviroments-list__item">AWS</li>
               <li class="enviroments-list__item">VPS</li>
@@ -65,22 +66,22 @@
         </div>
         <div class="plan-create__item right">
           <div class="uptime">
-            <h3 class="uptime-ttl">稼働時間</h3>
+            <h3 class="uptime-ttl">{isEnglish ? 'Working Hours' : '稼働時間'}</h3>
             <p class="uptime-content">
-              月曜～金曜：9時～22時
+              {isEnglish ? 'Monday to Friday: 9:00-22:00' : '月曜～金曜：9時～22時'}
             </p>
           </div>
           <div class="cost">
-            <h3 class="cost-ttl">概算費用</h3>
+            <h3 class="cost-ttl">{isEnglish ? 'Estimated Cost' : '概算費用'}</h3>
             <table class="cost-landing">
               <thead>
                 <tr>
-                  <th colspan="2">ランディングページ</th>
+                  <th colspan="2">{isEnglish ? 'Landing Page' : 'ランディングページ'}</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>3～5日</td>
+                  <td>{isEnglish ? '3-5 days' : '3～5日'}</td>
                   <td>¥30,000～</td>
                 </tr>
               </tbody>
@@ -88,7 +89,7 @@
             <table class="cost-home">
               <thead>
                 <tr>
-                  <th colspan="2">ホームページ</th>
+                  <th colspan="2">{isEnglish ? 'Homepage' : 'ホームページ'}</th>
                 </tr>
               </thead>
               <tbody>
@@ -97,7 +98,7 @@
                   <th></th>
                 </tr>
                 <tr>
-                  <td>3～5日</td>
+                  <td>{isEnglish ? '3-5 days' : '3～5日'}</td>
                   <td>¥50,000～</td>
                 </tr>
                 <tr>
@@ -105,7 +106,7 @@
                   <th></th>
                 </tr>
                 <tr>
-                  <td>5～10日</td>
+                  <td>{isEnglish ? '5-10 days' : '5～10日'}</td>
                   <td>¥100,000～</td>
                 </tr>
                 <tr>
@@ -113,7 +114,7 @@
                   <th></th>
                 </tr>
                 <tr>
-                  <td>10日～</td>
+                  <td>{isEnglish ? '10+ days' : '10日～'}</td>
                   <td>¥150,000～</td>
                 </tr>
               </tbody>
@@ -122,53 +123,62 @@
         </div>
       </div>
       <div class="plan-general plan-main__item">
-        <h3 class="plan-general__ttl">サービス料金</h3>
+        <h3 class="plan-general__ttl">{isEnglish ? 'Service Pricing' : 'サービス料金'}</h3>
         <div class="plan-general__list">
           <ul class="plan-general__box left">
             <li class="plan-general__item">
-              <h4 class="plan-general__name">ホームページ制作・リニューアル</h4>
+              <h4 class="plan-general__name">{isEnglish ? 'Website Creation & Renewal' : 'ホームページ制作・リニューアル'}</h4>
               <p class="plan-general__sub">
-                シンプルなLPから、しっかりした構成まで対応
+                {isEnglish ? 'From simple landing pages to well-structured compositions' : 'シンプルなLPから、しっかりした構成まで対応'}
               </p>
               <p class="plan-general__fee">¥50,000～</p>
             </li>
             <li class="plan-general__item">
-              <h4 class="plan-general__name">多言語対応（インバウンド）</h4>
+              <h4 class="plan-general__name">{isEnglish ? 'Multilingual Support (Inbound)' : '多言語対応（インバウンド）'}</h4>
               <p class="plan-general__sub">
-                日本語＋英語切替・翻訳整備なども可能
+                {isEnglish ? 'Japanese + English switching, translation setup also possible' : '日本語＋英語切替・翻訳整備なども可能'}
               </p>
               <p class="plan-general__fee">¥20,000～</p>
             </li>
             <li class="plan-general__item">
-              <h4 class="plan-general__name">アクセス解析（Google連携）</h4>
+              <h4 class="plan-general__name">{isEnglish ? 'Access Analytics (Google Integration)' : 'アクセス解析（Google連携）'}</h4>
               <p class="plan-general__sub">
-                Googleアナリティクス／Search Console導入対応
+                {isEnglish ? 'Google Analytics / Search Console implementation support' : 'Googleアナリティクス／Search Console導入対応'}
               </p>
               <p class="plan-general__fee">¥10,000～</p>
             </li>
           </ul>
           <ul class="plan-general__box right">
             <li class="plan-general__item">
-              <h4 class="plan-general__name">スケジュール更新・運用保守</h4>
+              <h4 class="plan-general__name">{isEnglish ? 'Schedule Updates & Operation Maintenance' : 'スケジュール更新・運用保守'}</h4>
               <p class="plan-general__sub">
-                情報の反映／SNS連携／画像差し替えなど対応可能
+                {isEnglish ? 'Information updates / SNS integration / Image replacement, etc. available' : '情報の反映／SNS連携／画像差し替えなど対応可能'}
               </p>
               <p class="plan-general__fee">¥5,000～</p>
             </li>
             <li class="plan-general__item">
               <h4 class="plan-general__name">
-                オンラインメンター・ヘルプデスク
+                {isEnglish ? 'Online Mentor & Help Desk' : 'オンラインメンター・ヘルプデスク'}
               </h4>
               <p class="plan-general__sub">
-                ホームページ制作や運用の技術的なことについて質問にお応えします。
+                {isEnglish ? 'I answer questions about technical aspects of website creation and operation.' : 'ホームページ制作や運用の技術的なことについて質問にお応えします。'}
               </p>
-              <p class="plan-general__fee">応相談</p>
+              <p class="plan-general__fee">{isEnglish ? 'Consultation' : '応相談'}</p>
             </li>
             <li class="plan-general__item">
-              <h4 class="plan-general__name">お問い合わせ</h4>
+              <h4 class="plan-general__name">{isEnglish ? 'Contact Us' : 'お問い合わせ'}</h4>
               <p class="plan-general__sub">
-                ご予算・ご相談内容に応じて柔軟に対応します。<br />
-                「今のサイト、見てもらえますか？」だけでもOKです！
+                {isEnglish ? (
+                  <>
+                    We respond flexibly according to your budget and consultation needs.<br />
+                    Even just "Can you take a look at my current site?" is OK!
+                  </>
+                ) : (
+                  <>
+                    ご予算・ご相談内容に応じて柔軟に対応します。<br />
+                    「今のサイト、見てもらえますか？」だけでもOKです！
+                  </>
+                )}
               </p>
             </li>
           </ul>
