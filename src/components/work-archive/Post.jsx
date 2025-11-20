@@ -4,7 +4,7 @@ export default function Post({ posts, basePath = "" }) {
     return (
         <section className="work-archive-section post" id="work-archive-section">
             <div className="container">
-                <h2 className="work-archive-ttl post"><p>{isEnglish ? "General Companies" : "一般企業様"}</p></h2>
+                <h2 className="work-archive-ttl post"><p>{isEnglish ? "WordPress Development" : "Wordress"}</p></h2>
                 <ul className="work-archive-list post">
                     {posts.map((post, i) => {
                         const thumbnail = post.eyecatch?.url || 'https://via.placeholder.com/400x200';

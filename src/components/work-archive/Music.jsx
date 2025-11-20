@@ -4,7 +4,7 @@ export default function Music({ posts, basePath = "" }) {
     return (
         <section className="work-archive-section music" id="work-archive-section">
             <div className="container">
-                <h2 className="work-archive-ttl music"><p>{isEnglish ? "Live Houses & Bands" : "ライブハウス・バンド様"}</p></h2>
+                <h2 className="work-archive-ttl music"><p>{isEnglish ? "App Development" : "アプリ開発"}</p></h2>
                 <ul className="work-archive-list music">
                     {posts.map((post, i) => {
                         const thumbnail = post.eyecatch?.url || 'https://via.placeholder.com/400x200';
