@@ -38,7 +38,7 @@ const isEnglish = Astro.url.pathname.startsWith('/en');
         <p>
           {isEnglish 
             ? "You've created a website, but you're worried about the unprofessional design..." 
-            : "ホームページを作ったものの、<br />デザインが素人感満載で不安・・・"
+            : <>ホームページを作ったものの、<br class="sp_only"/>デザインが素人感満載で不安・・・</>
           }
         </p>
       </li>
@@ -46,7 +46,7 @@ const isEnglish = Astro.url.pathname.startsWith('/en');
         <p>
           {isEnglish 
             ? "You're concerned about whether customers are visiting your outdated site..." 
-            : "何年も更新されていないサイトに、<br />お客様が来ているか心配"
+            : <>何年も更新されていないサイトに、<br class="sp_only"/>お客様が来ているか心配</>
           }
         </p>
       </li>
@@ -54,7 +54,7 @@ const isEnglish = Astro.url.pathname.startsWith('/en');
         <p>
           {isEnglish 
             ? "You want to add English support for foreign tourists but don't know how..." 
-            : "外国人観光客向けに英語対応をしたいけど<br />方法がわからない"
+            : <>外国人観光客向けに英語対応をしたいけど<br class="sp_only"/>方法がわからない</>
           }
         </p>
       </li>
@@ -70,7 +70,7 @@ const isEnglish = Astro.url.pathname.startsWith('/en');
         <p>
           {isEnglish 
             ? "You planned to update it yourself but have been too busy and neglected it..." 
-            : "自分で更新するつもりだったけど、<br />忙しくて結局放置中"
+            : <>自分で更新するつもりだったけど、<br class="sp_only"/>忙しくて結局放置中</>
           }
         </p>
       </li>
