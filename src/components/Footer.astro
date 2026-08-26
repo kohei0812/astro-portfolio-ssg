@@ -1,12 +1,14 @@
 ---
 //src/components/Footer.astro
+const isEnglish = Astro.url.pathname.startsWith("/en");
+const basePath = isEnglish ? "/en" : "";
 ---
 
 <footer class="footer" id="footer" role="contentinfo">
-  <a href="/" class="footer-logo">
+  <a href={`${basePath}/`} class="footer-logo">
     Dynamis
   </a>
-  <ul class="footer-social" aria-label="フッターSNSリンク">
+  <ul class="footer-social" aria-label={isEnglish ? "Footer SNS links" : "フッターSNSリンク"}>
     <li class="footer-social__item facebook">
       <a
         href="https://www.facebook.com/profile.php?id=100003251432034&locale=ja_JP"

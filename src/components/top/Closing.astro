@@ -1,0 +1,47 @@
+---
+//src/components/top/Closing.astro
+const isEnglish = Astro.url.pathname.startsWith("/en");
+
+const benefits = isEnglish
+  ? ["Create time", "Free up creativity", "Raise the value of the company"]
+  : ["時間を生み出す", "創造性を発揮する", "会社の価値を高める"];
+---
+
+<section class="ai-sec closing" id="closing" aria-labelledby="closing-heading">
+  <div class="container">
+    <h2 class="closing-ttl" id="closing-heading">
+      {isEnglish ? (
+        <>
+          AI is not here to <span class="closing-em">replace people</span>.<br />
+          It is here to build a workplace where staff can<br class="pc_only" />
+          <span class="ai-marker">focus on work that matters</span>.
+        </>
+      ) : (
+        <>
+          AIは、<span class="closing-em">人を置き換えるものではありません。</span><br />
+          社員がもっと価値のある仕事に<br class="pc_only" />
+          <span class="ai-marker">集中できる環境</span>を、つくるためのものです。
+        </>
+      )}
+    </h2>
+
+    <ul class="closing-benefits">
+      {benefits.map((benefit) => (
+        <li class="closing-benefits__item">{benefit}</li>
+      ))}
+    </ul>
+
+    <div class="closing-cta cta">
+      <p class="cta-p">
+        {isEnglish ? (
+          <>Let's build a company where<br />AI works as a member of staff.</>
+        ) : (
+          <>一緒に、「AIを社員として働かせる会社」を<br />つくりませんか。</>
+        )}
+      </p>
+      <a href="#contact" class="cta-link">
+        {isEnglish ? "Book a free consultation" : "無料で相談してみる"}
+      </a>
+    </div>
+  </div>
+</section>

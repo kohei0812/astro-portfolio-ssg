@@ -1,6 +1,22 @@
 ---
 //src/components/top/Challenges.astro
 const isEnglish = Astro.url.pathname.startsWith('/en');
+
+const challenges = isEnglish
+  ? [
+      "We don't have enough people",
+      "The work lives in one person's head",
+      "Too busy to fix how we work",
+      "Too small to hire a system company",
+      "We want to use AI, but don't know where to start",
+    ]
+  : [
+      "人手が足りない",
+      "業務が属人化している",
+      "忙しすぎて改善する余裕がない",
+      "システム会社に頼むほどの規模ではない",
+      "AIを使いたいが、何から始めればいいかわからない",
+    ];
 ---
 
 <section
@@ -31,67 +47,24 @@ const isEnglish = Astro.url.pathname.startsWith('/en');
   <h2 class="challenges-ttl eng" id="challenges-heading">Your Challenges</h2>
   <div class="container">
     <p class="challenges-sub">
-      {isEnglish ? "Do you have any of these concerns?" : "こんなお悩みありませんか？"}
+      {isEnglish ? "Does any of this sound familiar?" : "こんなお悩みはありませんか？"}
     </p>
     <ul class="challenges-list">
-      <li class="challenges-list__item">
-        <p>
-          {isEnglish 
-            ? "You've created a website, but you're worried about the unprofessional design..." 
-            : <>ホームページを作ったものの、<br class="sp_only"/>デザインが素人感満載で不安・・・</>
-          }
-        </p>
-      </li>
-      <li class="challenges-list__item">
-        <p>
-          {isEnglish 
-            ? "You're concerned about whether customers are visiting your outdated site..." 
-            : <>何年も更新されていないサイトに、<br class="sp_only"/>お客様が来ているか心配</>
-          }
-        </p>
-      </li>
-      <li class="challenges-list__item">
-        <p>
-          {isEnglish 
-            ? "You want to add English support for foreign tourists but don't know how..." 
-            : <>外国人観光客向けに英語対応をしたいけど<br class="sp_only"/>方法がわからない</>
-          }
-        </p>
-      </li>
-      <li class="challenges-list__item">
-        <p>
-          {isEnglish 
-            ? "You don't understand why your site traffic and inquiries aren't growing..." 
-            : "アクセス数や問い合わせが伸び悩んでいる理由がわからない"
-          }
-        </p>
-      </li>
-      <li class="challenges-list__item">
-        <p>
-          {isEnglish 
-            ? "You planned to update it yourself but have been too busy and neglected it..." 
-            : <>自分で更新するつもりだったけど、<br class="sp_only"/>忙しくて結局放置中</>
-          }
-        </p>
-      </li>
-      <li class="challenges-list__item">
-        <p>
-          {isEnglish 
-            ? "You don’t have anyone you can easily ask those small but hard-to-ask questions..." 
-            : "制作会社に聞きづらい小さな相談を気軽に相談できる相手がいない"
-          }
-        </p>
-      </li>
+      {challenges.map((challenge) => (
+        <li class="challenges-list__item">
+          <p>{isEnglish ? `“${challenge}”` : `「${challenge}」`}</p>
+        </li>
+      ))}
     </ul>
     <p class="challenges-catch">
-      {isEnglish 
-        ? "Leave all those worries to us!" 
-        : <>そのお悩み、<br />まるっと<br class="sp_only" />お任せください！</>
+      {isEnglish
+        ? <>If even one of them fits,<br />I can help.</>
+        : <>どれか1つでも<br />当てはまれば、<br class="sp_only" />お力になれます。</>
       }
     </p>
     <div class="challenges-cta cta">
-      <p class="cta-p">{isEnglish ? "Get a free consultation" : "無料で相談してみる"}</p>
-      <a href="#contact" class="cta-link">{isEnglish ? "Learn more" : "詳しくはこちら"}</a>
+      <p class="cta-p">{isEnglish ? "The first consultation is free" : "初回相談は無料です"}</p>
+      <a href="#contact" class="cta-link">{isEnglish ? "Book a free consultation" : "無料で相談してみる"}</a>
     </div>
   </div>
 </section>

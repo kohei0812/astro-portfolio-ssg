@@ -6,3 +6,18 @@
   @use "top/profile";
   @use "top/works";
   @use "top/plan";
+
+  /*** AIコンサルLPのセクション ***/
+  /* 共通パーツ（.ai-sec / .ai-head / .ai-card / .ai-num / .ai-note など） */
+  @use "top/ai-parts";
+  @use "top/reframe";
+  @use "top/before-after";
+  @use "top/service";
+  @use "top/first-session";
+  @use "top/growth";
+  @use "top/strength";
+  @use "top/voice";
+  @use "top/vision";
+  @use "top/subsidy";
+  @use "top/flow";
+  @use "top/closing";

@@ -1,0 +1,65 @@
+---
+//src/components/top/Service.astro
+import Icon from "./Icon.astro";
+
+const isEnglish = Astro.url.pathname.startsWith("/en");
+
+const steps = isEnglish
+  ? [
+      { name: "AI basics", tag: "Building the foundation", icon: "teach" },
+      { name: "Work interview", tag: "Taking stock of the work", icon: "interview" },
+      { name: "Process redesign", tag: "Rebuilding the flow", icon: "redesign" },
+      { name: "Automation", tag: "Routine work goes to AI", icon: "automate" },
+      { name: "Staff training", tag: "Growing people who run it", icon: "train" },
+      { name: "Operation", tag: "Support until it sticks", icon: "operate" },
+    ]
+  : [
+      { name: "AI基本講習", tag: "使い方の土台づくり", icon: "teach" },
+      { name: "業務ヒアリング", tag: "業務の棚卸し", icon: "interview" },
+      { name: "業務改善", tag: "フローの再設計", icon: "redesign" },
+      { name: "自動化", tag: "定型業務をAIに", icon: "automate" },
+      { name: "社員教育", tag: "自走できる社員を育成", icon: "train" },
+      { name: "運用", tag: "定着まで支援", icon: "operate" },
+    ];
+---
+
+<section class="ai-sec service" id="service" aria-labelledby="service-heading">
+  <div class="container">
+    <header class="ai-head">
+      <p class="ai-head__eyebrow eng">Service</p>
+      <h2 class="ai-head__ttl" id="service-heading">
+        {isEnglish ? "Six steps, from first use to daily habit" : "AI導入から定着までの6ステップ"}
+      </h2>
+      <p class="ai-head__lead">
+        {isEnglish
+          ? "Not a one-off seminar — one connected process that reaches a result."
+          : <>単発の講習ではなく、<br class="sp_only" />成果につながる一連の流れで支援します。</>}
+      </p>
+    </header>
+
+    <ol class="service-steps fadeInTrigger">
+      {steps.map((step, i) => (
+        <li class="service-steps__item">
+          <p class="ai-num"><span>{String(i + 1).padStart(2, "0")}</span></p>
+          <span class="service-steps__icon"><Icon name={step.icon} /></span>
+          <h3 class="service-steps__name">{step.name}</h3>
+          <p class="service-steps__tag">{step.tag}</p>
+        </li>
+      ))}
+    </ol>
+
+    <p class="service-dev">
+      {isEnglish
+        ? "If it needs a business app or a system built, I build it myself."
+        : "※ 業務アプリやシステムの開発が必要になれば、私が直接対応します。"}
+    </p>
+
+    <p class="ai-note ai-note--accent">
+      {isEnglish ? (
+        <>Training is not the finish line. I stay until <span class="ai-marker">your staff can run AI on their own</span>.</>
+      ) : (
+        <>講習で終わらせない。<span class="ai-marker">社員が自分でAIを使いこなせるところまで</span>伴走します。</>
+      )}
+    </p>
+  </div>
+</section>

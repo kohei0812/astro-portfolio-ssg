@@ -1,0 +1,62 @@
+---
+//src/components/top/Flow.astro
+const isEnglish = Astro.url.pathname.startsWith("/en");
+
+const steps = isEnglish
+  ? [
+      { name: "Get in touch", txt: "Email or LINE, whichever is easiest." },
+      { name: "First interview", txt: "Your work, your problems, what you want AI to do." },
+      { name: "Proposal", txt: "I design the support you actually need." },
+      { name: "Quote", txt: "Priced to headcount, scope, and period." },
+      { name: "Booking", txt: "You confirm, and we lock the schedule." },
+      { name: "Support starts", txt: "We begin with what was decided." },
+    ]
+  : [
+      { name: "お問い合わせ", txt: "メール・LINEからお気軽に" },
+      { name: "初回ヒアリング", txt: "業務・お悩み・実現したいことを整理" },
+      { name: "方針のご提案", txt: "必要な支援内容を設計してご提案" },
+      { name: "お見積もり", txt: "人数・内容・期間に応じてご提示" },
+      { name: "ご依頼・日程調整", txt: "実施内容と日程を確定" },
+      { name: "支援スタート", txt: "決定した内容から順に開始" },
+    ];
+---
+
+<section class="ai-sec flow" id="flow" aria-labelledby="flow-heading">
+  <div class="container">
+    <header class="ai-head">
+      <p class="ai-head__eyebrow eng">Flow</p>
+      <h2 class="ai-head__ttl" id="flow-heading">
+        {isEnglish ? "How a request goes" : "ご依頼の流れ"}
+      </h2>
+      <p class="ai-head__lead">
+        {isEnglish
+          ? "From your first message through to the day the support actually starts."
+          : "お問い合わせいただいてから、実際に支援が始まるまでの流れです。"}
+      </p>
+    </header>
+
+    <ol class="flow-steps fadeInTrigger">
+      {steps.map((step, i) => (
+        <li class="flow-steps__item">
+          <p class="ai-num"><span>{String(i + 1).padStart(2, "0")}</span></p>
+          <h3 class="flow-steps__name">{step.name}</h3>
+          <p class="flow-steps__txt">{step.txt}</p>
+        </li>
+      ))}
+    </ol>
+
+    <p class="ai-note">
+      {isEnglish ? (
+        <>
+          "I don't know what to ask for yet" is a fine place to start.<br />
+          <span class="ai-marker">The first consultation is free.</span> We'll work out the right way in from there.
+        </>
+      ) : (
+        <>
+          「何を頼めばいいかわからない」という段階でも大丈夫です。<br />
+          <span class="ai-marker">初回相談は無料。</span>ヒアリングから最適な進め方をご提案します。
+        </>
+      )}
+    </p>
+  </div>
+</section>

@@ -24,19 +24,28 @@ const isEnglish = Astro.url.pathname.startsWith('/en');
     />
   </picture>
   <div class="container">
-    <p class="hero-ttl fadeInTrigger" id="hero-ttl">
-      {isEnglish ? (
-        <>
-          Resonating thoughts,<br />
-          Creating the future
-        </>
-      ) : (
-        <>
-          想いを響かせ、<br />
-          未来を創る
-        </>
-      )}
-    </p>
+    <div class="hero-copy">
+      <p class="hero-ttl fadeInTrigger" id="hero-ttl">
+        {isEnglish ? (
+          <>
+            Resonating thoughts,<br />
+            Creating the future
+          </>
+        ) : (
+          <>
+            想いを響かせ、<br />
+            未来を創る
+          </>
+        )}
+      </p>
+      <p class="hero-sub fadeInTrigger">
+        {isEnglish ? (
+          <>From reshaping how the work runs, to training your staff on AI — I stay with you through all of it.</>
+        ) : (
+          <>業務改善から、社員へのAI教育まで伴走します。</>
+        )}
+      </p>
+    </div>
   </div>
   <HeroTextSwiper client:load />
 </section>

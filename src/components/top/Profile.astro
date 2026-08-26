@@ -1,6 +1,23 @@
 ---
 //src/components/top/Profile.astro
 const isEnglish = Astro.url.pathname.startsWith('/en');
+
+/* 経歴は時系列そのものが中身なので、順番の分かる形で出す */
+const career = isEnglish
+  ? [
+      { name: "Law degree at Kobe University, then a SIer", txt: "Started working life in sales" },
+      { name: "Left, questioning the track I was on", txt: "Chose my own way over a stable one" },
+      { name: "Band, bartending, gardening", txt: "Years of work on the floor, face to face with people" },
+      { name: "At 37, decided to become a web engineer", txt: "Went to the Philippines to study English and IT" },
+      { name: "Freelance web engineer, then AI consulting", txt: "Back home, started AI support alongside development work" },
+    ]
+  : [
+      { name: "神戸大学法学部を卒業、新卒でSIerへ", txt: "営業職として社会人をスタート" },
+      { name: "レールに乗った人生に疑問を感じ、退職", txt: "安定より、自分で選ぶ生き方へ" },
+      { name: "バンド活動 × バーテンダー × 植木職人", txt: "現場の仕事で、人と向き合い続けた時代" },
+      { name: "37歳、Webエンジニアになると決意", txt: "フィリピンへ英語×ITの留学" },
+      { name: "フリーランスWebエンジニア → AIコンサルへ", txt: "帰国後、開発の実務と並行してAI活用支援を開始" },
+    ];
 ---
 
 <section class="profile" id="profile" aria-labelledby="profile-heading">
@@ -23,6 +40,11 @@ const isEnglish = Astro.url.pathname.startsWith('/en');
       川端 康平<br />
       <span class="eng">Kohei Kawabata</span>
     </p>
+    <p class="profile-role">
+      {isEnglish
+        ? "AI adoption consultant × Web engineer"
+        : "AI活用支援コンサルタント × Webエンジニア"}
+    </p>
     <div class="profile-main">
       <div class="profile-main__left">
         <picture>
@@ -37,25 +59,26 @@ const isEnglish = Astro.url.pathname.startsWith('/en');
           />
         </picture>
       </div>
-      <p class="profile-main__right desc">
-        {isEnglish ? (
-          <>
-            After graduating from Kobe University Faculty of Law, I joined a SIer company as a sales representative, but I questioned the conventional path of life and left the company.<br /><br />
-            After that, while doing band activities, I worked as a bartender and a gardener, and at the age of 37, I decided to become a web engineer and went to the Philippines for English IT study abroad.<br />
-            After returning to Japan, while working as a freelance web engineer, I was entrusted with creative and IT system management at a local company and business startups. Currently, I am also involved in developing programming materials in the welfare business.<br /><br />
-            In production, I strive to give shape to clients' thoughts and make proposals that are considerate of the users beyond.<br />
-            I want to continue my activities without forgetting the spirit of always challenging myself.
-          </>
-        ) : (
-          <>
-            神戸大学法学部卒業後、新卒でSIerに営業職で入社するものの、レールに乗った人生の在り方に疑問を感じ退職。<br /><br />
-            その後、バンド活動をしながらバーテンダーや植木職人を経て37歳の時にWebエンジニアになることを決意し、フィリピンに英語IT留学をする。<br />
-            帰国後はフリーランスWebエンジニアとして活動する傍ら、地元の会社で1人クリエティブ兼情シスや事業の立ち上げを任されたり、現在は福祉事業の中でプログラミング教材の開発にも携わっています。<br /><br />
-            制作においては、クライアントの想いを形にすること、その先のユーザーに寄り添った提案を心がけています。<br />
-            これからも常に挑戦する気持ちを忘れず、活動していきたいと思います。
-          </>
-        )}
-      </p>
+      <div class="profile-main__right">
+        <p class="profile-career__lead">
+          {isEnglish ? "The route here was not a straight one." : "経歴は、かなり異色です。"}
+        </p>
+        <ol class="profile-career">
+          {career.map((step) => (
+            <li class="profile-career__item">
+              <h3 class="profile-career__name">{step.name}</h3>
+              <p class="profile-career__txt">{step.txt}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
     </div>
+    <p class="profile-catch">
+      {isEnglish ? (
+        <>Every detour taught me what the floor actually feels like.<br /><span class="ai-marker">That is what my AI support is built on.</span></>
+      ) : (
+        <>回り道の分だけ、現場のリアルが分かる。<br /><span class="ai-marker">それが私のAI支援の土台です。</span></>
+      )}
+    </p>
   </div>
 </section>

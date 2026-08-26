@@ -45,10 +45,22 @@
         }
       }
 
+      &-copy {
+        width: 100%;
+      }
+
       &-ttl {
         min-height: 205px;
         contain: layout;
         font-size: 6.4rem;
+      }
+
+      &-sub {
+        margin-top: 24px;
+        font-size: 2rem;
+        font-weight: 600;
+        line-height: 1.7;
+        max-width: 600px;
       }
 
       &-sub-title {
@@ -125,11 +137,22 @@
         }
       }
 
+      &-copy {
+        width: 100%;
+      }
+
       &-ttl {
         margin-top: 25vh;
         min-height: 115px;
         contain: layout;
         font-size: 3.6rem;
+      }
+
+      &-sub {
+        margin-top: 16px;
+        font-size: 1.5rem;
+        font-weight: 600;
+        line-height: 1.8;
       }
 
       &-sub-title {

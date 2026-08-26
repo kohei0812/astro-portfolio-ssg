@@ -1,0 +1,73 @@
+---
+//src/components/top/Voice.astro
+const isEnglish = Astro.url.pathname.startsWith("/en");
+
+const voices = isEnglish
+  ? [
+      { quote: "Our productivity went up significantly.", em: "productivity" },
+      { quote: "We automated almost all of the work.", em: "automated" },
+      { quote: "The busywork is gone. It got so much easier.", em: "busywork" },
+    ]
+  : [
+      { quote: "生産性が大きく上がりました。", em: "生産性" },
+      { quote: "ほとんどの業務を自動化できました", em: "自動化" },
+      { quote: "煩雑な作業がなくなり、楽になりました", em: "煩雑な作業" },
+    ];
+
+const attribution = isEnglish ? "From a participant" : "受講者さまの声";
+
+/* 強調語を <span> で囲む（引用文はそのまま、色だけ変える） */
+const splitQuote = (quote, em) => {
+  const i = quote.indexOf(em);
+  if (i === -1) return [quote, "", ""];
+  return [quote.slice(0, i), em, quote.slice(i + em.length)];
+};
+---
+
+<section class="ai-sec voice" id="voice" aria-labelledby="voice-heading">
+  <div class="container">
+    <header class="ai-head">
+      <p class="ai-head__eyebrow eng">Voice</p>
+      <h2 class="ai-head__ttl" id="voice-heading">
+        {isEnglish ? "What people say" : "お客様の声"}
+      </h2>
+      <p class="ai-head__lead">
+        {isEnglish
+          ? "From people who have been through the training and the support."
+          : "講習・支援を受けた方からいただいた声です。"}
+      </p>
+    </header>
+
+    <ul class="voice-list fadeInTrigger">
+      {voices.map((voice, i) => {
+        const [head, em, tail] = splitQuote(voice.quote, voice.em);
+        return (
+          <li class="voice-list__item ai-card">
+            <picture class="voice-list__illust">
+              <source srcset={`/assets/images/illust/voice-0${i + 1}.webp`} type="image/webp" />
+              <img
+                src={`/assets/images/illust/voice-0${i + 1}.png`}
+                alt=""
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
+            <span class="voice-list__mark eng" aria-hidden="true">&ldquo;</span>
+            <blockquote class="voice-list__quote">
+              {head}<span class="voice-list__em">{em}</span>{tail}
+            </blockquote>
+            <p class="voice-list__from">{attribution}</p>
+          </li>
+        );
+      })}
+    </ul>
+
+    <p class="ai-note ai-note--accent">
+      {isEnglish ? (
+        <>For plenty of people, <span class="ai-marker">a single two-hour session</span> is where it changes.</>
+      ) : (
+        <><span class="ai-marker">たった1回・2時間</span>で劇的に変わる方も、少なくありません。</>
+      )}
+    </p>
+  </div>
+</section>

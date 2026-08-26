@@ -1,0 +1,327 @@
+@use "../variables" as v;
+
+/*****************/
+/*** subsidy ***/
+/*****************/
+/* 金額だけ Montserrat で大きく出し、あとは罫線と余白で整理する */
+
+#top {
+  .subsidy {
+    &-lead {
+      display: flex;
+      align-items: flex-start;
+
+      &__txt {
+        flex: 1;
+
+        .desc {
+          color: rgba(195, 206, 224, 0.8);
+          line-height: 1.9;
+        }
+      }
+
+      &__note {
+        color: rgba(195, 206, 224, 0.45);
+        font-weight: 500;
+      }
+    }
+
+    /* 助成上限額 */
+    &-amount {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      border-top: 1px solid v.$color-accent;
+
+      &__year {
+        color: rgba(195, 206, 224, 0.5);
+        font-weight: 600;
+      }
+
+      &__lead,
+      &__tail {
+        color: rgba(195, 206, 224, 0.8);
+        font-weight: bold;
+      }
+
+      &__num {
+        color: v.$color-accent;
+        font-weight: bold;
+        line-height: 1;
+
+        small {
+          font-weight: bold;
+        }
+      }
+
+      &__note {
+        color: rgba(195, 206, 224, 0.4);
+        font-weight: 500;
+        line-height: 1.6;
+      }
+    }
+
+    &-subttl {
+      color: white;
+      font-weight: bold;
+
+      &__note {
+        color: rgba(195, 206, 224, 0.5);
+        font-weight: 500;
+      }
+    }
+
+    &-points {
+      display: grid;
+    }
+
+    &-flow {
+      display: grid;
+
+      &__item {
+        background-color: white;
+        border-top: 1px solid rgba(23, 36, 57, 0.12);
+
+        .ai-num {
+          color: rgba(23, 36, 57, 0.22);
+        }
+      }
+
+      &__name {
+        color: v.$color-secondary;
+        font-weight: bold;
+        line-height: 1.5;
+      }
+
+      &__txt {
+        color: #6b7688;
+        font-weight: 500;
+        line-height: 1.8;
+      }
+    }
+
+    &-support {
+      &__ttl {
+        color: v.$color-secondary;
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+/*****************/
+/*** PC ***/
+/*****************/
+@media screen and (min-width: 769px) {
+  #top {
+    .subsidy {
+      &-lead {
+        margin-top: 70px;
+        gap: 60px;
+
+        &__txt .desc {
+          font-size: 1.5rem;
+        }
+
+        &__note {
+          margin-top: 16px;
+          font-size: 1.2rem;
+        }
+      }
+
+      &-amount {
+        width: 260px;
+        padding-top: 22px;
+
+        &__year {
+          font-size: 1.2rem;
+        }
+
+        &__lead {
+          margin-top: 14px;
+          font-size: 1.5rem;
+        }
+
+        &__num {
+          margin-top: 6px;
+          font-size: 7.2rem;
+
+          small {
+            font-size: 2.2rem;
+            margin-left: 4px;
+          }
+        }
+
+        &__tail {
+          margin-top: 10px;
+          font-size: 1.5rem;
+        }
+
+        &__note {
+          margin-top: 18px;
+          font-size: 1.1rem;
+        }
+      }
+
+      &-subttl {
+        margin-top: 80px;
+        font-size: 2rem;
+
+        &__note {
+          margin-left: 12px;
+          font-size: 1.3rem;
+        }
+      }
+
+      &-points {
+        margin-top: 30px;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 28px;
+      }
+
+      &-flow {
+        margin-top: 30px;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+
+        &__item {
+          padding: 22px 22px 26px;
+        }
+
+        .ai-num {
+          margin-bottom: 18px;
+        }
+
+        &__name {
+          font-size: 1.6rem;
+        }
+
+        &__txt {
+          margin-top: 10px;
+          font-size: 1.3rem;
+        }
+      }
+
+      &-support {
+        margin-top: 50px;
+
+        &__ttl {
+          font-size: 1.8rem;
+        }
+      }
+    }
+  }
+}
+
+/*****************/
+/*** SP ***/
+/*****************/
+@media screen and (max-width: 768px) {
+  #top {
+    .subsidy {
+      &-lead {
+        margin-top: 36px;
+        flex-direction: column-reverse;
+        gap: 30px;
+
+        &__txt .desc {
+          font-size: 1.4rem;
+        }
+
+        &__note {
+          margin-top: 14px;
+          font-size: 1.1rem;
+        }
+      }
+
+      &-amount {
+        width: 100%;
+        padding-top: 18px;
+
+        &__year {
+          font-size: 1.1rem;
+        }
+
+        &__lead {
+          margin-top: 10px;
+          font-size: 1.4rem;
+        }
+
+        &__num {
+          margin-top: 4px;
+          font-size: 5.4rem;
+
+          small {
+            font-size: 1.9rem;
+            margin-left: 3px;
+          }
+        }
+
+        &__tail {
+          margin-top: 8px;
+          font-size: 1.4rem;
+        }
+
+        &__note {
+          margin-top: 14px;
+          font-size: 1.1rem;
+        }
+      }
+
+      &-subttl {
+        margin-top: 46px;
+        font-size: 1.7rem;
+
+        &__note {
+          display: block;
+          margin-left: 0;
+          margin-top: 5px;
+          font-size: 1.2rem;
+        }
+      }
+
+      &-points {
+        margin-top: 20px;
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+
+      &-flow {
+        margin-top: 20px;
+        grid-template-columns: 1fr;
+
+        &__item {
+          display: grid;
+          grid-template-columns: auto 1fr;
+          gap: 0 16px;
+          align-items: baseline;
+          padding: 16px 0 18px;
+        }
+
+        .ai-num {
+          grid-row: 1 / 3;
+          grid-column: 1;
+        }
+
+        &__name {
+          grid-column: 2;
+          font-size: 1.5rem;
+        }
+
+        &__txt {
+          grid-column: 2;
+          margin-top: 6px;
+          font-size: 1.3rem;
+        }
+      }
+
+      &-support {
+        margin-top: 34px;
+
+        &__ttl {
+          font-size: 1.6rem;
+        }
+      }
+    }
+  }
+}

@@ -60,24 +60,24 @@ export default function HeroTextSwiper() {
           <div className="swiper-slide">
             <h1 className="scroll-content">
               {isEnglish 
-                ? "This is the portfolio site of Kohei Kawabata, a front-end engineer."
-                : "フロントエンドエンジニア川端康平のポートフォリオサイトです。"
+                ? "AI adoption consultant × Web engineer — Kohei Kawabata"
+                : "AI活用支援コンサルタント × Webエンジニア 川端康平"
               }
             </h1>
           </div>
           <div className="swiper-slide">
             <div className="scroll-content">
               {isEnglish 
-                ? "This is the portfolio site of Kohei Kawabata, a front-end engineer."
-                : "フロントエンドエンジニア川端康平のポートフォリオサイトです。"
+                ? "AI adoption consultant × Web engineer — Kohei Kawabata"
+                : "AI活用支援コンサルタント × Webエンジニア 川端康平"
               }
             </div>
           </div>
           <div className="swiper-slide">
             <div className="scroll-content">
               {isEnglish 
-                ? "This is the portfolio site of Kohei Kawabata, a front-end engineer."
-                : "フロントエンドエンジニア川端康平のポートフォリオサイトです。"
+                ? "AI adoption consultant × Web engineer — Kohei Kawabata"
+                : "AI活用支援コンサルタント × Webエンジニア 川端康平"
               }
             </div>
           </div>

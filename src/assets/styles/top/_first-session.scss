@@ -1,0 +1,108 @@
+@use "../variables" as v;
+
+/*****************/
+/*** first-session ***/
+/*****************/
+/* 初回2時間の内訳。.ai-card（罫線パネル）を並べる */
+
+#top {
+  .firstsession {
+    &-list {
+      display: grid;
+
+      &__item {
+        display: flex;
+        flex-direction: column;
+      }
+
+      &__head {
+        display: flex;
+        align-items: baseline;
+      }
+    }
+  }
+}
+
+/*****************/
+/*** PC ***/
+/*****************/
+@media screen and (min-width: 769px) {
+  #top {
+    .firstsession {
+      &-list {
+        margin-top: 70px;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 28px;
+
+        &__head {
+          gap: 18px;
+        }
+      }
+    }
+  }
+}
+
+/*****************/
+/*** SP ***/
+/*****************/
+@media screen and (max-width: 768px) {
+  #top {
+    .firstsession {
+      &-list {
+        margin-top: 36px;
+        grid-template-columns: 1fr;
+        gap: 14px;
+
+        &__head {
+          gap: 14px;
+        }
+      }
+    }
+  }
+}
+
+/*****************/
+/*** first-session のイラスト ***/
+/*****************/
+/* 画像は営業資料から切り出したもの。白カードの上に置く前提で背景は白のまま */
+
+#top {
+  .firstsession-list__illust img {
+    margin: 0 auto;
+    width: auto;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  #top {
+    .firstsession-list {
+      &__item .ai-num {
+        margin-bottom: 4px;
+      }
+
+      &__illust {
+        display: block;
+        margin-bottom: 18px;
+
+        img {
+          height: 118px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #top {
+    .firstsession-list {
+      &__illust {
+        display: block;
+        margin-bottom: 14px;
+
+        img {
+          height: 96px;
+        }
+      }
+    }
+  }
+}

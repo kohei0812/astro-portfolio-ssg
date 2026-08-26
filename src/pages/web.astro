@@ -1,0 +1,73 @@
+---
+import Layout from "../layouts/Layout.astro";
+import WebPlan from "../components/web/WebPlan.astro";
+---
+
+<Layout
+  title="Dynamis | Web制作・システム開発"
+  description="ホームページ制作・リニューアル、多言語対応、業務システム開発まで。現役Webエンジニアが対応します。"
+>
+  <!-- main -->
+  <main id="web" class="web" role="main">
+    <div class="pageheader">
+      <h1 class="pageheader-ttl">
+        <span class="eng">Web Development</span>
+        Web制作・システム開発
+      </h1>
+    </div>
+    <nav aria-label="パンくずリスト" class="breadcrumb">
+      <div class="container">
+        <ol
+          itemscope
+          itemtype="https://schema.org/BreadcrumbList"
+          class="breadcrumb-list"
+        >
+          <li
+            class="breadcrumb-list__item"
+            itemprop="itemListElement"
+            itemscope
+            itemtype="https://schema.org/ListItem"
+          >
+            <a itemprop="item" href="/">
+              <span itemprop="name">ホーム</span>
+            </a>
+            <meta itemprop="position" content="1" />
+          </li>
+          <li
+            class="breadcrumb-list__item"
+            itemprop="itemListElement"
+            itemscope
+            itemtype="https://schema.org/ListItem"
+          >
+            <span itemprop="name">Web制作・システム開発</span>
+            <meta itemprop="position" content="2" />
+          </li>
+        </ol>
+      </div>
+    </nav>
+
+    <section class="web-intro">
+      <div class="container">
+        <p class="web-intro__lead">
+          AI活用支援と並行して、Web制作・業務システム開発も承っています。
+        </p>
+        <p class="web-intro__txt desc">
+          ホームページの制作・リニューアルから、多言語対応、アクセス解析の導入、運用保守まで。
+          業務の自動化にあわせて業務アプリやシステムが必要になった場合も、同じ人間が設計から開発まで対応します。
+        </p>
+        <a href="/work-archive" class="web-intro__link">制作実績を見る</a>
+      </div>
+    </section>
+
+    <WebPlan />
+
+    <section class="web-cta">
+      <div class="container">
+        <div class="cta">
+          <p class="cta-p">まずはご相談ください</p>
+          <a href="/#contact" class="cta-link">お問い合わせはこちら</a>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>

@@ -1,0 +1,80 @@
+---
+//src/components/top/Growth.astro
+const isEnglish = Astro.url.pathname.startsWith("/en");
+
+/*
+  「誰が担当するか」が回を追うごとに移っていくことがこのセクションの中身。
+  owner はその移行を表すデータなので、番号と合わせて必ず出力する。
+*/
+const steps = isEnglish
+  ? [
+      { txt: "Basics and hands-on Claude, to feel where it fits.", owner: ["Kawabata"] },
+      { txt: "I interview, design, and automate it.", owner: ["Kawabata"] },
+      { txt: "I only design. Your team automates it.", owner: ["Kawabata", "Your team"] },
+      { txt: "Your team designs and automates it, start to finish.", owner: ["Your team"] },
+    ]
+  : [
+      { txt: "基礎講義とClaudeの体験学習で、業務での使いどころを体感する", owner: ["川端"] },
+      { txt: "ヒアリングから設計・自動化まで、川端が実施する", owner: ["川端"] },
+      { txt: "川端は設計のみ。自動化は担当者が手を動かす", owner: ["川端", "担当者"] },
+      { txt: "担当者が自分で設計し、自動化まで実践する", owner: ["担当者"] },
+    ];
+
+const ownerLabel = isEnglish ? "In charge" : "担当";
+---
+
+<section class="ai-sec growth" id="growth" aria-labelledby="growth-heading">
+  <div class="container">
+    <header class="ai-head">
+      <p class="ai-head__eyebrow eng">Step Up</p>
+      <h2 class="ai-head__ttl" id="growth-heading">
+        {isEnglish ? "Four steps to running it yourself" : "自走するまでの4ステップ"}
+      </h2>
+      <p class="ai-head__lead">
+        {isEnglish
+          ? "Round by round, the hands on the keyboard move from me to your team."
+          : "回を追うごとに、手を動かす人が私から御社の担当者へ移っていきます。"}
+      </p>
+    </header>
+
+    <ol class="growth-steps fadeInTrigger">
+      {steps.map((step, i) => (
+        <li class="growth-steps__item ai-card">
+          <p class="ai-num"><span>{String(i + 1).padStart(2, "0")}</span></p>
+          <picture class="growth-steps__illust">
+            <source srcset={`/assets/images/illust/growth-0${i + 1}.webp`} type="image/webp" />
+            <img
+              src={`/assets/images/illust/growth-0${i + 1}.png`}
+              alt=""
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
+          <p class="ai-card__txt">{step.txt}</p>
+          <div class="growth-steps__owner">
+            <span class="growth-steps__owner-label">{ownerLabel}</span>
+            <span class="growth-steps__owner-names">
+              {step.owner.map((name) => (
+                <span class={`growth-steps__chip${name === "川端" || name === "Kawabata" ? " is-me" : ""}`}>{name}</span>
+              ))}
+            </span>
+          </div>
+        </li>
+      ))}
+    </ol>
+
+    <p class="growth-handover" aria-hidden="true">
+      <span class="growth-handover__from">{isEnglish ? "Kawabata leads" : "川端が主導"}</span>
+      <span class="growth-handover__bar"></span>
+      <span class="growth-handover__to">{isEnglish ? "Your team leads" : "担当者が主導"}</span>
+    </p>
+
+    <p class="ai-note">
+      {isEnglish ? (
+        <>My involvement shrinks step by step. The goal is <span class="ai-marker">your team running AI without me</span>.</>
+      ) : (
+        <>川端の関与を段階的に減らし、<span class="ai-marker">担当者がAIで自走できる状態</span>になることがゴールです。</>
+      )}
+    </p>
+  </div>
+</section>

@@ -1,0 +1,161 @@
+---
+//src/components/top/BeforeAfter.astro
+const isEnglish = Astro.url.pathname.startsWith("/en");
+
+/*
+  このセクションの中身は工程名そのものではなく、
+  「どの工程を誰が手を動かすか」がどう変わるか。
+  だから各工程には担当（人／AI）を必ず添える。
+  出典は AI活用支援_営業資料.pptx の「導入前と導入後」。
+*/
+const HUMAN = isEnglish ? "You" : "人";
+const AI = "AI";
+
+const beforeSteps = isEnglish
+  ? [
+      { name: "Open the spreadsheet", actor: HUMAN },
+      { name: "Read the email", actor: HUMAN },
+      { name: "Re-type it across", actor: HUMAN },
+      { name: "Check it", actor: HUMAN },
+    ]
+  : [
+      { name: "Excelを開く", actor: HUMAN },
+      { name: "メールを読む", actor: HUMAN },
+      { name: "転記する", actor: HUMAN },
+      { name: "確認する", actor: HUMAN },
+    ];
+
+const afterSteps = isEnglish
+  ? [
+      { name: "Tell AI what you need", actor: HUMAN },
+      { name: "Collect and transfer the data", actor: AI },
+      { name: "Assemble the document", actor: AI },
+      { name: "Check it", actor: HUMAN },
+    ]
+  : [
+      { name: "AIにチャットで指示する", actor: HUMAN },
+      { name: "データを集めて転記する", actor: AI },
+      { name: "資料の形にまとめる", actor: AI },
+      { name: "確認する", actor: HUMAN },
+    ];
+
+const goalLabel = isEnglish ? "Done" : "完成";
+const colStep = isEnglish ? "Step" : "工程";
+const colActor = isEnglish ? "Who does it" : "手を動かす人";
+---
+
+<section
+  class="ai-sec ai-sec--dark beforeafter"
+  id="beforeafter"
+  aria-labelledby="beforeafter-heading"
+>
+  <div class="container">
+    <header class="ai-head">
+      <p class="ai-head__eyebrow eng">Before / After</p>
+      <h2 class="ai-head__ttl" id="beforeafter-heading">
+        {isEnglish ? "What changes, before and after" : "導入前と導入後で、何が変わるのか"}
+      </h2>
+      <p class="ai-head__lead">
+        {isEnglish
+          ? "The steps barely change. What changes is who has to do them."
+          : "工程そのものは変わりません。変わるのは、誰がその工程に手を動かすかです。"}
+      </p>
+    </header>
+
+    <div class="beforeafter-compare fadeInTrigger">
+      <div class="beforeafter-compare__col is-before">
+        <p class="ai-label ai-label--muted">
+          <span>{isEnglish ? "Before" : "導入前"}</span>
+        </p>
+        <p class="beforeafter-compare__lead">
+          {isEnglish ? (
+            <>A person links <span class="beforeafter-em">every step by hand</span></>
+          ) : (
+            <>人が全工程を<span class="beforeafter-em">手作業</span>でつなぐ</>
+          )}
+        </p>
+        <picture class="beforeafter-compare__illust">
+          <source srcset="/assets/images/illust/ba-before.webp" type="image/webp" />
+          <img
+            src="/assets/images/illust/ba-before.png"
+            alt={isEnglish ? "A person working through every step at a laptop" : "すべての工程を手で進める人"}
+            loading="lazy"
+            decoding="async"
+          />
+        </picture>
+
+        <p class="beforeafter-steps__head" aria-hidden="true">
+          <span>{colStep}</span><span>{colActor}</span>
+        </p>
+        <ol class="beforeafter-steps">
+          {beforeSteps.map((step) => (
+            <li class="beforeafter-steps__item">
+              <span class="beforeafter-steps__name">{step.name}</span>
+              <span class="beforeafter-steps__actor">{step.actor}</span>
+            </li>
+          ))}
+          <li class="beforeafter-steps__item is-goal">
+            <span class="beforeafter-steps__name">{goalLabel}</span>
+          </li>
+        </ol>
+
+        <p class="beforeafter-compare__summary">
+          {isEnglish
+            ? "Start to finish, a person is doing the work."
+            : "最初から最後まで、人が手を動かしている。"}
+        </p>
+      </div>
+
+      <div class="beforeafter-compare__col is-after">
+        <p class="ai-label">
+          <span>{isEnglish ? "After" : "導入後"}</span>
+        </p>
+        <p class="beforeafter-compare__lead">
+          {isEnglish ? (
+            <>AI does the work. <span class="beforeafter-em">You decide</span></>
+          ) : (
+            <>手を動かすのは<span class="beforeafter-em">AI</span>。人は<span class="beforeafter-em">判断に集中</span></>
+          )}
+        </p>
+        <picture class="beforeafter-compare__illust">
+          <source srcset="/assets/images/illust/ba-after.webp" type="image/webp" />
+          <img
+            src="/assets/images/illust/ba-after.png"
+            alt={isEnglish ? "AI working at a laptop in place of a person" : "人に代わってPCに向かうAI"}
+            loading="lazy"
+            decoding="async"
+          />
+        </picture>
+
+        <p class="beforeafter-steps__head" aria-hidden="true">
+          <span>{colStep}</span><span>{colActor}</span>
+        </p>
+        <ol class="beforeafter-steps is-after">
+          {afterSteps.map((step) => (
+            <li class={`beforeafter-steps__item${step.actor === AI ? " is-ai" : ""}`}>
+              <span class="beforeafter-steps__name">{step.name}</span>
+              <span class="beforeafter-steps__actor">{step.actor}</span>
+            </li>
+          ))}
+          <li class="beforeafter-steps__item is-goal">
+            <span class="beforeafter-steps__name">{goalLabel}</span>
+          </li>
+        </ol>
+
+        <p class="beforeafter-compare__summary">
+          {isEnglish
+            ? "You only touch the first instruction and the final check."
+            : "人が手を動かすのは、最初の指示と最後の確認だけ。"}
+        </p>
+      </div>
+    </div>
+
+    <p class="ai-note">
+      {isEnglish ? (
+        <>Every tedious step in between — <span class="ai-marker">AI runs all of it</span>.</>
+      ) : (
+        <>面倒な中間工程は、<span class="ai-marker">すべてAIが実行します</span></>
+      )}
+    </p>
+  </div>
+</section>

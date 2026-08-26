@@ -1,0 +1,109 @@
+@use "../variables" as v;
+
+/*****************/
+/*** flow ***/
+/*****************/
+/* 依頼から支援開始までの順序。service と同じ罫線＋番号の作法に揃える */
+
+#top {
+  .flow {
+    &-steps {
+      display: grid;
+
+      &__item {
+        background-color: white;
+        border-top: 1px solid rgba(23, 36, 57, 0.12);
+
+        &:first-child {
+          border-top-color: v.$color-accent;
+        }
+
+        .ai-num {
+          color: rgba(23, 36, 57, 0.22);
+        }
+      }
+
+      &__name {
+        color: v.$color-secondary;
+        font-weight: bold;
+        line-height: 1.5;
+      }
+
+      &__txt {
+        color: #6b7688;
+        font-weight: 500;
+        line-height: 1.8;
+      }
+    }
+  }
+}
+
+/*****************/
+/*** PC ***/
+/*****************/
+@media screen and (min-width: 769px) {
+  #top {
+    .flow {
+      &-steps {
+        margin-top: 70px;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 20px;
+
+        &__item {
+          padding: 22px 18px 26px;
+        }
+
+        .ai-num {
+          margin-bottom: 22px;
+        }
+
+        &__name {
+          font-size: 1.6rem;
+        }
+
+        &__txt {
+          margin-top: 12px;
+          font-size: 1.2rem;
+        }
+      }
+    }
+  }
+}
+
+/*****************/
+/*** SP ***/
+/*****************/
+@media screen and (max-width: 768px) {
+  #top {
+    .flow {
+      &-steps {
+        margin-top: 36px;
+        grid-template-columns: 1fr;
+
+        &__item {
+          display: grid;
+          grid-template-columns: auto 1fr;
+          gap: 0 16px;
+          align-items: baseline;
+          padding: 18px 0 20px;
+        }
+
+        .ai-num {
+          grid-row: 1 / 3;
+          grid-column: 1;
+        }
+
+        &__name {
+          grid-column: 2;
+          font-size: 1.6rem;
+        }
+
+        &__txt {
+          grid-column: 2;
+          margin-top: 6px;
+          font-size: 1.3rem;
+        }
+      }
+    }
+  }
+}

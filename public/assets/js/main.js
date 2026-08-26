@@ -135,8 +135,8 @@ document.addEventListener("DOMContentLoaded", function () {
     triggers.forEach((elem) => {
       const elemPos = elem.getBoundingClientRect().top + scroll - 100;
 
-      // 「window.scrollTop() が 0 以上」条件を先に付ける
-      if (scroll > 0 && scroll >= elemPos - windowHeight) {
+      // 読み込み直後（scroll === 0）でもビューポート内なら表示する
+      if (scroll >= elemPos - windowHeight) {
         elem.classList.add("fadeIn");
       }
     });

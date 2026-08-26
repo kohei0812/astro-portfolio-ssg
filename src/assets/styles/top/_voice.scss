@@ -1,0 +1,138 @@
+@use "../variables" as v;
+
+/*****************/
+/*** voice ***/
+/*****************/
+/* 引用符はアクセント色で小さく。文そのものを主役にする */
+
+#top {
+  .voice {
+    &-list {
+      display: grid;
+
+      &__item {
+        display: flex;
+        flex-direction: column;
+      }
+
+      &__mark {
+        display: block;
+        color: v.$color-accent;
+        font-weight: bold;
+        line-height: 0.8;
+      }
+
+      &__quote {
+        margin: 0;
+        color: v.$color-secondary;
+        font-weight: bold;
+        line-height: 1.8;
+        flex: 1;
+      }
+
+      &__em {
+        color: v.$color-accent;
+      }
+
+      &__from {
+        color: rgba(23, 36, 57, 0.45);
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+/*****************/
+/*** PC ***/
+/*****************/
+@media screen and (min-width: 769px) {
+  #top {
+    .voice {
+      &-list {
+        margin-top: 70px;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 28px;
+
+        &__mark {
+          font-size: 3.2rem;
+        }
+
+        &__quote {
+          margin-top: 16px;
+          font-size: 2rem;
+        }
+
+        &__from {
+          margin-top: 30px;
+          font-size: 1.3rem;
+        }
+      }
+    }
+  }
+}
+
+/*****************/
+/*** SP ***/
+/*****************/
+@media screen and (max-width: 768px) {
+  #top {
+    .voice {
+      &-list {
+        margin-top: 36px;
+        grid-template-columns: 1fr;
+        gap: 14px;
+
+        &__mark {
+          font-size: 2.4rem;
+        }
+
+        &__quote {
+          margin-top: 10px;
+          font-size: 1.7rem;
+        }
+
+        &__from {
+          margin-top: 20px;
+          font-size: 1.2rem;
+        }
+      }
+    }
+  }
+}
+
+/*****************/
+/*** voice のイラスト ***/
+/*****************/
+
+#top {
+  .voice-list__illust img {
+    margin: 0 auto;
+    width: auto;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  #top {
+    .voice-list__illust {
+      display: block;
+      margin-bottom: 6px;
+
+      img {
+        height: 130px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #top {
+    .voice-list__illust {
+      display: block;
+      margin-bottom: 4px;
+
+      img {
+        height: 108px;
+      }
+    }
+  }
+}

@@ -143,3 +143,185 @@
     }
   }
 }
+/*****************/
+/*** profile（AIコンサル版で追加した要素）***/
+/*****************/
+/* 肩書き・経歴タイムライン・締めの一文。上のブロックが既存のレイアウト */
+
+#top {
+  .profile {
+    &-role {
+      color: rgba(255, 255, 255, 0.85);
+      text-align: center;
+      font-weight: 600;
+    }
+
+    /* 経歴は時系列。左の縦線と点で順序を示す */
+    &-career {
+      position: relative;
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: 8px;
+        bottom: 8px;
+        width: 1px;
+        background-color: rgba(195, 206, 224, 0.45);
+      }
+
+      &__lead {
+        color: white;
+        font-weight: bold;
+      }
+
+      &__item {
+        position: relative;
+
+        &::before {
+          content: "";
+          position: absolute;
+          border-radius: 50%;
+          background-color: v.$color-accent;
+        }
+      }
+
+      &__name {
+        color: white;
+        font-weight: bold;
+        line-height: 1.5;
+      }
+
+      &__txt {
+        color: rgba(255, 255, 255, 0.75);
+        font-weight: 500;
+        line-height: 1.6;
+      }
+    }
+
+    &-catch {
+      position: relative;
+      border-top: 1px solid rgba(195, 206, 224, 0.18);
+      color: white;
+      font-weight: bold;
+      line-height: 1.8;
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: -1px;
+        left: 0;
+        width: 40px;
+        height: 1px;
+        background-color: v.$color-accent;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 769px) {
+  #top {
+    .profile {
+      &-role {
+        margin-top: 18px;
+        font-size: 1.6rem;
+      }
+
+      &-career {
+        margin-top: 22px;
+        padding-left: 22px;
+
+        &::before {
+          left: 4px;
+        }
+
+        &__lead {
+          font-size: 1.8rem;
+        }
+
+        &__item {
+          padding-bottom: 22px;
+
+          &::before {
+            top: 7px;
+            left: -22px;
+            width: 9px;
+            height: 9px;
+          }
+
+          &:last-child {
+            padding-bottom: 0;
+          }
+        }
+
+        &__name {
+          font-size: 1.6rem;
+        }
+
+        &__txt {
+          margin-top: 6px;
+          font-size: 1.4rem;
+        }
+      }
+
+      &-catch {
+        margin-top: 60px;
+        padding-top: 30px;
+        font-size: 2rem;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #top {
+    .profile {
+      &-role {
+        margin-top: 12px;
+        font-size: 1.3rem;
+      }
+
+      &-career {
+        margin-top: 18px;
+        padding-left: 18px;
+
+        &::before {
+          left: 3px;
+        }
+
+        &__lead {
+          font-size: 1.6rem;
+        }
+
+        &__item {
+          padding-bottom: 18px;
+
+          &::before {
+            top: 6px;
+            left: -18px;
+            width: 7px;
+            height: 7px;
+          }
+
+          &:last-child {
+            padding-bottom: 0;
+          }
+        }
+
+        &__name {
+          font-size: 1.5rem;
+        }
+
+        &__txt {
+          margin-top: 5px;
+          font-size: 1.3rem;
+        }
+      }
+
+      &-catch {
+        margin-top: 34px;
+        padding-top: 22px;
+        font-size: 1.6rem;
+      }
+    }
+  }
+}

@@ -1,0 +1,106 @@
+@use "../variables" as v;
+
+/*****************/
+/*** web-intro / web-cta ***/
+/*****************/
+
+#web {
+  background-color: v.$color-primary;
+
+  .web-intro {
+    background-color: v.$color-primary;
+
+    &__lead {
+      color: white;
+      font-weight: bold;
+      line-height: 1.6;
+    }
+
+    &__txt {
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    &__link {
+      display: inline-block;
+      border: 1px solid white;
+      color: white;
+      font-weight: bold;
+      position: relative;
+
+      &:hover {
+        opacity: 1;
+        background-color: white;
+        color: v.$color-secondary;
+      }
+    }
+  }
+
+  .web-cta {
+    background-color: v.$color-primary;
+
+    .cta {
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+}
+
+/*****************/
+/*** PC ***/
+/*****************/
+@media screen and (min-width: 769px) {
+  #web {
+    .web-intro {
+      padding: 60px 0 40px;
+
+      &__lead {
+        font-size: 2.4rem;
+      }
+
+      &__txt {
+        margin-top: 20px;
+        font-size: 1.5rem;
+      }
+
+      &__link {
+        margin-top: 30px;
+        padding: 12px 40px;
+        font-size: 1.5rem;
+      }
+    }
+
+    .web-cta {
+      padding: 60px 0 90px;
+    }
+  }
+}
+
+/*****************/
+/*** SP ***/
+/*****************/
+@media screen and (max-width: 768px) {
+  #web {
+    .web-intro {
+      padding: 36px 0 26px;
+
+      &__lead {
+        font-size: 1.8rem;
+      }
+
+      &__txt {
+        margin-top: 16px;
+        font-size: 1.4rem;
+      }
+
+      &__link {
+        margin-top: 24px;
+        padding: 10px 30px;
+        font-size: 1.4rem;
+      }
+    }
+
+    .web-cta {
+      padding: 40px 0 60px;
+    }
+  }
+}

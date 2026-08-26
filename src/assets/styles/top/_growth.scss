@@ -1,0 +1,196 @@
+@use "../variables" as v;
+
+/*****************/
+/*** growth ***/
+/*****************/
+/*
+  「担当が川端から担当者へ移っていく」ことがこのセクションの中身。
+  カード下の担当表示と、その下の受け渡しバーで移行を可視化する。
+*/
+
+#top {
+  .growth {
+    &-steps {
+      display: grid;
+
+      &__item {
+        display: flex;
+        flex-direction: column;
+      }
+
+      &__owner {
+        margin-top: auto;
+        display: flex;
+        align-items: center;
+        border-top: 1px solid rgba(23, 36, 57, 0.12);
+      }
+
+      &__owner-label {
+        color: rgba(23, 36, 57, 0.45);
+        font-weight: 600;
+        flex-shrink: 0;
+      }
+
+      &__owner-names {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      &__chip {
+        color: rgba(23, 36, 57, 0.55);
+        font-weight: bold;
+        white-space: nowrap;
+
+        &.is-me {
+          color: v.$color-accent;
+        }
+
+        /* 担当が2人並ぶ回だけ区切りを出す */
+        &:not(:first-child)::before {
+          content: "＋";
+          margin: 0 8px;
+          color: rgba(23, 36, 57, 0.3);
+          font-weight: 500;
+        }
+      }
+    }
+
+    /* 主導権の受け渡し */
+    &-handover {
+      display: flex;
+      align-items: center;
+      color: rgba(195, 206, 224, 0.55);
+      font-weight: 600;
+
+      &__bar {
+        flex: 1;
+        height: 1px;
+        background: linear-gradient(90deg, v.$color-accent 0%, rgba(195, 206, 224, 0.5) 100%);
+      }
+    }
+  }
+}
+
+/*****************/
+/*** PC ***/
+/*****************/
+@media screen and (min-width: 769px) {
+  #top {
+    .growth {
+      &-steps {
+        margin-top: 70px;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 28px;
+
+        .ai-num {
+          margin-bottom: 20px;
+        }
+
+        &__owner {
+          margin-top: 26px;
+          padding-top: 16px;
+          gap: 14px;
+        }
+
+        &__owner-label {
+          font-size: 1.2rem;
+        }
+
+        &__chip {
+          font-size: 1.4rem;
+        }
+      }
+
+      &-handover {
+        margin-top: 28px;
+        gap: 20px;
+        font-size: 1.3rem;
+      }
+    }
+  }
+}
+
+/*****************/
+/*** SP ***/
+/*****************/
+@media screen and (max-width: 768px) {
+  #top {
+    .growth {
+      &-steps {
+        margin-top: 36px;
+        grid-template-columns: 1fr;
+        gap: 14px;
+
+        .ai-num {
+          margin-bottom: 14px;
+        }
+
+        &__owner {
+          margin-top: 18px;
+          padding-top: 14px;
+          gap: 12px;
+        }
+
+        &__owner-label {
+          font-size: 1.1rem;
+        }
+
+        &__chip {
+          font-size: 1.3rem;
+        }
+      }
+
+      &-handover {
+        margin-top: 22px;
+        gap: 12px;
+        font-size: 1.1rem;
+      }
+    }
+  }
+}
+
+/*****************/
+/*** growth のイラスト ***/
+/*****************/
+/* 画像は営業資料から切り出したもの。白カードの上に置く前提で背景は白のまま */
+
+#top {
+  .growth-steps__illust img {
+    margin: 0 auto;
+    width: auto;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  #top {
+    .growth-steps {
+      &__item .ai-num {
+        margin-bottom: 4px;
+      }
+
+      &__illust {
+        display: block;
+        margin-bottom: 16px;
+
+        img {
+          height: 112px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #top {
+    .growth-steps {
+      &__illust {
+        display: block;
+        margin-bottom: 12px;
+
+        img {
+          height: 96px;
+        }
+      }
+    }
+  }
+}

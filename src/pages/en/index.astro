@@ -2,14 +2,25 @@
 import Layout from "../../layouts/Layout.astro";
 import Hero from "../../components/top/hero/Hero.astro";
 import Challenges from "../../components/top/Challenges.astro";
+import Reframe from "../../components/top/Reframe.astro";
+import BeforeAfter from "../../components/top/BeforeAfter.astro";
+import Service from "../../components/top/Service.astro";
+import FirstSession from "../../components/top/FirstSession.astro";
+import Growth from "../../components/top/Growth.astro";
+import Strength from "../../components/top/Strength.astro";
+import Voice from "../../components/top/Voice.astro";
 import Profile from "../../components/top/Profile.astro";
-import Works from "../../components/top/works/Works.astro";
+import Vision from "../../components/top/Vision.astro";
 import Plan from "../../components/top/Plan.astro";
+import Subsidy from "../../components/top/Subsidy.astro";
+import Flow from "../../components/top/Flow.astro";
+import Closing from "../../components/top/Closing.astro";
 import ContactForm from "../../components/ContactForm.jsx";
 ---
 
 <Layout
-  title="Dynamis | Portfolio of Front-end Engineer Kohei Kawabata"
+  title="Kohei Kawabata — AI adoption consultant | Dynamis"
+  description="AI basics, work interviews, process redesign, automation, staff training, and support until it sticks. A working engineer who stays until your team runs AI on their own."
   lang="en"
 >
   <!-- Structured Data (JSON-LD) -->
@@ -18,18 +29,36 @@ import ContactForm from "../../components/ContactForm.jsx";
     type="application/ld+json"
     set:html={JSON.stringify({
       "@context": "https://schema.org",
-      "@type": "WebSite",
+      "@type": "ProfessionalService",
       name: "Dynamis",
       url: "https://dddynamis.com/en/",
+      description:
+        "AI adoption consulting: AI basics, process improvement, automation, staff training, and operational support.",
+      areaServed: "JP",
+      founder: {
+        "@type": "Person",
+        name: "Kohei Kawabata",
+        jobTitle: "AI adoption consultant / Web engineer",
+      },
     })}
   />
   <!-- main -->
   <main id="top" role="main">
     <Hero />
     <Challenges />
+    <Reframe />
+    <BeforeAfter />
+    <Service />
+    <FirstSession />
+    <Growth />
+    <Strength />
+    <Voice />
     <Profile />
-    <Works basePath="/en" />
+    <Vision />
     <Plan />
-    <ContactForm client:visible/>
+    <Subsidy />
+    <Flow />
+    <Closing />
+    <ContactForm client:visible />
   </main>
 </Layout>

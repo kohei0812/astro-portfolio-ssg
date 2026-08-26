@@ -8,9 +8,14 @@ const isTopPage = currentPath === "/" || currentPath === "/en/";
 const basePath = isEnglish ? "/en" : "";
 
 // トップページでは#リンク、他ページでは/付きリンクを使用
-const profileLink = isTopPage ? `${basePath}#profile` : `${basePath}/#profile`;
-const planLink = isTopPage ? `${basePath}#plan` : `${basePath}/#plan`;
-const contactLink = isTopPage ? `${basePath}#contact` : `${basePath}/#contact`;
+const anchor = (id: string) =>
+  isTopPage ? `${basePath}#${id}` : `${basePath}/#${id}`;
+
+const serviceLink = anchor("service");
+const strengthLink = anchor("strength");
+const profileLink = anchor("profile");
+const planLink = anchor("plan");
+const contactLink = anchor("contact");
 
 // 言語切替用URL生成
 const getLanguageToggleUrl = () => {
@@ -35,13 +40,19 @@ const toggleLanguage = isEnglish ? 'JA' : 'EN';
       <a href={`${basePath}/`} class="menu__link">{isEnglish ? "Top" : "トップ"}</a>
     </li>
     <li class="menu__item">
-      <a href={profileLink} class="menu__link">{isEnglish ? "Profile" : "プロフィール"}</a>
+      <a href={serviceLink} class="menu__link">{isEnglish ? "Service" : "サービス"}</a>
     </li>
     <li class="menu__item">
-      <a href={`${basePath}/work-archive`} class="menu__link">{isEnglish ? "Works" : "制作実績"}</a>
+      <a href={strengthLink} class="menu__link">{isEnglish ? "Strength" : "強み"}</a>
     </li>
     <li class="menu__item">
       <a href={planLink} class="menu__link">{isEnglish ? "Plans" : "料金プラン"}</a>
+    </li>
+    <li class="menu__item">
+      <a href={profileLink} class="menu__link">{isEnglish ? "Profile" : "プロフィール"}</a>
+    </li>
+    <li class="menu__item">
+      <a href={`${basePath}/web`} class="menu__link">{isEnglish ? "Web" : "Web制作"}</a>
     </li>
     <li class="menu__item">
       <a href={contactLink} class="menu__link">{isEnglish ? "Contact" : "お問い合わせ"}</a>
@@ -128,7 +139,7 @@ const toggleLanguage = isEnglish ? 'JA' : 'EN';
 <!-- header -->
 <header class="header" id="header" role="banner">
   <div class="container">
-    <a href="/" class="header-logo" aria-label={isEnglish ? "To Top Page" : "トップページへ"}>
+    <a href={`${basePath}/`} class="header-logo" aria-label={isEnglish ? "To Top Page" : "トップページへ"}>
       Dynamis
     </a>
     <nav class="header-nav" aria-label={isEnglish ? "Main Navigation" : "メインナビゲーション"}>
@@ -137,13 +148,19 @@ const toggleLanguage = isEnglish ? 'JA' : 'EN';
           <a href={`${basePath}/`} class="menu__link">{isEnglish ? "Top" : "トップ"}</a>
         </li>
         <li class="menu__item">
-          <a href={profileLink} class="menu__link">{isEnglish ? "Profile" : "プロフィール"}</a>
+          <a href={serviceLink} class="menu__link">{isEnglish ? "Service" : "サービス"}</a>
         </li>
         <li class="menu__item">
-          <a href={`${basePath}/work-archive`} class="menu__link">{isEnglish ? "Works" : "制作実績"}</a>
+          <a href={strengthLink} class="menu__link">{isEnglish ? "Strength" : "強み"}</a>
         </li>
         <li class="menu__item">
           <a href={planLink} class="menu__link">{isEnglish ? "Plans" : "料金プラン"}</a>
+        </li>
+        <li class="menu__item">
+          <a href={profileLink} class="menu__link">{isEnglish ? "Profile" : "プロフィール"}</a>
+        </li>
+        <li class="menu__item">
+          <a href={`${basePath}/web`} class="menu__link">{isEnglish ? "Web" : "Web制作"}</a>
         </li>
         <li class="menu__item">
           <a href={contactLink} class="menu__link">{isEnglish ? "Contact" : "お問い合わせ"}</a>

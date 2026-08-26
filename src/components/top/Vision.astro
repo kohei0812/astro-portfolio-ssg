@@ -1,0 +1,97 @@
+---
+//src/components/top/Vision.astro
+const isEnglish = Astro.url.pathname.startsWith("/en");
+
+const destinations = isEnglish
+  ? ["Building customer relationships", "New challenges, new value", "Time with the team", "Time for yourself and your family"]
+  : ["お客様との関係づくり", "新しい挑戦・価値づくり", "チームや仲間との時間", "自分や家族の時間"];
+---
+
+<section
+  class="ai-sec ai-sec--dark vision"
+  id="vision"
+  aria-labelledby="vision-heading"
+>
+  <div class="container">
+    <header class="ai-head">
+      <p class="ai-head__eyebrow eng">Vision</p>
+      <h2 class="ai-head__ttl" id="vision-heading">
+        {isEnglish ? "What the efficiency is actually for" : "AIで効率化した先にあるもの"}
+      </h2>
+      <p class="ai-head__lead">
+        {isEnglish
+          ? "Cutting cost is not the point of bringing in AI."
+          : "AI導入の目的は、コスト削減ではありません。"}
+      </p>
+    </header>
+
+    <div class="vision-main fadeInTrigger">
+      <div class="vision-main__left">
+        <p class="vision-catch">
+          {isEnglish ? (
+            <>Giving people their time back,<br /><span class="ai-marker">for the work they actually want to do</span></>
+          ) : (
+            <><span class="ai-marker">人が本当にやりたいことへ、</span><br /><span class="ai-marker">時間を使えるようにすること</span></>
+          )}
+        </p>
+        <p class="vision-body desc">
+          {isEnglish ? (
+            <>
+              Efficiency is the method, not the goal.<br />
+              What you do with the time you get back — I think that through with you too.
+            </>
+          ) : (
+            <>
+              効率化は手段であって、目的ではありません。<br />
+              取り戻した時間で何をするか。そこまで一緒に考えます。
+            </>
+          )}
+        </p>
+      </div>
+
+      <div class="vision-main__right">
+        <div class="vision-shift">
+          <div class="vision-shift__col is-before">
+            <p class="ai-label ai-label--muted"><span>{isEnglish ? "Until now" : "これまで"}</span></p>
+            <picture class="vision-shift__illust">
+              <source srcset="/assets/images/illust/vision-before.webp" type="image/webp" />
+              <img src="/assets/images/illust/vision-before.png" alt="" loading="lazy" decoding="async" />
+            </picture>
+            <p class="vision-shift__txt">
+              {isEnglish ? "Days spent chasing the work that has to get done" : "やるべき作業に追われる毎日"}
+            </p>
+          </div>
+          <div class="vision-shift__col is-after">
+            <p class="ai-label"><span>{isEnglish ? "From here" : "これから"}</span></p>
+            <picture class="vision-shift__illust">
+              <source srcset="/assets/images/illust/vision-after.webp" type="image/webp" />
+              <img src="/assets/images/illust/vision-after.png" alt="" loading="lazy" decoding="async" />
+            </picture>
+            <p class="vision-shift__txt">
+              {isEnglish ? "Days spent absorbed in the work you want to do" : "やりたいことに夢中になれる毎日"}
+            </p>
+          </div>
+        </div>
+
+        <p class="vision-dest__ttl">
+          {isEnglish
+            ? "AI takes the tedious work. People move to creating, deciding, connecting."
+            : "AIが面倒な作業を担い、人は、創造・判断・コミュニケーションへ"}
+        </p>
+        <ul class="vision-dest">
+          {destinations.map((dest) => (
+            <li class="vision-dest__item">{dest}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    <p class="ai-note">
+      {isEnglish ? (
+        <>AI is a partner that creates time. Let's put yours toward <span class="ai-marker">what you actually want to do</span>.</>
+      ) : (
+        <>AIは時間を生み出すパートナー。あなたの<span class="ai-marker">「やりたいこと」</span>を、実現しましょう。</>
+      )}
+    </p>
+  </div>
+</section>
