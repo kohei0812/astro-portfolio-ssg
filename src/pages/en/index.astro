@@ -2,28 +2,21 @@
 import Layout from "../../layouts/Layout.astro";
 import Hero from "../../components/top/hero/Hero.astro";
 import Challenges from "../../components/top/Challenges.astro";
-import Reframe from "../../components/top/Reframe.astro";
-import BeforeAfter from "../../components/top/BeforeAfter.astro";
+import Shift from "../../components/top/Shift.astro";
 import Service from "../../components/top/Service.astro";
-import FirstSession from "../../components/top/FirstSession.astro";
-import Growth from "../../components/top/Growth.astro";
-import Strength from "../../components/top/Strength.astro";
-import Voice from "../../components/top/Voice.astro";
+import PhotoBand from "../../components/top/PhotoBand.astro";
 import Profile from "../../components/top/Profile.astro";
-import Vision from "../../components/top/Vision.astro";
 import Plan from "../../components/top/Plan.astro";
-import Subsidy from "../../components/top/Subsidy.astro";
 import Flow from "../../components/top/Flow.astro";
-import Closing from "../../components/top/Closing.astro";
 import ContactForm from "../../components/ContactForm.jsx";
 ---
 
 <Layout
-  title="Kohei Kawabata — AI adoption consultant | Dynamis"
-  description="AI basics, work interviews, process redesign, automation, staff training, and support until it sticks. A working engineer who stays until your team runs AI on their own."
+  title="AX for small businesses | Kohei Kawabata"
+  description="Not how to use AI — rebuilding how the work runs. Two hours to automate one real task, and support until your staff can change it themselves."
   lang="en"
 >
-  <!-- Structured Data (JSON-LD) -->
+  <!-- 構造化データ（JSON-LD） -->
   <script
     is:inline
     type="application/ld+json"
@@ -33,12 +26,12 @@ import ContactForm from "../../components/ContactForm.jsx";
       name: "Dynamis",
       url: "https://dddynamis.com/en/",
       description:
-        "AI adoption consulting: AI basics, process improvement, automation, staff training, and operational support.",
+        "AX support for small businesses: process redesign, automation, and support until the team runs it alone.",
       areaServed: "JP",
       founder: {
         "@type": "Person",
         name: "Kohei Kawabata",
-        jobTitle: "AI adoption consultant / Web engineer",
+        jobTitle: "AI活用支援コンサルタント / Webエンジニア",
       },
     })}
   />
@@ -46,19 +39,12 @@ import ContactForm from "../../components/ContactForm.jsx";
   <main id="top" role="main">
     <Hero />
     <Challenges />
-    <Reframe />
-    <BeforeAfter />
+    <Shift />
     <Service />
-    <FirstSession />
-    <Growth />
-    <Strength />
-    <Voice />
+    <PhotoBand />
     <Profile />
-    <Vision />
     <Plan />
-    <Subsidy />
     <Flow />
-    <Closing />
-    <ContactForm client:visible />
+    <ContactForm lang="en" client:visible />
   </main>
 </Layout>

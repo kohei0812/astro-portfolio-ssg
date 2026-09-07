@@ -1,8 +1,10 @@
 import { useState, useRef } from 'react';
 
-export default function ContactForm() {
+export default function ContactForm({ lang = "ja" }) {
   // 現在の言語を判定
-  const isEnglish = typeof window !== 'undefined' && window.location.pathname.startsWith('/en');
+  // 言語は Astro 側から渡す。window 参照だと SSG 時に判定できず、
+  // 初期HTMLが日本語のまま出てしまう（client:visible で hydration が遅れるため）
+  const isEnglish = lang === 'en';
   const [formData, setFormData] = useState({
     name: '',
     email: '',

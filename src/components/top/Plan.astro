@@ -120,5 +120,16 @@ const seminarIncludes = isEnglish
           : '本格的なシステム開発など、要件によっては別途お見積り'}
       </li>
     </ul>
+
+    <a class="plan-subsidy" href={isEnglish ? '/en/subsidy' : '/subsidy'}>
+      <span class="plan-subsidy__txt">
+        {isEnglish
+          ? 'This cost may be partly covered by a public grant'
+          : 'この費用、助成金の対象になる場合があります'}
+      </span>
+      <span class="plan-subsidy__more">
+        {isEnglish ? 'About the grant' : '業務改善助成金について'}
+      </span>
+    </a>
   </div>
 </section>

@@ -2,25 +2,18 @@
 import Layout from "../layouts/Layout.astro";
 import Hero from "../components/top/hero/Hero.astro";
 import Challenges from "../components/top/Challenges.astro";
-import Reframe from "../components/top/Reframe.astro";
-import BeforeAfter from "../components/top/BeforeAfter.astro";
+import Shift from "../components/top/Shift.astro";
 import Service from "../components/top/Service.astro";
-import FirstSession from "../components/top/FirstSession.astro";
-import Growth from "../components/top/Growth.astro";
-import Strength from "../components/top/Strength.astro";
-import Voice from "../components/top/Voice.astro";
+import PhotoBand from "../components/top/PhotoBand.astro";
 import Profile from "../components/top/Profile.astro";
-import Vision from "../components/top/Vision.astro";
 import Plan from "../components/top/Plan.astro";
-import Subsidy from "../components/top/Subsidy.astro";
 import Flow from "../components/top/Flow.astro";
-import Closing from "../components/top/Closing.astro";
 import ContactForm from "../components/ContactForm.jsx";
 ---
 
 <Layout
-  title="AI活用支援コンサルタント 川端康平 | Dynamis"
-  description="AI基本講習から業務ヒアリング、業務改善、自動化、社員教育、運用定着まで。現役エンジニアが、社員が自分でAIを使いこなせる状態まで伴走します。初回相談は無料。"
+  title="中小企業のAX支援 | 川端康平"
+  description="AIの使い方を教えるのではなく、業務そのものを作り替える。初回2時間で御社の業務をひとつ自動化し、最後は社員が自分の手で変えられる状態にします。初回相談は無料。"
 >
   <!-- 構造化データ（JSON-LD） -->
   <script
@@ -32,7 +25,7 @@ import ContactForm from "../components/ContactForm.jsx";
       name: "Dynamis",
       url: "https://dddynamis.com/",
       description:
-        "AI活用支援コンサルティング。AI基本講習・業務改善・自動化・社員教育・運用定着まで一貫支援。",
+        "中小企業向けのAX（AI変革）支援。業務の再設計から自動化、社員が自走するまでの伴走まで。",
       areaServed: "JP",
       founder: {
         "@type": "Person",
@@ -45,19 +38,12 @@ import ContactForm from "../components/ContactForm.jsx";
   <main id="top" role="main">
     <Hero />
     <Challenges />
-    <Reframe />
-    <BeforeAfter />
+    <Shift />
     <Service />
-    <FirstSession />
-    <Growth />
-    <Strength />
-    <Voice />
+    <PhotoBand />
     <Profile />
-    <Vision />
     <Plan />
-    <Subsidy />
     <Flow />
-    <Closing />
-    <ContactForm client:visible />
+    <ContactForm lang="ja" client:visible />
   </main>
 </Layout>

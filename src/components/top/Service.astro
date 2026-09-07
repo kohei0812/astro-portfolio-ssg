@@ -1,64 +1,108 @@
 ---
 //src/components/top/Service.astro
-import Icon from "./Icon.astro";
-
+/*
+  旧 Service（6ステップ）＋ FirstSession（初回2時間）＋ Growth（自走4ステップ）を統合。
+  読み手が知りたいのは「初回に何が起きるか」と「最終的にどこまで行くか」の2点だけなので、
+  その2つに絞る。BNI資料の「まず2時間でここまでやります」が初回の中身の出典。
+*/
 const isEnglish = Astro.url.pathname.startsWith("/en");
 
-const steps = isEnglish
+const firstSession = isEnglish
   ? [
-      { name: "AI basics", tag: "Building the foundation", icon: "teach" },
-      { name: "Work interview", tag: "Taking stock of the work", icon: "interview" },
-      { name: "Process redesign", tag: "Rebuilding the flow", icon: "redesign" },
-      { name: "Automation", tag: "Routine work goes to AI", icon: "automate" },
-      { name: "Staff training", tag: "Growing people who run it", icon: "train" },
-      { name: "Operation", tag: "Support until it sticks", icon: "operate" },
+      { name: "Claude Code, explained", txt: "What it is, and what it can take off your plate." },
+      { name: "Set up, on the spot", txt: "Accounts and your PC, ready before I leave." },
+      { name: "One job, automated", txt: "We pick a real task from your work and automate it that day." },
     ]
   : [
-      { name: "AI基本講習", tag: "使い方の土台づくり", icon: "teach" },
-      { name: "業務ヒアリング", tag: "業務の棚卸し", icon: "interview" },
-      { name: "業務改善", tag: "フローの再設計", icon: "redesign" },
-      { name: "自動化", tag: "定型業務をAIに", icon: "automate" },
-      { name: "社員教育", tag: "自走できる社員を育成", icon: "train" },
-      { name: "運用", tag: "定着まで支援", icon: "operate" },
+      { name: "Claude Code の解説", txt: "何ができて、何を任せられるのかを掴む" },
+      { name: "設定・インストール", txt: "アカウントとPC環境を、その場で使える状態に" },
+      { name: "業務をひとつ自動化", txt: "実際の業務をヒアリングし、その場で動かす" },
+    ];
+
+const growth = isEnglish
+  ? [
+      { name: "I do it", txt: "I interview the work, design the flow, and automate it." },
+      { name: "We do it together", txt: "I design. Your team does the hands-on work." },
+      { name: "You do it", txt: "Your team designs and automates it, start to finish." },
+    ]
+  : [
+      { name: "私がやる", txt: "業務をヒアリングし、設計から自動化まで私が実施する" },
+      { name: "一緒にやる", txt: "設計は私、手を動かすのは担当者。並走して覚えてもらう" },
+      { name: "自分たちでやる", txt: "担当者が自分で設計し、自動化まで実践する" },
     ];
 ---
 
-<section class="ai-sec service" id="service" aria-labelledby="service-heading">
+<section class="ai-sec ai-sec--dark service" id="service" aria-labelledby="service-heading">
   <div class="container">
-    <header class="ai-head">
-      <p class="ai-head__eyebrow eng">Service</p>
-      <h2 class="ai-head__ttl" id="service-heading">
-        {isEnglish ? "Six steps, from first use to daily habit" : "AI導入から定着までの6ステップ"}
-      </h2>
-      <p class="ai-head__lead">
-        {isEnglish
-          ? "Not a one-off seminar — one connected process that reaches a result."
-          : <>単発の講習ではなく、<br class="sp_only" />成果につながる一連の流れで支援します。</>}
+    {/* 左に「2時間」を大きく固定、右に中身を流す非対称構図 */}
+    <div class="service-main">
+      <div class="service-main__left">
+        <p class="ai-head__eyebrow eng">Service</p>
+        <h2 class="service-main__ttl" id="service-heading">
+          <span class="service-main__label">{isEnglish ? "First session" : "初回研修"}</span>
+          <span class="service-metric">
+            <span class="service-metric__num eng">2</span>
+            <span class="service-metric__unit">{isEnglish ? "hours" : "時間"}</span>
+          </span>
+          <span class="service-main__rest">
+            {isEnglish ? "to the first result" : "で、業務がひとつ動き出す"}
+          </span>
+        </h2>
+        <p class="service-main__lead">
+          {isEnglish
+            ? "Not a seminar. We take a real task from your work and make it run before I leave."
+            : "座学ではありません。御社の実際の業務をひとつ選び、その場で動かすところまでやります。"}
+        </p>
+      </div>
+
+      <div class="service-main__right">
+        <ol class="service-first fadeInTrigger">
+          {firstSession.map((step, i) => (
+            <li class="service-first__item">
+              <p class="ai-num"><span>{String(i + 1).padStart(2, "0")}</span></p>
+              <div class="service-first__body">
+                <h3 class="service-first__name">{step.name}</h3>
+                <p class="service-first__txt">{step.txt}</p>
+              </div>
+              <picture class="service-first__illust">
+                <source srcset={`/assets/images/illust/svc-0${i + 1}.webp`} type="image/webp" />
+                <img src={`/assets/images/illust/svc-0${i + 1}.png`} alt="" loading="lazy" decoding="async" />
+              </picture>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+
+    <div class="service-growth fadeInTrigger">
+      <h3 class="service-growth__ttl">
+        {isEnglish ? "Then I hand it over" : "2回目以降は、手を動かす人が入れ替わっていきます"}
+      </h3>
+      <ol class="service-growth__list">
+        {growth.map((step, i) => (
+          <li class="service-growth__item">
+            <p class="ai-num"><span>{String(i + 1).padStart(2, "0")}</span></p>
+            <picture class="service-growth__illust">
+              <source srcset={`/assets/images/illust/grw-0${i + 1}.webp`} type="image/webp" />
+              <img src={`/assets/images/illust/grw-0${i + 1}.png`} alt="" loading="lazy" decoding="async" />
+            </picture>
+            <h4 class="service-growth__name">{step.name}</h4>
+            <p class="service-growth__txt">{step.txt}</p>
+          </li>
+        ))}
+      </ol>
+      <p class="service-growth__bar" aria-hidden="true">
+        <span>{isEnglish ? "I lead" : "私が主導"}</span>
+        <span class="service-growth__bar-line"></span>
+        <span>{isEnglish ? "Your team leads" : "担当者が主導"}</span>
       </p>
-    </header>
+    </div>
 
-    <ol class="service-steps fadeInTrigger">
-      {steps.map((step, i) => (
-        <li class="service-steps__item">
-          <p class="ai-num"><span>{String(i + 1).padStart(2, "0")}</span></p>
-          <span class="service-steps__icon"><Icon name={step.icon} /></span>
-          <h3 class="service-steps__name">{step.name}</h3>
-          <p class="service-steps__tag">{step.tag}</p>
-        </li>
-      ))}
-    </ol>
-
-    <p class="service-dev">
-      {isEnglish
-        ? "If it needs a business app or a system built, I build it myself."
-        : "※ 業務アプリやシステムの開発が必要になれば、私が直接対応します。"}
-    </p>
-
-    <p class="ai-note ai-note--accent">
+    <p class="ai-note">
       {isEnglish ? (
-        <>Training is not the finish line. I stay until <span class="ai-marker">your staff can run AI on their own</span>.</>
+        <>If it needs a real system built, <span class="ai-marker">I build that too</span> — same person, no handoff.</>
       ) : (
-        <>講習で終わらせない。<span class="ai-marker">社員が自分でAIを使いこなせるところまで</span>伴走します。</>
+        <>業務アプリやシステムが必要になれば、<span class="ai-marker">そのまま私が開発します。</span></>
       )}
     </p>
   </div>

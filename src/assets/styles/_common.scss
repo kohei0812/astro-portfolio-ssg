@@ -211,49 +211,51 @@ h6,
 
   .cta {
     max-width: 956px;
-    width: 90%;
-    background-color: black;
-    padding-top: 52px;
-    padding-bottom: 48px;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.04);
+    border-top: 1px solid v.$color-accent;
+    padding-top: 56px;
+    padding-bottom: 56px;
 
     &-p {
-      font-size: 3.6rem;
+      font-size: 3rem;
       text-align: center;
       font-weight: bold;
+      line-height: 1.6;
     }
 
     &-link {
       margin: 40px auto 0;
-      width: 418px;
-      height: 62px;
-      border-radius: 7px;
+      width: 360px;
+      height: 66px;
       color: white;
-      font-size: 2rem;
+      font-size: 1.7rem;
       text-align: center;
-      background-color: #FF8533;
-      line-height: 62px;
+      background-color: v.$color-accent;
+      line-height: 66px;
       position: relative;
       font-weight: bold;
+      letter-spacing: 0.04em;
 
       &:after {
         content: "";
         position: absolute;
-        width: 10px;
-        height: 10px;
+        width: 8px;
+        height: 8px;
         border-top: 2px solid white;
         border-right: 2px solid white;
         top: 50%;
-        right: 20px;
+        right: 24px;
         transform: translateY(-50%) rotate(45deg);
       }
 
       &:hover {
         opacity: 1;
         background-color: white;
-        color: #FF8533;
+        color: v.$color-accent;
 
         &:after {
-          border-color: #FF8533;
+          border-color: v.$color-accent;
         }
       }
     }
@@ -499,35 +501,36 @@ h6,
   .cta {
     max-width: 956px;
     width: 100%;
-    background-color: black;
-    padding-top: 52px;
-    padding-bottom: 69px;
+    background-color: rgba(255, 255, 255, 0.04);
+    border-top: 1px solid v.$color-accent;
+    padding: 36px 20px 40px;
 
     &-p {
-      font-size: 2rem;
+      font-size: 1.9rem;
       text-align: center;
       font-weight: bold;
+      line-height: 1.7;
     }
 
     &-link {
-      margin: 35px auto 0;
-      width: 90%;
+      margin: 30px auto 0;
+      width: 100%;
       max-width: 330px;
-      height: 62px;
-      border-radius: 7px;
+      height: 60px;
       color: white;
-      font-size: 2rem;
+      font-size: 1.5rem;
       text-align: center;
-      background-color: #FF8533;
-      line-height: 62px;
+      background-color: v.$color-accent;
+      line-height: 60px;
       position: relative;
       font-weight: bold;
+      letter-spacing: 0.04em;
 
       &:after {
         content: "";
         position: absolute;
-        width: 10px;
-        height: 10px;
+        width: 8px;
+        height: 8px;
         border-top: 2px solid white;
         border-right: 2px solid white;
         top: 50%;
@@ -538,10 +541,10 @@ h6,
       &:hover {
         opacity: 1;
         background-color: white;
-        color: #FF8533;
+        color: v.$color-accent;
 
         &:after {
-          border-color: #FF8533;
+          border-color: v.$color-accent;
         }
       }
     }
@@ -831,4 +834,83 @@ h6,
     }
   }
 
+}
+/*****************/
+/*** 追従CTA ***/
+/*****************/
+/* FVを抜けたら右下に出る。表示切替は main.js の「追従CTA」 */
+
+.sticky-cta {
+  position: fixed;
+  z-index: 100;
+  background-color: v.$color-accent;
+  color: white;
+  font-weight: bold;
+  letter-spacing: 0.04em;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(12px);
+  transition: opacity 0.4s ease, transform 0.4s ease, background-color 0.3s ease;
+
+  &.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  &:hover {
+    opacity: 1;
+    background-color: white;
+    color: v.$color-accent;
+  }
+
+  &__txt {
+    position: relative;
+    display: block;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: 0;
+      width: 7px;
+      height: 7px;
+      border-top: 2px solid currentColor;
+      border-right: 2px solid currentColor;
+      transform: translateY(-50%) rotate(45deg);
+    }
+  }
+}
+
+@media screen and (min-width: 769px) {
+  .sticky-cta {
+    right: 30px;
+    bottom: 30px;
+    padding: 18px 46px 18px 28px;
+    font-size: 1.5rem;
+
+    &__txt::after {
+      right: -18px;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  /* SPはハンバーガーと重ならないよう下部に横長で置く */
+  .sticky-cta {
+    left: 15px;
+    right: 15px;
+    bottom: 15px;
+    padding: 16px 20px;
+    font-size: 1.4rem;
+    text-align: center;
+
+    &__txt::after {
+      right: 4px;
+    }
+  }
+}
+
+@media print {
+  .sticky-cta { display: none; }
 }

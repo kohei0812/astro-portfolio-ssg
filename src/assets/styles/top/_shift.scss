@@ -1,0 +1,328 @@
+@use "../variables" as v;
+
+/*****************/
+/*** shift ***/
+/*****************/
+/*
+  ページで唯一、コンテナ(1110px)の外へ出るセクション。
+  画面を左右に割り、左＝これまで（沈んだ紺）／右＝これから（白）にする。
+  他のセクションが全部「見出し→grid」なので、ここで構図を変えて単調さを切る。
+*/
+
+#top {
+  .shift {
+    position: relative;
+    overflow: hidden;
+    z-index: 50;
+    background-color: v.$color-primary;
+
+    &-head .container,
+    &-foot .container {
+      position: relative;
+    }
+
+    /* 全幅の左右分割 */
+    &-split {
+      display: flex;
+      width: 100%;
+
+      &__side {
+        flex: 1;
+        display: flex;
+
+        &.is-before {
+          background-color: #131e30;
+        }
+
+        &.is-after {
+          background-color: white;
+        }
+      }
+
+      /* 中身はコンテナの左右端に揃える */
+      &__inner {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      &__label {
+        color: rgba(195, 206, 224, 0.55);
+        font-weight: 700;
+        letter-spacing: 0.1em;
+      }
+
+      &__lead {
+        color: rgba(195, 206, 224, 0.85);
+        font-weight: bold;
+        line-height: 1.5;
+      }
+
+      &__side.is-after .shift-split__label {
+        color: #8a94a6;
+      }
+
+      &__side.is-after .shift-split__lead {
+        color: v.$color-secondary;
+      }
+
+      /* 着手までの時間。ここが一番の差なので大きく出す */
+      &__metric {
+        margin-top: auto;
+        display: flex;
+        flex-direction: column;
+        border-top: 1px solid rgba(195, 206, 224, 0.2);
+
+        &-label {
+          color: rgba(195, 206, 224, 0.5);
+          font-weight: 600;
+        }
+
+        &-num {
+          color: rgba(195, 206, 224, 0.8);
+          font-weight: bold;
+          line-height: 1;
+
+          &.is-accent {
+            color: v.$color-accent;
+          }
+        }
+      }
+
+      &__side.is-after .shift-split__metric {
+        border-top-color: rgba(23, 36, 57, 0.16);
+
+        .shift-split__metric-label {
+          color: #8a94a6;
+        }
+      }
+    }
+
+    /*
+      左右それぞれの地色に合わせてデュオトーン処理した写真。
+      カラム幅いっぱいの帯にして、図版ではなく「場面」として見せる。
+    */
+    &-split__photo {
+      display: block;
+      overflow: hidden;
+      border-radius: 5px;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    &-em {
+      color: v.$color-accent;
+    }
+
+    &-steps {
+      &__item {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 12px;
+        border-bottom: 1px solid rgba(195, 206, 224, 0.14);
+      }
+
+      &__name {
+        color: rgba(195, 206, 224, 0.75);
+        font-weight: 600;
+      }
+
+      &__actor {
+        flex-shrink: 0;
+        color: rgba(195, 206, 224, 0.45);
+        font-weight: bold;
+      }
+
+      &.is-after {
+        .shift-steps__item {
+          border-bottom-color: rgba(23, 36, 57, 0.1);
+        }
+
+        .shift-steps__name {
+          color: #46536a;
+        }
+
+        .shift-steps__actor {
+          color: #8a94a6;
+        }
+
+        .shift-steps__item.is-ai {
+          .shift-steps__name {
+            color: v.$color-secondary;
+          }
+
+          .shift-steps__actor {
+            color: v.$color-accent;
+          }
+        }
+      }
+    }
+
+    &-foot__txt {
+      color: white;
+      font-weight: bold;
+      line-height: 1.8;
+    }
+  }
+}
+
+/*****************/
+/*** PC ***/
+/*****************/
+@media screen and (min-width: 769px) {
+  #top {
+    .shift {
+      &-head {
+        padding-top: 130px;
+        padding-bottom: 60px;
+      }
+
+      &-split {
+        &__inner {
+          padding: 60px 50px 56px;
+        }
+
+        /* 内側の端をコンテナの左右端に合わせる */
+        &__side.is-before .shift-split__inner {
+          margin-left: auto;
+          max-width: calc(1110px / 2);
+          padding-left: 15px;
+        }
+
+        &__side.is-after .shift-split__inner {
+          margin-right: auto;
+          max-width: calc(1110px / 2);
+          padding-right: 15px;
+        }
+
+        &__label {
+          font-size: 1.3rem;
+        }
+
+        &__lead {
+          margin-top: 18px;
+          font-size: 2.4rem;
+        }
+
+        &__metric {
+          margin-top: 50px;
+          padding-top: 22px;
+
+          &-label {
+            font-size: 1.2rem;
+          }
+
+          &-num {
+            margin-top: 10px;
+            font-size: 4.4rem;
+          }
+        }
+      }
+
+      &-split__photo {
+        margin-top: 28px;
+        height: 200px;
+      }
+
+      &-steps {
+        margin-top: 26px;
+
+        &__item {
+          padding: 15px 0;
+          font-size: 1.7rem;
+        }
+
+        &__actor {
+          font-size: 1.5rem;
+        }
+      }
+
+      &-foot {
+        padding-top: 60px;
+        padding-bottom: 140px;
+
+        &__txt {
+          font-size: 2.2rem;
+        }
+      }
+    }
+  }
+}
+
+/*****************/
+/*** SP ***/
+/*****************/
+@media screen and (max-width: 768px) {
+  #top {
+    .shift {
+      &-head {
+        padding-top: 70px;
+        padding-bottom: 30px;
+      }
+
+      /* 狭い画面では上下に積む */
+      &-split {
+        flex-direction: column;
+
+        &__inner {
+          padding: 32px 15px 34px;
+        }
+
+        &__label {
+          font-size: 1.2rem;
+        }
+
+        &__lead {
+          margin-top: 14px;
+          font-size: 1.9rem;
+        }
+
+        &__metric {
+          margin-top: 30px;
+          padding-top: 18px;
+
+          &-label {
+            font-size: 1.1rem;
+          }
+
+          &-num {
+            margin-top: 8px;
+            font-size: 3.2rem;
+          }
+        }
+      }
+
+      &-split__photo {
+        margin-top: 22px;
+        height: 150px;
+      }
+
+      &-steps {
+        margin-top: 20px;
+
+        &__item {
+          padding: 13px 0;
+          font-size: 1.5rem;
+        }
+
+        &__actor {
+          font-size: 1.4rem;
+        }
+      }
+
+      &-foot {
+        padding-top: 34px;
+        padding-bottom: 76px;
+
+        &__txt {
+          font-size: 1.7rem;
+        }
+      }
+    }
+  }
+}

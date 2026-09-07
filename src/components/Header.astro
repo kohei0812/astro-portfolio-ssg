@@ -12,7 +12,7 @@ const anchor = (id: string) =>
   isTopPage ? `${basePath}#${id}` : `${basePath}/#${id}`;
 
 const serviceLink = anchor("service");
-const strengthLink = anchor("strength");
+const shiftLink = anchor("shift");
 const profileLink = anchor("profile");
 const planLink = anchor("plan");
 const contactLink = anchor("contact");
@@ -43,7 +43,7 @@ const toggleLanguage = isEnglish ? 'JA' : 'EN';
       <a href={serviceLink} class="menu__link">{isEnglish ? "Service" : "サービス"}</a>
     </li>
     <li class="menu__item">
-      <a href={strengthLink} class="menu__link">{isEnglish ? "Strength" : "強み"}</a>
+      <a href={shiftLink} class="menu__link">{isEnglish ? "The Shift" : "何が変わるか"}</a>
     </li>
     <li class="menu__item">
       <a href={planLink} class="menu__link">{isEnglish ? "Plans" : "料金プラン"}</a>
@@ -136,6 +136,11 @@ const toggleLanguage = isEnglish ? 'JA' : 'EN';
   <span class="hamburger-menu__bar"></span>
   <span class="hamburger-menu__bar"></span>
 </button>
+<!-- 追従CTA：FVを抜けたら右下に出す。表示制御は public/assets/js/main.js -->
+<a class="sticky-cta" id="js-sticky-cta" href={contactLink}>
+  <span class="sticky-cta__txt">{isEnglish ? "Free consultation" : "無料で相談する"}</span>
+</a>
+
 <!-- header -->
 <header class="header" id="header" role="banner">
   <div class="container">
@@ -151,7 +156,7 @@ const toggleLanguage = isEnglish ? 'JA' : 'EN';
           <a href={serviceLink} class="menu__link">{isEnglish ? "Service" : "サービス"}</a>
         </li>
         <li class="menu__item">
-          <a href={strengthLink} class="menu__link">{isEnglish ? "Strength" : "強み"}</a>
+          <a href={shiftLink} class="menu__link">{isEnglish ? "The Shift" : "何が変わるか"}</a>
         </li>
         <li class="menu__item">
           <a href={planLink} class="menu__link">{isEnglish ? "Plans" : "料金プラン"}</a>

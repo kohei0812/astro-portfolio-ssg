@@ -35,49 +35,57 @@ const career = isEnglish
     />
   </picture>
   <div class="container">
-    <h2 class="profile-ttl eng section-ttl" id="profile-heading">Profile</h2>
-    <p class="profile-name">
-      川端 康平<br />
-      <span class="eng">Kohei Kawabata</span>
-    </p>
-    <p class="profile-role">
-      {isEnglish
-        ? "AI adoption consultant × Web engineer"
-        : "AI活用支援コンサルタント × Webエンジニア"}
-    </p>
+    {/*
+      顔写真は現状モノクロの暗いスナップで、この文脈に合わないため使っていない。
+      ビジネス用の写真が用意できたら profile-photo として左に戻す。
+    */}
     <div class="profile-main">
-      <div class="profile-main__left">
+      <div class="profile-head">
+        <p class="ai-head__eyebrow eng">Profile</p>
+        <h2 class="profile-name" id="profile-heading">
+          {isEnglish ? (
+            <>Kohei Kawabata<span class="profile-name__en">川端 康平</span></>
+          ) : (
+            <>川端 康平<span class="profile-name__en eng">Kohei Kawabata</span></>
+          )}
+        </h2>
+        <p class="profile-role">
+          {isEnglish
+            ? "AI adoption consultant × Web engineer"
+            : "AI活用支援コンサルタント × Webエンジニア"}
+        </p>
+      </div>
+
+      {/* 年表の「バンド活動」に対応する当時の写真。他の写真と同じデュオトーンで色を揃えている */}
+      <div class="profile-photo">
         <picture>
-          <source srcset="/assets/images/profile-main.webp" type="image/webp" />
+          <source media="(min-width: 769px)" srcset="/assets/images/photo/profile-live.webp" type="image/webp" />
+          <source media="(min-width: 769px)" srcset="/assets/images/photo/profile-live.jpg" />
+          <source srcset="/assets/images/photo/profile-live-sp.webp" type="image/webp" />
           <img
-            src="/assets/images/profile-main.jpg"
-            width="524"
-            height="200"
-            loading="lazy"
-            decoding="async"
-            alt={isEnglish ? "Profile photo" : "顔写真"}
+            src="/assets/images/photo/profile-live-sp.jpg"
+            alt={isEnglish ? "Kohei Kawabata playing guitar on stage" : "ステージでギターを弾く川端康平"}
+            width="1200" height="800" loading="lazy" decoding="async"
           />
         </picture>
       </div>
-      <div class="profile-main__right">
-        <p class="profile-career__lead">
-          {isEnglish ? "The route here was not a straight one." : "経歴は、かなり異色です。"}
-        </p>
-        <ol class="profile-career">
-          {career.map((step) => (
-            <li class="profile-career__item">
-              <h3 class="profile-career__name">{step.name}</h3>
-              <p class="profile-career__txt">{step.txt}</p>
-            </li>
-          ))}
-        </ol>
-      </div>
     </div>
+
+    {/* 経歴は横一本の年表にして、縦積みが続く他セクションと流れを変える */}
+    <ol class="profile-career fadeInTrigger">
+      {career.map((step) => (
+        <li class="profile-career__item">
+          <h3 class="profile-career__name">{step.name}</h3>
+          <p class="profile-career__txt">{step.txt}</p>
+        </li>
+      ))}
+    </ol>
+
     <p class="profile-catch">
       {isEnglish ? (
-        <>Every detour taught me what the floor actually feels like.<br /><span class="ai-marker">That is what my AI support is built on.</span></>
+        <>I left a burning development floor after a year, and came back the long way round.<br /><span class="ai-marker">DX never reached small businesses. AI is how it gets there.</span></>
       ) : (
-        <>回り道の分だけ、現場のリアルが分かる。<br /><span class="ai-marker">それが私のAI支援の土台です。</span></>
+        <>炎上する開発現場を1年で離れ、遠回りしてここに戻りました。<br /><span class="ai-marker">中小企業に届かなかったDXを、AIで届けます。</span></>
       )}
     </p>
   </div>

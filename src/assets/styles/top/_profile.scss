@@ -223,7 +223,7 @@
     .profile {
       &-role {
         margin-top: 18px;
-        font-size: 1.6rem;
+        font-size: 1.8rem;
       }
 
       &-career {
@@ -308,7 +308,7 @@
         }
 
         &__name {
-          font-size: 1.5rem;
+          font-size: 1.7rem;
         }
 
         &__txt {
@@ -321,6 +321,281 @@
         margin-top: 34px;
         padding-top: 22px;
         font-size: 1.6rem;
+      }
+    }
+  }
+}
+
+
+/*****************/
+/*** profile（構図の作り直し）***/
+/*****************/
+/*
+  他セクションが縦積みばかりなので、経歴は横一本の年表にして流れを変える。
+  上のブロックにある中央寄せ・2カラムの指定はここで打ち消している。
+*/
+
+#top {
+  .profile {
+    .container {
+      display: block;
+    }
+
+    /* 名前ブロックと写真の非対称。年表はこの下に全幅で置く */
+    &-main {
+      display: flex;
+      align-items: flex-end;
+    }
+
+    &-photo {
+      margin: 0;
+      flex-shrink: 0;
+
+      img {
+        width: 100%;
+        height: auto;
+        border-radius: 5px;
+      }
+
+    }
+
+    &-ttl {
+      display: none;
+    }
+
+    &-name {
+      text-align: left;
+      border-bottom: none;
+      padding-bottom: 0;
+      color: white;
+      font-weight: bold;
+      line-height: 1.2;
+
+      &__en {
+        display: block;
+        color: rgba(195, 206, 224, 0.55);
+        font-weight: 600;
+        letter-spacing: 0.08em;
+      }
+    }
+
+    &-role {
+      text-align: left;
+      color: rgba(195, 206, 224, 0.75);
+      font-weight: 600;
+    }
+
+    /* 横一本の年表 */
+    &-career {
+      display: grid;
+      position: relative;
+
+      &::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background-color: rgba(195, 206, 224, 0.2);
+      }
+
+      &__item {
+        position: relative;
+
+        &::before {
+          content: "";
+          position: absolute;
+          left: 0;
+          border-radius: 50%;
+          background-color: v.$color-accent;
+        }
+      }
+
+      &__name {
+        color: white;
+        font-weight: bold;
+        line-height: 1.5;
+      }
+
+      &__txt {
+        color: rgba(195, 206, 224, 0.65);
+        font-weight: 500;
+        line-height: 1.7;
+      }
+    }
+
+    &-catch {
+      text-align: left;
+      position: relative;
+      border-top: 1px solid rgba(195, 206, 224, 0.18);
+      color: white;
+      font-weight: bold;
+      line-height: 1.8;
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: -1px;
+        left: 0;
+        width: 40px;
+        height: 1px;
+        background-color: v.$color-accent;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 769px) {
+  #top {
+    .profile {
+      padding-top: 130px;
+      padding-bottom: 140px;
+
+      &-name {
+        margin-top: 22px;
+        font-size: 4.4rem;
+
+        &__en {
+          margin-top: 14px;
+          font-size: 1.4rem;
+        }
+      }
+
+      &-role {
+        margin-top: 18px;
+        font-size: 1.6rem;
+      }
+
+      &-main {
+        gap: 60px;
+
+        &__x {
+          display: none;
+        }
+      }
+
+      &-head {
+        flex: 1;
+      }
+
+      &-photo {
+        width: 44%;
+        max-width: 480px;
+      }
+
+      &-career {
+        margin-top: 70px;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 0 24px;
+
+        &::before {
+          top: 5px;
+        }
+
+        &__item {
+          padding-top: 30px;
+
+          &::before {
+            top: 1px;
+            width: 9px;
+            height: 9px;
+          }
+        }
+
+        &__name {
+          font-size: 1.5rem;
+        }
+
+        &__txt {
+          margin-top: 10px;
+          font-size: 1.5rem;
+        }
+      }
+
+      &-catch {
+        margin-top: 90px;
+        padding-top: 30px;
+        font-size: 2.2rem;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #top {
+    .profile {
+      padding-top: 70px;
+      padding-bottom: 76px;
+
+      &-name {
+        margin-top: 16px;
+        font-size: 2.8rem;
+
+        &__en {
+          margin-top: 10px;
+          font-size: 1.2rem;
+        }
+      }
+
+      &-role {
+        margin-top: 12px;
+        font-size: 1.5rem;
+      }
+
+      /* 5列は狭すぎるので縦の年表に戻す */
+      &-main {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 26px;
+      }
+
+      &-photo {
+        width: 100%;
+      }
+
+      &-career {
+        margin-top: 40px;
+        grid-template-columns: 1fr;
+        padding-left: 22px;
+
+        &::before {
+          left: 4px;
+          right: auto;
+          top: 8px;
+          bottom: 8px;
+          width: 1px;
+          height: auto;
+        }
+
+        &__item {
+          padding-bottom: 22px;
+
+          &::before {
+            top: 6px;
+            left: -22px;
+            width: 8px;
+            height: 8px;
+          }
+
+          &:last-child {
+            padding-bottom: 0;
+          }
+        }
+
+        &__name {
+          font-size: 1.5rem;
+        }
+
+        &__txt {
+          margin-top: 6px;
+          font-size: 1.4rem;
+        }
+      }
+
+      &-catch {
+        margin-top: 46px;
+        padding-top: 24px;
+        font-size: 1.7rem;
       }
     }
   }

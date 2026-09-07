@@ -1,0 +1,125 @@
+---
+//src/components/subsidy/SubsidyBody.astro
+// 助成金はトップに置くと長くなりすぎるので /subsidy に分けた。料金セクションから導線がある。
+const isEnglish = Astro.url.pathname.startsWith("/en");
+
+const points = isEnglish
+  ? [
+      { name: "A pay rise is the condition", txt: "Raise the minimum wage inside the workplace by 50 yen or more. The rate and the cap move with the raise and the headcount." },
+      { name: "Productivity work qualifies", txt: "AI and system adoption, equipment, process consulting, training and education — a wide range of work qualifies." },
+      { name: "Part of the cost is covered", txt: "Part of what you spend on raising productivity comes back, which lightens the load on the company." },
+    ]
+  : [
+      { name: "賃上げが条件", txt: "事業場内最低賃金を50円以上引き上げること。引き上げ額と人数で助成率・上限額が変わります。" },
+      { name: "生産性向上の取組が対象", txt: "AI・システム導入、設備投資、業務改善コンサル、人材育成など。" },
+      { name: "費用の一部を助成", txt: "生産性向上にかけた費用の一部が戻り、負担が軽くなります。" },
+    ];
+
+const flow = isEnglish
+  ? [
+      { name: "Map the situation", txt: "List where AI and process work could help" },
+      { name: "Write the plan", txt: "Put the pay rise and the productivity work on paper" },
+      { name: "Apply", txt: "A partner helps prepare and file the documents" },
+      { name: "Approval", txt: "Once it clears review, the work starts" },
+      { name: "Do the work", txt: "AI adoption, process change, training" },
+      { name: "Receive the grant", txt: "After the report of what was done, the grant is paid" },
+    ]
+  : [
+      { name: "現状の課題整理", txt: "AI活用・業務改善の課題を洗い出す" },
+      { name: "計画の作成", txt: "賃上げ計画と取組をまとめる" },
+      { name: "申請", txt: "パートナーが書類作成・提出を支援" },
+      { name: "交付決定", txt: "交付が決まり次第スタート" },
+      { name: "取組の実施", txt: "AI導入・業務改善・教育を実施" },
+      { name: "助成金の受給", txt: "実績報告後に支給" },
+    ];
+---
+
+<section class="ai-sec subsidy" id="subsidy" aria-labelledby="subsidy-heading">
+  <div class="container">
+    <header class="ai-head">
+      <p class="ai-head__eyebrow eng">Subsidy</p>
+      <h2 class="ai-head__ttl" id="subsidy-heading">
+        {isEnglish ? "A public grant you can put toward this" : "「業務改善助成金」という選択肢"}
+      </h2>
+      <p class="ai-head__lead">
+        {isEnglish
+          ? "A scheme for small and mid-sized businesses raising wages alongside productivity."
+          : "賃上げとあわせて生産性向上に取り組む、中小企業向けの制度です。"}
+      </p>
+    </header>
+
+    <div class="subsidy-lead fadeInTrigger">
+      <div class="subsidy-lead__txt">
+        <p class="desc">
+          {isEnglish ? (
+            <>
+              This grant supports small and mid-sized businesses that raise their in-workplace minimum wage and work on productivity.{" "}
+              <span class="ai-marker">Unlike a subsidy, there is no cap on application slots</span> — meet the requirements and it goes through.
+            </>
+          ) : (
+            <>
+              業務改善助成金は、事業場内の最低賃金を引き上げ、生産性向上に取り組む中小企業・小規模事業者を支援する制度です。<span
+                class="ai-marker">補助金と異なり、申請枠の制限はありません。</span>そのため、要件を満たせば申請が通りやすい制度です。
+            </>
+          )}
+        </p>
+        <p class="subsidy-lead__note">
+          {isEnglish ? "Grants are made within the budget available." : "※ただし、予算の範囲内での交付となります。"}
+        </p>
+      </div>
+
+      <p class="subsidy-amount">
+        <span class="subsidy-amount__year">{isEnglish ? "FY2026" : "2026年度（令和8年度）"}</span>
+        <span class="subsidy-amount__lead">{isEnglish ? "Up to" : "最大"}</span>
+        <span class="subsidy-amount__num eng">600<small>{isEnglish ? "万円" : "万円"}</small></span>
+        <span class="subsidy-amount__tail">{isEnglish ? "granted" : "を助成"}</span>
+        <span class="subsidy-amount__note">
+          {isEnglish
+            ? "The amount moves with the size of the raise and the headcount."
+            : "※助成額は引き上げ額・労働者数などにより変動します"}
+        </span>
+      </p>
+    </div>
+
+    <h3 class="subsidy-subttl">{isEnglish ? "How the grant works" : "制度のポイント"}</h3>
+    <ul class="subsidy-points">
+      {points.map((point) => (
+        <li class="subsidy-points__item ai-card">
+          <h4 class="ai-card__ttl">{point.name}</h4>
+          <p class="ai-card__txt">{point.txt}</p>
+        </li>
+      ))}
+    </ul>
+
+    <h3 class="subsidy-subttl">
+      {isEnglish ? "How it usually goes" : "活用の流れ"}
+      <span class="subsidy-subttl__note">{isEnglish ? "(typical case)" : "（一般的なイメージ）"}</span>
+    </h3>
+    <ol class="subsidy-flow">
+      {flow.map((step, i) => (
+        <li class="subsidy-flow__item">
+          <p class="ai-num"><span>{String(i + 1).padStart(2, "0")}</span></p>
+          <h4 class="subsidy-flow__name">{step.name}</h4>
+          <p class="subsidy-flow__txt">{step.txt}</p>
+        </li>
+      ))}
+    </ol>
+
+    <div class="subsidy-support ai-card">
+      <h3 class="subsidy-support__ttl">{isEnglish ? "Help with the application" : "申請サポートも安心"}</h3>
+      <p class="ai-card__txt">
+        {isEnglish
+          ? "Requirements, paperwork, and the plan itself are handled by a specialist partner we work with."
+          : "制度要件の確認から書類作成・提出、採択に向けた計画づくりまで、提携する専門の申請パートナーが対応します。"}
+      </p>
+    </div>
+
+    <p class="ai-note">
+      {isEnglish ? (
+        <>What you spend on AI and process work <span class="ai-marker">may qualify</span>.</>
+      ) : (
+        <>AIの導入や業務改善、システム化にかかった費用が<span class="ai-marker">助成対象になる可能性があります。</span>御社に合った活用方法をご提案します。</>
+      )}
+    </p>
+  </div>
+</section>

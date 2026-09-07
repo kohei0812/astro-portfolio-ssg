@@ -1,0 +1,27 @@
+  /*****************/
+  /*** main#subsidy-page（業務改善助成金ページ）***/
+  /*****************/
+  /* トップと同じ共通パーツを、このページのスコープで読み直している */
+  @use "subsidy/ai-parts-sub";
+  @use "subsidy/subsidy";
+
+#subsidy-page {
+  background-color: #172439;
+
+  .subsidy-cta {
+    background-color: #172439;
+
+    .cta {
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+}
+
+@media screen and (min-width: 769px) {
+  #subsidy-page .subsidy-cta { padding: 20px 0 110px; }
+}
+
+@media screen and (max-width: 768px) {
+  #subsidy-page .subsidy-cta { padding: 10px 0 70px; }
+}

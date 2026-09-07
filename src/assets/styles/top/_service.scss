@@ -3,22 +3,66 @@
 /*****************/
 /*** service ***/
 /*****************/
-/*
-  1〜6は実際の進行順。矢印や枠で囲わず、
-  大きな番号と天の罫線だけで順序と区切りを示す。
-*/
+/* 初回2時間の中身（白カード3枚）と、その先の受け渡し（罫線の3ステップ） */
 
 #top {
   .service {
-    &-steps {
+    /* 左に主張と数字、右に中身。gridを並べるだけの構図をやめる */
+    &-main {
+      display: flex;
+      align-items: flex-start;
+
+      &__ttl {
+        color: white;
+        line-height: 1.5;
+        display: block;
+      }
+
+      /* 「初回研修 / 2時間 / で、業務が…」を縦に積む。h2 には全文が入っている */
+      &__label {
+        display: block;
+        color: v.$color-accent;
+        font-weight: bold;
+        letter-spacing: 0.06em;
+      }
+
+      &__rest {
+        display: block;
+      }
+
+      &__lead {
+        color: rgba(195, 206, 224, 0.75);
+        line-height: 1.9;
+        font-weight: 500;
+      }
+    }
+
+    /* 数字はこのセクションの主役なので本文と桁違いに大きく置く */
+    &-metric {
+      display: flex;
+      align-items: baseline;
+      color: white;
+
+      &__num {
+        font-weight: bold;
+        line-height: 0.9;
+        letter-spacing: -0.02em;
+      }
+
+      &__unit {
+        font-weight: bold;
+      }
+    }
+
+    &-first {
       display: grid;
 
       &__item {
-        position: relative;
         background-color: white;
+        position: relative;
         border-top: 1px solid rgba(23, 36, 57, 0.12);
+        border-radius: 5px;
 
-        /* 最初のステップだけ罫線をアクセント色にして起点を示す */
         &:first-child {
           border-top-color: v.$color-accent;
         }
@@ -28,7 +72,6 @@
         }
       }
 
-      /* 暗背景なのでラスター画像ではなく線画アイコン（currentColorを継ぐ） */
       &__icon {
         display: block;
         color: v.$color-accent;
@@ -45,17 +88,81 @@
         line-height: 1.5;
       }
 
-      &__tag {
+      &__txt {
         color: #6b7688;
         font-weight: 500;
-        line-height: 1.6;
+        line-height: 1.8;
+      }
+
+      /* 図は枠を決めて contain。元スライドの比率のまま全体を収める */
+      &__illust {
+        display: block;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+        }
       }
     }
 
-    &-dev {
-      color: rgba(195, 206, 224, 0.75);
-      line-height: 1.9;
-      font-weight: 500;
+    /* 2回目以降。担当が私から担当者へ移る */
+    &-growth {
+      &__ttl {
+        color: white;
+        font-weight: bold;
+        line-height: 1.6;
+      }
+
+      &__list {
+        display: grid;
+      }
+
+      &__item {
+        border-top: 1px solid rgba(195, 206, 224, 0.18);
+
+        &:last-child {
+          border-top-color: v.$color-accent;
+        }
+      }
+
+      &__name {
+        color: white;
+        font-weight: bold;
+      }
+
+      &__txt {
+        color: rgba(195, 206, 224, 0.7);
+        font-weight: 500;
+        line-height: 1.8;
+      }
+
+      /* 暗背景に色付きの図を載せるので、白い円を敷いて色を保つ */
+      &__illust {
+        display: block;
+        background-color: white;
+        border-radius: 50%;
+        aspect-ratio: 1 / 1;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+        }
+      }
+
+      &__bar {
+        display: flex;
+        align-items: center;
+        color: rgba(195, 206, 224, 0.85);
+        font-weight: bold;
+
+        &-line {
+          flex: 1;
+          height: 1px;
+          background: linear-gradient(90deg, rgba(195, 206, 224, 0.5) 0%, v.$color-accent 100%);
+        }
+      }
     }
   }
 }
@@ -66,37 +173,123 @@
 @media screen and (min-width: 769px) {
   #top {
     .service {
-      &-steps {
-        margin-top: 70px;
-        grid-template-columns: repeat(6, 1fr);
-        gap: 20px;
+      &-main {
+        gap: 80px;
 
-        &__item {
-          padding: 22px 18px 26px;
+        &__label {
+          margin-top: 20px;
+          font-size: 1.8rem;
         }
 
-        .ai-num {
-          margin-bottom: 18px;
+        &__left {
+          width: 38%;
+          flex-shrink: 0;
+          position: sticky;
+          top: 140px;
         }
 
-        &__icon {
-          width: 30px;
-          margin-bottom: 18px;
+        &__right {
+          flex: 1;
         }
 
-        &__name {
+        &__rest {
+          margin-top: 6px;
+          font-size: 2.8rem;
+        }
+
+        &__lead {
+          margin-top: 26px;
           font-size: 1.7rem;
-        }
-
-        &__tag {
-          margin-top: 12px;
-          font-size: 1.2rem;
         }
       }
 
-      &-dev {
-        margin-top: 60px;
-        font-size: 1.4rem;
+      &-metric {
+        margin-top: 10px;
+        gap: 14px;
+
+        &__num {
+          font-size: 13rem;
+        }
+
+        &__unit {
+          font-size: 3rem;
+        }
+      }
+
+      &-first {
+        grid-template-columns: 1fr;
+        gap: 16px;
+
+        /* 横長の行にして、左の大きな数字と釣り合わせる */
+        &__item {
+          display: grid;
+          grid-template-columns: auto 1fr auto;
+          gap: 0 28px;
+          align-items: center;
+          padding: 22px 30px 24px;
+        }
+
+        .ai-num {
+          margin-bottom: 0;
+        }
+
+        &__illust {
+          width: 150px;
+          height: 96px;
+        }
+
+        &__name {
+          font-size: 1.9rem;
+        }
+
+        &__txt {
+          margin-top: 8px;
+          font-size: 1.6rem;
+        }
+      }
+
+      &-growth {
+        margin-top: 90px;
+
+        &__ttl {
+          font-size: 2rem;
+        }
+
+        &__list {
+          margin-top: 30px;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 0 28px;
+        }
+
+        &__item {
+          padding: 22px 0 26px;
+        }
+
+        .ai-num {
+          margin-bottom: 12px;
+        }
+
+        &__illust {
+          margin: 0 auto 26px;
+          padding: 46px;
+          width: 320px;
+          height: 320px;
+        }
+
+        &__name {
+          font-size: 1.8rem;
+        }
+
+        &__txt {
+          margin-top: 10px;
+          font-size: 1.5rem;
+        }
+
+        &__bar {
+          margin-top: 30px;
+          gap: 22px;
+          font-size: 1.6rem;
+        }
       }
     }
   }
@@ -108,47 +301,124 @@
 @media screen and (max-width: 768px) {
   #top {
     .service {
-      &-steps {
-        margin-top: 36px;
-        grid-template-columns: 1fr;
+      &-main {
+        flex-direction: column;
+        gap: 32px;
 
-        /* 1行1ステップ。番号・見出し・補足を横位置で揃える */
+        &__label {
+          margin-top: 14px;
+          font-size: 1.5rem;
+        }
+
+        &__rest {
+          margin-top: 4px;
+          font-size: 2rem;
+        }
+
+        &__lead {
+          margin-top: 18px;
+          font-size: 1.5rem;
+        }
+      }
+
+      &-metric {
+        margin-top: 8px;
+        gap: 10px;
+
+        &__num {
+          font-size: 7rem;
+        }
+
+        &__unit {
+          font-size: 2rem;
+        }
+      }
+
+      &-first {
+        grid-template-columns: 1fr;
+        gap: 12px;
+
         &__item {
           display: grid;
           grid-template-columns: auto 1fr auto;
-          gap: 0 16px;
-          align-items: baseline;
-          padding: 18px 0 20px;
+          gap: 0 14px;
+          align-items: center;
+          padding: 18px 18px 20px;
         }
 
         .ai-num {
-          grid-row: 1 / 3;
           grid-column: 1;
           margin-bottom: 0;
         }
 
-        &__icon {
-          grid-row: 1 / 3;
-          grid-column: 3;
-          width: 26px;
-          align-self: center;
+        &__illust {
+          width: 84px;
+          height: 64px;
         }
 
         &__name {
+          font-size: 1.7rem;
+        }
+
+        &__txt {
+          margin-top: 6px;
+          font-size: 1.4rem;
+        }
+      }
+
+      &-growth {
+        margin-top: 50px;
+
+        &__ttl {
+          font-size: 1.7rem;
+        }
+
+        &__list {
+          margin-top: 20px;
+          grid-template-columns: 1fr;
+        }
+
+        &__item {
+          display: grid;
+          grid-template-columns: auto 1fr;
+          gap: 0 14px;
+          align-items: baseline;
+          padding: 20px 0 24px;
+        }
+
+        .ai-num {
+          grid-row: 1;
+          grid-column: 1;
+          margin-bottom: 0;
+        }
+
+        &__illust {
+          grid-row: 2;
+          grid-column: 1 / 3;
+          margin: 18px auto 6px;
+          padding: 30px;
+          width: 210px;
+          height: 210px;
+        }
+
+        &__name {
+          grid-row: 1;
           grid-column: 2;
           font-size: 1.6rem;
         }
 
-        &__tag {
-          grid-column: 2;
-          margin-top: 6px;
-          font-size: 1.2rem;
+        &__txt {
+          grid-row: 3;
+          grid-column: 1 / 3;
+          margin-top: 10px;
+          font-size: 1.4rem;
         }
-      }
 
-      &-dev {
-        margin-top: 34px;
-        font-size: 1.3rem;
+        &__bar {
+          margin-top: 24px;
+          gap: 12px;
+          font-size: 1.3rem;
+        }
       }
     }
   }

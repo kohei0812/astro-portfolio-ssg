@@ -1,0 +1,317 @@
+@use "../variables" as v;
+
+/*******************************/
+/*** AIコンサルLP 共通パーツ ***/
+/*******************************/
+/*
+  トップページのAIコンサル系セクションで共有するパーツ。
+  対象: reframe / service / first-session / growth / before-after /
+        strength / voice / vision / subsidy / flow / closing
+
+  設計方針（日本のBtoB/AI系サイトの作法に合わせる）:
+  - 箱で囲まない。1pxの罫線と余白で区切る。
+  - アクセント色（赤）は「罫線の左端の短いセグメント」と数語だけに使う。
+  - 番号は塗りのバッジにせず、Montserratの数字を沈んだ色で置く。
+  - 白ベタ面は plan（料金）だけに残し、ここでは使わない。
+
+  .hero が position:fixed / z-index:1 のため、
+  重なる全セクションに position:relative + z-index:50 が必要。
+*/
+
+#subsidy-page {
+  /* --- セクション外枠 --------------------------------- */
+  .ai-sec {
+    position: relative;
+    overflow: hidden;
+    z-index: 50;
+    background-color: v.$color-primary;
+
+    &--dark {
+      background-color: v.$color-secondary;
+    }
+
+    .container {
+      position: relative;
+    }
+  }
+
+  /*
+    罫線の左端にアクセント色の短いセグメントを重ねる。
+    このサイトの新セクションで唯一くり返す装飾。
+  */
+  %rule-accent {
+    position: relative;
+    border-top: 1px solid rgba(195, 206, 224, 0.18);
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: -1px;
+      left: 0;
+      width: 40px;
+      height: 1px;
+      background-color: v.$color-accent;
+    }
+  }
+
+  /* --- 見出し（英字ラベル → 日本語見出し → リード） --- */
+  .ai-head {
+    &__eyebrow {
+      display: flex;
+      align-items: center;
+      color: v.$color-accent;
+      font-weight: 700;
+      text-transform: uppercase;
+
+      &::before {
+        content: "";
+        height: 1px;
+        background-color: currentColor;
+        flex-shrink: 0;
+      }
+    }
+
+    &__ttl {
+      color: white;
+      line-height: 1.5;
+    }
+
+    &__lead {
+      color: rgba(195, 206, 224, 0.75);
+      line-height: 1.9;
+      font-weight: 500;
+    }
+  }
+
+  /* --- 番号（塗らない・囲まない） --------------------- */
+  .ai-num {
+    color: rgba(195, 206, 224, 0.3);
+    line-height: 1;
+    flex-shrink: 0;
+    white-space: nowrap;
+
+    span {
+      display: block;
+      font-family: "Montserrat", "Montserrat Fallback", sans-serif;
+      font-weight: 700;
+      font-feature-settings: "tnum";
+    }
+  }
+
+  /* --- ラベル（導入前 / 実際は など） ----------------- */
+  .ai-label {
+    display: flex;
+    align-items: center;
+    color: v.$color-accent;
+
+    &::before {
+      content: "";
+      height: 1px;
+      background-color: currentColor;
+      flex-shrink: 0;
+    }
+
+    span {
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    /* 使う場所がすべて白／薄グレーのカード上になったので紺側に振る */
+    &--muted {
+      color: #8a94a6;
+    }
+  }
+
+  /*
+    --- カード ---
+    本文を読ませる箱は白地・紺文字にする（暗背景に小さな明朝〜ゴシックの
+    白文字を並べると本文としては読みにくいため）。
+    天のアクセント罫線は暗背景の他パーツと同じ作法のまま残す。
+  */
+  .ai-card {
+    @extend %rule-accent;
+    background-color: white;
+    border-top-color: rgba(23, 36, 57, 0.12);
+
+    &__ttl {
+      color: v.$color-secondary;
+      font-weight: bold;
+      line-height: 1.6;
+      text-align: left;
+    }
+
+    &__txt {
+      color: #46536a;
+      line-height: 1.9;
+      font-weight: 500;
+    }
+
+    /* 白地の上では番号も紺側に振る */
+    .ai-num {
+      color: rgba(23, 36, 57, 0.22);
+    }
+  }
+
+  /* --- セクション末尾の結論 --------------------------- */
+  .ai-note {
+    @extend %rule-accent;
+    color: white;
+    line-height: 1.9;
+    font-weight: bold;
+  }
+
+  /* --- 強調 ------------------------------------------- */
+  /* 黄色の塗りは使わない。赤の下線と赤文字だけで足りる */
+  .ai-marker {
+    color: white;
+    font-weight: bold;
+    padding-bottom: 3px;
+    box-shadow: inset 0 -2px 0 v.$color-accent;
+  }
+
+  .ai-strong {
+    color: v.$color-accent;
+    font-weight: bold;
+  }
+}
+
+/*****************/
+/*** PC ***/
+/*****************/
+@media screen and (min-width: 769px) {
+  #subsidy-page {
+    .ai-sec {
+      padding-top: 130px;
+      padding-bottom: 140px;
+    }
+
+    .ai-head {
+      &__eyebrow {
+        gap: 16px;
+        font-size: 1.3rem;
+        letter-spacing: 0.2em;
+
+        &::before {
+          width: 36px;
+        }
+      }
+
+      &__ttl {
+        margin-top: 22px;
+        font-size: 3.6rem;
+      }
+
+      &__lead {
+        margin-top: 26px;
+        font-size: 1.6rem;
+        max-width: 760px;
+      }
+    }
+
+    .ai-num span {
+      font-size: 4.4rem;
+    }
+
+    .ai-label {
+      gap: 12px;
+
+      &::before {
+        width: 28px;
+      }
+
+      span {
+        font-size: 1.5rem;
+        letter-spacing: 0.08em;
+      }
+    }
+
+    .ai-card {
+      padding: 30px 28px 34px;
+
+      &__ttl {
+        font-size: 1.9rem;
+      }
+
+      &__txt {
+        margin-top: 16px;
+        font-size: 1.5rem;
+      }
+    }
+
+    .ai-note {
+      margin-top: 80px;
+      padding-top: 34px;
+      font-size: 2.2rem;
+    }
+  }
+}
+
+/*****************/
+/*** SP ***/
+/*****************/
+@media screen and (max-width: 768px) {
+  #subsidy-page {
+    .ai-sec {
+      padding-top: 70px;
+      padding-bottom: 76px;
+    }
+
+    .ai-head {
+      &__eyebrow {
+        gap: 12px;
+        font-size: 1.1rem;
+        letter-spacing: 0.18em;
+
+        &::before {
+          width: 24px;
+        }
+      }
+
+      &__ttl {
+        margin-top: 16px;
+        font-size: 2.2rem;
+      }
+
+      &__lead {
+        margin-top: 18px;
+        font-size: 1.4rem;
+      }
+    }
+
+    .ai-num span {
+      font-size: 3.2rem;
+    }
+
+    .ai-label {
+      gap: 10px;
+
+      &::before {
+        width: 20px;
+      }
+
+      span {
+        font-size: 1.3rem;
+        letter-spacing: 0.06em;
+      }
+    }
+
+    .ai-card {
+      padding: 22px 20px 26px;
+
+      &__ttl {
+        font-size: 1.6rem;
+      }
+
+      &__txt {
+        margin-top: 12px;
+        font-size: 1.4rem;
+      }
+    }
+
+    .ai-note {
+      margin-top: 44px;
+      padding-top: 26px;
+      font-size: 1.7rem;
+    }
+  }
+}

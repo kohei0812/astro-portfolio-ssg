@@ -124,6 +124,21 @@ document.addEventListener("DOMContentLoaded", function () {
   window.addEventListener("scroll", handleScroll);
 
   /******************* */
+  /* 追従CTA */
+  /******************* */
+  // FV（またはページヘッダー）を抜けたら表示する
+  const stickyCta = document.getElementById("js-sticky-cta");
+  if (stickyCta) {
+    const showAfter = () => (heroEl ? heroEl.offsetHeight * 0.8 : 400);
+    const toggleStickyCta = () => {
+      const y = window.pageYOffset || document.documentElement.scrollTop;
+      stickyCta.classList.toggle("is-visible", y > showAfter());
+    };
+    window.addEventListener("scroll", toggleStickyCta);
+    toggleStickyCta();
+  }
+
+  /******************* */
   /* フェードイン */
   /******************* */
 

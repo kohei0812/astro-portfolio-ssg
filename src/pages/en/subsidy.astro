@@ -1,0 +1,42 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import SubsidyBody from "../../components/subsidy/SubsidyBody.astro";
+---
+
+<Layout
+  title="A public grant you can put toward this | Dynamis"
+  description="What you spend on AI adoption and process improvement may be partly covered. A scheme for small and mid-sized businesses raising wages alongside productivity."
+  lang="en"
+>
+  <main id="subsidy-page" class="subsidy-page" role="main">
+    <div class="pageheader">
+      <h1 class="pageheader-ttl">
+        <span class="eng">Subsidy</span>
+        A public grant you can put toward this
+      </h1>
+    </div>
+    <nav aria-label="Breadcrumb" class="breadcrumb">
+      <div class="container">
+        <ol itemscope itemtype="https://schema.org/BreadcrumbList" class="breadcrumb-list">
+          <li class="breadcrumb-list__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <a itemprop="item" href="/en/"><span itemprop="name">Home</span></a>
+            <meta itemprop="position" content="1" />
+          </li>
+          <li class="breadcrumb-list__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <span itemprop="name">Subsidy</span>
+            <meta itemprop="position" content="2" />
+          </li>
+        </ol>
+      </div>
+    </nav>
+    <SubsidyBody />
+    <section class="subsidy-cta">
+      <div class="container">
+        <div class="cta">
+          <p class="cta-p">Let's check together whether it applies to you</p>
+          <a href="/en/#contact" class="cta-link">Book a free consultation</a>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>

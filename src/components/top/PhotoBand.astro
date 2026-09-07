@@ -1,0 +1,36 @@
+---
+//src/components/top/PhotoBand.astro
+/*
+  セクションとセクションの間に挟む全幅の写真帯。
+  文字が続く流れをここで一度切るための余白でもあるので、
+  コピーは一行だけに留めること。
+  写真は Unsplash（商用利用可・クレジット不要）を紺にデュオトーン処理したもの。
+*/
+const isEnglish = Astro.url.pathname.startsWith("/en");
+---
+
+<section class="photoband" aria-hidden="true">
+  <picture class="photoband-bg">
+    <source media="(min-width: 769px)" srcset="/assets/images/photo/band-site.webp" type="image/webp" />
+    <source media="(min-width: 769px)" srcset="/assets/images/photo/band-site.jpg" />
+    <source srcset="/assets/images/photo/band-site-sp.webp" type="image/webp" />
+    <img
+      src="/assets/images/photo/band-site-sp.jpg"
+      alt=""
+      width="2000"
+      height="857"
+      loading="lazy"
+      decoding="async"
+    />
+  </picture>
+  <div class="photoband-veil"></div>
+  <div class="container">
+    <p class="photoband-copy">
+      {isEnglish ? (
+        <>AI only matters once it runs <span class="photoband-em">on the floor</span>.</>
+      ) : (
+        <>AIは、<span class="photoband-em">現場で動いて</span>はじめて意味がある。</>
+      )}
+    </p>
+  </div>
+</section>

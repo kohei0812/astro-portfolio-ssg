@@ -1,0 +1,125 @@
+---
+//src/components/top/Shift.astro
+/*
+  このセクションだけコンテナ(1110px)を使わず、画面を左右に割る。
+  左＝これまで（沈んだ紺）、右＝これから（白）。
+  ページの中で一度だけ全幅にすることで、単調さを断ち切る役目も持たせている。
+*/
+const isEnglish = Astro.url.pathname.startsWith("/en");
+
+const HUMAN = isEnglish ? "You" : "人";
+const AI = "AI";
+
+const beforeSteps = isEnglish
+  ? [
+      { name: "Work out what you need", actor: HUMAN },
+      { name: "Brief a vendor", actor: HUMAN },
+      { name: "Wait for the build", actor: HUMAN },
+      { name: "Ask for changes", actor: HUMAN },
+    ]
+  : [
+      { name: "何が必要か考える", actor: HUMAN },
+      { name: "開発会社に発注する", actor: HUMAN },
+      { name: "できあがりを待つ", actor: HUMAN },
+      { name: "追加・変更を依頼する", actor: HUMAN },
+    ];
+
+const afterSteps = isEnglish
+  ? [
+      { name: "Say what you want", actor: HUMAN },
+      { name: "Build it", actor: AI },
+      { name: "Fix and extend", actor: AI },
+      { name: "Decide if it's right", actor: HUMAN },
+    ]
+  : [
+      { name: "やりたいことを伝える", actor: HUMAN },
+      { name: "作る", actor: AI },
+      { name: "直す・足す", actor: AI },
+      { name: "これでいいか判断する", actor: HUMAN },
+    ];
+---
+
+<section class="shift" id="shift" aria-labelledby="shift-heading">
+  <div class="shift-head">
+    <div class="container">
+      <p class="ai-head__eyebrow eng">The Shift</p>
+      <h2 class="ai-head__ttl" id="shift-heading">
+        {isEnglish
+          ? "Systems: from having them built, to changing them yourself"
+          : "システムは「作ってもらう」から、「自分たちで変える」へ"}
+      </h2>
+    </div>
+  </div>
+
+  <div class="shift-split fadeInTrigger">
+    <div class="shift-split__side is-before">
+      <div class="shift-split__inner">
+        <p class="shift-split__label">{isEnglish ? "Until now" : "これまで"}</p>
+        <p class="shift-split__lead">
+          {isEnglish ? <>You <span class="shift-em">order it</span></> : <>開発会社に<span class="shift-em">発注する</span></>}
+        </p>
+        <picture class="shift-split__photo">
+          <source srcset="/assets/images/photo/shift-before.webp" type="image/webp" />
+          <img
+            src="/assets/images/photo/shift-before.jpg"
+            alt={isEnglish ? "Stacks of paperwork waiting" : "積み上がった書類"}
+            width="1200" height="750" loading="lazy" decoding="async"
+          />
+        </picture>
+        <ol class="shift-steps">
+          {beforeSteps.map((step) => (
+            <li class="shift-steps__item">
+              <span class="shift-steps__name">{step.name}</span>
+              <span class="shift-steps__actor">{step.actor}</span>
+            </li>
+          ))}
+        </ol>
+        <p class="shift-split__metric">
+          <span class="shift-split__metric-label">{isEnglish ? "Time to start" : "着手まで"}</span>
+          <span class="shift-split__metric-num eng">{isEnglish ? "months" : "数ヶ月"}</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="shift-split__side is-after">
+      <div class="shift-split__inner">
+        <p class="shift-split__label">{isEnglish ? "From here" : "これから"}</p>
+        <p class="shift-split__lead">
+          {isEnglish ? <>Your team <span class="shift-em">builds it</span></> : <>社員が<span class="shift-em">AIで作る</span></>}
+        </p>
+        <picture class="shift-split__photo">
+          <source srcset="/assets/images/photo/shift-after.webp" type="image/webp" />
+          <img
+            src="/assets/images/photo/shift-after.jpg"
+            alt={isEnglish ? "Hands working at a laptop" : "自分の手でPCを操作する"}
+            width="1200" height="750" loading="lazy" decoding="async"
+          />
+        </picture>
+        <ol class="shift-steps is-after">
+          {afterSteps.map((step) => (
+            <li class={`shift-steps__item${step.actor === AI ? " is-ai" : ""}`}>
+              <span class="shift-steps__name">{step.name}</span>
+              <span class="shift-steps__actor">{step.actor}</span>
+            </li>
+          ))}
+        </ol>
+        <p class="shift-split__metric">
+          <span class="shift-split__metric-label">{isEnglish ? "Time to start" : "着手まで"}</span>
+          <span class="shift-split__metric-num eng is-accent">{isEnglish ? "same day" : "その日"}</span>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="shift-foot">
+    <div class="container">
+      <p class="shift-foot__txt">
+        {isEnglish ? (
+          <>The engineer's job moves to the side: <span class="ai-marker">designing, reviewing, keeping the quality.</span></>
+        ) : (
+          <>エンジニアの役割は、<span class="ai-marker">設計とレビューと品質保証</span>に移ります。</>
+        )}
+      </p>
+    </div>
+  </div>
+</section>

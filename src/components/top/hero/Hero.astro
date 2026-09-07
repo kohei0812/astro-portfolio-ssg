@@ -1,51 +1,64 @@
 ---
-//src/components/top/Hero.astro
+//src/components/top/hero/Hero.astro
 import HeroTextSwiper from "./HeroTextSwiper.jsx";
 const isEnglish = Astro.url.pathname.startsWith('/en');
 ---
 
 <section class="hero" id="hero" aria-labelledby="hero-heading">
+  {/*
+    背景はサイトの紺にデュオトーン処理した現場写真。
+    素材は Unsplash（商用利用可・クレジット不要）。
+    色を落としてあるのは、主役をタイポグラフィのままにするため。
+  */}
   <picture class="hero-bg">
-    <source
-      media="(min-width: 769px)"
-      srcset="/assets/images/hero.webp"
-      type="image/webp"
-    />
-    <source media="(min-width: 769px)" srcset="/assets/images/hero.jpg" />
-    <source srcset="/assets/images/hero-sp.webp" type="image/webp" />
+    <source media="(min-width: 769px)" srcset="/assets/images/photo/hero-factory.webp" type="image/webp" />
+    <source media="(min-width: 769px)" srcset="/assets/images/photo/hero-factory.jpg" />
+    <source srcset="/assets/images/photo/hero-factory-sp.webp" type="image/webp" />
     <img
-      src="/assets/images/hero-sp.png"
-      alt={isEnglish ? 'Background image' : '背景画像'}
-      width="375"
-      height="665"
+      src="/assets/images/photo/hero-factory-sp.jpg"
+      alt=""
+      width="2000"
+      height="1125"
       loading="eager"
       decoding="async"
       fetchpriority="high"
     />
   </picture>
+  <div class="hero-veil" aria-hidden="true"></div>
   <div class="container">
     <div class="hero-copy">
-      <p class="hero-ttl fadeInTrigger" id="hero-ttl">
+      <p class="hero-eyebrow eng fadeInTrigger">AI Transformation</p>
+      {/*
+        キャッチは ChatGPT に10案出させたうちの一つ。
+        「これまでのやり方では大企業しかDXが進まなかった」という
+        事業の出発点（BNI資料）と直結するものを選んでいる。
+        別案: 「業務を変える力を、自社の中に。」/「中小企業の業務変革を、AIで現実に。」
+      */}
+      <h1 class="hero-ttl fadeInTrigger" id="hero-ttl">
         {isEnglish ? (
           <>
-            Resonating thoughts,<br />
-            Creating the future
+            Change shouldn't belong<br />
+            to big companies alone.
           </>
         ) : (
           <>
-            想いを響かせ、<br />
-            未来を創る
+            業務変革を、<br />
+            大企業だけのものにしない。
           </>
         )}
+      </h1>
+      <p class="hero-service fadeInTrigger">
+        {isEnglish ? "AI adoption support for small businesses" : "中小企業のAI活用支援"}
       </p>
       <p class="hero-sub fadeInTrigger">
         {isEnglish ? (
-          <>From reshaping how the work runs, to training your staff on AI — I stay with you through all of it.</>
+          <>Not "how to use AI" — I rebuild how the work runs, until your own staff can change it themselves.</>
         ) : (
-          <>業務改善から、社員へのAI教育まで伴走します。</>
+          <>AIの使い方を教えるのではなく、<br class="sp_only" />業務そのものを作り替える。<br />
+          最後は、社員が自分の手で変えられる状態にします。</>
         )}
       </p>
     </div>
   </div>
-  <HeroTextSwiper client:load />
+  <HeroTextSwiper lang={isEnglish ? "en" : "ja"} client:load />
 </section>

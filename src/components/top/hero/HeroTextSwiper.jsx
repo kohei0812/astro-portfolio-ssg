@@ -3,12 +3,13 @@ import Swiper from 'swiper';
 import { Autoplay } from 'swiper/modules';
 import 'swiper/css/bundle';
 
-export default function HeroTextSwiper() {
+export default function HeroTextSwiper({ lang = "ja" }) {
   const sliderRef = useRef(null);
   const swiperInstance = useRef(null);
   
   // 現在の言語を判定
-  const isEnglish = typeof window !== 'undefined' && window.location.pathname.startsWith('/en');
+  // 言語は Astro 側から渡す。window 参照だと SSG 時に判定できず初期HTMLが日本語になる
+  const isEnglish = lang === 'en';
 
   // Swiper初期化処理
   const initSwiper = () => {
