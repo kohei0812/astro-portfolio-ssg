@@ -1,0 +1,74 @@
+---
+/*
+  事例一覧（2026-10-02 新設）。中身は src/data/cases.js。
+  社名・個人名・地名は出さない（業種と規模のみ。顧客管理グループの方針）。
+  詳細ページがあるのは記録の厚い3件だけ。残りは短く載せる。
+*/
+import Layout from "../../layouts/Layout.astro";
+import LineIcon from "../../components/corp/LineIcon.astro";
+import CasePanel from "../../components/corp/CasePanel.astro";
+import { cases, shortCases, casesPage } from "../../data/cases.js";
+---
+
+<Layout title={casesPage.title} description={casesPage.description} corp>
+  <main id="corp-page" class="corp-page cp-cases" role="main">
+    <header class="cp-page-head">
+      <div class="cp-container">
+        <p class="cp-head__en eng" data-reveal>Case studies</p>
+        <h1 class="cp-page-head__ttl" data-reveal style="--d: .1s">事例</h1>
+        <p class="cp-page-head__lead" data-reveal style="--d: .2s">{casesPage.lead}</p>
+      </div>
+    </header>
+
+    <section class="cp-sec" aria-label="事例の一覧">
+      <span class="cp-watermark eng" aria-hidden="true">CASES</span>
+      <div class="cp-container">
+        <div class="ck-list">
+          {cases.map((c, i) => (
+            <a href={`/cases/${c.slug}`} class="ck-card" data-reveal style={`--d: ${i * 0.08}s`}>
+              <CasePanel c={c} />
+              <div class="ck-card__body">
+                <p class="ck-card__label">{c.industry}</p>
+                <h2 class="ck-card__ttl">{c.cardTitle}</h2>
+                <p class="ck-card__txt">{c.cardText}</p>
+                <ul class="ck-card__tags">{c.tags.map((t) => <li>{t}</li>)}</ul>
+                <span class="ck-card__more">詳しく見る</span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="cp-sec cp-sec--gray" aria-labelledby="shorts-ttl">
+      <div class="cp-container">
+        <header class="cp-head" data-reveal>
+          <p class="cp-head__en eng">More cases</p>
+          <h2 class="cp-head__ttl" id="shorts-ttl">そのほかの事例</h2>
+        </header>
+        <ul class="ck-shorts">
+          {shortCases.map((s, i) => (
+            <li data-reveal style={`--d: ${i * 0.08}s`}>
+              <p class="ck-shorts__label"><LineIcon name={s.icon} size={36} />{s.industry}</p>
+              <p class="ck-shorts__txt">{s.text}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <section class="cp-closing" aria-labelledby="cases-closing">
+      <picture class="cp-closing__band" aria-hidden="true">
+        <source media="(min-width: 769px)" srcset="/assets/images/corp/band-connect.webp" type="image/webp" />
+        <source media="(min-width: 769px)" srcset="/assets/images/corp/band-connect.jpg" />
+        <source srcset="/assets/images/corp/band-connect-sp.webp" type="image/webp" />
+        <img src="/assets/images/corp/band-connect-sp.jpg" alt="" width="800" height="600" loading="lazy" decoding="async" />
+      </picture>
+      <div class="cp-container cp-closing__inner" data-reveal>
+        <h2 class="cp-closing__ttl" id="cases-closing">{casesPage.closingTitle}</h2>
+        <p class="cp-closing__txt">{casesPage.closingText}</p>
+        <a href="/consultation" class="cp-btn cp-btn--primary cp-btn--lg">初回相談について</a>
+      </div>
+    </section>
+  </main>
+</Layout>

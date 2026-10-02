@@ -77,6 +77,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const last = rects.filter((x) => Math.abs(x.bottom - bottom) < 2);
     return Math.max(...last.map((x) => x.right)) - Math.min(...last.map((x) => x.left));
   };
+  // 行数（文字の行の下端の種類）を数える。改行を足して行が増えるなら採用しない
+  const lineCount = (el) => {
+    const r = document.createRange();
+    r.selectNodeContents(el);
+    const bottoms = [];
+    [...r.getClientRects()].forEach((x) => {
+      if (x.width > 0 && !bottoms.some((b) => Math.abs(b - x.bottom) < 2)) bottoms.push(x.bottom);
+    });
+    return bottoms.length;
+  };
   const fix = () => {
     document.querySelectorAll(SEL).forEach((el) => {
       if (el.dataset.orig !== undefined) {
@@ -89,6 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!short()) return;
       const html = el.innerHTML;
       el.dataset.orig = html;
+      const lines = lineCount(el);
       const from = Math.max(html.lastIndexOf("<br"), 0);
       const end = html.trimEnd().length - 2;
       const cands = [];
@@ -97,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       for (const k of cands.slice(0, 6)) {
         el.innerHTML = html.slice(0, k + 1) + '<br class="orphan-br" />' + html.slice(k + 1);
-        if (!short()) return;
+        if (!short() && lineCount(el) <= lines) return;
       }
       el.innerHTML = html;
       el.style.textWrap = "balance";
@@ -106,6 +117,8 @@ document.addEventListener("DOMContentLoaded", () => {
   };
   let t;
   addEventListener("load", () => setTimeout(fix, 300));
+  // よくある質問など、開いたときに初めて行が決まる要素は開いた時点で測り直す
+  document.addEventListener("toggle", () => fix(), true);
   addEventListener("resize", () => {
     clearTimeout(t);
     t = setTimeout(fix, 200);

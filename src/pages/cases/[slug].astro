@@ -1,0 +1,141 @@
+---
+/*
+  事例の詳細（2026-10-02 新設）。中身は src/data/cases.js。
+  構成：見出し＋紺の面 → 概要 → 支援の前と変わったこと → やったこと → お客様の言葉 → 担当より → 次の一歩（進行中のみ）→ ほかの事例
+*/
+import Layout from "../../layouts/Layout.astro";
+import LineIcon from "../../components/corp/LineIcon.astro";
+import CasePanel from "../../components/corp/CasePanel.astro";
+import { cases } from "../../data/cases.js";
+
+export function getStaticPaths() {
+  return cases.map((c) => ({ params: { slug: c.slug }, props: { c } }));
+}
+
+const { c } = Astro.props;
+const others = cases.filter((x) => x.slug !== c.slug);
+---
+
+<Layout title={c.title} description={c.description} corp>
+  <main id="corp-page" class="corp-page cp-cases cp-case" role="main">
+    <header class="cp-page-head">
+      <div class="cp-container">
+        <p class="ck-crumb" data-reveal><a href="/cases">事例</a><span aria-hidden="true">／</span>{c.industry}</p>
+        <div class="ck-hero">
+          <div data-reveal>
+            <p class="ck-hero__label">{c.industry}</p>
+            <h1 class="ck-hero__ttl">{c.h1}</h1>
+            <p class="ck-hero__lead">{c.lead}</p>
+          </div>
+          <div data-reveal style="--d: .15s"><CasePanel c={c} /></div>
+        </div>
+        <dl class="ck-summary" data-reveal style="--d: .2s">
+          {c.summary.map((s) => (
+            <div><dt>{s.th}</dt><dd>{s.td}</dd></div>
+          ))}
+        </dl>
+      </div>
+    </header>
+
+    <!-- 支援の前 → 変わったこと -->
+    <section class="cp-sec" aria-labelledby="ba-ttl">
+      <div class="cp-container">
+        <header class="cp-head" data-reveal>
+          <p class="cp-head__en eng">Before / After</p>
+          <h2 class="cp-head__ttl" id="ba-ttl">支援の前と、変わったこと</h2>
+        </header>
+        <div class="ck-ba">
+          <div class="ck-ba__col" data-reveal>
+            <p class="ck-ba__ttl"><small>BEFORE</small>支援の前</p>
+            <ul class="ck-ba__list">{c.before.map((x) => <li>{x}</li>)}</ul>
+          </div>
+          <div class="ck-ba__arrow" aria-hidden="true"><span></span></div>
+          <div class="ck-ba__col is-after" data-reveal style="--d: .12s">
+            <p class="ck-ba__ttl"><small>AFTER</small>変わったこと</p>
+            <ul class="ck-ba__list">{c.after.map((x) => <li>{x}</li>)}</ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- やったこと -->
+    <section class="cp-sec cp-sec--gray" aria-labelledby="steps-ttl">
+      <span class="cp-watermark eng" aria-hidden="true">PROCESS</span>
+      <div class="cp-container">
+        <header class="cp-head" data-reveal>
+          <p class="cp-head__en eng">What we did</p>
+          <h2 class="cp-head__ttl" id="steps-ttl">やったこと</h2>
+        </header>
+        <ol class="ck-steps">
+          {c.steps.map((s, i) => (
+            <li data-reveal style={`--d: ${i * 0.06}s`}>
+              <p class="ck-steps__ttl">{s.ttl}</p>
+              <p class="ck-steps__txt">{s.txt}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <!-- お客様の言葉・担当より -->
+    <section class="cp-sec" aria-labelledby="voice-ttl">
+      <div class="cp-container">
+        <h2 class="visually-hidden" id="voice-ttl">{c.voice ? "お客様の言葉と担当より" : "担当より"}</h2>
+        {c.voice && (
+          <blockquote class="ck-voice" data-reveal>
+            <p class="ck-voice__txt">{c.voice}</p>
+            <p class="ck-voice__who">{c.voiceWho}</p>
+          </blockquote>
+        )}
+
+        <div class="ck-staff" data-reveal style="--d: .1s">
+          <picture class="ck-staff__photo">
+            <source srcset="/assets/images/consultation/profile-kawabata.webp" type="image/webp" />
+            <img src="/assets/images/consultation/profile-kawabata.jpg" alt="担当 川端康平" width="800" height="1053" loading="lazy" decoding="async" />
+          </picture>
+          <div>
+            <p class="ck-staff__ttl">担当より<span>DDDynamis 川端 康平</span></p>
+            <p class="ck-staff__txt">{c.staff}</p>
+          </div>
+        </div>
+
+        {c.next && (
+          <p class="ck-next" data-reveal><LineIcon name="flag" size={32} /><span>{c.next}</span></p>
+        )}
+      </div>
+    </section>
+
+    <!-- ほかの事例 -->
+    <section class="cp-sec cp-sec--gray" aria-labelledby="others-ttl">
+      <div class="cp-container">
+        <header class="cp-head" data-reveal>
+          <p class="cp-head__en eng">Other cases</p>
+          <h2 class="cp-head__ttl" id="others-ttl">ほかの事例</h2>
+        </header>
+        <div class="ck-others">
+          {others.map((o, i) => (
+            <a href={`/cases/${o.slug}`} data-reveal style={`--d: ${i * 0.08}s`}>
+              <LineIcon name={o.icon} size={44} />
+              <span><small>{o.industry}</small>{o.cardTitle}</span>
+            </a>
+          ))}
+        </div>
+        <p class="ck-back" data-reveal><a href="/cases" class="cp-link">事例の一覧へ</a></p>
+      </div>
+    </section>
+
+    <section class="cp-closing" aria-labelledby="case-closing">
+      <picture class="cp-closing__band" aria-hidden="true">
+        <source media="(min-width: 769px)" srcset="/assets/images/corp/band-connect.webp" type="image/webp" />
+        <source media="(min-width: 769px)" srcset="/assets/images/corp/band-connect.jpg" />
+        <source srcset="/assets/images/corp/band-connect-sp.webp" type="image/webp" />
+        <img src="/assets/images/corp/band-connect-sp.jpg" alt="" width="800" height="600" loading="lazy" decoding="async" />
+      </picture>
+      <div class="cp-container cp-closing__inner" data-reveal>
+        <h2 class="cp-closing__ttl" id="case-closing">まずは、やりたいことを1つ。</h2>
+        <p class="cp-closing__txt">御社の業務で同じことができるか、初回相談で実際の業務をもとに確かめます。初回相談は無料です。</p>
+        <a href="/consultation" class="cp-btn cp-btn--primary cp-btn--lg">初回相談について</a>
+      </div>
+    </section>
+  </main>
+</Layout>

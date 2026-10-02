@@ -1,0 +1,25 @@
+---
+//src/components/corp/CasePanel.astro
+// 事例の「顔」になる紺の面。お客様の写真は載せないので、業種アイコンと成果の数字（ある事例だけ）で見せる。
+// 一覧カードと詳細ページの見出し横で共通に使う。データは src/data/cases.js。
+import LineIcon from "./LineIcon.astro";
+const { c } = Astro.props;
+---
+<div class="ck-panel" aria-hidden={c.figure ? undefined : "true"}>
+  <span class="ck-panel__bg"><LineIcon name={c.icon} size={260} /></span>
+  {c.figure ? (
+    <>
+      <p class="ck-panel__label">{c.figure.label}</p>
+      <p class="ck-panel__figure" aria-label={`${c.figure.label} ${c.figure.before}から${c.figure.after}円`}>
+        <s>{c.figure.before}</s>
+        <span class="ck-panel__arrow" aria-hidden="true"></span>
+        <span class="ck-panel__after">{c.figure.after}<small>円</small></span>
+      </p>
+    </>
+  ) : (
+    <>
+      <LineIcon name={c.icon} size={72} />
+      <p class="ck-panel__status">{c.status}</p>
+    </>
+  )}
+</div>

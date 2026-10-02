@@ -1,0 +1,1134 @@
+@use "variables" as v;
+
+/*****************/
+/*** コーポレートサイト：事例（/cases 一覧・/cases/[slug] 詳細、2026-10-02 新設）***/
+/*****************/
+/*
+  お客様の写真は載せない（社名・個人を出さない方針）。代わりに紺の面に業種のアイコンと
+  成果の数字（ある事例だけ）を置いて「顔」にする。
+*/
+$navy: v.$color-primary;
+$red: v.$color-accent;
+$ink: #1d2738;
+$body: #46536a;
+$sub: #6b7688;
+$line: rgba(23, 36, 57, 0.14);
+$gray: #f4f6f9;
+$ease: cubic-bezier(0.22, 1, 0.36, 1);
+$eng: "Montserrat", "Montserrat Fallback", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+#corp-page.cp-cases {
+  /* --- 紺の面（一覧カード・詳細の見出し横で共通） --- */
+  .ck-panel {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: $navy;
+    color: white;
+    overflow: hidden;
+    text-align: center;
+
+    /* 背景の大きな線画アイコン */
+    &__bg {
+      position: absolute;
+      right: -6%;
+      bottom: -10%;
+      color: rgba(white, 0.07);
+      pointer-events: none;
+    }
+
+    &__label {
+      position: relative;
+      color: rgba(white, 0.75);
+      font-weight: bold;
+      letter-spacing: 0.08em;
+    }
+
+    &__figure {
+      position: relative;
+      display: flex;
+      align-items: center;
+      font-family: $eng;
+      font-weight: 700;
+      line-height: 1;
+
+      s {
+        color: rgba(white, 0.55);
+        text-decoration-thickness: 2px;
+      }
+
+      small {
+        font-size: 0.45em;
+        font-family: inherit;
+      }
+    }
+
+    &__arrow {
+      display: block;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-color: transparent transparent transparent $red;
+    }
+
+    &__after {
+      color: white;
+    }
+
+    &__status {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(white, 0.5);
+      font-weight: bold;
+      letter-spacing: 0.06em;
+
+      &::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: #5fd38d;
+        animation: ck-pulse 2s ease-in-out infinite;
+      }
+    }
+  }
+
+  @keyframes ck-pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.35;
+    }
+  }
+
+  /* --- 一覧 --- */
+  .ck-list {
+    display: grid;
+  }
+
+  .ck-card {
+    display: grid;
+    background-color: white;
+    box-shadow: inset 0 0 0 1px $line;
+    transition: box-shadow 0.25s ease;
+
+    &:hover {
+      opacity: 1;
+      box-shadow: inset 0 0 0 1px $navy;
+
+      .ck-card__more::after {
+        width: 44px;
+      }
+    }
+
+    &__body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &__label {
+      color: $red;
+      font-weight: bold;
+      letter-spacing: 0.06em;
+    }
+
+    &__ttl {
+      color: $navy;
+      font-weight: bold;
+      line-height: 1.55;
+    }
+
+    &__txt {
+      color: $body;
+      font-weight: 400;
+      line-height: 1.85;
+    }
+
+    &__tags {
+      display: flex;
+      flex-wrap: wrap;
+
+      li {
+        background-color: $gray;
+        color: $navy;
+        font-weight: bold;
+      }
+    }
+
+    &__more {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: auto;
+      color: $navy;
+      font-weight: bold;
+
+      &::after {
+        content: "";
+        width: 28px;
+        height: 1px;
+        background-color: currentColor;
+        transition: width 0.3s $ease;
+      }
+    }
+  }
+
+  .ck-shorts {
+    display: grid;
+
+    li {
+      background-color: white;
+    }
+
+    &__label {
+      display: flex;
+      align-items: center;
+      color: $navy;
+      font-weight: bold;
+    }
+
+    &__txt {
+      color: $body;
+      font-weight: 400;
+      line-height: 1.85;
+    }
+  }
+
+  /* --- 詳細 --- */
+  .ck-crumb {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    color: $sub;
+    font-weight: 500;
+
+    a {
+      display: inline;
+      color: $navy;
+      text-decoration: underline;
+      text-underline-offset: 0.3em;
+    }
+
+    span[aria-hidden] {
+      color: $line;
+    }
+  }
+
+  .ck-hero {
+    display: grid;
+    align-items: stretch;
+
+    &__label {
+      color: $red;
+      font-weight: bold;
+      letter-spacing: 0.06em;
+    }
+
+    &__ttl {
+      color: $navy;
+      font-weight: bold;
+      line-height: 1.5;
+    }
+
+    &__lead {
+      color: $ink;
+      font-weight: 500;
+      line-height: 2;
+    }
+  }
+
+  .ck-summary {
+    display: grid;
+    background-color: $gray;
+
+    div {
+      display: flex;
+      flex-direction: column;
+    }
+
+    dt {
+      color: $sub;
+      font-weight: bold;
+      letter-spacing: 0.06em;
+    }
+
+    dd {
+      color: $navy;
+      font-weight: bold;
+      line-height: 1.6;
+    }
+  }
+
+  /* 支援の前 → 変わったこと */
+  .ck-ba {
+    display: grid;
+    align-items: stretch;
+
+    &__col {
+      background-color: white;
+      box-shadow: inset 0 0 0 1px $line;
+
+      &.is-after {
+        box-shadow: inset 0 0 0 2px $navy;
+      }
+    }
+
+    &__ttl {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: $navy;
+      font-weight: bold;
+
+      small {
+        color: $red;
+        font-family: $eng;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+      }
+    }
+
+    &__list li {
+      position: relative;
+      color: $ink;
+      font-weight: 500;
+      line-height: 1.8;
+
+      &::before {
+        content: "";
+        position: absolute;
+        left: 0;
+      }
+    }
+
+    &__col:not(.is-after) &__list li::before {
+      width: 10px;
+      height: 1.5px;
+      background-color: $sub;
+    }
+
+    &__col.is-after &__list li::before {
+      width: 12px;
+      height: 7px;
+      border-left: 2px solid $red;
+      border-bottom: 2px solid $red;
+      transform: rotate(-45deg);
+    }
+
+    &__arrow {
+      display: grid;
+      place-items: center;
+
+      span {
+        display: block;
+        border-style: solid;
+        border-color: transparent transparent transparent $red;
+      }
+    }
+  }
+
+  /* やったこと：番号付きの縦の流れ */
+  .ck-steps {
+    position: relative;
+    counter-reset: ck;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 8px;
+      bottom: 8px;
+      width: 1px;
+      background-color: rgba($navy, 0.25);
+    }
+
+    li {
+      position: relative;
+      counter-increment: ck;
+
+      &::before {
+        content: counter(ck, decimal-leading-zero);
+        position: absolute;
+        left: 0;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        background-color: white;
+        box-shadow: inset 0 0 0 1px $navy;
+        color: $navy;
+        font-family: $eng;
+        font-weight: 700;
+      }
+    }
+
+    &__ttl {
+      color: $navy;
+      font-weight: bold;
+      line-height: 1.5;
+    }
+
+    &__txt {
+      color: $body;
+      font-weight: 400;
+      line-height: 1.9;
+      letter-spacing: 0.03em;
+    }
+  }
+
+  /* お客様の言葉 */
+  .ck-voice {
+    position: relative;
+    text-align: center;
+
+    &::before {
+      content: "\201C";
+      display: block;
+      color: $red;
+      font-family: Georgia, serif;
+      line-height: 1;
+    }
+
+    &__txt {
+      color: $navy;
+      font-weight: bold;
+      line-height: 1.7;
+    }
+
+    &__who {
+      color: $sub;
+      font-weight: 500;
+    }
+  }
+
+  /* 担当より */
+  .ck-staff {
+    display: grid;
+    align-items: start;
+    background-color: white;
+    box-shadow: inset 0 0 0 1px $line;
+
+    &__photo img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 50%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      object-position: 50% 20%;
+    }
+
+    &__ttl {
+      color: $navy;
+      font-weight: bold;
+
+      span {
+        margin-left: 10px;
+        color: $sub;
+        font-weight: 500;
+      }
+    }
+
+    &__txt {
+      color: $body;
+      font-weight: 400;
+      line-height: 2;
+      letter-spacing: 0.03em;
+    }
+  }
+
+  .ck-next {
+    display: flex;
+    align-items: flex-start;
+    border-top: 1px solid $line;
+    border-bottom: 1px solid $line;
+    color: $navy;
+    font-weight: bold;
+    line-height: 1.8;
+
+    .cp-icon {
+      flex-shrink: 0;
+      color: $red;
+    }
+  }
+
+  .ck-others {
+    display: grid;
+
+    a {
+      display: flex;
+      align-items: center;
+      background-color: white;
+      box-shadow: inset 0 0 0 1px $line;
+      color: $navy;
+      font-weight: bold;
+      line-height: 1.6;
+      transition: box-shadow 0.25s ease;
+
+      &:hover {
+        opacity: 1;
+        box-shadow: inset 0 0 0 1px $navy;
+      }
+
+      .cp-icon {
+        flex-shrink: 0;
+      }
+
+      small {
+        display: block;
+        color: $red;
+        font-weight: bold;
+      }
+    }
+  }
+
+  .ck-back {
+    text-align: center;
+  }
+}
+
+/*****************/
+/*** PC ***/
+/*****************/
+@media screen and (min-width: 769px) {
+  #corp-page.cp-cases {
+    .ck-panel {
+      &__bg {
+        width: 260px;
+        height: 260px;
+      }
+
+      &__label {
+        font-size: 1.3rem;
+      }
+
+      &__figure {
+        gap: 18px;
+        margin-top: 14px;
+        font-size: 5.2rem;
+
+        s {
+          font-size: 0.6em;
+        }
+      }
+
+      &__arrow {
+        border-width: 10px 0 10px 14px;
+      }
+
+      &__status {
+        margin-top: 16px;
+        padding: 8px 16px;
+        font-size: 1.4rem;
+      }
+
+      > .cp-icon {
+        position: relative;
+        width: 72px;
+        height: 72px;
+      }
+    }
+
+    .ck-list {
+      gap: 24px;
+    }
+
+    .ck-card {
+      grid-template-columns: 38% minmax(0, 1fr);
+
+      .ck-panel {
+        min-height: 280px;
+        padding: 32px;
+      }
+
+      &__body {
+        padding: 36px 40px 34px;
+      }
+
+      &__label {
+        font-size: 1.3rem;
+      }
+
+      &__ttl {
+        margin-top: 10px;
+        font-size: 2.2rem;
+      }
+
+      &__txt {
+        margin-top: 12px;
+        font-size: 1.5rem;
+      }
+
+      &__tags {
+        gap: 6px;
+        margin-top: 18px;
+
+        li {
+          padding: 5px 12px;
+          font-size: 1.2rem;
+        }
+      }
+
+      &__more {
+        padding-top: 24px;
+        font-size: 1.4rem;
+      }
+    }
+
+    .ck-shorts {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+
+      li {
+        padding: 26px 26px 28px;
+      }
+
+      &__label {
+        gap: 12px;
+        font-size: 1.5rem;
+      }
+
+      &__txt {
+        margin-top: 12px;
+        font-size: 1.4rem;
+      }
+    }
+
+    .ck-crumb {
+      gap: 10px;
+      margin-bottom: 24px;
+      font-size: 1.3rem;
+    }
+
+    .ck-hero {
+      grid-template-columns: minmax(0, 1fr) 40%;
+      gap: 56px;
+
+      &__label {
+        font-size: 1.4rem;
+      }
+
+      &__ttl {
+        margin-top: 14px;
+        font-size: 3.6rem;
+      }
+
+      &__lead {
+        margin-top: 24px;
+        font-size: 1.7rem;
+      }
+
+      .ck-panel {
+        min-height: 300px;
+        padding: 36px;
+      }
+    }
+
+    .ck-summary {
+      grid-template-columns: repeat(4, 1fr);
+      margin-top: 56px;
+
+      div {
+        gap: 8px;
+        padding: 24px 28px;
+
+        & + div {
+          border-left: 1px solid $line;
+        }
+      }
+
+      dt {
+        font-size: 1.2rem;
+      }
+
+      dd {
+        font-size: 1.5rem;
+      }
+    }
+
+    .ck-ba {
+      grid-template-columns: minmax(0, 1fr) 48px minmax(0, 1fr);
+
+      &__col {
+        padding: 32px 36px 34px;
+      }
+
+      &__ttl {
+        margin-bottom: 18px;
+        font-size: 2rem;
+
+        small {
+          font-size: 1.1rem;
+        }
+      }
+
+      &__list {
+        display: grid;
+        gap: 12px;
+
+        li {
+          padding-left: 26px;
+          font-size: 1.5rem;
+
+          &::before {
+            top: 0.85em;
+          }
+        }
+      }
+
+      &__col.is-after &__list li::before {
+        top: 0.5em;
+      }
+
+      &__arrow span {
+        border-width: 14px 0 14px 18px;
+      }
+    }
+
+    .ck-steps {
+      max-width: 860px;
+
+      &::before {
+        left: 23px;
+      }
+
+      li {
+        padding: 0 0 40px 80px;
+
+        &:last-child {
+          padding-bottom: 0;
+        }
+
+        &::before {
+          top: -4px;
+          width: 48px;
+          height: 48px;
+          font-size: 1.5rem;
+        }
+      }
+
+      &__ttl {
+        font-size: 2rem;
+      }
+
+      &__txt {
+        margin-top: 8px;
+        font-size: 1.6rem;
+      }
+    }
+
+    .ck-voice {
+      max-width: 820px;
+      margin: 0 auto;
+
+      &::before {
+        font-size: 9rem;
+        height: 0.55em;
+      }
+
+      &__txt {
+        font-size: 2.6rem;
+      }
+
+      &__who {
+        margin-top: 18px;
+        font-size: 1.4rem;
+      }
+    }
+
+    .ck-staff {
+      grid-template-columns: 140px minmax(0, 1fr);
+      gap: 40px;
+      max-width: 940px;
+      margin: 0 auto;
+      padding: 40px 48px;
+
+      &__ttl {
+        font-size: 1.8rem;
+
+        span {
+          font-size: 1.3rem;
+        }
+      }
+
+      &__txt {
+        margin-top: 14px;
+        font-size: 1.6rem;
+      }
+    }
+
+    .ck-next {
+      gap: 16px;
+      max-width: 940px;
+      margin: 56px auto 0;
+      padding: 24px 4px;
+      font-size: 1.7rem;
+    }
+
+    .ck-others {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+
+      a {
+        gap: 18px;
+        padding: 24px 28px;
+        font-size: 1.6rem;
+
+        small {
+          font-size: 1.2rem;
+        }
+      }
+    }
+
+    .ck-back {
+      margin-top: 48px;
+    }
+  }
+}
+
+/*****************/
+/*** SP ***/
+/*****************/
+@media screen and (max-width: 768px) {
+  #corp-page.cp-cases {
+    .ck-panel {
+      &__bg {
+        width: 180px;
+        height: 180px;
+      }
+
+      &__label {
+        font-size: 1.2rem;
+      }
+
+      &__figure {
+        gap: 12px;
+        margin-top: 10px;
+        font-size: 4rem;
+
+        s {
+          font-size: 0.6em;
+        }
+      }
+
+      &__arrow {
+        border-width: 8px 0 8px 11px;
+      }
+
+      &__status {
+        margin-top: 12px;
+        padding: 6px 12px;
+        font-size: 1.3rem;
+      }
+
+      > .cp-icon {
+        position: relative;
+        width: 56px;
+        height: 56px;
+      }
+    }
+
+    .ck-list {
+      gap: 16px;
+    }
+
+    .ck-card {
+      .ck-panel {
+        min-height: 180px;
+        padding: 24px;
+      }
+
+      &__body {
+        padding: 24px 20px 26px;
+      }
+
+      &__label {
+        font-size: 1.2rem;
+      }
+
+      &__ttl {
+        margin-top: 8px;
+        font-size: 1.9rem;
+      }
+
+      &__txt {
+        margin-top: 10px;
+        font-size: 1.4rem;
+      }
+
+      &__tags {
+        gap: 6px;
+        margin-top: 14px;
+
+        li {
+          padding: 4px 10px;
+          font-size: 1.2rem;
+        }
+      }
+
+      &__more {
+        padding-top: 18px;
+        font-size: 1.4rem;
+      }
+    }
+
+    .ck-shorts {
+      gap: 10px;
+
+      li {
+        padding: 20px 18px 22px;
+      }
+
+      &__label {
+        gap: 10px;
+        font-size: 1.5rem;
+      }
+
+      &__txt {
+        margin-top: 8px;
+        font-size: 1.4rem;
+      }
+    }
+
+    .ck-crumb {
+      gap: 8px;
+      margin-bottom: 18px;
+      font-size: 1.2rem;
+    }
+
+    .ck-hero {
+      gap: 28px;
+
+      &__label {
+        font-size: 1.3rem;
+      }
+
+      &__ttl {
+        margin-top: 10px;
+        font-size: 2.4rem;
+      }
+
+      &__lead {
+        margin-top: 16px;
+        font-size: 1.5rem;
+        line-height: 1.95;
+      }
+
+      .ck-panel {
+        min-height: 200px;
+        padding: 28px 20px;
+      }
+    }
+
+    .ck-summary {
+      grid-template-columns: repeat(2, 1fr);
+      margin-top: 32px;
+
+      div {
+        gap: 4px;
+        padding: 16px 18px;
+
+        &:nth-child(n + 3) {
+          border-top: 1px solid $line;
+        }
+
+        &:nth-child(2n) {
+          border-left: 1px solid $line;
+        }
+      }
+
+      dt {
+        font-size: 1.1rem;
+      }
+
+      dd {
+        font-size: 1.4rem;
+      }
+    }
+
+    .ck-ba {
+      gap: 0;
+
+      &__col {
+        padding: 24px 20px 26px;
+      }
+
+      &__ttl {
+        margin-bottom: 14px;
+        font-size: 1.8rem;
+
+        small {
+          font-size: 1rem;
+        }
+      }
+
+      &__list {
+        display: grid;
+        gap: 10px;
+
+        li {
+          padding-left: 24px;
+          font-size: 1.4rem;
+
+          &::before {
+            top: 0.85em;
+          }
+        }
+      }
+
+      &__col.is-after &__list li::before {
+        top: 0.5em;
+      }
+
+      &__arrow {
+        height: 40px;
+
+        span {
+          border-width: 14px 12px 0 12px;
+          border-color: $red transparent transparent transparent;
+        }
+      }
+    }
+
+    .ck-steps {
+      &::before {
+        left: 19px;
+      }
+
+      li {
+        padding: 0 0 30px 58px;
+
+        &:last-child {
+          padding-bottom: 0;
+        }
+
+        &::before {
+          top: -2px;
+          width: 40px;
+          height: 40px;
+          font-size: 1.3rem;
+        }
+      }
+
+      &__ttl {
+        font-size: 1.7rem;
+      }
+
+      &__txt {
+        margin-top: 6px;
+        font-size: 1.5rem;
+      }
+    }
+
+    .ck-voice {
+      &::before {
+        font-size: 7rem;
+        height: 0.55em;
+      }
+
+      &__txt {
+        font-size: 2rem;
+      }
+
+      &__who {
+        margin-top: 14px;
+        font-size: 1.3rem;
+      }
+    }
+
+    .ck-staff {
+      grid-template-columns: 72px minmax(0, 1fr);
+      gap: 16px;
+      padding: 24px 20px;
+
+      &__ttl {
+        font-size: 1.6rem;
+
+        span {
+          display: block;
+          margin: 2px 0 0;
+          font-size: 1.2rem;
+        }
+      }
+
+      &__txt {
+        grid-column: 1 / -1;
+        font-size: 1.5rem;
+        line-height: 1.95;
+      }
+    }
+
+    .ck-next {
+      gap: 12px;
+      margin-top: 40px;
+      padding: 20px 2px;
+      font-size: 1.5rem;
+
+      .cp-icon {
+        width: 28px;
+        height: 28px;
+      }
+    }
+
+    .ck-others {
+      gap: 10px;
+
+      a {
+        gap: 14px;
+        padding: 18px;
+        font-size: 1.5rem;
+
+        .cp-icon {
+          width: 36px;
+          height: 36px;
+        }
+
+        small {
+          font-size: 1.1rem;
+        }
+      }
+    }
+
+    .ck-back {
+      margin-top: 36px;
+    }
+  }
+}
+
+/* 見出しを読み上げ用にだけ置く */
+#corp-page .visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* 担当よりと言葉の間 */
+@media screen and (min-width: 769px) {
+  #corp-page.cp-cases .ck-voice + .ck-staff {
+    margin-top: 72px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #corp-page.cp-cases .ck-voice + .ck-staff {
+    margin-top: 48px;
+  }
+}
+
+/* 紺の面のアイコンは白に（共通の .cp-icon の色指定に負けないよう詳しく指定） */
+#corp-page.cp-cases .ck-panel {
+  > .cp-icon {
+    color: white;
+  }
+
+  .ck-panel__bg .cp-icon {
+    color: rgba(255, 255, 255, 0.08);
+  }
+}
