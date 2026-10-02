@@ -9,6 +9,7 @@
   写真は Unsplash（顔の写る人物写真は使わない）＋本人写真。トーンは全写真に同じ補正をかけて揃えている。
 */
 import Layout from "../layouts/Layout.astro";
+import LineIcon from "../components/corp/LineIcon.astro";
 
 const chain = [
   {
@@ -35,6 +36,7 @@ const chain = [
 
 const services = [
   {
+    icon: "gear",
     en: "AI Adoption",
     name: "AI導入支援",
     catch: "実際の仕事を、ひとつ動かす。",
@@ -42,6 +44,7 @@ const services = [
     items: ["業務の流れと、AIに渡す情報の整理", "AIに任せる業務の選定と、実業務で動く仕組みづくり", "必要な業務アプリの開発"],
   },
   {
+    icon: "growth",
     en: "AI Training",
     name: "AI人材育成",
     catch: "研修のあとに、使う人を増やす。",
@@ -55,9 +58,9 @@ const services = [
 ];
 
 const extras = [
-  { name: "業務アプリ開発", txt: "AI導入支援のなかで必要になった業務アプリを開発します。", href: "/consultation" },
-  { name: "Web制作", txt: "AI活用に付随するWeb制作にも対応します。", href: "/web" },
-  { name: "助成金の相談", txt: "支援にあたって、助成金の活用に関する相談もお受けします。", href: "/subsidy" },
+  { icon: "app", name: "業務アプリ開発", txt: "AI導入支援のなかで必要になった業務アプリを開発します。", href: "/consultation" },
+  { icon: "web", name: "Web制作", txt: "AI活用に付随するWeb制作にも対応します。", href: "/web" },
+  { icon: "subsidy", name: "助成金の相談", txt: "支援にあたって、助成金の活用に関する相談もお受けします。", href: "/subsidy" },
 ];
 
 /* 事例は匿名・業種のみ。数字は本人確認済みの A 社だけ */
@@ -80,16 +83,30 @@ const works = [
 ];
 
 const values = [
-  { name: "自走したら卒業。", txt: "自分たちで使い、仕組みを変えていけることを支援の到達点にします。" },
-  { name: "利用率で測る。", txt: "研修後に誰が、何に、どれだけAIを使っているかを確かめます。" },
-  { name: "パッケージを売らない。", txt: "会社の業務と状況を見て、必要な分だけ、一緒にやります。" },
-  { name: "情報整理が成果を決める。", txt: "プロンプトよりも先に、仕事の前提や判断基準を、AIが使える情報に整えます。" },
+  { icon: "graduate", name: "自走したら卒業。", txt: "自分たちで使い、仕組みを変えていけることを支援の到達点にします。" },
+  { icon: "measure", name: "利用率で測る。", txt: "研修後に誰が、何に、どれだけAIを使っているかを確かめます。" },
+  { icon: "handshake", name: "パッケージを売らない。", txt: "会社の業務と状況を見て、必要な分だけ、一緒にやります。" },
+  { icon: "layers", name: "情報整理が成果を決める。", txt: "プロンプトよりも先に、仕事の前提や判断基準を、AIが使える情報に整えます。" },
 ];
 
+/* FV は本人の写真（相談の場面は隣の方の顔をぼかしてある） */
 const fvSlides = [
-  { name: "hands", label: "AIで、会社の馬力を上げる" },
-  { name: "connect", label: "生まれた時間で、人と向き合う" },
-  { name: "team", label: "それが、組織の力になる" },
+  { name: "guitar", label: "バンドマン、バーテンダー、植木職人を経て" },
+  { name: "consult", label: "相談の場で、実際に作って見せる" },
+  { name: "portrait", label: "DDDynamis代表　川端 康平" },
+];
+
+const career = ["神戸大学法学部", "SIerの営業", "バンド・バーテンダー・植木職人", "37歳でWebエンジニアへ", "AI活用支援"];
+const practiceTasks = [
+  { icon: "handshake", name: "営業" },
+  { icon: "megaphone", name: "発信" },
+  { icon: "doc", name: "研修資料の作成" },
+  { icon: "code", name: "開発" },
+];
+const closingTimes = [
+  { icon: "talk", name: "従業員の話を聴く時間" },
+  { icon: "flag", name: "理念を伝える時間" },
+  { icon: "idea", name: "次の仕事を考える時間" },
 ];
 ---
 
@@ -137,18 +154,21 @@ const fvSlides = [
         <header class="cp-head" data-reveal>
           <p class="cp-head__en eng">What has changed</p>
           <h2 class="cp-head__ttl" id="change-ttl">AIの変化を、<br class="sp_only" />中小企業の機会に。</h2>
-          <p class="cp-head__lead">AIによって仕事の進め方が変わり、活用の進み方によっては大企業との差がさらに広がるかもしれません。人手不足のなか、社長も現場に立つ中小企業では、仕事の仕組みを見直す時間さえ取りにくくなっています。</p>
         </header>
+        <ul class="cp-points" data-reveal>
+          <li><LineIcon name="building" /><p>AIによって仕事の進め方が変わり、活用の進み方によっては<strong>大企業との差がさらに広がる</strong>かもしれません。</p></li>
+          <li><LineIcon name="clock" /><p>人手不足のなか、社長も現場に立つ中小企業では、<strong>仕事の仕組みを見直す時間さえ取りにくく</strong>なっています。</p></li>
+        </ul>
         <div class="cp-change__compare">
           <div class="cp-change__col" data-reveal>
-            <p class="cp-change__label">これまで</p>
+            <p class="cp-change__label"><LineIcon name="building" size={28} />これまで</p>
             <p class="cp-change__big">多額の費用と、<br />多くの人手。</p>
             <h3 class="cp-change__ttl">お金と人手をかけることが前提でした。</h3>
             <p class="cp-change__txt">システムをつくり、業務を変えるには、多額の費用と多くの人手が必要でした。時間をつくり、人を育てる余力を生むためのDXは、投資できる大企業が中心で、中小企業には届きにくいものでした。</p>
           </div>
           <div class="cp-change__arrow" aria-hidden="true"></div>
           <div class="cp-change__col is-now" data-reveal style="--d: .15s">
-            <p class="cp-change__label">いま</p>
+            <p class="cp-change__label"><LineIcon name="laptop" size={28} />いま</p>
             <p class="cp-change__big">道具代は、<br /><em>月数千円</em>から。</p>
             <h3 class="cp-change__ttl">月数千円の道具から、業務を変えられます。</h3>
             <p class="cp-change__txt">ClaudeやChatGPTなどのAIは、道具そのものの利用料として月数千円から使えます。支援費用とは別の道具代ですが、大きなシステム投資を前提にせず、中小企業も身近な業務からDXと時間の創出に取り組めるようになりました。</p>
@@ -168,9 +188,23 @@ const fvSlides = [
           <span class="cp-line"><span>中小企業を、</span></span>
           <span class="cp-line"><span>強くする。</span></span>
         </h2>
-        <p class="cp-mission__txt" data-reveal style="--d: .3s">
-          DDDynamisは、AIで人の時間を取り戻し、その時間を人に使える会社を増やします。目指すのは、仕事を任せる仕組みと、人が育つ文化の両方がある組織です。主に、従業員5〜50人ほどで、社長が現場も見ている会社のAI活用を支援しています。
-        </p>
+        <p class="cp-mission__txt" data-reveal style="--d: .3s">DDDynamisは、AIで人の時間を取り戻し、その時間を人に使える会社を増やします。</p>
+        <div class="cp-equation" data-reveal>
+          <p class="cp-equation__lead">目指すのは、</p>
+          <div class="cp-equation__row">
+            <p class="cp-equation__item"><LineIcon name="gear" /><span>仕事を任せる仕組み</span></p>
+            <p class="cp-equation__op" aria-hidden="true">＋</p>
+            <p class="cp-equation__item"><LineIcon name="growth" /><span>人が育つ文化</span></p>
+          </div>
+          <p class="cp-equation__end">の両方がある組織です。</p>
+        </div>
+        <div class="cp-chips" data-reveal>
+          <p class="cp-chips__label">主に支援している会社</p>
+          <ul>
+            <li>従業員5〜50人ほど</li>
+            <li>社長が現場も見ている</li>
+          </ul>
+        </div>
       </div>
     </section>
 
@@ -187,7 +221,12 @@ const fvSlides = [
             <h2 class="cp-head__ttl" id="origin-ttl">中小企業に届かなかったDXを、<br />AIで届けます。</h2>
           </header>
           <p class="cp-origin__name" data-reveal>川端 康平<span>DDDynamis代表／AI軍師</span></p>
-          <p class="cp-origin__txt" data-reveal>神戸大学法学部を卒業後、SIerの営業を経て退職し、バンド活動、バーテンダー、植木職人を経験しました。37歳でフィリピンへ留学してWebエンジニアに転身し、フリーランスの開発実務からAI活用支援へと仕事を広げてきました。原点にあるのは、多額の費用と人手を要するシステム投資が、大企業にしか届かなかった構造への問題意識です。現役エンジニアとして、相談の場で実際に作って見せることから、会社の変化を支えます。</p>
+          <ol class="cp-career" data-reveal aria-label="経歴">
+            {career.map((c) => <li>{c}</li>)}
+          </ol>
+          <p class="cp-origin__txt" data-reveal>神戸大学法学部を卒業後、SIerの営業を経て退職し、バンド活動、バーテンダー、植木職人を経験しました。37歳でフィリピンへ留学してWebエンジニアに転身し、フリーランスの開発実務からAI活用支援へと仕事を広げてきました。</p>
+          <blockquote class="cp-quote" data-reveal>原点にあるのは、多額の費用と人手を要するシステム投資が、<strong>大企業にしか届かなかった構造</strong>への問題意識です。</blockquote>
+          <p class="cp-origin__txt" data-reveal>現役エンジニアとして、相談の場で実際に作って見せることから、会社の変化を支えます。</p>
           <a href="/about" class="cp-link" data-reveal>代表の原点と、私たちの考え方</a>
         </div>
       </div>
@@ -230,6 +269,7 @@ const fvSlides = [
         <div class="cp-service__list">
           {services.map((s, i) => (
             <article class="cp-service__item" data-reveal style={`--d: ${i * 0.12}s`}>
+              <div class="cp-service__icon"><LineIcon name={s.icon} size={56} /></div>
               <p class="cp-service__en eng">{s.en}</p>
               <h3 class="cp-service__name">{s.name}</h3>
               <p class="cp-service__catch">{s.catch}</p>
@@ -246,6 +286,7 @@ const fvSlides = [
             {extras.map((e) => (
               <li>
                 <a href={e.href}>
+                  <LineIcon name={e.icon} size={36} />
                   <span class="cp-extras__name">{e.name}</span>
                   <span class="cp-extras__txt">{e.txt}</span>
                 </a>
@@ -266,6 +307,13 @@ const fvSlides = [
         <div class="cp-works__list">
           {works.map((w, i) => (
             <article class={`cp-work${i === 0 ? " is-feature" : ""}`} data-reveal style={`--d: ${i * 0.1}s`}>
+              {i === 0 && (
+                <p class="cp-work__figure" aria-label="外注費 1件約15万円から0円">
+                  <span class="cp-work__before"><small>外注費 1件</small><s>約15万円</s></span>
+                  <span class="cp-work__arrow" aria-hidden="true"></span>
+                  <span class="cp-work__after">0<small>円</small></span>
+                </p>
+              )}
               <p class="cp-work__tag">{w.tag}</p>
               <h3 class="cp-work__ttl">{w.ttl}</h3>
               <p class="cp-work__txt">{w.txt}</p>
@@ -287,6 +335,10 @@ const fvSlides = [
         <div class="cp-practice__card" data-reveal>
           <p class="cp-head__en eng">Our practice</p>
           <h2 class="cp-practice__ttl" id="practice-ttl">私たち自身も、<br />AIを社員として働かせています。</h2>
+          <ul class="cp-tasks">
+            {practiceTasks.map((t) => <li><LineIcon name={t.icon} size={36} /><span>{t.name}</span></li>)}
+          </ul>
+          <p class="cp-tasks__note">を、一人で並行。</p>
           <p class="cp-practice__txt">DDDynamisでは、川端がAIに仕事を任せながら、営業・発信・研修資料の作成・開発を一人で並行しています。AIに任せられる仕事が増え、目の前の仕事に没頭する、フローの状態で働けるようになりました。自社での実践も、支援に生かしています。</p>
         </div>
       </div>
@@ -302,7 +354,7 @@ const fvSlides = [
         <ol class="cp-values__list">
           {values.map((v, i) => (
             <li class="cp-values__item" data-reveal style={`--d: ${i * 0.08}s`}>
-              <p class="cp-values__no eng">{String(i + 1).padStart(2, "0")}</p>
+              <div class="cp-values__head"><LineIcon name={v.icon} size={44} /><p class="cp-values__no eng">{String(i + 1).padStart(2, "0")}</p></div>
               <h3 class="cp-values__name">{v.name}</h3>
               <p class="cp-values__txt">{v.txt}</p>
             </li>
@@ -321,7 +373,10 @@ const fvSlides = [
       </picture>
       <div class="cp-container cp-closing__inner" data-reveal>
         <h2 class="cp-closing__ttl" id="closing-ttl">AIで生まれた時間で、<br />誰と向き合いますか？</h2>
-        <p class="cp-closing__txt">従業員の話を聴く時間、理念を伝える時間、次の仕事を考える時間に、AIで生まれた余力を使ってほしいと考えています。初回相談では、会社の業務と、その先に実現したいことをお聞かせください。</p>
+        <ul class="cp-times">
+          {closingTimes.map((t) => <li><LineIcon name={t.icon} size={44} /><span>{t.name}</span></li>)}
+        </ul>
+        <p class="cp-closing__txt">従業員の話を聴く時間、理念を伝える時間、次の仕事を考える時間に、AIで生まれた余力を使ってほしいと考えています。<br class="pc_only" />初回相談では、会社の業務と、その先に実現したいことをお聞かせください。</p>
         <a href="/consultation" class="cp-btn cp-btn--primary cp-btn--lg">初回相談について</a>
       </div>
     </section>

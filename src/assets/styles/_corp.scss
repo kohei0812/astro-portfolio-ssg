@@ -2226,3 +2226,618 @@ $ease: cubic-bezier(0.22, 1, 0.36, 1);
     }
   }
 }
+
+/*****************/
+/*** 文章を「部品」に分けて見せるパーツ（2026-10-02 追加）***/
+/*****************/
+#corp-page {
+  .cp-icon {
+    display: block;
+    flex-shrink: 0;
+    color: $navy;
+  }
+
+  /* 前置きの論点をアイコン付きで2つに分ける */
+  .cp-points {
+    display: grid;
+
+    li {
+      display: flex;
+      align-items: flex-start;
+      background-color: $gray;
+    }
+
+    p {
+      color: $body;
+      font-weight: 500;
+      line-height: 1.9;
+    }
+
+    strong {
+      color: $navy;
+    }
+  }
+
+  .cp-change__label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .cp-icon {
+      color: inherit;
+    }
+  }
+
+  /* ミッション：仕組み ＋ 文化 */
+  .cp-equation {
+    &__lead,
+    &__end {
+      color: $body;
+      font-weight: bold;
+    }
+
+    &__row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &__item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: $gray;
+      color: $navy;
+      font-weight: bold;
+    }
+
+    &__op {
+      color: $red;
+      font-weight: bold;
+    }
+  }
+
+  .cp-chips {
+    &__label {
+      color: $sub;
+      font-weight: bold;
+    }
+
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    li {
+      color: $navy;
+      font-weight: bold;
+      box-shadow: inset 0 0 0 1px $navy;
+    }
+  }
+
+  /* 経歴の年表（矢印でつなぐ） */
+  .cp-career {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+
+    li {
+      position: relative;
+      color: $navy;
+      font-weight: bold;
+      background-color: white;
+      box-shadow: inset 0 0 0 1px $line;
+
+      &:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        width: 6px;
+        height: 6px;
+        border-top: 1.5px solid $navy;
+        border-right: 1.5px solid $navy;
+        transform: translateY(-50%) rotate(45deg);
+      }
+
+      &:last-child {
+        background-color: $navy;
+        color: white;
+        box-shadow: none;
+      }
+    }
+  }
+
+  .cp-quote {
+    position: relative;
+    color: $ink;
+    font-weight: bold;
+    line-height: 1.8;
+    border-left: 4px solid $navy;
+    background-color: white;
+
+    strong {
+      color: $navy;
+      box-shadow: inset 0 -0.35em 0 rgba(23, 36, 57, 0.1);
+    }
+  }
+
+  .cp-service__icon {
+    color: $navy;
+  }
+
+  .cp-extras__list a {
+    .cp-icon {
+      color: $navy;
+    }
+  }
+
+  /* 事例A：大きな数字で */
+  .cp-work__figure {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    background-color: $gray;
+  }
+
+  .cp-work__before {
+    display: flex;
+    flex-direction: column;
+    color: $sub;
+    font-weight: bold;
+
+    s {
+      text-decoration-color: rgba(217, 1, 30, 0.7);
+      text-decoration-thickness: 2px;
+    }
+
+    small {
+      font-weight: bold;
+    }
+  }
+
+  .cp-work__arrow {
+    position: relative;
+    height: 2px;
+    background-color: $navy;
+
+    &::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: 50%;
+      width: 10px;
+      height: 10px;
+      border-top: 2px solid $navy;
+      border-right: 2px solid $navy;
+      transform: translateY(-50%) rotate(45deg);
+    }
+  }
+
+  .cp-work__after {
+    color: $navy;
+    font-family: "Montserrat", "Montserrat Fallback", sans-serif;
+    font-weight: 700;
+    line-height: 1;
+
+    small {
+      font-family: inherit;
+      font-weight: bold;
+    }
+  }
+
+  /* 自社の実践：4つの仕事 */
+  .cp-tasks {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+
+    li {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      background-color: $gray;
+      color: $navy;
+      font-weight: bold;
+      line-height: 1.4;
+    }
+
+    &__note {
+      color: $navy;
+      font-weight: bold;
+    }
+  }
+
+  .cp-values__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* 締め：3つの時間 */
+  .cp-times {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-left: auto;
+    margin-right: auto;
+
+    li {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: white;
+      color: $navy;
+      font-weight: bold;
+      line-height: 1.5;
+    }
+
+    .cp-icon {
+      color: $navy;
+    }
+  }
+}
+
+@media screen and (min-width: 769px) {
+  #corp-page {
+    .cp-points {
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 72px;
+
+      li {
+        gap: 20px;
+        padding: 28px 32px;
+      }
+
+      p {
+        font-size: 1.6rem;
+      }
+    }
+
+    .cp-change__label {
+      font-size: 1.5rem;
+    }
+
+    .cp-equation {
+      margin-top: 56px;
+
+      &__lead,
+      &__end {
+        font-size: 1.7rem;
+      }
+
+      &__row {
+        gap: 28px;
+        margin: 24px 0;
+      }
+
+      &__item {
+        gap: 14px;
+        width: 260px;
+        padding: 32px 20px;
+        font-size: 2rem;
+      }
+
+      &__op {
+        font-size: 4rem;
+      }
+    }
+
+    .cp-chips {
+      margin-top: 56px;
+
+      &__label {
+        font-size: 1.4rem;
+      }
+
+      ul {
+        gap: 12px;
+        margin-top: 14px;
+      }
+
+      li {
+        padding: 12px 24px;
+        font-size: 1.7rem;
+      }
+    }
+
+    .cp-career {
+      gap: 10px 26px;
+      margin: 24px 0 28px;
+
+      li {
+        padding: 8px 14px;
+        font-size: 1.35rem;
+
+        &:not(:last-child)::after {
+          right: -17px;
+        }
+      }
+    }
+
+    .cp-quote {
+      margin: 28px 0;
+      padding: 22px 28px;
+      font-size: 1.8rem;
+    }
+
+    .cp-service__icon {
+      margin-bottom: 18px;
+    }
+
+    .cp-extras__list a {
+      display: grid;
+      grid-template-columns: 36px 1fr;
+      column-gap: 16px;
+      align-items: start;
+
+      .cp-icon {
+        grid-row: span 2;
+      }
+    }
+
+    .cp-work__figure {
+      gap: 18px;
+      padding: 24px 28px;
+      margin-bottom: 24px;
+    }
+
+    .cp-work__before {
+      font-size: 2.2rem;
+
+      small {
+        font-size: 1.2rem;
+      }
+    }
+
+    .cp-work__arrow {
+      width: 56px;
+    }
+
+    .cp-work__after {
+      font-size: 6.4rem;
+
+      small {
+        font-size: 2rem;
+        margin-left: 4px;
+      }
+    }
+
+    .cp-tasks {
+      gap: 12px;
+      margin-top: 24px;
+
+      li {
+        gap: 10px;
+        padding: 20px 8px;
+        font-size: 1.4rem;
+      }
+
+      &__note {
+        margin-top: 12px;
+        font-size: 1.8rem;
+      }
+    }
+
+    .cp-practice__card {
+      max-width: 660px;
+    }
+
+    .cp-practice__txt {
+      margin-top: 24px;
+    }
+
+    .cp-values__head {
+      margin-bottom: 4px;
+    }
+
+    .cp-times {
+      max-width: 820px;
+      gap: 16px;
+      margin-top: 40px;
+
+      li {
+        gap: 14px;
+        padding: 28px 16px;
+        font-size: 1.6rem;
+      }
+    }
+
+    .cp-closing__txt {
+      margin-top: 32px;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #corp-page {
+    .cp-points {
+      gap: 12px;
+      margin-bottom: 44px;
+
+      li {
+        gap: 14px;
+        padding: 20px 18px;
+      }
+
+      .cp-icon {
+        width: 36px;
+        height: 36px;
+      }
+
+      p {
+        font-size: 1.45rem;
+      }
+    }
+
+    .cp-change__label {
+      font-size: 1.3rem;
+    }
+
+    .cp-equation {
+      margin-top: 36px;
+
+      &__lead,
+      &__end {
+        font-size: 1.5rem;
+      }
+
+      &__row {
+        gap: 8px;
+        margin: 16px 0;
+      }
+
+      &__item {
+        flex: 1;
+        gap: 10px;
+        padding: 20px 8px;
+        font-size: 1.5rem;
+        text-align: center;
+      }
+
+      &__op {
+        font-size: 2.8rem;
+      }
+    }
+
+    .cp-chips {
+      margin-top: 36px;
+
+      &__label {
+        font-size: 1.3rem;
+      }
+
+      ul {
+        gap: 8px;
+        margin-top: 10px;
+      }
+
+      li {
+        padding: 10px 16px;
+        font-size: 1.5rem;
+      }
+    }
+
+    .cp-career {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+      margin: 20px 0 24px;
+
+      li {
+        padding: 7px 12px;
+        font-size: 1.3rem;
+
+        &:not(:last-child)::after {
+          top: auto;
+          bottom: -12px;
+          left: 16px;
+          transform: rotate(135deg);
+        }
+      }
+    }
+
+    .cp-quote {
+      margin: 22px 0;
+      padding: 18px 18px;
+      font-size: 1.6rem;
+    }
+
+    .cp-service__icon {
+      margin-bottom: 12px;
+
+      .cp-icon {
+        width: 48px;
+        height: 48px;
+      }
+    }
+
+    .cp-extras__list a {
+      display: grid;
+      grid-template-columns: 32px 1fr;
+      column-gap: 14px;
+
+      .cp-icon {
+        grid-row: span 2;
+        width: 32px;
+        height: 32px;
+      }
+    }
+
+    .cp-work__figure {
+      gap: 12px;
+      padding: 18px 18px;
+      margin-bottom: 18px;
+    }
+
+    .cp-work__before {
+      font-size: 1.8rem;
+
+      small {
+        font-size: 1.1rem;
+      }
+    }
+
+    .cp-work__arrow {
+      width: 36px;
+    }
+
+    .cp-work__after {
+      font-size: 4.8rem;
+
+      small {
+        font-size: 1.6rem;
+        margin-left: 3px;
+      }
+    }
+
+    .cp-tasks {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-top: 18px;
+
+      li {
+        gap: 8px;
+        padding: 16px 6px;
+        font-size: 1.3rem;
+      }
+
+      &__note {
+        margin-top: 10px;
+        font-size: 1.6rem;
+      }
+    }
+
+    .cp-practice__txt {
+      margin-top: 18px;
+    }
+
+    .cp-values__head .cp-icon {
+      width: 36px;
+      height: 36px;
+    }
+
+    .cp-times {
+      grid-template-columns: 1fr;
+      gap: 8px;
+      margin-top: 28px;
+
+      li {
+        flex-direction: row;
+        gap: 14px;
+        padding: 14px 18px;
+        font-size: 1.5rem;
+        text-align: left;
+      }
+
+      .cp-icon {
+        width: 34px;
+        height: 34px;
+      }
+    }
+
+    .cp-closing__txt {
+      margin-top: 24px;
+    }
+  }
+}

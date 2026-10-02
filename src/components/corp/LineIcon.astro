@@ -1,0 +1,150 @@
+---
+//src/components/corp/LineIcon.astro
+// コーポレートサイト用の線画アイコン（48×48、線幅1.6、色は currentColor）。
+// 人物イラストは使わない方針（過去に却下）なので、物と記号だけで描いている。
+const { name, size = 48 } = Astro.props;
+---
+<svg
+  class={`cp-icon cp-icon--${name}`}
+  width={size}
+  height={size}
+  viewBox="0 0 48 48"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+>
+  {name === "building" && (
+    <>
+      <path d="M8 42V12l14-6v36" />
+      <path d="M22 42V18l18 6v18" />
+      <path d="M4 42h40" />
+      <path d="M13 16h4M13 22h4M13 28h4M13 34h4M28 28h6M28 34h6" />
+    </>
+  )}
+  {name === "laptop" && (
+    <>
+      <rect x="9" y="12" width="30" height="20" rx="1.5" />
+      <path d="M4 36h40l-3 4H7z" />
+      <path d="M17 22l4 4 9-9" />
+    </>
+  )}
+  {name === "gear" && (
+    <>
+      <circle cx="24" cy="24" r="6" />
+      <path d="M24 6v6M24 36v6M6 24h6M36 24h6M11.3 11.3l4.2 4.2M32.5 32.5l4.2 4.2M11.3 36.7l4.2-4.2M32.5 15.5l4.2-4.2" />
+    </>
+  )}
+  {name === "growth" && (
+    <>
+      <path d="M6 40h36" />
+      <rect x="10" y="28" width="6" height="12" />
+      <rect x="21" y="20" width="6" height="20" />
+      <rect x="32" y="12" width="6" height="28" />
+      <path d="M8 22l10-8 8 4 14-10" />
+      <path d="M34 8h6v6" />
+    </>
+  )}
+  {name === "app" && (
+    <>
+      <rect x="14" y="5" width="20" height="38" rx="3" />
+      <path d="M21 37h6" />
+      <rect x="19" y="12" width="10" height="8" rx="1" />
+      <path d="M19 25h10M19 30h7" />
+    </>
+  )}
+  {name === "web" && (
+    <>
+      <rect x="5" y="9" width="38" height="30" rx="2" />
+      <path d="M5 16h38" />
+      <path d="M10 12.5h1M14 12.5h1M18 12.5h1" />
+      <path d="M11 23h14M11 28h10M30 22h8v10h-8z" />
+    </>
+  )}
+  {name === "subsidy" && (
+    <>
+      <path d="M12 5h18l8 8v30H12z" />
+      <path d="M30 5v8h8" />
+      <path d="M19 22l5 6 5-6M24 28v10M19 31h10M19 35h10" />
+    </>
+  )}
+  {name === "graduate" && (
+    <>
+      <path d="M4 18l20-9 20 9-20 9z" />
+      <path d="M12 22v9c0 3 5.5 6 12 6s12-3 12-6v-9" />
+      <path d="M44 18v12" />
+    </>
+  )}
+  {name === "measure" && (
+    <>
+      <circle cx="24" cy="26" r="16" />
+      <path d="M24 26l8-8" />
+      <path d="M24 10v3M10 26h3M35 26h3M14 16l2 2" />
+      <circle cx="24" cy="26" r="1.5" />
+    </>
+  )}
+  {name === "handshake" && (
+    <>
+      <path d="M4 20l8-6 8 4" />
+      <path d="M44 20l-8-6-10 4-8 6a2.5 2.5 0 0 0 3.5 3.5L27 24" />
+      <path d="M12 14v14l10 9a2 2 0 0 0 3-2.6l-1-1.2M36 14v14l-6 6" />
+      <path d="M28 33l2 2a2 2 0 0 1-3 2.7L25 36" />
+    </>
+  )}
+  {name === "layers" && (
+    <>
+      <path d="M24 6L4 16l20 10 20-10z" />
+      <path d="M4 24l20 10 20-10" />
+      <path d="M4 32l20 10 20-10" />
+    </>
+  )}
+  {name === "clock" && (
+    <>
+      <circle cx="24" cy="24" r="17" />
+      <path d="M24 13v11l7 5" />
+    </>
+  )}
+  {name === "talk" && (
+    <>
+      <path d="M6 10h24a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3H16l-7 6v-6H6a3 3 0 0 1-3-3V13a3 3 0 0 1 3-3z" />
+      <path d="M37 18h5a3 3 0 0 1 3 3v11a3 3 0 0 1-3 3h-2v5l-6-5h-9a3 3 0 0 1-3-3v-1" />
+      <path d="M11 19h16M11 23h10" />
+    </>
+  )}
+  {name === "flag" && (
+    <>
+      <path d="M12 44V6" />
+      <path d="M12 8h24l-5 7 5 7H12" />
+    </>
+  )}
+  {name === "idea" && (
+    <>
+      <path d="M17 31c-3.5-2.6-6-6.4-6-11a13 13 0 0 1 26 0c0 4.6-2.5 8.4-6 11v4H17z" />
+      <path d="M18 40h12M20 44h8" />
+      <path d="M24 35v-9l-4-4M24 26l4-4" />
+    </>
+  )}
+  {name === "megaphone" && (
+    <>
+      <path d="M6 20v8a2 2 0 0 0 2 2h6l18 9V9L14 18H8a2 2 0 0 0-2 2z" />
+      <path d="M14 30l3 10h5l-2-9" />
+      <path d="M38 18a8 8 0 0 1 0 12" />
+    </>
+  )}
+  {name === "doc" && (
+    <>
+      <rect x="8" y="10" width="32" height="24" rx="2" />
+      <path d="M24 34v6M16 42h16" />
+      <path d="M13 16h12M13 21h8M28 16h7v10h-7zM13 27h10" />
+    </>
+  )}
+  {name === "code" && (
+    <>
+      <rect x="5" y="8" width="38" height="32" rx="2" />
+      <path d="M5 15h38" />
+      <path d="M17 23l-5 5 5 5M31 23l5 5-5 5M27 21l-6 14" />
+    </>
+  )}
+</svg>
