@@ -7,6 +7,7 @@ const {
   lang = "ja",
   lp = false, // true: LP用のヘッダー・フッター（ナビなし）に差し替える
   lpCta = undefined, // lp のとき { header, sticky } でボタン文言を渡す
+  lpTagline = "", // lp のときヘッダーのロゴ横に出す一行（PCのみ）
 } = Astro.props;
 
 // 現在のパス取得
@@ -188,7 +189,7 @@ const scriptHtml = `
     >
   </head>
   <body>
-    {lp ? <LpHeader ctaLabel={lpCta?.header} stickyLabel={lpCta?.sticky} /> : <Header />}
+    {lp ? <LpHeader ctaLabel={lpCta?.header} stickyLabel={lpCta?.sticky} tagline={lpTagline} /> : <Header />}
     <slot />
     {lp ? <LpFooter /> : <Footer />}
     <div set:html={scriptHtml} />

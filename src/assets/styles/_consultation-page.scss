@@ -208,6 +208,12 @@ $gray: #f4f6f9;
       font-weight: bold;
       letter-spacing: 0.12em;
     }
+
+    &__tagline {
+      color: $navy;
+      font-weight: bold;
+      border-top: 1px solid $line;
+    }
   }
 
   /* --- 2. 発注の壁 ------------------------------------ */
@@ -855,6 +861,12 @@ $gray: #f4f6f9;
       &__name {
         font-size: 2rem;
       }
+
+      &__tagline {
+        margin-top: 8px;
+        padding-top: 8px;
+        font-size: 1.4rem;
+      }
     }
 
     .c-wall {
@@ -1276,6 +1288,12 @@ $gray: #f4f6f9;
 
       &__name {
         font-size: 1.6rem;
+      }
+
+      &__tagline {
+        margin-top: 4px;
+        padding-top: 4px;
+        font-size: 1.2rem;
       }
     }
 
