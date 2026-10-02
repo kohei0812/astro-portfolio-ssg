@@ -3213,3 +3213,120 @@ $ease: cubic-bezier(0.22, 1, 0.36, 1);
     }
   }
 }
+
+/*****************/
+/*** 指摘対応（2026-10-02 夜）***/
+/*****************/
+#corp-page {
+  /* 「これまで／いま」の大きな一言は両方とも赤 */
+  .cp-change__big,
+  .cp-change__col.is-now .cp-change__big {
+    color: $red;
+
+    em {
+      box-shadow: none;
+    }
+  }
+
+  /* 縦書きの中の「AI」を縦中横に */
+  .cp-tcy {
+    text-combine-upright: all;
+    -webkit-text-combine: horizontal;
+    letter-spacing: 0;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  #corp-page {
+    /* 事業内容カード：キャッチの上に余白 */
+    .cp-service__catch {
+      margin-top: 16px;
+    }
+
+    /*
+      横に並ぶカード同士で行を共有し、各要素の開始位置を揃える（subgrid）。
+      事業内容＝アイコン／英字／名前／キャッチ／本文／項目の6行
+      事例＝図または絵／業種／見出し／本文の4行
+      大切にしていること＝アイコンと番号／名前／本文の3行
+    */
+    .cp-service__list {
+      grid-template-rows: repeat(6, auto);
+      row-gap: 0;
+    }
+
+    .cp-service__item {
+      display: grid;
+      grid-row: span 6;
+      grid-template-rows: subgrid;
+      row-gap: 0;
+      align-content: start;
+
+      > * {
+        margin-top: 0;
+      }
+
+      .cp-service__en {
+        margin-top: 0;
+      }
+
+      .cp-service__name {
+        margin-top: 10px;
+      }
+
+      .cp-service__catch {
+        margin-top: 16px;
+      }
+
+      .cp-service__txt {
+        margin-top: 20px;
+      }
+
+      .cp-service__items {
+        margin-top: 24px;
+      }
+    }
+
+    .cp-works__list {
+      grid-template-rows: repeat(4, auto);
+      row-gap: 0;
+    }
+
+    .cp-work {
+      display: grid;
+      grid-row: span 4;
+      grid-template-rows: subgrid;
+      row-gap: 0;
+
+      /* 1行目（数字の図／アイコン）は下揃えにして、業種の行の位置を合わせる */
+      > :first-child {
+        align-self: end;
+      }
+
+      .cp-work__tag {
+        margin-top: 20px;
+      }
+    }
+
+    .cp-values__list {
+      grid-template-rows: repeat(3, auto);
+      row-gap: 0;
+    }
+
+    .cp-values__item {
+      display: grid;
+      grid-row: span 3;
+      grid-template-rows: subgrid;
+      row-gap: 0;
+    }
+  }
+}
+
+#corp-page {
+  .cp-vertical {
+    white-space: nowrap;
+  }
+
+  .cp-mission__txt {
+    text-wrap: balance;
+  }
+}
