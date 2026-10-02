@@ -62,3 +62,52 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   }
 });
+
+// 孤立文字（最後の行が「す。」だけ等）をなくす。text-wrap: pretty だけでは日本語で残るため。
+// 1) 文の切れ目（。→、）で手前に改行を入れる 2) 切れ目が無い一文は text-wrap: balance で行をならす。
+// 幅が変わったら元に戻して測り直す。アイコンや画像を含む要素は触らない。
+(() => {
+  const SEL = "#corp-page p, #corp-page dd, #corp-page li, #corp-page h3, #corp-page summary > span:last-child, #corp-page .cs-detail__goal > span";
+  const lastLineWidth = (el) => {
+    const r = document.createRange();
+    r.selectNodeContents(el);
+    const rects = [...r.getClientRects()].filter((x) => x.width > 0);
+    if (rects.length < 2) return Infinity;
+    const bottom = Math.max(...rects.map((x) => x.bottom));
+    const last = rects.filter((x) => Math.abs(x.bottom - bottom) < 2);
+    return Math.max(...last.map((x) => x.right)) - Math.min(...last.map((x) => x.left));
+  };
+  const fix = () => {
+    document.querySelectorAll(SEL).forEach((el) => {
+      if (el.dataset.orig !== undefined) {
+        el.innerHTML = el.dataset.orig;
+        el.style.textWrap = "";
+      }
+      if (el.querySelector("svg, img, picture, ul, ol, p")) return;
+      const em = parseFloat(getComputedStyle(el).fontSize) || 16;
+      const short = () => lastLineWidth(el) <= em * 3.5;
+      if (!short()) return;
+      const html = el.innerHTML;
+      el.dataset.orig = html;
+      const from = Math.max(html.lastIndexOf("<br"), 0);
+      const end = html.trimEnd().length - 2;
+      const cands = [];
+      for (const mark of ["。", "、"]) {
+        for (let k = html.lastIndexOf(mark, end); k > from; k = html.lastIndexOf(mark, k - 1)) cands.push(k);
+      }
+      for (const k of cands.slice(0, 6)) {
+        el.innerHTML = html.slice(0, k + 1) + '<br class="orphan-br" />' + html.slice(k + 1);
+        if (!short()) return;
+      }
+      el.innerHTML = html;
+      el.style.textWrap = "balance";
+      if (short()) el.style.textWrap = "";
+    });
+  };
+  let t;
+  addEventListener("load", () => setTimeout(fix, 300));
+  addEventListener("resize", () => {
+    clearTimeout(t);
+    t = setTimeout(fix, 200);
+  });
+})();

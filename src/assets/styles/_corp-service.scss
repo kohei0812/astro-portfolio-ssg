@@ -1730,3 +1730,25 @@ $ease: cubic-bezier(0.22, 1, 0.36, 1);
     text-wrap: balance;
   }
 }
+
+/* タブレット幅（PCレイアウトのまま狭い）：小さな箱の中で1〜2文字だけ折り返さないように */
+@media screen and (min-width: 769px) and (max-width: 1080px) {
+  #corp-page.cp-service-page {
+    .cs-ways__flow {
+      gap: 16px;
+
+      li {
+        padding: 10px 2px;
+        font-size: 1.2rem;
+      }
+
+      li + li::before {
+        left: -11px;
+      }
+    }
+
+    .cs-six li {
+      font-size: 1.3rem;
+    }
+  }
+}
