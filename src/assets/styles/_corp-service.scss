@@ -535,17 +535,12 @@ $ease: cubic-bezier(0.22, 1, 0.36, 1);
 /*****************/
 @media screen and (min-width: 769px) {
   #corp-page.cp-service-page {
-    /* 7段階を2段に（4＋3）。2段目は中央寄せ。丸をつなぐ線は段ごとに引く */
+    /* 6段階を2段に（3＋3）。丸をつなぐ線は段ごとに引く。業務アプリ開発は別枠なので流れに入れない */
     .cs-flow {
-      grid-template-columns: repeat(8, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 56px 24px;
 
       &__item {
-        grid-column: span 2;
-
-        &:nth-child(5) {
-          grid-column: 2 / span 2;
-        }
 
         &::after {
           content: "";
@@ -557,7 +552,7 @@ $ease: cubic-bezier(0.22, 1, 0.36, 1);
           background-color: rgba($navy, 0.3);
         }
 
-        &:nth-child(4)::after,
+        &:nth-child(3n)::after,
         &:last-child::after {
           content: none;
         }
@@ -585,6 +580,7 @@ $ease: cubic-bezier(0.22, 1, 0.36, 1);
 
       &__txt {
         text-align: center;
+        text-wrap: balance;
       }
 
       &__fork {
