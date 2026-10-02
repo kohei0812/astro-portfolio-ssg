@@ -67,6 +67,9 @@ export default function ConsultForm({ heading, lead, submitLabel, doneTitle, don
 
       await fetch(GOOGLE_FORM_URL, { method: 'POST', body: submitData, mode: 'no-cors' });
 
+      // GA4：初回相談の申込みをキーイベント（generate_lead）として送る
+      if (typeof window.gtag === 'function') window.gtag('event', 'generate_lead', { form: 'consultation', page: location.pathname });
+
       setIsSubmitted(true);
       setFormData(initialData);
     } catch (error) {

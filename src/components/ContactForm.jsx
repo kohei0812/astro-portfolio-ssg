@@ -121,6 +121,9 @@ export default function ContactForm({ lang = "ja" }) {
         mode: 'no-cors'
       });
       
+      // GA4：問い合わせ送信をキーイベント（generate_lead）として送る
+      if (typeof window.gtag === 'function') window.gtag('event', 'generate_lead', { form: 'contact', page: location.pathname });
+
       // 送信時刻を記録
       localStorage.setItem('lastFormSubmission', new Date().getTime().toString());
       

@@ -6,7 +6,7 @@ import sitemap from "@astrojs/sitemap";
 // https://astro.build/config
 export default defineConfig({
   output: "static", // SSG（静的サイト生成）に変更
-  site: "https://dddynamis.com",
+  site: "https://www.dddynamis.com",
   integrations: [
     react(), 
     sitemap({

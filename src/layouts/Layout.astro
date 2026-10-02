@@ -46,11 +46,25 @@ const scriptHtml = `
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
 
+    <!-- Google アナリティクス（GA4 プロパティ dddynamis.com、2026-10-02 作成）。全ページ共通 -->
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-KL8X2RBZGB"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-KL8X2RBZGB');
+      // 初回相談へのボタン・リンクのクリック（どのページのどのボタンから来たか）
+      document.addEventListener('click', function (e) {
+        var a = e.target.closest && e.target.closest('a[href*="/consultation"]');
+        if (a) gtag('event', 'cta_click', { link_text: (a.textContent || '').trim().slice(0, 40), page: location.pathname });
+      });
+    </script>
+
     <!-- SEO基本 -->
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="robots" content="index, follow" />
-    <link rel="canonical" href={`https://dddynamis.com${Astro.url.pathname}`} />
+    <link rel="canonical" href={`https://www.dddynamis.com${Astro.url.pathname}`} />
 
     <!-- OGP -->
     <meta property="og:title" content={title} />
@@ -60,14 +74,14 @@ const scriptHtml = `
     <meta property="og:locale" content={ogLocale} />
     <meta
       property="og:url"
-      content={`https://dddynamis.com${Astro.url.pathname}`}
+      content={`https://www.dddynamis.com${Astro.url.pathname}`}
     />
     <meta name="twitter:card" content="summary_large_image" />
     
     <!-- hreflang -->
-    <link rel="alternate" hreflang="ja" href={`https://dddynamis.com${getAlternateLanguageUrl("ja")}`} />
-    <link rel="alternate" hreflang="en" href={`https://dddynamis.com${getAlternateLanguageUrl("en")}`} />
-    <link rel="alternate" hreflang="x-default" href={`https://dddynamis.com${getAlternateLanguageUrl("ja")}`} />
+    <link rel="alternate" hreflang="ja" href={`https://www.dddynamis.com${getAlternateLanguageUrl("ja")}`} />
+    <link rel="alternate" hreflang="en" href={`https://www.dddynamis.com${getAlternateLanguageUrl("en")}`} />
+    <link rel="alternate" hreflang="x-default" href={`https://www.dddynamis.com${getAlternateLanguageUrl("ja")}`} />
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
