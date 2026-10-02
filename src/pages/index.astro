@@ -376,7 +376,7 @@ const closingTimes = [
         <ol class="cp-values__list">
           {values.map((v, i) => (
             <li class="cp-values__item" data-reveal style={`--d: ${i * 0.08}s`}>
-              <div class="cp-values__head"><LineIcon name={v.icon} size={44} /><p class="cp-values__no eng">{String(i + 1).padStart(2, "0")}</p></div>
+              <div class="cp-values__head"><p class="cp-values__no eng">{String(i + 1).padStart(2, "0")}</p><LineIcon name={v.icon} size={44} /></div>
               <h3 class="cp-values__name">{v.name}</h3>
               <p class="cp-values__txt">{v.txt}</p>
             </li>
