@@ -15,8 +15,10 @@ const FIELD_IDS = {
 };
 const SUBJECT = "【初回相談】お申し込み";
 const STYLES = ["オンライン", "訪問", "どちらでもよい"];
+// どこで知ったか（任意）。2026-10-03 追加：月次レポートで流入経路を本人の申告で確かめるため（GD/営業/マーケ運用）
+const SOURCES = ["X", "Instagram", "Facebook", "名刺", "BNI", "セミナー・研修", "検索", "ご紹介", "その他"];
 
-const initialData = { company: '', name: '', email: '', tel: '', style: STYLES[0], message: '' };
+const initialData = { company: '', name: '', email: '', tel: '', style: STYLES[0], source: '', message: '' };
 
 export default function ConsultForm({ heading, lead, submitLabel, doneTitle, doneText, messageLabel = 'ご相談したいこと（任意）', messagePlaceholder = '' }) {
   const [formData, setFormData] = useState(initialData);
@@ -55,6 +57,7 @@ export default function ConsultForm({ heading, lead, submitLabel, doneTitle, don
         `会社名・屋号: ${formData.company.trim()}`,
         `電話番号: ${formData.tel.trim() || '（未記入）'}`,
         `希望の形式: ${formData.style}`,
+        `どこで知ったか: ${formData.source || '（未選択）'}`,
         '',
         formData.message.trim() || '（記入なし）'
       ].join('\n');
@@ -68,7 +71,7 @@ export default function ConsultForm({ heading, lead, submitLabel, doneTitle, don
       await fetch(GOOGLE_FORM_URL, { method: 'POST', body: submitData, mode: 'no-cors' });
 
       // GA4：初回相談の申込みをキーイベント（generate_lead）として送る
-      if (typeof window.gtag === 'function') window.gtag('event', 'generate_lead', { form: 'consultation', page: location.pathname });
+      if (typeof window.gtag === 'function') window.gtag('event', 'generate_lead', { form: 'consultation', page: location.pathname, heard_from: formData.source || 'unknown' });
 
       setIsSubmitted(true);
       setFormData(initialData);
@@ -153,6 +156,14 @@ export default function ConsultForm({ heading, lead, submitLabel, doneTitle, don
               ))}
             </div>
           </fieldset>
+
+          <div className="form-group">
+            <label htmlFor="source" className="form-label">どこで知りましたか（任意）</label>
+            <select id="source" name="source" value={formData.source} onChange={handleChange} className="form-input">
+              <option value="">選択してください</option>
+              {SOURCES.map((s) => <option key={s} value={s}>{s}</option>)}
+            </select>
+          </div>
 
           <div className="form-group">
             <label htmlFor="message" className="form-label">{messageLabel}</label>
