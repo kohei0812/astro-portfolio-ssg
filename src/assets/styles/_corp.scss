@@ -3094,3 +3094,122 @@ $ease: cubic-bezier(0.22, 1, 0.36, 1);
     font-size: 2.8rem;
   }
 }
+
+/* 「大企業だけのものにしない」の上の商店街の写真帯 */
+#corp-page .cp-statement-band {
+  margin: 0;
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+}
+
+#corp-page .cp-statement-band + .cp-statement {
+  margin-top: 0;
+  border-top: none;
+}
+
+@media screen and (min-width: 769px) {
+  #corp-page .cp-statement-band {
+    margin-top: 120px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #corp-page .cp-statement-band {
+    margin-top: 72px;
+  }
+}
+
+/*****************/
+/*** 細部の調整（2026-10-02 監査）***/
+/*****************/
+/*
+  計測結果に合わせて揃える：
+  - 本文は 16px / 行間2.0 に統一（カード内は15px）。ばらついていた 1.9 / 2.1 を揃える。
+  - 1行の文字数は30〜38字程度に収める（一本の筋は46字、ミッションは42字あった）。
+  - 本文の太さは400＋字間0.04em。参考サイト（人材研究所・トンマナ等）の軽い読み味に合わせる。
+    見出し・ラベル・強調は従来どおり bold。
+*/
+#corp-page {
+  .cp-head__lead,
+  .cp-fv__sub,
+  .cp-change__txt,
+  .cp-mission__txt,
+  .cp-origin__txt,
+  .cp-chain__txt,
+  .cp-service__txt,
+  .cp-extras__txt,
+  .cp-work__txt,
+  .cp-practice__txt,
+  .cp-values__txt,
+  .cp-closing__txt,
+  .cp-points p,
+  .cp-target__txt,
+  .cp-article__body p,
+  .cp-article__body {
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    line-height: 2;
+  }
+
+  .cp-chain__txt {
+    max-width: 29em;
+  }
+
+  .cp-mission__txt {
+    max-width: 34em;
+  }
+
+  .cp-closing__txt {
+    max-width: 36em;
+  }
+
+  .cp-head__lead {
+    max-width: 38em;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  #corp-page {
+    .cp-fv__sub,
+    .cp-change__txt,
+    .cp-mission__txt,
+    .cp-origin__txt,
+    .cp-chain__txt,
+    .cp-practice__txt,
+    .cp-closing__txt,
+    .cp-points p,
+    .cp-article__body {
+      font-size: 1.6rem;
+    }
+
+    .cp-service__txt,
+    .cp-extras__txt,
+    .cp-work__txt,
+    .cp-values__txt {
+      font-size: 1.5rem;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #corp-page {
+    .cp-fv__sub,
+    .cp-change__txt,
+    .cp-mission__txt,
+    .cp-origin__txt,
+    .cp-chain__txt,
+    .cp-practice__txt,
+    .cp-closing__txt,
+    .cp-points p,
+    .cp-service__txt,
+    .cp-work__txt,
+    .cp-article__body {
+      font-size: 1.5rem;
+      line-height: 1.95;
+    }
+  }
+}

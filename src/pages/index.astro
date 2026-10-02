@@ -6,7 +6,7 @@
 
   話の運び：変化（外部環境と機会）→ ミッション → 代表と原点 → 一本の筋 → 事業内容 → 事例 → 自社の実践 → 大切にしていること → 締め
   文言は Codex（GPT-6 Astra）案（営業/コーポレートサイト_文言_Codex案_20261002.md）。
-  写真は Unsplash（顔の写る人物写真は使わない）＋本人写真。トーンは全写真に同じ補正をかけて揃えている。
+  写真は本人写真＋Unsplash＋ぱくたそ（PK-PAUI8414 文化／PK-PAUI8071 実践／yokohama-sIMG091 商店街）。顔の分かる他人の写真は使わない。トーンは同じ補正で揃えている。
 */
 import Layout from "../layouts/Layout.astro";
 import LineIcon from "../components/corp/LineIcon.astro";
@@ -182,6 +182,14 @@ const closingTimes = [
           </div>
         </div>
       </div>
+      <figure class="cp-statement-band" aria-hidden="true">
+        <picture>
+          <source media="(min-width: 769px)" srcset="/assets/images/corp/band-street.webp" type="image/webp" />
+          <source media="(min-width: 769px)" srcset="/assets/images/corp/band-street.jpg" />
+          <source srcset="/assets/images/corp/band-street-sp.webp" type="image/webp" />
+          <img src="/assets/images/corp/band-street-sp.jpg" alt="" width="800" height="600" loading="lazy" decoding="async" />
+        </picture>
+      </figure>
       <p class="cp-statement" data-reveal>
         <span>業務変革を、</span><span>大企業だけのものにしない。</span>
       </p>
@@ -339,10 +347,10 @@ const closingTimes = [
     <!-- 8. 自社の実践（写真帯の上に一文） -->
     <section class="cp-practice" aria-labelledby="practice-ttl">
       <picture class="cp-practice__bg" aria-hidden="true">
-        <source media="(min-width: 769px)" srcset="/assets/images/corp/band-team.webp" type="image/webp" />
-        <source media="(min-width: 769px)" srcset="/assets/images/corp/band-team.jpg" />
-        <source srcset="/assets/images/corp/band-team-sp.webp" type="image/webp" />
-        <img src="/assets/images/corp/band-team-sp.jpg" alt="" width="800" height="600" loading="lazy" decoding="async" />
+        <source media="(min-width: 769px)" srcset="/assets/images/corp/band-practice.webp" type="image/webp" />
+        <source media="(min-width: 769px)" srcset="/assets/images/corp/band-practice.jpg" />
+        <source srcset="/assets/images/corp/band-practice-sp.webp" type="image/webp" />
+        <img src="/assets/images/corp/band-practice-sp.jpg" alt="" width="800" height="600" loading="lazy" decoding="async" />
       </picture>
       <div class="cp-container cp-practice__inner">
         <div class="cp-practice__card" data-reveal>
