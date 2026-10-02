@@ -12,6 +12,8 @@
 import Layout from "../layouts/Layout.astro";
 import ConsultForm from "../components/consultation/ConsultForm.jsx";
 import CtaBlock from "../components/consultation/CtaBlock.astro";
+import PhotoBand from "../components/consultation/PhotoBand.astro";
+// 写真（side-*・band-*）は Unsplash。wall=photo-1499750310107 / method=photo-1544006659 / why=photo-1766476210492 / first=photo-1775163024488 / closing=photo-1769488702396
 
 const wallFlow = ["思いつく", "誰かに頼む", "見積を待つ", "順番を待つ", "熱が冷める"];
 
@@ -161,10 +163,16 @@ const faqs = [
           <p class="c-head__en eng">The wall</p>
           <h2 class="c-head__ttl" id="wall-heading">あの企画は、見積を待っている間に<br class="pc_only" />止まっていませんか。</h2>
         </header>
-        <div class="c-wall__story">
-          <p>新しいサービスを思いついた。まずは案内ページを作って、お客さまの反応を見たい。</p>
-          <p>でも、社内に作れる人がいない。頼める相手を探し、説明をまとめ、見積を待つ。発注できても、着手は相手の予定が空いてから。</p>
-          <p>ようやく順番が来る頃には、別の仕事に追われ、あの企画は寝かされたまま。急ぎの依頼が来ても、制作が間に合うか分からず、受けると答えられない。</p>
+        <div class="c-wall__intro">
+          <div class="c-wall__story">
+            <p>新しいサービスを思いついた。まずは案内ページを作って、お客さまの反応を見たい。</p>
+            <p>でも、社内に作れる人がいない。頼める相手を探し、説明をまとめ、見積を待つ。発注できても、着手は相手の予定が空いてから。</p>
+            <p>ようやく順番が来る頃には、別の仕事に追われ、あの企画は寝かされたまま。急ぎの依頼が来ても、制作が間に合うか分からず、受けると答えられない。</p>
+          </div>
+          <picture class="c-side-photo">
+            <source srcset="/assets/images/consultation/side-wall.webp" type="image/webp" />
+            <img src="/assets/images/consultation/side-wall.jpg" alt="" width="1000" height="750" loading="lazy" decoding="async" />
+          </picture>
         </div>
 
         <ol class="c-wall__flow" aria-label="発注の壁">
@@ -193,6 +201,8 @@ const faqs = [
       </div>
     </section>
 
+    <PhotoBand name="why" />
+
     <!-- 4. なぜ今までうまくいかなかったか：悪者は人ではなく仕組み -->
     <section class="c-sec c-why" aria-labelledby="why-heading">
       <div class="c-container">
@@ -219,8 +229,14 @@ const faqs = [
         <header class="c-head">
           <p class="c-head__en eng">Method</p>
           <h2 class="c-head__ttl" id="method-heading">頭の中のアイデアを、<br />社員が再現できる仕事の型に。</h2>
-          <p class="c-head__lead">「その場で作る型」は、目の前の仕事を1つ作りながら、次も自分たちで作れるようにする進め方です。</p>
         </header>
+        <div class="c-method__top">
+          <p class="c-head__lead">「その場で作る型」は、目の前の仕事を1つ作りながら、次も自分たちで作れるようにする進め方です。</p>
+          <picture class="c-side-photo">
+            <source srcset="/assets/images/consultation/side-method.webp" type="image/webp" />
+            <img src="/assets/images/consultation/side-method.jpg" alt="" width="1000" height="750" loading="lazy" decoding="async" />
+          </picture>
+        </div>
         <ol class="c-method__list">
           {steps.map((s, i) => (
             <li class="c-method__item">
@@ -301,6 +317,8 @@ const faqs = [
       </div>
     </section>
 
+    <PhotoBand name="first" />
+
     <!-- 9. 初回相談で起きること：持ち帰れるもの（その場で作る試作品）がリスク反転になる -->
     <section class="c-sec c-sec--light c-first" aria-labelledby="first-heading">
       <div class="c-container">
@@ -348,6 +366,8 @@ const faqs = [
         </dl>
       </div>
     </section>
+
+    <PhotoBand name="closing" />
 
     <!-- 12. 最終の後押し → フォーム -->
     <section class="c-sec c-sec--deep c-closing" aria-labelledby="closing-heading">

@@ -1,0 +1,14 @@
+---
+//src/components/consultation/PhotoBand.astro
+// セクションの間に挟む全幅の写真帯（読み疲れた目を休める）。
+// 写真は Unsplash（Unsplash License：商用利用可・クレジット不要）。顔の写る人物写真は使わない方針。
+const { name, alt = "" } = Astro.props;
+---
+<figure class="c-band" aria-hidden={alt ? undefined : "true"}>
+  <picture>
+    <source media="(min-width: 769px)" srcset={`/assets/images/consultation/band-${name}.webp`} type="image/webp" />
+    <source media="(min-width: 769px)" srcset={`/assets/images/consultation/band-${name}.jpg`} />
+    <source srcset={`/assets/images/consultation/band-${name}-sp.webp`} type="image/webp" />
+    <img src={`/assets/images/consultation/band-${name}-sp.jpg`} alt={alt} width="800" height="600" loading="lazy" decoding="async" />
+  </picture>
+</figure>

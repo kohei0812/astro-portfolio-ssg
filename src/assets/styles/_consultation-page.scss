@@ -216,6 +216,34 @@ $gray: #f4f6f9;
     }
   }
 
+  /* --- 写真（目を休める）。顔の写る人物写真は使わない ------------- */
+  .c-band {
+    margin: 0;
+    background-color: $gray;
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  .c-side-photo {
+    display: block;
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  .c-wall__intro,
+  .c-method__top {
+    display: grid;
+    align-items: center;
+  }
+
   /* --- 2. 発注の壁 ------------------------------------ */
   .c-wall {
     &__story p {
@@ -869,6 +897,20 @@ $gray: #f4f6f9;
       }
     }
 
+    .c-wall__intro,
+    .c-method__top {
+      grid-template-columns: 1fr 380px;
+      gap: 56px;
+    }
+
+    .c-method__top {
+      margin-bottom: 56px;
+
+      .c-head__lead {
+        margin-top: 0;
+      }
+    }
+
     .c-wall {
       &__story {
         max-width: 760px;
@@ -1294,6 +1336,19 @@ $gray: #f4f6f9;
         margin-top: 4px;
         padding-top: 4px;
         font-size: 1.2rem;
+      }
+    }
+
+    .c-wall__intro,
+    .c-method__top {
+      gap: 28px;
+    }
+
+    .c-method__top {
+      margin-bottom: 36px;
+
+      .c-head__lead {
+        margin-top: 0;
       }
     }
 
