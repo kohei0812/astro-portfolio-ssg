@@ -3330,3 +3330,517 @@ $ease: cubic-bezier(0.22, 1, 0.36, 1);
     text-wrap: balance;
   }
 }
+
+/*****************/
+/*** 私たちについて：原点の物語（章立て）***/
+/*****************/
+#corp-page {
+  .cp-chapters {
+    position: relative;
+    --chain-progress: 0;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      width: 2px;
+      height: 100%;
+    }
+
+    &::before {
+      background-color: $line;
+    }
+
+    &::after {
+      background-color: $navy;
+      transform: scaleY(var(--chain-progress));
+      transform-origin: top;
+    }
+  }
+
+  .cp-chapter {
+    position: relative;
+    display: grid;
+
+    .cp-chain__dot {
+      top: 6px;
+      transform: translate(-50%, 0);
+    }
+
+    &__no {
+      color: $red;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    &__phase {
+      color: $navy;
+      font-weight: 900;
+      line-height: 1.1;
+    }
+
+    &__ttl {
+      color: $ink;
+      font-weight: bold;
+      line-height: 1.5;
+    }
+
+    &__body {
+      color: $body;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      line-height: 2;
+
+      p + p,
+      p + ul,
+      ul + p,
+      figure + p,
+      div + p {
+        margin-top: 24px;
+      }
+    }
+
+    &__photo {
+      position: relative;
+      margin: 0;
+      z-index: 0;
+
+      img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border: 1px solid $navy;
+        transform: translate(12px, 12px);
+        z-index: -1;
+      }
+    }
+
+    &.is-quiet .cp-chapter__phase {
+      color: $sub;
+    }
+  }
+
+  /* 01：大企業と中小企業の対比 */
+  .cp-gap {
+    display: flex;
+    align-items: flex-end;
+    margin-top: 28px;
+    padding: 28px 24px;
+    background-color: $gray;
+
+    &__side {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: $sub;
+      font-weight: bold;
+
+      .cp-icon {
+        color: $sub;
+      }
+
+      em {
+        font-style: normal;
+        font-weight: 500;
+        font-size: 1.2rem;
+      }
+
+      &.is-big {
+        color: $navy;
+
+        .cp-icon {
+          color: $navy;
+        }
+      }
+    }
+
+    &__line {
+      flex: 1;
+      height: 0;
+      margin: 0 20px 34px;
+      border-top: 2px dashed rgba(217, 1, 30, 0.5);
+    }
+  }
+
+  /* 02：静かな引用 */
+  .cp-quiet {
+    color: $ink;
+    font-weight: bold;
+    line-height: 1.9;
+    border-left: 2px solid rgba(23, 36, 57, 0.3);
+  }
+
+  /* 03：仕事のアイコン */
+  .cp-jobs {
+    display: flex;
+    gap: 12px;
+
+    li {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding: 18px 8px;
+      background-color: $gray;
+      color: $navy;
+      font-weight: bold;
+    }
+  }
+
+  /* 04：道のり */
+  .cp-route {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    &__point {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding: 16px 18px;
+      background-color: $gray;
+      color: $navy;
+      font-weight: bold;
+    }
+
+    &__arrow {
+      width: 28px;
+      height: 2px;
+      background-color: $navy;
+      position: relative;
+
+      &::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 50%;
+        width: 8px;
+        height: 8px;
+        border-top: 2px solid $navy;
+        border-right: 2px solid $navy;
+        transform: translateY(-50%) rotate(45deg);
+      }
+    }
+  }
+
+  /* 05：会社の人 ＋ エンジニア */
+  .cp-roles {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    li:not(.cp-roles__plus) {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 18px 20px;
+      background-color: $gray;
+      color: $navy;
+      font-weight: bold;
+      line-height: 1.6;
+    }
+
+    &__plus {
+      color: $red;
+      font-weight: bold;
+      font-size: 2.8rem;
+    }
+  }
+
+  /* 締めの一文（写真の上） */
+  .cp-banner {
+    position: relative;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+
+    &__bg {
+      position: absolute;
+      inset: 0;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-color: rgba(15, 24, 38, 0.45);
+      }
+    }
+
+    &__txt {
+      position: relative;
+      color: white;
+      font-weight: bold;
+      text-align: center;
+      line-height: 1.5;
+      letter-spacing: 0.04em;
+
+      span {
+        display: inline-block;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 769px) {
+  #corp-page {
+    .cp-chapters {
+      padding-left: 64px;
+
+      &::before,
+      &::after {
+        left: 6px;
+      }
+    }
+
+    .cp-chapter {
+      grid-template-columns: 260px 1fr;
+      gap: 48px;
+      padding: 48px 0;
+      border-top: 1px solid $line;
+
+      &:first-child {
+        border-top: none;
+        padding-top: 8px;
+      }
+
+      .cp-chain__dot {
+        left: -58px;
+        top: 56px;
+      }
+
+      &:first-child .cp-chain__dot {
+        top: 16px;
+      }
+
+      &__no {
+        font-size: 1.2rem;
+      }
+
+      &__phase {
+        margin-top: 10px;
+        font-size: 4.4rem;
+      }
+
+      &__ttl {
+        margin-top: 12px;
+        font-size: 1.9rem;
+      }
+
+      &__body {
+        font-size: 1.6rem;
+      }
+    }
+
+    /* 03 は写真と本文を横並び */
+    .cp-chapter:nth-child(3) .cp-chapter__body {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+
+    .cp-chapter__photo.is-wide {
+      margin-bottom: 28px;
+    }
+
+    .cp-jobs {
+      margin-top: 24px;
+    }
+
+    .cp-route {
+      margin-bottom: 24px;
+
+      &__point {
+        font-size: 1.4rem;
+      }
+    }
+
+    .cp-roles {
+      margin-top: 24px;
+
+      li:not(.cp-roles__plus) {
+        font-size: 1.5rem;
+      }
+    }
+
+    .cp-quiet {
+      padding: 6px 0 6px 24px;
+      font-size: 1.9rem;
+    }
+
+    .cp-banner {
+      min-height: 420px;
+
+      &__txt {
+        font-size: clamp(3rem, 3.4vw, 4.6rem);
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #corp-page {
+    .cp-chapters {
+      padding-left: 28px;
+
+      &::before,
+      &::after {
+        left: 6px;
+      }
+    }
+
+    .cp-chapter {
+      gap: 18px;
+      padding: 32px 0;
+      border-top: 1px solid $line;
+
+      &:first-child {
+        border-top: none;
+        padding-top: 4px;
+      }
+
+      .cp-chain__dot {
+        left: -22px;
+        top: 38px;
+      }
+
+      &:first-child .cp-chain__dot {
+        top: 10px;
+      }
+
+      &__no {
+        font-size: 1.1rem;
+      }
+
+      &__phase {
+        margin-top: 6px;
+        font-size: 3.2rem;
+      }
+
+      &__ttl {
+        margin-top: 8px;
+        font-size: 1.7rem;
+      }
+
+      &__body {
+        font-size: 1.5rem;
+        line-height: 1.95;
+      }
+    }
+
+    .cp-chapter:nth-child(3) .cp-chapter__photo {
+      width: 70%;
+      margin-bottom: 24px;
+    }
+
+    .cp-chapter__photo.is-wide {
+      margin-bottom: 24px;
+    }
+
+    .cp-gap {
+      padding: 20px 14px;
+
+      &__line {
+        margin: 0 10px 30px;
+      }
+    }
+
+    .cp-jobs {
+      margin-top: 18px;
+
+      li {
+        font-size: 1.3rem;
+      }
+    }
+
+    .cp-route {
+      margin-bottom: 20px;
+      flex-direction: column;
+      align-items: stretch;
+
+      &__point {
+        flex-direction: row;
+        font-size: 1.4rem;
+        padding: 12px 16px;
+      }
+
+      &__arrow {
+        width: 2px;
+        height: 18px;
+        margin-left: 34px;
+
+        &::after {
+          right: auto;
+          top: auto;
+          bottom: 0;
+          left: 50%;
+          transform: translateX(-50%) rotate(135deg);
+        }
+      }
+    }
+
+    .cp-roles {
+      flex-direction: column;
+      align-items: stretch;
+      margin-top: 18px;
+
+      li:not(.cp-roles__plus) {
+        font-size: 1.4rem;
+      }
+
+      &__plus {
+        text-align: center;
+        font-size: 2.2rem;
+      }
+    }
+
+    .cp-quiet {
+      padding: 4px 0 4px 16px;
+      font-size: 1.6rem;
+    }
+
+    .cp-banner {
+      min-height: 260px;
+
+      &__txt {
+        padding: 0 20px;
+        font-size: 2.4rem;
+      }
+    }
+  }
+}
+
+#corp-page {
+  .cp-chapter__body p {
+    line-height: 2;
+  }
+
+  .cp-jobs li span {
+    white-space: nowrap;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  #corp-page .cp-jobs li {
+    font-size: 1.35rem;
+  }
+}
