@@ -1,0 +1,1244 @@
+@use "variables" as v;
+
+/*****************/
+/*** コーポレートサイト：サービス（/service、2026-10-02 新設）***/
+/*****************/
+/*
+  料金は載せない（本人判断）。見せるのは「流れ」「いまの段階」「各サービスの中身」。
+  色・余白・動きは _corp.scss と同じ考え方（白とグレーの面／紺は強調／赤はボタンとラベルだけ）。
+*/
+
+$navy: v.$color-primary;
+$red: v.$color-accent;
+$ink: #1d2738;
+$body: #46536a;
+$sub: #6b7688;
+$line: rgba(23, 36, 57, 0.14);
+$gray: #f4f6f9;
+$ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+#corp-page.cp-service-page {
+  /* --- 支援の流れ ------------------------------------- */
+  .cs-flow {
+    position: relative;
+    display: grid;
+    counter-reset: flow;
+
+    &__item {
+      position: relative;
+      text-align: center;
+    }
+
+    &__icon {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      place-items: center;
+      margin: 0 auto;
+      border-radius: 50%;
+      background-color: white;
+      color: $navy;
+      box-shadow: inset 0 0 0 1px $line;
+    }
+
+    &__item.is-free &__icon,
+    &__item.is-goal &__icon {
+      background-color: $navy;
+      color: white;
+      box-shadow: none;
+    }
+
+    &__no {
+      display: block;
+      color: $red;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+    }
+
+    &__name {
+      color: $navy;
+      font-weight: bold;
+      line-height: 1.5;
+    }
+
+    &__txt {
+      color: $body;
+      font-weight: 400;
+      line-height: 1.8;
+      letter-spacing: 0.02em;
+    }
+
+    &__fork {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+
+      span {
+        padding: 2px 8px;
+        background-color: $gray;
+        color: $navy;
+        font-size: 1.2rem;
+        font-weight: bold;
+      }
+    }
+  }
+
+  /* --- AI活用の5段階（階段） --------------------------- */
+  .cs-stairs {
+    position: relative;
+    display: grid;
+
+    &__step {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      background-color: white;
+      box-shadow: inset 0 0 0 1px $line;
+    }
+
+    &__step:nth-child(n + 2) {
+      background-color: rgba($navy, 0.04);
+    }
+
+    &__step:nth-child(n + 4) {
+      background-color: rgba($navy, 0.09);
+    }
+
+    &__no {
+      color: $navy;
+      font-weight: 700;
+      line-height: 1;
+
+      small {
+        margin-right: 6px;
+        color: $sub;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+      }
+    }
+
+    &__name {
+      color: $navy;
+      font-weight: bold;
+    }
+
+    &__txt {
+      color: $body;
+      font-weight: 400;
+      line-height: 1.8;
+    }
+
+    &__seminar {
+      margin-top: auto;
+      color: $sub;
+      font-weight: bold;
+      letter-spacing: 0.06em;
+    }
+
+    /* 「多くの会社はここ」の印 */
+    &__here {
+      position: absolute;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background-color: $red;
+      color: white;
+      font-weight: bold;
+      white-space: nowrap;
+
+      &::after {
+        content: "";
+        position: absolute;
+        left: 20px;
+        bottom: -6px;
+        border: 6px solid transparent;
+        border-bottom: 0;
+        border-top-color: $red;
+      }
+    }
+  }
+
+  .cs-stairs-note {
+    color: $ink;
+    font-weight: bold;
+    line-height: 1.9;
+
+    em {
+      color: $red;
+    }
+  }
+
+  /* --- サービス詳細 ----------------------------------- */
+  .cs-detail {
+    position: relative;
+    display: grid;
+    align-items: start;
+
+    &__photo {
+      position: relative;
+
+      picture {
+        display: block;
+        height: 100%;
+      }
+
+      img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      /* 写真の後ろにずらした線の枠（トップと同じあしらい） */
+      &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        transform: translate(16px, 16px);
+        box-shadow: inset 0 0 0 1px rgba($navy, 0.35);
+        z-index: -1;
+      }
+    }
+
+    &__num {
+      position: absolute;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba($navy, 0.28);
+      font-weight: 700;
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    &__label {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      color: $navy;
+    }
+
+    &__en {
+      color: $red;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    &__name {
+      color: $navy;
+      font-weight: bold;
+      line-height: 1.5;
+    }
+
+    &__tag {
+      display: inline-block;
+      background-color: $red;
+      color: white;
+      font-weight: bold;
+      vertical-align: middle;
+    }
+
+    &__catch {
+      color: $ink;
+      font-weight: bold;
+      line-height: 1.6;
+    }
+
+    &__txt {
+      color: $body;
+      font-weight: 400;
+      line-height: 2;
+      letter-spacing: 0.04em;
+    }
+
+    &__box {
+      display: grid;
+    }
+
+    &__box-ttl {
+      color: $navy;
+      font-weight: bold;
+      letter-spacing: 0.06em;
+    }
+
+    /* こんな会社に：吹き出しのチップ */
+    &__for {
+      display: flex;
+      flex-wrap: wrap;
+
+      li {
+        background-color: $gray;
+        color: $ink;
+        font-weight: 500;
+        line-height: 1.6;
+      }
+    }
+
+    /* 含まれること：チェック */
+    &__incl li {
+      position: relative;
+      color: $ink;
+      font-weight: 500;
+      line-height: 1.7;
+
+      &::before {
+        content: "";
+        position: absolute;
+        left: 2px;
+        width: 12px;
+        height: 7px;
+        border-left: 2px solid $navy;
+        border-bottom: 2px solid $navy;
+        transform: rotate(-45deg);
+      }
+    }
+
+    /* 到達点 */
+    &__goal {
+      display: flex;
+      align-items: flex-start;
+      border-top: 1px solid $line;
+      color: $navy;
+      font-weight: bold;
+      line-height: 1.7;
+
+      .cp-icon {
+        flex-shrink: 0;
+        color: $red;
+      }
+    }
+  }
+
+  /* --- 研修：6ステップの帯 ----------------------------- */
+  .cs-six {
+    display: grid;
+    counter-reset: six;
+
+    li {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background-color: white;
+      box-shadow: inset 0 0 0 1px $line;
+      color: $navy;
+      font-weight: bold;
+      line-height: 1.5;
+      text-align: center;
+
+      &::before {
+        counter-increment: six;
+        content: "STEP " counter(six);
+        display: block;
+        color: $red;
+        font-family: "Montserrat", "Montserrat Fallback", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+      }
+
+      &.is-track {
+        background-color: $navy;
+        color: white;
+        box-shadow: none;
+
+        &::before {
+          color: rgba(white, 0.8);
+        }
+      }
+    }
+  }
+
+  /* --- 9回パッケージ ---------------------------------- */
+  .cs-course {
+    display: grid;
+
+    &__item {
+      position: relative;
+      background-color: white;
+      box-shadow: inset 0 0 0 1px $line;
+
+      &.is-zero {
+        background-color: transparent;
+        box-shadow: none;
+        border: 1px dashed rgba($navy, 0.35);
+      }
+
+      &.is-last {
+        background-color: $navy;
+        box-shadow: none;
+
+        .cs-course__no,
+        .cs-course__name,
+        .cs-course__txt {
+          color: white;
+        }
+      }
+    }
+
+    &__no {
+      color: $red;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+    }
+
+    &__name {
+      color: $navy;
+      font-weight: bold;
+      line-height: 1.5;
+    }
+
+    &__txt {
+      color: $body;
+      font-weight: 400;
+      line-height: 1.8;
+    }
+  }
+
+  /* --- セミナー3段階 ---------------------------------- */
+  .cs-seminar {
+    display: grid;
+
+    &__item {
+      background-color: white;
+      box-shadow: inset 0 0 0 1px $line;
+    }
+
+    &__level {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      border-bottom: 1px solid $line;
+    }
+
+    &__name {
+      color: $navy;
+      font-weight: bold;
+    }
+
+    &__stage {
+      color: $red;
+      font-weight: bold;
+      letter-spacing: 0.04em;
+    }
+
+    &__bar {
+      display: flex;
+      gap: 4px;
+
+      span {
+        flex: 1;
+        height: 6px;
+        background-color: rgba($navy, 0.12);
+
+        &.is-on {
+          background-color: $navy;
+        }
+      }
+    }
+
+    dt {
+      color: $sub;
+      font-weight: bold;
+      letter-spacing: 0.06em;
+    }
+
+    dd {
+      color: $ink;
+      font-weight: 400;
+      line-height: 1.8;
+    }
+  }
+
+  .cs-subhead {
+    display: flex;
+    align-items: center;
+    color: $navy;
+    font-weight: bold;
+
+    &::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background-color: $line;
+    }
+  }
+
+  /* --- よくある質問 ----------------------------------- */
+  .cs-faq {
+    &__item {
+      border-bottom: 1px solid $line;
+
+      &:first-child {
+        border-top: 1px solid $line;
+      }
+    }
+
+    summary {
+      position: relative;
+      display: flex;
+      align-items: baseline;
+      cursor: pointer;
+      color: $navy;
+      font-weight: bold;
+      line-height: 1.6;
+      list-style: none;
+
+      &::-webkit-details-marker {
+        display: none;
+      }
+
+      &::after {
+        content: "";
+        position: absolute;
+        right: 6px;
+        top: 50%;
+        width: 10px;
+        height: 10px;
+        border-right: 1.5px solid $navy;
+        border-bottom: 1.5px solid $navy;
+        transform: translateY(-70%) rotate(45deg);
+        transition: transform 0.3s $ease;
+      }
+    }
+
+    &__item[open] summary::after {
+      transform: translateY(-30%) rotate(-135deg);
+    }
+
+    &__q,
+    &__a {
+      flex-shrink: 0;
+      font-family: "Montserrat", "Montserrat Fallback", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-weight: 700;
+    }
+
+    &__q {
+      color: $red;
+    }
+
+    &__body {
+      display: flex;
+      align-items: baseline;
+      color: $body;
+      font-weight: 400;
+      line-height: 2;
+      letter-spacing: 0.04em;
+    }
+
+    &__a {
+      color: $navy;
+    }
+  }
+}
+
+/*****************/
+/*** PC ***/
+/*****************/
+@media screen and (min-width: 769px) {
+  #corp-page.cp-service-page {
+    .cs-flow {
+      grid-template-columns: repeat(7, 1fr);
+      gap: 0 12px;
+
+      /* 丸をつなぐ線 */
+      &::before {
+        content: "";
+        position: absolute;
+        top: 36px;
+        left: calc(100% / 14);
+        right: calc(100% / 14);
+        height: 1px;
+        background-color: rgba($navy, 0.3);
+      }
+
+      &__icon {
+        width: 72px;
+        height: 72px;
+      }
+
+      &__no {
+        margin-top: 18px;
+        font-size: 1.1rem;
+      }
+
+      &__name {
+        margin-top: 6px;
+        font-size: 1.6rem;
+      }
+
+      &__txt {
+        margin-top: 10px;
+        font-size: 1.3rem;
+      }
+
+      &__txt {
+        text-align: center;
+      }
+
+      &__fork {
+        justify-content: center;
+        margin-top: 10px;
+      }
+    }
+
+    .cs-stairs {
+      grid-template-columns: repeat(5, 1fr);
+      align-items: end;
+      gap: 10px;
+      padding-top: 48px;
+
+      @for $i from 1 through 5 {
+        &__step:nth-child(#{$i}) {
+          min-height: #{240 + ($i - 1) * 44}px;
+        }
+      }
+
+      &__step {
+        padding: 26px 22px 22px;
+      }
+
+      &__no {
+        font-size: 4rem;
+
+        small {
+          font-size: 1.2rem;
+        }
+      }
+
+      &__name {
+        margin-top: 14px;
+        font-size: 1.8rem;
+      }
+
+      &__txt {
+        margin-top: 10px;
+        font-size: 1.4rem;
+      }
+
+      &__seminar {
+        padding-top: 16px;
+        font-size: 1.2rem;
+      }
+
+      &__here {
+        top: -44px;
+        left: 0;
+        padding: 6px 14px;
+        font-size: 1.3rem;
+      }
+    }
+
+    .cs-stairs-note {
+      margin-top: 40px;
+      font-size: 1.8rem;
+      text-align: center;
+    }
+
+    .cs-details {
+      display: grid;
+      gap: 160px;
+      padding-top: 40px;
+    }
+
+    .cs-detail {
+      grid-template-columns: 42% minmax(0, 1fr);
+      gap: 72px;
+
+      &.is-rev {
+        grid-template-columns: minmax(0, 1fr) 42%;
+
+        .cs-detail__photo {
+          order: 2;
+        }
+
+        .cs-detail__num {
+          left: auto;
+          right: 0;
+        }
+      }
+
+      &__photo {
+        position: sticky;
+        top: 116px;
+        aspect-ratio: 4 / 5;
+      }
+
+      &__num {
+        top: 0;
+        left: -8px;
+        font-size: 12rem;
+        transform: translateY(-62%);
+      }
+
+      &__en {
+        font-size: 1.2rem;
+      }
+
+      &__name {
+        margin-top: 12px;
+        font-size: 3rem;
+      }
+
+      &__tag {
+        margin-left: 12px;
+        padding: 4px 10px;
+        font-size: 1.3rem;
+      }
+
+      &__catch {
+        margin-top: 20px;
+        font-size: 2rem;
+      }
+
+      &__txt {
+        margin-top: 20px;
+        max-width: 32em;
+        font-size: 1.6rem;
+      }
+
+      &__box {
+        margin-top: 36px;
+        gap: 28px;
+      }
+
+      &__box-ttl {
+        margin-bottom: 12px;
+        font-size: 1.4rem;
+      }
+
+      &__for {
+        gap: 8px;
+
+        li {
+          padding: 8px 16px;
+          font-size: 1.4rem;
+        }
+      }
+
+      &__incl {
+        display: grid;
+        gap: 10px;
+
+        li {
+          padding-left: 28px;
+          font-size: 1.5rem;
+
+          &::before {
+            top: 0.55em;
+          }
+        }
+      }
+
+      &__goal {
+        gap: 14px;
+        margin-top: 36px;
+        padding-top: 24px;
+        font-size: 1.6rem;
+      }
+    }
+
+    .cs-training-more {
+      margin-top: 120px;
+    }
+
+    .cs-subhead {
+      gap: 24px;
+      margin-bottom: 32px;
+      font-size: 2.2rem;
+
+      & + p {
+        margin: -12px 0 32px;
+        max-width: 46em;
+        color: $body;
+        font-size: 1.5rem;
+        line-height: 2;
+      }
+    }
+
+    .cs-six {
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+      margin-bottom: 96px;
+
+      li {
+        min-height: 110px;
+        padding: 18px 10px;
+        font-size: 1.5rem;
+
+        &::before {
+          margin-bottom: 8px;
+          font-size: 1.1rem;
+        }
+      }
+    }
+
+    .cs-course {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 96px;
+
+      &__item {
+        padding: 22px 20px 24px;
+
+        &.is-zero {
+          grid-column: 1 / -1;
+          display: flex;
+          align-items: baseline;
+          gap: 20px;
+          padding: 16px 20px;
+
+          .cs-course__name {
+            margin-top: 0;
+          }
+
+          .cs-course__txt {
+            margin-top: 0;
+          }
+        }
+      }
+
+      &__no {
+        font-size: 1.2rem;
+      }
+
+      &__name {
+        margin-top: 8px;
+        font-size: 1.6rem;
+      }
+
+      &__txt {
+        margin-top: 8px;
+        font-size: 1.3rem;
+      }
+    }
+
+    .cs-seminar {
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, auto);
+      gap: 0 16px;
+
+      &__item {
+        display: grid;
+        grid-row: span 3;
+        grid-template-rows: subgrid;
+        padding: 28px 28px 32px;
+      }
+
+      &__level {
+        padding-bottom: 14px;
+      }
+
+      &__name {
+        font-size: 2rem;
+      }
+
+      &__stage {
+        font-size: 1.3rem;
+      }
+
+      &__bar {
+        margin-top: 16px;
+      }
+
+      dl {
+        display: grid;
+        grid-row: span 1;
+        gap: 6px;
+        margin-top: 20px;
+        align-content: start;
+      }
+
+      dt {
+        font-size: 1.2rem;
+
+        &:not(:first-child) {
+          margin-top: 12px;
+        }
+      }
+
+      dd {
+        font-size: 1.4rem;
+      }
+    }
+
+    .cs-faq {
+      max-width: 860px;
+      margin: 0 auto;
+
+      summary {
+        gap: 20px;
+        padding: 28px 48px 28px 4px;
+        font-size: 1.7rem;
+      }
+
+      &__q,
+      &__a {
+        font-size: 2rem;
+      }
+
+      &__body {
+        gap: 20px;
+        padding: 0 48px 32px 4px;
+        font-size: 1.6rem;
+      }
+    }
+  }
+}
+
+/*****************/
+/*** SP ***/
+/*****************/
+@media screen and (max-width: 768px) {
+  #corp-page.cp-service-page {
+    .cs-flow {
+      grid-template-columns: 1fr;
+      gap: 0;
+
+      /* 縦の線 */
+      &::before {
+        content: "";
+        position: absolute;
+        top: 28px;
+        bottom: 28px;
+        left: 28px;
+        width: 1px;
+        background-color: rgba($navy, 0.3);
+      }
+
+      &__item {
+        display: grid;
+        grid-template-columns: 56px 1fr;
+        column-gap: 18px;
+        padding-bottom: 22px;
+        text-align: left;
+
+        > *:not(.cs-flow__icon) {
+          grid-column: 2;
+        }
+      }
+
+      &__icon {
+        grid-row: 1 / span 3;
+        width: 56px;
+        height: 56px;
+
+        .cp-icon {
+          width: 30px;
+          height: 30px;
+        }
+      }
+
+      &__no {
+        margin-top: 4px;
+        font-size: 1.1rem;
+      }
+
+      &__name {
+        margin-top: 2px;
+        font-size: 1.6rem;
+      }
+
+      &__txt {
+        margin-top: 4px;
+        font-size: 1.4rem;
+      }
+
+      &__fork {
+        margin-top: 6px;
+      }
+    }
+
+    .cs-stairs {
+      grid-template-columns: 1fr;
+      gap: 8px;
+      padding-top: 40px;
+
+      @for $i from 1 through 5 {
+        &__step:nth-child(#{$i}) {
+          margin-left: #{($i - 1) * 4}%;
+        }
+      }
+
+      &__step {
+        padding: 18px 18px 16px;
+      }
+
+      &__no {
+        font-size: 2.8rem;
+
+        small {
+          font-size: 1.1rem;
+        }
+      }
+
+      &__name {
+        margin-top: 8px;
+        font-size: 1.7rem;
+      }
+
+      &__txt {
+        margin-top: 6px;
+        font-size: 1.4rem;
+      }
+
+      &__seminar {
+        padding-top: 8px;
+        font-size: 1.2rem;
+      }
+
+      &__here {
+        top: -36px;
+        left: 0;
+        padding: 5px 12px;
+        font-size: 1.2rem;
+      }
+    }
+
+    .cs-stairs-note {
+      margin-top: 28px;
+      font-size: 1.6rem;
+    }
+
+    .cs-details {
+      display: grid;
+      gap: 96px;
+    }
+
+    .cs-detail {
+      grid-template-columns: 1fr;
+      gap: 32px;
+
+      &__photo {
+        aspect-ratio: 4 / 3;
+        margin-right: 16px;
+
+        &::before {
+          transform: translate(12px, 12px);
+        }
+      }
+
+      &__num {
+        top: -40px;
+        right: 0;
+        font-size: 8rem;
+      }
+
+      &__en {
+        font-size: 1.1rem;
+      }
+
+      &__name {
+        margin-top: 10px;
+        font-size: 2.4rem;
+      }
+
+      &__tag {
+        margin-left: 8px;
+        padding: 3px 8px;
+        font-size: 1.2rem;
+      }
+
+      &__catch {
+        margin-top: 14px;
+        font-size: 1.8rem;
+      }
+
+      &__txt {
+        margin-top: 14px;
+        font-size: 1.5rem;
+        line-height: 1.95;
+      }
+
+      &__box {
+        margin-top: 28px;
+        gap: 24px;
+      }
+
+      &__box-ttl {
+        margin-bottom: 10px;
+        font-size: 1.3rem;
+      }
+
+      &__for {
+        gap: 6px;
+
+        li {
+          padding: 7px 12px;
+          font-size: 1.4rem;
+        }
+      }
+
+      &__incl {
+        display: grid;
+        gap: 8px;
+
+        li {
+          padding-left: 26px;
+          font-size: 1.4rem;
+
+          &::before {
+            top: 0.5em;
+          }
+        }
+      }
+
+      &__goal {
+        gap: 10px;
+        margin-top: 28px;
+        padding-top: 20px;
+        font-size: 1.5rem;
+
+        .cp-icon {
+          width: 28px;
+          height: 28px;
+        }
+      }
+    }
+
+    .cs-training-more {
+      margin-top: 80px;
+    }
+
+    .cs-subhead {
+      gap: 16px;
+      margin-bottom: 24px;
+      font-size: 1.9rem;
+
+      & + p {
+        margin: -8px 0 24px;
+        color: $body;
+        font-size: 1.4rem;
+        line-height: 1.9;
+      }
+    }
+
+    .cs-six {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 6px;
+      margin-bottom: 64px;
+
+      li {
+        min-height: 84px;
+        padding: 14px 8px;
+        font-size: 1.4rem;
+
+        &::before {
+          margin-bottom: 4px;
+          font-size: 1rem;
+        }
+      }
+    }
+
+    .cs-course {
+      grid-template-columns: 1fr;
+      gap: 8px;
+      margin-bottom: 64px;
+
+      &__item {
+        display: grid;
+        grid-template-columns: 52px 1fr;
+        column-gap: 12px;
+        padding: 16px 18px;
+
+        > *:not(.cs-course__no) {
+          grid-column: 2;
+        }
+      }
+
+      &__no {
+        grid-row: 1 / span 2;
+        font-size: 1.2rem;
+        padding-top: 3px;
+      }
+
+      &__name {
+        font-size: 1.6rem;
+      }
+
+      &__txt {
+        margin-top: 4px;
+        font-size: 1.4rem;
+      }
+    }
+
+    .cs-seminar {
+      grid-template-columns: 1fr;
+      gap: 12px;
+
+      &__item {
+        padding: 22px 20px 24px;
+      }
+
+      &__level {
+        padding-bottom: 12px;
+      }
+
+      &__name {
+        font-size: 1.8rem;
+      }
+
+      &__stage {
+        font-size: 1.2rem;
+      }
+
+      &__bar {
+        margin-top: 14px;
+      }
+
+      dl {
+        display: grid;
+        gap: 4px;
+        margin-top: 16px;
+      }
+
+      dt {
+        font-size: 1.2rem;
+
+        &:not(:first-child) {
+          margin-top: 10px;
+        }
+      }
+
+      dd {
+        font-size: 1.4rem;
+      }
+    }
+
+    .cs-faq {
+      summary {
+        gap: 12px;
+        padding: 20px 36px 20px 2px;
+        font-size: 1.5rem;
+      }
+
+      &__q,
+      &__a {
+        font-size: 1.7rem;
+      }
+
+      &__body {
+        gap: 12px;
+        padding: 0 8px 24px 2px;
+        font-size: 1.4rem;
+        line-height: 1.95;
+      }
+    }
+  }
+}
+
+/* トップの事業内容から /service へのリンク */
+#corp-page .cp-service__more {
+  margin-top: 48px;
+  text-align: center;
+}
+
+@media screen and (min-width: 769px) {
+  #corp-page.cp-service-page .cs-extras {
+    margin-top: 140px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #corp-page.cp-service-page .cs-extras {
+    margin-top: 88px;
+  }
+}
