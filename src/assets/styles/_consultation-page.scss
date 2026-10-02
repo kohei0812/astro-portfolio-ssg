@@ -29,6 +29,24 @@ $gray: #f4f6f9;
     font-style: normal;
   }
 
+  /* 「す。」だけの行を作らない（対応ブラウザ）。残ったものは consultation.astro のスクリプトで「。」の後に改行する */
+  p,
+  dd,
+  li {
+    text-wrap: pretty;
+  }
+
+  /* 短い文（見出し・チェック項目・リード）は行の長さをそろえる */
+  h3,
+  dt,
+  .c-check__item,
+  .c-head__lead,
+  .c-cta__lead,
+  .c-notfor__item strong {
+    text-wrap: balance;
+    word-break: auto-phrase; /* そろえるときに語の途中で割らない */
+  }
+
   /* --- 外枠 ------------------------------------------- */
   .c-container {
     margin: 0 auto;
@@ -1244,7 +1262,7 @@ $gray: #f4f6f9;
 
       &__ttl {
         margin-top: 14px;
-        font-size: 2.3rem;
+        font-size: 2.2rem; /* 360px幅で「社員が再現できる仕事の型に。」が1行に収まる大きさ */
       }
 
       &__lead {

@@ -391,6 +391,48 @@ const faqs = [
   </main>
 
   <script is:inline>
+    // 最後の行が数文字だけ（「す。」など）になった段落は、直前の「。」の後で改行する。
+    // text-wrap: pretty が効かないブラウザ向けの保険。幅が変わったら元に戻して測り直す。
+    (() => {
+      const SEL = "#consultation-page p:not(.c-method__step), #consultation-page dd, #consultation-page dt, #consultation-page li, #consultation-page h2, #consultation-page h3";
+      const lastLineWidth = (el) => {
+        const r = document.createRange();
+        r.selectNodeContents(el);
+        const rects = [...r.getClientRects()].filter((x) => x.width > 0);
+        if (rects.length < 2) return Infinity;
+        const bottom = Math.max(...rects.map((x) => x.bottom));
+        const last = rects.filter((x) => Math.abs(x.bottom - bottom) < 2);
+        return Math.max(...last.map((x) => x.right)) - Math.min(...last.map((x) => x.left));
+      };
+      const fix = () => {
+        document.querySelectorAll(SEL).forEach((el) => {
+          if (el.dataset.orig !== undefined) el.innerHTML = el.dataset.orig;
+          if (el.closest("form")) return;
+          const em = parseFloat(getComputedStyle(el).fontSize) || 16;
+          const short = () => lastLineWidth(el) <= em * 4.5;
+          if (!short()) return;
+          const html = el.innerHTML;
+          // 最後の改行より後ろだけが対象。文の切れ目（。）を優先し、無ければ読点（、）。
+          // 折っても最後の行がまだ短ければ、さらに手前の切れ目を試す
+          const from = Math.max(html.lastIndexOf("<br"), 0);
+          const end = html.trimEnd().length - 2;
+          const cands = [];
+          for (const mark of ["。", "、"]) {
+            for (let k = html.lastIndexOf(mark, end); k > from; k = html.lastIndexOf(mark, k - 1)) cands.push(k);
+          }
+          el.dataset.orig = html;
+          for (const k of cands.slice(0, 6)) {
+            el.innerHTML = html.slice(0, k + 1) + '<br class="orphan-br" />' + html.slice(k + 1);
+            if (!short()) return;
+          }
+          el.innerHTML = html; // どれも駄目なら元のまま
+        });
+      };
+      let t;
+      window.addEventListener("load", () => setTimeout(fix, 300));
+      window.addEventListener("resize", () => { clearTimeout(t); t = setTimeout(fix, 200); });
+    })();
+
     // フォームが画面に入ったら追従CTAを隠す（表示そのものは main.js がスクロール量で制御）
     document.addEventListener("DOMContentLoaded", () => {
       const sticky = document.getElementById("js-sticky-cta");
