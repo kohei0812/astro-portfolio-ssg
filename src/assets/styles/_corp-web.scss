@@ -1,0 +1,252 @@
+@use "variables" as v;
+
+/*****************/
+/*** コーポレートサイト：Web制作・システム開発（/web、2026-10-02 作り直し）***/
+/*****************/
+$navy: v.$color-primary;
+$red: v.$color-accent;
+$ink: #1d2738;
+$body: #46536a;
+$sub: #6b7688;
+$line: rgba(23, 36, 57, 0.14);
+$gray: #f4f6f9;
+
+#corp-page.cp-web-page {
+  .cw-menu {
+    display: grid;
+
+    li {
+      background-color: white;
+      box-shadow: inset 0 0 0 1px $line;
+      color: $navy;
+    }
+
+    &__name {
+      color: $navy;
+      font-weight: bold;
+      line-height: 1.5;
+    }
+
+    &__txt {
+      color: $body;
+      font-weight: 400;
+      line-height: 1.85;
+      letter-spacing: 0.03em;
+      text-wrap: pretty;
+    }
+  }
+
+  .cw-cost {
+    color: $ink;
+    font-weight: bold;
+    line-height: 1.9;
+  }
+
+  .cw-partner {
+    display: grid;
+
+    &__box {
+      background-color: white;
+    }
+
+    &__ttl {
+      color: $navy;
+      font-weight: bold;
+      letter-spacing: 0.06em;
+
+      &:not(:first-child) {
+        border-top: 1px solid $line;
+      }
+    }
+
+    &__txt {
+      color: $ink;
+      font-weight: 500;
+    }
+  }
+
+  .cw-strengths {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    li {
+      display: grid;
+      place-items: center;
+      background-color: $navy;
+      color: white;
+      font-weight: bold;
+      text-align: center;
+      line-height: 1.5;
+    }
+  }
+
+  .cw-chips {
+    display: flex;
+    flex-wrap: wrap;
+
+    li {
+      background-color: $gray;
+      color: $navy;
+      font-weight: 600;
+    }
+  }
+
+  .cw-more {
+    text-align: center;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  #corp-page.cp-web-page {
+    .cw-menu {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+
+      li {
+        padding: 32px 28px 30px;
+      }
+
+      &__name {
+        margin-top: 16px;
+        font-size: 1.8rem;
+      }
+
+      &__txt {
+        margin-top: 10px;
+        font-size: 1.5rem;
+      }
+    }
+
+    .cw-cost {
+      margin-top: 40px;
+      font-size: 1.6rem;
+      text-align: center;
+    }
+
+    .cw-partner {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+
+      &__box {
+        padding: 32px 32px 36px;
+      }
+
+      &__ttl {
+        margin-bottom: 14px;
+        font-size: 1.4rem;
+
+        &:not(:first-child) {
+          margin-top: 28px;
+          padding-top: 24px;
+        }
+      }
+
+      &__txt {
+        font-size: 1.6rem;
+      }
+    }
+
+    .cw-strengths {
+      gap: 8px;
+
+      li {
+        min-height: 72px;
+        padding: 10px;
+        font-size: 1.5rem;
+      }
+    }
+
+    .cw-chips {
+      gap: 8px;
+
+      li {
+        padding: 7px 14px;
+        font-size: 1.3rem;
+      }
+    }
+
+    .cw-more {
+      margin-top: 56px;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #corp-page.cp-web-page {
+    .cw-menu {
+      gap: 10px;
+
+      li {
+        display: grid;
+        grid-template-columns: 40px 1fr;
+        column-gap: 14px;
+        padding: 22px 18px;
+
+        .cp-icon {
+          grid-row: 1 / span 2;
+          width: 40px;
+          height: 40px;
+        }
+      }
+
+      &__name {
+        font-size: 1.6rem;
+      }
+
+      &__txt {
+        margin-top: 4px;
+        font-size: 1.4rem;
+      }
+    }
+
+    .cw-cost {
+      margin-top: 28px;
+      font-size: 1.5rem;
+    }
+
+    .cw-partner {
+      gap: 10px;
+
+      &__box {
+        padding: 24px 20px 26px;
+      }
+
+      &__ttl {
+        margin-bottom: 12px;
+        font-size: 1.3rem;
+
+        &:not(:first-child) {
+          margin-top: 22px;
+          padding-top: 20px;
+        }
+      }
+
+      &__txt {
+        font-size: 1.5rem;
+      }
+    }
+
+    .cw-strengths {
+      gap: 6px;
+
+      li {
+        min-height: 64px;
+        padding: 8px 4px;
+        font-size: 1.3rem;
+      }
+    }
+
+    .cw-chips {
+      gap: 6px;
+
+      li {
+        padding: 6px 12px;
+        font-size: 1.2rem;
+      }
+    }
+
+    .cw-more {
+      margin-top: 40px;
+    }
+  }
+}

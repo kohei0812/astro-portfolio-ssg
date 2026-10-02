@@ -73,6 +73,16 @@
   &__copy {
     color: #9aa3b2;
   }
+
+  /* 運営者のサイト｜プライバシーポリシー を1行に並べる（共通の a{display:block} を打ち消す） */
+  &__link a {
+    display: inline;
+  }
+
+  &__link span {
+    margin: 0 0.8em;
+    color: #c3c9d3;
+  }
 }
 
 @media screen and (min-width: 769px) {

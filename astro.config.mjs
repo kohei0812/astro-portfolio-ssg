@@ -7,6 +7,10 @@ import sitemap from "@astrojs/sitemap";
 export default defineConfig({
   output: "static", // SSG（静的サイト生成）に変更
   site: "https://www.dddynamis.com",
+  // 助成金の詳しい説明ページは廃止（提携パートナーが担当）。旧URLはサービスへ
+  redirects: {
+    "/subsidy": "/service",
+  },
   integrations: [
     react(), 
     sitemap({

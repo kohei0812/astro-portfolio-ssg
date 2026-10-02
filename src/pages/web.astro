@@ -1,72 +1,100 @@
 ---
+/*
+  Web制作・システム開発（2026-10-02 コーポレートの見た目に作り直し）。
+  中身は旧ページ（components/web/WebPlan.astro）から引き継ぎ、料金表はサービスページと同じく載せない。
+  旧コンポーネントは英語版（/en/web）が使っているので残している。スタイルは _corp-web.scss。
+*/
 import Layout from "../layouts/Layout.astro";
-import WebPlan from "../components/web/WebPlan.astro";
+import LineIcon from "../components/corp/LineIcon.astro";
+
+const menus = [
+  { icon: "web", name: "ホームページ制作・リニューアル", txt: "シンプルなLPから、しっかりした構成のサイトまで対応します。" },
+  { icon: "talk", name: "多言語対応", txt: "日本語と英語の切り替えや、翻訳の整備など、インバウンド向けの対応を行います。" },
+  { icon: "growth", name: "アクセス解析の導入", txt: "Google アナリティクスと Search Console を導入し、見るべき数字を整えます。" },
+  { icon: "gear", name: "更新・運用保守", txt: "情報の更新、SNS連携、画像の差し替えなど、公開後の運用を引き受けます。" },
+  { icon: "app", name: "業務アプリ・システム開発", txt: "業務の自動化にあわせて必要になったアプリやシステムを、設計から開発まで担当します。" },
+  { icon: "idea", name: "技術相談・ヘルプデスク", txt: "サイト制作や運用の技術的なご質問に、オンラインでお答えします。" },
+];
+
+const strengths = ["納期厳守", "素早い対応と密な連絡", "高い品質"];
+const langs = ["HTML5", "CSS3 / SCSS", "JavaScript", "React", "TypeScript", "Astro", "PHP / Laravel", "WordPress", "Python / Django", "GAS"];
+const envs = ["AWS", "VPS", "Linux（Ubuntu）", "nginx", "Git", "Docker", "Vercel"];
 ---
 
 <Layout
-  title="Dynamis | Web制作・システム開発"
-  description="ホームページ制作・リニューアル、多言語対応、業務システム開発まで。現役Webエンジニアが対応します。"
+  title="Web制作・システム開発｜DDDynamis・AI軍師"
+  description="ホームページ制作・リニューアル、多言語対応、アクセス解析の導入、運用保守、業務アプリ・システム開発まで。AI活用支援と同じ担当者が、設計から開発まで対応します。"
+  corp
 >
-  <!-- main -->
-  <main id="web" class="web" role="main">
-    <div class="pageheader">
-      <h1 class="pageheader-ttl">
-        <span class="eng">Web Development</span>
-        Web制作・システム開発
-      </h1>
-    </div>
-    <nav aria-label="パンくずリスト" class="breadcrumb">
-      <div class="container">
-        <ol
-          itemscope
-          itemtype="https://schema.org/BreadcrumbList"
-          class="breadcrumb-list"
-        >
-          <li
-            class="breadcrumb-list__item"
-            itemprop="itemListElement"
-            itemscope
-            itemtype="https://schema.org/ListItem"
-          >
-            <a itemprop="item" href="/">
-              <span itemprop="name">ホーム</span>
-            </a>
-            <meta itemprop="position" content="1" />
-          </li>
-          <li
-            class="breadcrumb-list__item"
-            itemprop="itemListElement"
-            itemscope
-            itemtype="https://schema.org/ListItem"
-          >
-            <span itemprop="name">Web制作・システム開発</span>
-            <meta itemprop="position" content="2" />
-          </li>
-        </ol>
+  <main id="corp-page" class="corp-page cp-web-page" role="main">
+    <header class="cp-page-head">
+      <div class="cp-container">
+        <p class="cp-head__en eng" data-reveal>Web development</p>
+        <h1 class="cp-page-head__ttl" data-reveal style="--d: .1s">Web制作・<br class="sp_only" />システム開発</h1>
+        <p class="cp-page-head__lead" data-reveal style="--d: .2s">AI活用支援と並行して、Web制作と業務システムの開発も承っています。</p>
       </div>
-    </nav>
+    </header>
 
-    <section class="web-intro">
-      <div class="container">
-        <p class="web-intro__lead">
-          AI活用支援と並行して、Web制作・業務システム開発も承っています。
-        </p>
-        <p class="web-intro__txt desc">
-          ホームページの制作・リニューアルから、多言語対応、アクセス解析の導入、運用保守まで。
-          業務の自動化にあわせて業務アプリやシステムが必要になった場合も、同じ人間が設計から開発まで対応します。
-        </p>
-        <a href="/work-archive" class="web-intro__link">制作実績を見る</a>
+    <!-- 対応できること -->
+    <section class="cp-sec" aria-labelledby="web-menu-ttl">
+      <span class="cp-watermark eng" aria-hidden="true">WEB</span>
+      <div class="cp-container">
+        <header class="cp-head" data-reveal>
+          <p class="cp-head__en eng">What we do</p>
+          <h2 class="cp-head__ttl" id="web-menu-ttl">対応できること</h2>
+          <p class="cp-head__lead">サイトの制作から公開後の運用、業務に合わせたシステムまで。AIで業務を変える中でWebやシステムが必要になったときも、同じ担当者がそのまま形にします。</p>
+        </header>
+        <ul class="cw-menu">
+          {menus.map((m, i) => (
+            <li data-reveal style={`--d: ${(i % 3) * 0.08}s`}>
+              <LineIcon name={m.icon} size={44} />
+              <p class="cw-menu__name">{m.name}</p>
+              <p class="cw-menu__txt">{m.txt}</p>
+            </li>
+          ))}
+        </ul>
+        <p class="cw-cost" data-reveal>費用は、ページ数や機能に合わせてお見積りします。「今のサイト、見てもらえますか？」だけでも構いません。</p>
       </div>
     </section>
 
-    <WebPlan />
-
-    <section class="web-cta">
-      <div class="container">
-        <div class="cta">
-          <p class="cta-p">まずはご相談ください</p>
-          <a href="/#contact" class="cta-link">お問い合わせはこちら</a>
+    <!-- 制作会社の方へ -->
+    <section class="cp-sec cp-sec--gray" aria-labelledby="web-partner-ttl">
+      <div class="cp-container">
+        <header class="cp-head" data-reveal>
+          <p class="cp-head__en eng">For production companies</p>
+          <h2 class="cp-head__ttl" id="web-partner-ttl">制作会社の方へ</h2>
+          <p class="cp-head__lead">コーディングや開発の外部パートナーとしてもお手伝いしています。Lancersでも多くの実績と評価をいただいています。</p>
+        </header>
+        <div class="cw-partner">
+          <div class="cw-partner__box" data-reveal>
+            <p class="cw-partner__ttl">いただいている評価</p>
+            <ul class="cw-strengths">{strengths.map((s) => <li>{s}</li>)}</ul>
+            <p class="cw-partner__ttl">稼働時間</p>
+            <p class="cw-partner__txt">月曜〜金曜　9時〜22時</p>
+          </div>
+          <div class="cw-partner__box" data-reveal style="--d: .1s">
+            <p class="cw-partner__ttl">対応言語・フレームワーク</p>
+            <ul class="cw-chips">{langs.map((l) => <li class="eng">{l}</li>)}</ul>
+            <p class="cw-partner__ttl">サーバー環境・ツール</p>
+            <ul class="cw-chips">{envs.map((l) => <li class="eng">{l}</li>)}</ul>
+          </div>
         </div>
+        <p class="cw-more" data-reveal><a href="/work-archive" class="cp-link">制作実績を見る</a></p>
+      </div>
+    </section>
+
+    <!-- お問い合わせ -->
+    <section class="cp-closing" aria-labelledby="web-closing">
+      <picture class="cp-closing__band" aria-hidden="true">
+        <source media="(min-width: 769px)" srcset="/assets/images/corp/band-connect.webp" type="image/webp" />
+        <source media="(min-width: 769px)" srcset="/assets/images/corp/band-connect.jpg" />
+        <source srcset="/assets/images/corp/band-connect-sp.webp" type="image/webp" />
+        <img src="/assets/images/corp/band-connect-sp.jpg" alt="" width="800" height="600" loading="lazy" decoding="async" />
+      </picture>
+      <div class="cp-container cp-closing__inner" data-reveal>
+        <h2 class="cp-closing__ttl" id="web-closing">まずは、ご相談ください。</h2>
+        <p class="cp-closing__txt">制作・リニューアル・開発のご相談は、初回相談のフォームからお送りください。ご相談内容の欄に「Web制作」とお書き添えください。</p>
+        <a href="/consultation" class="cp-btn cp-btn--primary cp-btn--lg">お問い合わせ</a>
       </div>
     </section>
   </main>

@@ -3844,3 +3844,88 @@ $ease: cubic-bezier(0.22, 1, 0.36, 1);
     font-size: 1.35rem;
   }
 }
+
+/*****************/
+/*** プライバシーポリシー（2026-10-02）***/
+/*****************/
+#corp-page .cp-privacy__body {
+  h2 {
+    position: relative;
+    color: $navy;
+    font-weight: bold;
+    line-height: 1.6;
+    border-top: 1px solid $line;
+  }
+
+  ul {
+    display: grid;
+    gap: 6px;
+  }
+
+  li {
+    position: relative;
+    padding-left: 1.2em;
+    line-height: 1.9;
+
+    &::before {
+      content: "・";
+      position: absolute;
+      left: 0;
+    }
+  }
+
+  a {
+    display: inline;
+    color: $navy;
+    text-decoration: underline;
+    text-underline-offset: 0.3em;
+  }
+
+  .cp-privacy__date {
+    color: $sub;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  #corp-page .cp-privacy__body {
+    font-size: 1.6rem;
+
+    h2 {
+      margin: 48px 0 16px;
+      padding-top: 24px;
+      font-size: 2rem;
+    }
+
+    p + p,
+    p + ul,
+    ul + p {
+      margin-top: 14px;
+    }
+
+    .cp-privacy__date {
+      margin-top: 56px;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #corp-page .cp-privacy__body {
+    font-size: 1.5rem;
+
+    h2 {
+      margin: 36px 0 12px;
+      padding-top: 18px;
+      font-size: 1.8rem;
+    }
+
+    p + p,
+    p + ul,
+    ul + p {
+      margin-top: 12px;
+    }
+
+    .cp-privacy__date {
+      margin-top: 40px;
+    }
+  }
+}

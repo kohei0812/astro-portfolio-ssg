@@ -162,6 +162,8 @@ export default function ConsultForm({ heading, lead, submitLabel, doneTitle, don
             {errors.message && <span className="error-message">{errors.message}</span>}
           </div>
 
+          <p className="form-privacy">送信いただいた情報は、<a href="/privacy" target="_blank" rel="noopener">プライバシーポリシー</a>に沿って取り扱います。</p>
+
           <button type="submit" className="form-submit" disabled={isSubmitting}>
             {isSubmitting ? (<><span className="spinner"></span>送信中...</>) : submitLabel}
           </button>

@@ -741,6 +741,22 @@ $gray: #f4f6f9;
       color: $sub;
     }
 
+    /* 送信ボタン上のプライバシーポリシーの一文 */
+    .form-privacy {
+      margin: 8px 0 20px;
+      color: $sub;
+      font-size: 1.3rem;
+      line-height: 1.8;
+      text-align: center;
+
+      a {
+        display: inline;
+        color: inherit;
+        text-decoration: underline;
+        text-underline-offset: 0.3em;
+      }
+    }
+
     .form-submit {
       background-color: $red;
       border-radius: 0;
