@@ -14,21 +14,25 @@ import LineIcon from "../components/corp/LineIcon.astro";
 const chain = [
   {
     no: "01",
+    kanji: "馬力",
     name: "AIで、会社の馬力を上げる。",
     txt: "AIを社員として働かせ、仕事を任せられる仕組みをつくります。業務を理解している経営者や現場の人自身が仕組みを作り、エンジニアがそれを支えます。",
   },
   {
     no: "02",
+    kanji: "時間",
     name: "人の時間を取り戻す。",
     txt: "AIに仕事を任せることで、日々の業務に追われていた時間を取り戻します。生まれた余力を、時間を報酬として還元することにもつなげたいと考えています。",
   },
   {
     no: "03",
+    kanji: "対話",
     name: "人と向き合う時間を増やす。",
     txt: "私たちが目指すのは、幹部が従業員の話を聴き、理念を日々の仕事に落とし込み、1on1や対話で関係を築ける会社です。AIでつくった時間で、人と人が繋がる時間を増やします。",
   },
   {
     no: "04",
+    kanji: "文化",
     name: "積み重ねを、会社の文化にする。",
     txt: "人と向き合う時間が日常になり、考えを伝え合い、人を育てることが会社の文化になる。その積み重ねが、組織全体の強さにつながると考えています。",
   },
@@ -71,11 +75,13 @@ const works = [
     txt: "1回の研修で、Webサイト制作のコーディングを社内で行えるようになり、それまで1件約15万円かかっていたコーディング外注がゼロになりました。その外注先は川端自身でしたが、A社は内製化によって特急の依頼も受けられるようになりました。",
   },
   {
+    icon: "web",
     tag: "不動産広告 B社",
     ttl: "外注していた制作物の多くを、社内で作れるように。",
     txt: "AI活用によって、外注していた制作物の多くを社内で作れるようになりました。社内で対応できる制作業務の範囲が広がっています。",
   },
   {
+    icon: "app",
     tag: "不動産管理 C社",
     ttl: "社員1人が展開役となり、業務の半自動化を進行中。",
     txt: "社員1人が社内への展開役となり、AI活用を広げています。申込書の処理から関係先への連絡までを半自動化する取り組みが、現在進んでいます。",
@@ -150,6 +156,7 @@ const closingTimes = [
 
     <!-- 2. 変化：外部環境 → それは機会（これまで／いま） -->
     <section class="cp-sec cp-change" aria-labelledby="change-ttl">
+      <span class="cp-watermark eng" aria-hidden="true">CHANGE</span>
       <div class="cp-container">
         <header class="cp-head" data-reveal>
           <p class="cp-head__en eng">What has changed</p>
@@ -182,7 +189,9 @@ const closingTimes = [
 
     <!-- 3. ミッション：大きな文字と余白だけ -->
     <section class="cp-sec cp-mission" aria-labelledby="mission-ttl">
+      <span class="cp-watermark eng" aria-hidden="true">MISSION</span>
       <div class="cp-container">
+        <p class="cp-vertical" aria-hidden="true">AIで時間をつくり、人と人が繋がる時間を増やす。</p>
         <p class="cp-head__en eng" data-reveal>Our mission</p>
         <h2 class="cp-mission__ttl" id="mission-ttl" data-reveal>
           <span class="cp-line"><span>中小企業を、</span></span>
@@ -210,6 +219,7 @@ const closingTimes = [
 
     <!-- 4. 代表と原点（全文は /about） -->
     <section class="cp-sec cp-sec--gray cp-origin" aria-labelledby="origin-ttl">
+      <span class="cp-watermark eng" aria-hidden="true">ORIGIN</span>
       <div class="cp-container cp-origin__inner">
         <picture class="cp-origin__photo" data-reveal>
           <source srcset="/assets/images/consultation/profile-kawabata.webp" type="image/webp" />
@@ -248,7 +258,7 @@ const closingTimes = [
               </picture>
               <span class="cp-chain__dot" aria-hidden="true"></span>
               <div class="cp-chain__body" data-reveal style="--d: .1s">
-                <p class="cp-chain__no eng">{c.no}</p>
+                <p class="cp-chain__key"><span class="cp-chain__no eng">{c.no}</span><span class="cp-chain__kanji">{c.kanji}</span></p>
                 <h3 class="cp-chain__name">{c.name}</h3>
                 <p class="cp-chain__txt">{c.txt}</p>
               </div>
@@ -261,6 +271,7 @@ const closingTimes = [
 
     <!-- 6. 事業内容 -->
     <section class="cp-sec cp-sec--gray cp-service" id="service" aria-labelledby="service-ttl">
+      <span class="cp-watermark eng" aria-hidden="true">SERVICE</span>
       <div class="cp-container">
         <header class="cp-head" data-reveal>
           <p class="cp-head__en eng">Service</p>
@@ -299,6 +310,7 @@ const closingTimes = [
 
     <!-- 7. 事例 -->
     <section class="cp-sec cp-works" id="works" aria-labelledby="works-ttl">
+      <span class="cp-watermark eng" aria-hidden="true">WORKS</span>
       <div class="cp-container">
         <header class="cp-head" data-reveal>
           <p class="cp-head__en eng">Works</p>
@@ -314,6 +326,7 @@ const closingTimes = [
                   <span class="cp-work__after">0<small>円</small></span>
                 </p>
               )}
+              {w.icon && <div class="cp-work__icon"><LineIcon name={w.icon} size={52} /></div>}
               <p class="cp-work__tag">{w.tag}</p>
               <h3 class="cp-work__ttl">{w.ttl}</h3>
               <p class="cp-work__txt">{w.txt}</p>
@@ -346,6 +359,7 @@ const closingTimes = [
 
     <!-- 9. 大切にしていること -->
     <section class="cp-sec cp-values" aria-labelledby="values-ttl">
+      <span class="cp-watermark eng" aria-hidden="true">VALUES</span>
       <div class="cp-container">
         <header class="cp-head" data-reveal>
           <p class="cp-head__en eng">Our values</p>
@@ -362,6 +376,17 @@ const closingTimes = [
         </ol>
       </div>
     </section>
+
+    <!-- 流れる文字帯（ホバーで停止、reduced-motion では停止） -->
+    <div class="cp-marquee" aria-hidden="true">
+      <div class="cp-marquee__track">
+        {[0, 1].map(() => (
+          <p class="cp-marquee__set">
+            <span class="eng">SMALL BUSINESS × AI</span><span>会社の馬力を、AIで何倍にも。</span><span class="eng">MAKE TIME FOR PEOPLE</span><span>中小企業を、強くする。</span>
+          </p>
+        ))}
+      </div>
+    </div>
 
     <!-- 10. 締め：問いかけ → 初回相談へ（写真は向き合う2人の手元） -->
     <section class="cp-closing" aria-labelledby="closing-ttl">

@@ -7,6 +7,8 @@
 */
 import Layout from "../layouts/Layout.astro";
 
+const kanji = ["馬力", "時間", "対話", "文化"];
+
 const chain = [
   { name: "AIで、会社の馬力を上げる。", txt: "AIを社員として働かせるために、会社の仕事を見直し、任せられる業務を整理します。業務を知る人が必要な仕組みを作り、実際の仕事で使って、確かめながら直していきます。AIを使える人が増えることを、会社全体の仕事を進める力につなげます。" },
   { name: "人の時間を取り戻す。", txt: "AIが担える仕事を任せ、人が使える時間を生み出します。その時間を新たな仕事で埋めるだけでなく、人を育てることや、落ち着いて考えることに使ってほしいと考えています。働く人に、時間を報酬として還元することも、私たちが目指す姿のひとつです。" },
@@ -39,6 +41,7 @@ const values = [
 
     <!-- 1. これまでといま -->
     <section class="cp-sec cp-article" aria-labelledby="a1">
+      <span class="cp-watermark eng" aria-hidden="true">CHANGE</span>
       <div class="cp-container cp-article__inner">
         <header class="cp-head" data-reveal>
           <p class="cp-head__en eng">What has changed</p>
@@ -48,8 +51,10 @@ const values = [
           <p>AIによって、会社の仕事の進め方が変わっています。大企業で活用が進む一方、人手不足のなかで毎日の業務を回す中小企業には、仕組みを見直す時間を取りにくい現実があります。このままでは、仕事に使える時間や事業を進める力の差が広がりかねません。</p>
           <p>けれども、私たちはAIを中小企業にとっての機会だと考えています。</p>
           <h3>これまで｜業務を変えるには、大きな投資が必要でした。</h3>
-          <p>システムをつくるには、多額の費用と多くの人手が必要でした。DXで時間をつくり、人を育てる経営は、その投資ができる大企業を中心に実現してきました。中小企業に届かなかったのは、会社の意欲の問題ではなく、大きな投資を前提とする仕組みの問題です。</p>
+          <p>システムをつくるには、多額の費用と多くの人手が必要でした。DXで時間をつくり、人を育てる経営は、その投資ができる大企業を中心に実現してきました。</p>
+          <blockquote class="cp-quote">中小企業に届かなかったのは、会社の意欲の問題ではなく、<strong>大きな投資を前提とする仕組みの問題</strong>です。</blockquote>
           <h3>いま｜会社の人自身が、仕組みを作れるようになりました。</h3>
+          <p class="cp-bigline"><span>道具代は、</span><em>月数千円</em><span>から。</span></p>
           <p>ClaudeやChatGPTなどのAIは、道具そのものの利用料として月数千円から使えます。これは支援費用を含む金額ではありませんが、業務を変え始めるための道具が、中小企業にも手の届くものになったということです。</p>
           <p>業務を理解している経営者や現場の人自身が仕組みを作る時代になりました。人が日本語でやりたいことを伝え、AIが作り、人が確かめて直していく。その取り組みをエンジニアが支えることで、中小企業も自分たちの仕事を変え、時間を生み出せるようになっています。</p>
         </div>
@@ -58,6 +63,7 @@ const values = [
 
     <!-- 2. ミッションと支援先 -->
     <section class="cp-sec cp-sec--gray cp-mission" aria-labelledby="a2">
+      <span class="cp-watermark eng" aria-hidden="true">MISSION</span>
       <div class="cp-container">
         <p class="cp-head__en eng" data-reveal>Our mission</p>
         <h2 class="cp-mission__ttl" id="a2" data-reveal>
@@ -75,6 +81,7 @@ const values = [
 
     <!-- 3. 原体験 -->
     <section class="cp-sec cp-article cp-story" aria-labelledby="a3">
+      <span class="cp-watermark eng" aria-hidden="true">ORIGIN</span>
       <div class="cp-container cp-article__inner">
         <header class="cp-head" data-reveal>
           <p class="cp-head__en eng">Origin</p>
@@ -82,7 +89,7 @@ const values = [
         </header>
         <div class="cp-article__body" data-reveal>
           <p>私は神戸大学法学部を卒業し、新卒でSIerに営業として入りました。システムをつくるには、多額の費用と多くの人手が必要で、その投資ができるのは大企業でした。時間をつくり、人を育てるための仕組みが、投資できる会社にしか届かない。その構造を、最初の職場で目にしました。</p>
-          <p>そこで開発現場の炎上と同僚の死に直面し、私は1年で会社を辞めました。</p>
+          <blockquote class="cp-quote">そこで開発現場の炎上と同僚の死に直面し、私は1年で会社を辞めました。</blockquote>
           <p>退職後はバンド活動、バーテンダー、植木職人を経験しました。37歳でフィリピンへ留学し、Webエンジニアの道へ進みました。フリーランスとして開発に携わり、いまはAI活用を支援しています。</p>
           <p>中小企業がDXから取り残されてきたのは、大きなお金と人手を先に用意しなければならない、これまでのやり方によるものでした。AIによって、そこを変えられるようになりました。業務を知っている会社の人自身が仕組みを作り、エンジニアがそれを支える。私が作るだけで終わらず、会社の人が自分たちの仕事を変えていける。その形を中小企業に届けたいと思っています。遠回りをして戻ってきたこの仕事で、人の時間を取り戻すことに取り組んでいます。</p>
         </div>
@@ -99,6 +106,7 @@ const values = [
 
     <!-- 4. 一本の筋（トップより詳しく） -->
     <section class="cp-sec cp-sec--gray cp-chain cp-chain--about" aria-labelledby="a4">
+      <span class="cp-watermark eng" aria-hidden="true">STRENGTHEN</span>
       <div class="cp-container">
         <header class="cp-head cp-head--center" data-reveal>
           <p class="cp-head__en eng">How we strengthen</p>
@@ -113,7 +121,7 @@ const values = [
               </picture>
               <span class="cp-chain__dot" aria-hidden="true"></span>
               <div class="cp-chain__body" data-reveal style="--d: .1s">
-                <p class="cp-chain__no eng">{String(i + 1).padStart(2, "0")}</p>
+                <p class="cp-chain__key"><span class="cp-chain__no eng">{String(i + 1).padStart(2, "0")}</span><span class="cp-chain__kanji">{kanji[i]}</span></p>
                 <h3 class="cp-chain__name">{c.name}</h3>
                 <p class="cp-chain__txt">{c.txt}</p>
               </div>
@@ -126,6 +134,7 @@ const values = [
 
     <!-- 5. 提供すること／6. 事例と自社の実践 -->
     <section class="cp-sec cp-article" aria-labelledby="a5">
+      <span class="cp-watermark eng" aria-hidden="true">SERVICE</span>
       <div class="cp-container cp-article__inner">
         <header class="cp-head" data-reveal>
           <p class="cp-head__en eng">What we do</p>
@@ -137,6 +146,11 @@ const values = [
           <p>AI人材育成では、AIを「学ぶ科目」ではなく、「PC操作の新しい型」として伝えます。日本語で頼めばPCが動く体験から、自分の仕事に結びつけていきます。研修は、驚かせる、自分事化、その場で成功させる、自分で作らせる、社内へ広げる、1か月後に利用状況を追跡する、という6ステップです。</p>
           <p>この2つの事業を通じて、AIの使い方を教えるのではなく、業務そのものを作り替えることに取り組みます。<a href="/web">Web制作</a>や<a href="/subsidy">助成金の相談</a>にも、必要に応じて対応します。</p>
           <h3>自分たちで仕事を進める力が、社内に残る。</h3>
+          <p class="cp-work__figure cp-work__figure--inline" aria-label="外注費 1件約15万円から0円">
+            <span class="cp-work__before"><small>外注費 1件</small><s>約15万円</s></span>
+            <span class="cp-work__arrow" aria-hidden="true"></span>
+            <span class="cp-work__after">0<small>円</small></span>
+          </p>
           <p>広告代理店A社では、1回の研修でWebサイト制作のコーディングを内製化し、1件約15万円のコーディング外注がゼロになりました。その外注先は、私自身でした。A社は特急の依頼も受けられるようになりました。私への発注がなくなっても、会社にできることが増えるなら、それが支援の成果だと考えています。</p>
           <p>不動産広告B社では、外注していた制作物の多くを社内で作れるようになりました。不動産管理C社では、社員1人が社内への展開役となり、申込書の処理から関係先への連絡までを半自動化する取り組みが進行中です。</p>
           <h3>私たちも、AIを社員として働かせています。</h3>
@@ -147,6 +161,7 @@ const values = [
 
     <!-- 7. 大切にしていること -->
     <section class="cp-sec cp-sec--gray cp-values cp-values--about" aria-labelledby="a7">
+      <span class="cp-watermark eng" aria-hidden="true">VALUES</span>
       <div class="cp-container">
         <header class="cp-head" data-reveal>
           <p class="cp-head__en eng">Our values</p>
@@ -166,6 +181,7 @@ const values = [
 
     <!-- 8. 代表メッセージ -->
     <section class="cp-sec cp-message" aria-labelledby="a8">
+      <span class="cp-watermark eng" aria-hidden="true">MESSAGE</span>
       <div class="cp-container cp-message__inner">
         <picture class="cp-message__photo" data-reveal>
           <source srcset="/assets/images/consultation/profile-kawabata.webp" type="image/webp" />
