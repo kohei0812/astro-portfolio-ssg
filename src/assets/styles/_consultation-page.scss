@@ -1,0 +1,1586 @@
+@use "variables" as v;
+
+/*****************/
+/*** main#consultation-page（初回相談LP）***/
+/*****************/
+/*
+  サイトの作法（箱・バッジ・黄色マーカーを使わず、罫線と余白とタイポグラフィで組む）のまま、
+  日本のLPの型（縦長1カラム・本人写真のFV・節ごとのCTA・チェックリスト）に合わせている。
+  - 面は白と薄いグレーだけ。紺の面は「読んでいてしんどい」ため使わない（2026-10-02 本人指示）。
+  - 紺は強調色：見出し・番号・罫線の天・数字の強調に使う。
+  - 赤は「申込ボタン」と英字ラベルだけに使う。
+  - 節ごとに構図を変える（物語＋流れ図 / 2カラム / 縦のステップ / 事例の表 / 写真＋本文）。
+*/
+
+$navy: v.$color-primary;
+$red: v.$color-accent;
+$ink: #1d2738;
+$body: #46536a;
+$sub: #6b7688;
+$line: rgba(23, 36, 57, 0.14);
+$gray: #f4f6f9;
+
+#consultation-page {
+  background-color: white;
+  color: $ink;
+  overflow: hidden;
+
+  em {
+    font-style: normal;
+  }
+
+  /* --- 外枠 ------------------------------------------- */
+  .c-container {
+    margin: 0 auto;
+  }
+
+  .c-sec {
+    position: relative;
+    background-color: white;
+
+    &--light {
+      background-color: $gray;
+    }
+  }
+
+  /* --- 見出し（英字ラベル → 日本語見出し → リード） --- */
+  .c-head {
+    &__en {
+      display: flex;
+      align-items: center;
+      color: $red;
+      font-weight: 700;
+      text-transform: uppercase;
+
+      &::before {
+        content: "";
+        height: 1px;
+        background-color: currentColor;
+      }
+    }
+
+    &__ttl {
+      color: $navy;
+      font-weight: bold;
+      line-height: 1.5;
+      text-wrap: balance;
+      word-break: auto-phrase;
+    }
+
+    &__lead {
+      color: $body;
+      line-height: 1.9;
+      font-weight: 500;
+    }
+  }
+
+  /* --- CTA（節ごとに置く） ---------------------------- */
+  .c-cta {
+    text-align: center;
+
+    &__lead {
+      color: $ink;
+      font-weight: bold;
+      line-height: 1.8;
+    }
+
+    &__btn {
+      position: relative;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      background-color: $red;
+      color: white;
+      font-weight: bold;
+      letter-spacing: 0.04em;
+      box-shadow: 0 6px 0 #9c0016;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+
+      &::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        width: 8px;
+        height: 8px;
+        border-top: 2px solid currentColor;
+        border-right: 2px solid currentColor;
+        transform: translateY(-50%) rotate(45deg);
+      }
+
+      &:hover {
+        opacity: 1;
+        transform: translateY(3px);
+        box-shadow: 0 3px 0 #9c0016;
+      }
+    }
+
+    &__note {
+      color: $sub;
+      font-weight: 500;
+      line-height: 1.7;
+    }
+
+    &--light {
+      border-top: 1px solid $line;
+    }
+
+    &--fv {
+      text-align: left;
+
+      .c-cta__btn {
+        margin-left: 0;
+      }
+    }
+  }
+
+  /* --- 1. FV ----------------------------------------- */
+  .c-fv {
+    position: relative;
+    background-color: white;
+    border-bottom: 1px solid $line;
+
+    &__target {
+      display: inline-block;
+      color: $navy;
+      font-weight: bold;
+      line-height: 1.7;
+      border-bottom: 2px solid $navy;
+    }
+
+    &__ttl {
+      color: $ink;
+      font-weight: bold;
+      line-height: 1.45;
+      letter-spacing: 0.02em;
+
+      em {
+        color: $navy;
+        white-space: nowrap;
+        box-shadow: inset 0 -0.14em 0 rgba(23, 36, 57, 0.16);
+      }
+    }
+
+    &__sub {
+      color: $body;
+      font-weight: 500;
+      line-height: 1.9;
+
+      strong {
+        color: $navy;
+      }
+    }
+
+    &__photo {
+      position: relative;
+      background-color: #e9edf2;
+
+      picture {
+        display: block;
+        height: 100%;
+      }
+
+      img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: 50% 15%;
+      }
+    }
+
+    &__caption {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      display: flex;
+      flex-direction: column;
+      background-color: white;
+      border-top: 2px solid $navy;
+    }
+
+    &__role {
+      color: $sub;
+      font-weight: 500;
+    }
+
+    &__name {
+      color: $navy;
+      font-weight: bold;
+      letter-spacing: 0.12em;
+    }
+  }
+
+  /* --- 2. 発注の壁 ------------------------------------ */
+  .c-wall {
+    &__story p {
+      color: $body;
+      line-height: 2;
+      font-weight: 500;
+    }
+
+    /* 流れは箱にせず、文字と罫線で。最後の「熱が冷める」だけ赤 */
+    &__flow {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      border-top: 2px solid $navy;
+      border-bottom: 1px solid $line;
+    }
+
+    &__flow-item {
+      position: relative;
+      display: flex;
+      align-items: center;
+      color: $navy;
+      font-weight: bold;
+
+      &:not(.is-end)::after {
+        content: "";
+        display: block;
+        height: 1px;
+        background-color: rgba(23, 36, 57, 0.35);
+      }
+
+      &.is-end {
+        color: $red;
+      }
+    }
+
+    &__point {
+      color: $ink;
+      font-weight: bold;
+      line-height: 1.9;
+
+      strong {
+        color: $navy;
+        box-shadow: inset 0 -0.3em 0 rgba(23, 36, 57, 0.1);
+      }
+    }
+
+    &__loss {
+      color: $sub;
+      font-weight: 500;
+      line-height: 1.9;
+    }
+  }
+
+  /* チェックリスト：白い面に細い罫線。チェックは紺の線で描く */
+  .c-check {
+    background-color: white;
+    border-top: 2px solid $navy;
+
+    &__ttl {
+      color: $navy;
+      font-weight: bold;
+    }
+
+    &__item {
+      position: relative;
+      color: $ink;
+      font-weight: bold;
+      line-height: 1.7;
+      border-bottom: 1px solid $line;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &::before {
+        content: "";
+        position: absolute;
+        left: 2px;
+        width: 14px;
+        height: 7px;
+        border-left: 2px solid $navy;
+        border-bottom: 2px solid $navy;
+        transform: rotate(-45deg);
+      }
+    }
+  }
+
+  /* 天の罫線：細い線の左端に紺の太いセグメント（サイトの赤セグメントを紺に置き換えた形） */
+  %rule-top {
+    position: relative;
+    border-top: 1px solid $line;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: -2px;
+      left: 0;
+      width: 48px;
+      height: 3px;
+      background-color: $navy;
+    }
+  }
+
+  /* --- 4. なぜ続かなかったか ---------------------------- */
+  .c-why {
+    &__list {
+      display: grid;
+    }
+
+    &__item {
+      @extend %rule-top;
+    }
+
+    &__num {
+      font-weight: 700;
+      line-height: 1;
+      color: rgba(23, 36, 57, 0.18);
+    }
+
+    &__name {
+      color: $navy;
+      font-weight: bold;
+      letter-spacing: 0.06em;
+    }
+
+    &__ttl {
+      color: $ink;
+      font-weight: bold;
+      line-height: 1.6;
+    }
+
+    &__txt {
+      color: $body;
+      font-weight: 500;
+      line-height: 1.9;
+    }
+  }
+
+  /* --- 5. その場で作る型 -------------------------------- */
+  .c-method {
+    &__item {
+      display: flex;
+      border-top: 1px solid $line;
+
+      &:last-child {
+        border-bottom: 1px solid $line;
+      }
+    }
+
+    &__step {
+      flex-shrink: 0;
+      color: $sub;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+
+      span {
+        display: block;
+        color: $navy;
+        line-height: 1;
+        letter-spacing: 0;
+      }
+    }
+
+    &__name {
+      color: $navy;
+      font-weight: bold;
+      line-height: 1.6;
+    }
+
+    &__txt {
+      color: $body;
+      font-weight: 500;
+      line-height: 1.9;
+    }
+  }
+
+  /* --- 6. 事例 ---------------------------------------- */
+  .c-cases {
+    &__list {
+      display: grid;
+    }
+
+    &__self {
+      color: $body;
+      font-weight: 500;
+      line-height: 1.9;
+      border-left: 3px solid $navy;
+    }
+  }
+
+  .c-case {
+    background-color: white;
+    border-top: 3px solid $navy;
+
+    &__tag {
+      color: $sub;
+      font-weight: bold;
+      letter-spacing: 0.06em;
+    }
+
+    &__ttl {
+      color: $navy;
+      font-weight: bold;
+      line-height: 1.6;
+    }
+
+    &__row {
+      display: flex;
+      border-top: 1px solid $line;
+
+      dt {
+        flex-shrink: 0;
+        color: $sub;
+        font-weight: bold;
+      }
+
+      dd {
+        color: $body;
+        font-weight: 500;
+        line-height: 1.8;
+      }
+
+      &.is-now {
+        dt,
+        dd {
+          color: $navy;
+          font-weight: bold;
+        }
+      }
+    }
+
+    /* パターン破りの一文。ページ内でここだけ紺の太い縦線で目立たせる */
+    &__reveal {
+      background-color: rgba(23, 36, 57, 0.05);
+      border-left: 4px solid $navy;
+      color: $navy;
+      font-weight: bold;
+      line-height: 1.8;
+    }
+  }
+
+  /* --- 8. 誰がやるか ----------------------------------- */
+  .c-who {
+    &__photo img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    &__role {
+      color: $sub;
+      font-weight: bold;
+    }
+
+    &__name {
+      color: $navy;
+      font-weight: bold;
+      letter-spacing: 0.1em;
+
+      .eng {
+        color: $sub;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+      }
+    }
+
+    &__txt {
+      color: $body;
+      font-weight: 500;
+      line-height: 2;
+    }
+
+    &__principles {
+      display: grid;
+    }
+
+    &__principle {
+      @extend %rule-top;
+    }
+
+    &__principle-ttl {
+      color: $navy;
+      font-weight: bold;
+      line-height: 1.6;
+    }
+
+    &__principle-txt {
+      color: $body;
+      font-weight: 500;
+      line-height: 1.9;
+    }
+  }
+
+  /* --- 9. 初回相談で起きること ------------------------- */
+  .c-first {
+    &__list {
+      display: grid;
+    }
+
+    &__item {
+      border-top: 1px solid $line;
+
+      /* 「その場で1つ作る」が約束の中心なので、ここだけ天の罫線を紺で太く */
+      &.is-key {
+        border-top: 3px solid $navy;
+      }
+    }
+
+    &__num {
+      color: rgba(23, 36, 57, 0.22);
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    &__item.is-key &__num {
+      color: $navy;
+    }
+
+    &__name {
+      color: $navy;
+      font-weight: bold;
+      line-height: 1.6;
+    }
+
+    &__txt {
+      color: $body;
+      font-weight: 500;
+      line-height: 1.85;
+    }
+  }
+
+  .c-notfor {
+    background-color: white;
+    border-top: 3px solid $navy;
+
+    &__ttl {
+      color: $navy;
+      font-weight: bold;
+      line-height: 1.7;
+    }
+
+    &__item {
+      color: $body;
+      font-weight: 500;
+      line-height: 1.8;
+      border-top: 1px solid $line;
+
+      strong {
+        display: block;
+        color: $ink;
+        font-weight: bold;
+      }
+    }
+
+    &__end {
+      color: $ink;
+      font-weight: bold;
+      line-height: 1.8;
+    }
+  }
+
+  /* --- 11. FAQ ---------------------------------------- */
+  .c-faq {
+    &__item {
+      border-top: 1px solid $line;
+
+      &:last-child {
+        border-bottom: 1px solid $line;
+      }
+    }
+
+    &__q {
+      position: relative;
+      color: $navy;
+      font-weight: bold;
+      line-height: 1.6;
+
+      &::before {
+        content: "Q";
+        position: absolute;
+        left: 0;
+        color: $navy;
+        font-family: "Montserrat", "Montserrat Fallback", sans-serif;
+        font-weight: 700;
+      }
+    }
+
+    &__a {
+      color: $body;
+      font-weight: 500;
+      line-height: 1.9;
+    }
+  }
+
+  /* --- 12. 締め ---------------------------------------- */
+  .c-closing {
+    text-align: center;
+    background-color: $gray;
+
+    &__ttl {
+      color: $navy;
+      font-weight: bold;
+      line-height: 1.5;
+    }
+
+    &__txt {
+      color: $body;
+      font-weight: 500;
+      line-height: 1.9;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
+  /* --- フォーム（_contact.scss は紺地前提なので、白地用に上書き） --- */
+  #contact {
+    background-color: $gray;
+
+    .section-ttl {
+      color: rgba(23, 36, 57, 0.05);
+    }
+
+    .contact-form__title {
+      color: $navy;
+      line-height: 1.5;
+      text-wrap: balance;
+      word-break: auto-phrase; /* 日本語を文節で折り返す（対応ブラウザのみ） */
+    }
+
+    .contact-form__desc {
+      color: $body;
+    }
+
+    .contact-form__form {
+      background-color: white;
+      border-top: 3px solid $navy;
+    }
+
+    .form-label {
+      color: $ink;
+    }
+
+    .required {
+      color: $red;
+    }
+
+    .form-input,
+    .form-textarea {
+      background-color: white;
+      border: 1px solid rgba(23, 36, 57, 0.25);
+      border-radius: 2px;
+      color: $ink;
+
+      &::placeholder {
+        color: #9aa3b2;
+      }
+
+      &:focus {
+        border-color: $navy;
+        background-color: white;
+        box-shadow: 0 0 0 3px rgba(23, 36, 57, 0.1);
+      }
+
+      &.error {
+        border-color: $red;
+      }
+    }
+
+    .error-message {
+      color: $red;
+    }
+
+    .character-count {
+      color: $sub;
+    }
+
+    .form-submit {
+      background-color: $red;
+      border-radius: 0;
+      box-shadow: 0 6px 0 #9c0016;
+
+      &:hover {
+        background-color: $red;
+        transform: translateY(3px);
+        box-shadow: 0 3px 0 #9c0016;
+      }
+    }
+
+    .success-message {
+      color: $ink;
+
+      h2 {
+        color: $navy;
+      }
+
+      p {
+        color: $body;
+      }
+    }
+  }
+
+  .consult-style {
+    border: none;
+    padding: 0;
+    margin-left: 0;
+    margin-right: 0;
+
+    &__options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 28px;
+      margin-top: 4px;
+    }
+
+    &__option {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: $ink;
+      font-size: 1.5rem;
+      cursor: pointer;
+
+      input {
+        accent-color: $navy;
+        width: 18px;
+        height: 18px;
+      }
+    }
+  }
+}
+
+/*****************/
+/*** PC ***/
+/*****************/
+@media screen and (min-width: 769px) {
+  #consultation-page {
+    .c-container {
+      max-width: 960px;
+      padding: 0 40px;
+    }
+
+    .c-sec {
+      padding: 120px 0;
+    }
+
+    .c-head {
+      margin-bottom: 56px;
+
+      &__en {
+        gap: 16px;
+        font-size: 1.3rem;
+        letter-spacing: 0.2em;
+
+        &::before {
+          width: 36px;
+        }
+      }
+
+      &__ttl {
+        margin-top: 20px;
+        font-size: 3.4rem;
+      }
+
+      &__lead {
+        margin-top: 22px;
+        font-size: 1.6rem;
+      }
+    }
+
+    .c-cta {
+      margin-top: 72px;
+
+      &__lead {
+        font-size: 1.8rem;
+        margin-bottom: 24px;
+      }
+
+      &__btn {
+        width: 440px;
+        padding: 24px 50px 24px 30px;
+        font-size: 1.8rem;
+
+        &::after {
+          right: 26px;
+        }
+      }
+
+      &__note {
+        margin-top: 18px;
+        font-size: 1.4rem;
+      }
+
+      &--light {
+        padding-top: 56px;
+      }
+
+      &--fv {
+        margin-top: 44px;
+      }
+    }
+
+    /* FV：左に文字、右に写真（画面の右端まで） */
+    .c-fv {
+      padding-top: 72px;
+
+      &__inner {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 42%;
+        min-height: 640px;
+      }
+
+      &__copy {
+        padding: 80px 56px 90px max(40px, calc((100vw - 1200px) / 2 + 40px));
+      }
+
+      &__target {
+        font-size: 1.6rem;
+        padding-bottom: 6px;
+      }
+
+      &__ttl {
+        margin-top: 30px;
+        font-size: clamp(3.4rem, 3.5vw, 4.6rem);
+      }
+
+      &__sub {
+        margin-top: 28px;
+        font-size: 1.7rem;
+        max-width: 600px;
+      }
+
+      &__caption {
+        padding: 16px 26px;
+        gap: 4px;
+      }
+
+      &__role {
+        font-size: 1.2rem;
+      }
+
+      &__name {
+        font-size: 2rem;
+      }
+    }
+
+    .c-wall {
+      &__story {
+        max-width: 760px;
+
+        p + p {
+          margin-top: 18px;
+        }
+
+        p {
+          font-size: 1.7rem;
+        }
+      }
+
+      &__flow {
+        margin-top: 56px;
+        padding: 30px 0;
+        gap: 0 18px;
+      }
+
+      &__flow-item {
+        font-size: 1.8rem;
+        gap: 18px;
+
+        &:not(.is-end)::after {
+          width: 36px;
+        }
+      }
+
+      &__point {
+        margin-top: 44px;
+        font-size: 2rem;
+      }
+
+      &__loss {
+        margin-top: 14px;
+        font-size: 1.6rem;
+      }
+    }
+
+    .c-check {
+      margin-top: 64px;
+      padding: 40px 48px 24px;
+
+      &__ttl {
+        font-size: 2rem;
+        margin-bottom: 12px;
+      }
+
+      &__item {
+        padding: 18px 0 18px 40px;
+        font-size: 1.7rem;
+
+        &::before {
+          top: 24px;
+        }
+      }
+    }
+
+    .c-why {
+      &__list {
+        grid-template-columns: 1fr 1fr;
+        gap: 56px;
+      }
+
+      &__item {
+        padding-top: 36px;
+      }
+
+      &__num {
+        font-size: 4.4rem;
+      }
+
+      &__name {
+        margin-top: 22px;
+        font-size: 1.5rem;
+      }
+
+      &__ttl {
+        margin-top: 10px;
+        font-size: 2.2rem;
+      }
+
+      &__txt {
+        margin-top: 18px;
+        font-size: 1.6rem;
+      }
+    }
+
+    .c-method {
+      &__item {
+        gap: 48px;
+        padding: 38px 0;
+      }
+
+      &__step {
+        width: 90px;
+        font-size: 1.2rem;
+
+        span {
+          margin-top: 8px;
+          font-size: 5rem;
+        }
+      }
+
+      &__name {
+        font-size: 2.2rem;
+      }
+
+      &__txt {
+        margin-top: 12px;
+        font-size: 1.6rem;
+      }
+    }
+
+    .c-cases {
+      &__list {
+        gap: 32px;
+      }
+
+      &__self {
+        margin-top: 48px;
+        padding-left: 24px;
+        font-size: 1.6rem;
+      }
+    }
+
+    .c-case {
+      padding: 40px 48px;
+
+      &__tag {
+        font-size: 1.4rem;
+      }
+
+      &__ttl {
+        margin-top: 10px;
+        font-size: 2.2rem;
+      }
+
+      &__rows {
+        margin-top: 24px;
+      }
+
+      &__row {
+        gap: 28px;
+        padding: 16px 0;
+
+        dt {
+          width: 96px;
+          font-size: 1.4rem;
+          padding-top: 2px;
+        }
+
+        dd {
+          font-size: 1.6rem;
+        }
+      }
+
+      &__reveal {
+        margin-top: 20px;
+        padding: 22px 28px;
+        font-size: 1.7rem;
+      }
+    }
+
+    .c-who {
+      &__main {
+        display: grid;
+        grid-template-columns: 300px 1fr;
+        gap: 56px;
+        align-items: start;
+      }
+
+      &__role {
+        font-size: 1.5rem;
+      }
+
+      &__name {
+        margin-top: 8px;
+        font-size: 3.2rem;
+
+        .eng {
+          margin-left: 18px;
+          font-size: 1.3rem;
+        }
+      }
+
+      &__txt {
+        margin-top: 20px;
+        font-size: 1.6rem;
+      }
+
+      &__principles {
+        margin-top: 72px;
+        grid-template-columns: 1fr 1fr;
+        gap: 56px;
+      }
+
+      &__principle {
+        padding-top: 32px;
+      }
+
+      &__principle-ttl {
+        font-size: 2.2rem;
+      }
+
+      &__principle-txt {
+        margin-top: 16px;
+        font-size: 1.6rem;
+      }
+    }
+
+    .c-first {
+      &__list {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 28px;
+      }
+
+      &__item {
+        padding-top: 26px;
+      }
+
+      &__num {
+        font-size: 3.6rem;
+      }
+
+      &__name {
+        margin-top: 16px;
+        font-size: 1.8rem;
+      }
+
+      &__txt {
+        margin-top: 12px;
+        font-size: 1.5rem;
+      }
+    }
+
+    .c-notfor {
+      margin-top: 80px;
+      padding: 40px 48px;
+
+      &__ttl {
+        font-size: 2rem;
+      }
+
+      &__list {
+        margin-top: 24px;
+      }
+
+      &__item {
+        padding: 18px 0;
+        font-size: 1.6rem;
+
+        strong {
+          font-size: 1.8rem;
+          margin-bottom: 4px;
+        }
+      }
+
+      &__end {
+        margin-top: 18px;
+        font-size: 1.6rem;
+      }
+    }
+
+    .c-faq {
+      &__item {
+        padding: 30px 0;
+      }
+
+      &__q {
+        padding-left: 40px;
+        font-size: 1.9rem;
+      }
+
+      &__a {
+        margin-top: 12px;
+        padding-left: 40px;
+        font-size: 1.6rem;
+      }
+    }
+
+    .c-closing {
+      padding: 110px 0 40px;
+
+      &__ttl {
+        font-size: 3.6rem;
+      }
+
+      &__txt {
+        margin-top: 24px;
+        max-width: 640px;
+        font-size: 1.7rem;
+      }
+    }
+
+    #contact .contact-form__title {
+      font-size: 3rem;
+    }
+
+    #contact .contact-form__form {
+      padding: 44px 48px 40px;
+    }
+  }
+}
+
+/*****************/
+/*** SP ***/
+/*****************/
+@media screen and (max-width: 768px) {
+  #consultation-page {
+    .c-container {
+      padding: 0 20px;
+    }
+
+    .c-sec {
+      padding: 72px 0;
+    }
+
+    .c-head {
+      margin-bottom: 32px;
+
+      &__en {
+        gap: 12px;
+        font-size: 1.1rem;
+        letter-spacing: 0.18em;
+
+        &::before {
+          width: 24px;
+        }
+      }
+
+      &__ttl {
+        margin-top: 14px;
+        font-size: 2.3rem;
+      }
+
+      &__lead {
+        margin-top: 16px;
+        font-size: 1.5rem;
+      }
+    }
+
+    .c-cta {
+      margin-top: 44px;
+
+      &__lead {
+        font-size: 1.5rem;
+        margin-bottom: 18px;
+        text-align: left;
+      }
+
+      &__btn {
+        width: 100%;
+        padding: 20px 40px 20px 20px;
+        font-size: 1.6rem;
+
+        &::after {
+          right: 18px;
+        }
+      }
+
+      &__note {
+        margin-top: 12px;
+        font-size: 1.3rem;
+      }
+
+      &--light {
+        padding-top: 36px;
+      }
+
+      &--fv {
+        margin-top: 28px;
+      }
+    }
+
+    /* FV：写真を先に（顔で「誰の話か」を決める）、続けて文字 */
+    .c-fv {
+      padding-top: 56px;
+
+      &__inner {
+        display: flex;
+        flex-direction: column-reverse;
+      }
+
+      &__photo {
+        height: 62vw;
+        max-height: 420px;
+      }
+
+      &__copy {
+        padding: 30px 20px 56px;
+      }
+
+      &__target {
+        font-size: 1.4rem;
+        padding-bottom: 4px;
+      }
+
+      &__ttl {
+        margin-top: 20px;
+        font-size: 2.9rem;
+      }
+
+      &__sub {
+        margin-top: 18px;
+        font-size: 1.5rem;
+      }
+
+      &__caption {
+        padding: 10px 16px;
+        gap: 2px;
+      }
+
+      &__role {
+        font-size: 1rem;
+      }
+
+      &__name {
+        font-size: 1.6rem;
+      }
+    }
+
+    .c-wall {
+      &__story p {
+        font-size: 1.5rem;
+
+        & + p {
+          margin-top: 14px;
+        }
+      }
+
+      /* SPは縦に積む。矢印の罫線は縦向きに */
+      &__flow {
+        margin-top: 36px;
+        padding: 20px 0;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+      }
+
+      &__flow-item {
+        flex-direction: column;
+        align-items: flex-start;
+        font-size: 1.6rem;
+
+        &:not(.is-end)::after {
+          width: 1px;
+          height: 16px;
+          margin: 6px 0 6px 1em;
+        }
+      }
+
+      &__point {
+        margin-top: 28px;
+        font-size: 1.7rem;
+      }
+
+      &__loss {
+        margin-top: 10px;
+        font-size: 1.4rem;
+      }
+    }
+
+    .c-check {
+      margin-top: 40px;
+      padding: 26px 20px 12px;
+
+      &__ttl {
+        font-size: 1.7rem;
+        margin-bottom: 6px;
+      }
+
+      &__item {
+        padding: 14px 0 14px 32px;
+        font-size: 1.5rem;
+
+        &::before {
+          top: 19px;
+        }
+      }
+    }
+
+    .c-why {
+      &__list {
+        gap: 36px;
+      }
+
+      &__item {
+        padding-top: 24px;
+      }
+
+      &__num {
+        font-size: 3.4rem;
+      }
+
+      &__name {
+        margin-top: 14px;
+        font-size: 1.3rem;
+      }
+
+      &__ttl {
+        margin-top: 8px;
+        font-size: 1.8rem;
+      }
+
+      &__txt {
+        margin-top: 12px;
+        font-size: 1.5rem;
+      }
+    }
+
+    .c-method {
+      &__item {
+        gap: 18px;
+        padding: 26px 0;
+      }
+
+      &__step {
+        width: 52px;
+        font-size: 1rem;
+
+        span {
+          margin-top: 6px;
+          font-size: 3.4rem;
+        }
+      }
+
+      &__name {
+        font-size: 1.7rem;
+      }
+
+      &__txt {
+        margin-top: 8px;
+        font-size: 1.4rem;
+      }
+    }
+
+    .c-cases {
+      &__list {
+        gap: 20px;
+      }
+
+      &__self {
+        margin-top: 32px;
+        padding-left: 16px;
+        font-size: 1.5rem;
+      }
+    }
+
+    .c-case {
+      padding: 26px 20px;
+
+      &__tag {
+        font-size: 1.2rem;
+      }
+
+      &__ttl {
+        margin-top: 8px;
+        font-size: 1.8rem;
+      }
+
+      &__rows {
+        margin-top: 16px;
+      }
+
+      &__row {
+        flex-direction: column;
+        gap: 4px;
+        padding: 12px 0;
+
+        dt {
+          font-size: 1.2rem;
+        }
+
+        dd {
+          font-size: 1.5rem;
+        }
+      }
+
+      &__reveal {
+        margin-top: 14px;
+        padding: 16px 18px;
+        font-size: 1.5rem;
+      }
+    }
+
+    .c-who {
+      &__photo {
+        display: block;
+        width: 62%;
+        margin-bottom: 26px;
+      }
+
+      &__role {
+        font-size: 1.3rem;
+      }
+
+      &__name {
+        margin-top: 6px;
+        font-size: 2.5rem;
+
+        .eng {
+          display: block;
+          margin-top: 4px;
+          font-size: 1.1rem;
+        }
+      }
+
+      &__txt {
+        margin-top: 16px;
+        font-size: 1.5rem;
+      }
+
+      &__principles {
+        margin-top: 44px;
+        gap: 36px;
+      }
+
+      &__principle {
+        padding-top: 24px;
+      }
+
+      &__principle-ttl {
+        font-size: 1.8rem;
+      }
+
+      &__principle-txt {
+        margin-top: 12px;
+        font-size: 1.5rem;
+      }
+    }
+
+    .c-first {
+      &__list {
+        gap: 24px;
+      }
+
+      &__item {
+        padding-top: 20px;
+      }
+
+      &__num {
+        font-size: 2.8rem;
+      }
+
+      &__name {
+        margin-top: 10px;
+        font-size: 1.7rem;
+      }
+
+      &__txt {
+        margin-top: 8px;
+        font-size: 1.5rem;
+      }
+    }
+
+    .c-notfor {
+      margin-top: 48px;
+      padding: 26px 20px;
+
+      &__ttl {
+        font-size: 1.6rem;
+      }
+
+      &__list {
+        margin-top: 16px;
+      }
+
+      &__item {
+        padding: 14px 0;
+        font-size: 1.4rem;
+
+        strong {
+          font-size: 1.6rem;
+          margin-bottom: 4px;
+        }
+      }
+
+      &__end {
+        margin-top: 12px;
+        font-size: 1.5rem;
+      }
+    }
+
+    .c-faq {
+      &__item {
+        padding: 22px 0;
+      }
+
+      &__q {
+        padding-left: 28px;
+        font-size: 1.6rem;
+      }
+
+      &__a {
+        margin-top: 10px;
+        font-size: 1.5rem;
+      }
+    }
+
+    .c-closing {
+      padding: 72px 0 24px;
+
+      &__ttl {
+        font-size: 2.4rem;
+      }
+
+      &__txt {
+        margin-top: 18px;
+        font-size: 1.5rem;
+        text-align: left;
+      }
+    }
+
+    #contact .contact-form__title {
+      font-size: 2.1rem;
+    }
+
+    #contact .contact-form__form {
+      padding: 28px 20px 26px;
+    }
+
+    .consult-style__option {
+      font-size: 1.4rem;
+    }
+  }
+}

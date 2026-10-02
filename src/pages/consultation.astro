@@ -1,0 +1,382 @@
+---
+/*
+  初回相談（無料）LP。SNS広告の CTA・名刺の QR・セミナー後の案内の受け皿。
+  サイトのナビは出さない（Layout の lp）。料金は載せない方針。
+
+  メッセージ戦略（営業/LP研究_メッセージ戦略_心理学とマーケ_20261002.md）：
+  「業務効率化」ではなく、社長のアイデアが形になるまでの「待ち時間」を減らす（実行速度型）。
+  発注の壁 → なぜ今まで駄目だったか → その場で作る型 → 事例 → 誰がやるか → 初回相談 → 向かない会社 → 申込。
+  申込ボタンは気持ちが動く節の直後に置き、文言を場所ごとに変える。
+  文言は Codex（GPT-6 Astra）案 v2（営業/初回相談LP_文言v2_Codex案_20261002.md）を採用。
+*/
+import Layout from "../layouts/Layout.astro";
+import ConsultForm from "../components/consultation/ConsultForm.jsx";
+import CtaBlock from "../components/consultation/CtaBlock.astro";
+
+const wallFlow = ["思いつく", "誰かに頼む", "見積を待つ", "順番を待つ", "熱が冷める"];
+
+const scenes = [
+  "思いついた企画が、メモや会議の議事録に残ったままになっている。",
+  "小さな制作や修正でも、見積と納期の確認から始めている。",
+  "特急の依頼を受けたいのに、外注先の予定が分からず返事を保留している。",
+  "「自分で作れれば、もう試せたのに」と感じることがある。",
+  "AIの研修を受けても、実際の仕事では以前と同じように外注している。",
+];
+
+const traps = [
+  {
+    name: "勉強化の罠",
+    ttl: "研修が、仕事とは別の「勉強」になってしまう。",
+    txt: "機能やプロンプトを覚えることが目的になると、AIは忙しい社員にとって、学ぶ科目がもう1つ増えた状態になります。自分の仕事で何を作るかにつながらず、受講後は元のやり方に戻ります。",
+  },
+  {
+    name: "知識の非対称性ループ",
+    ttl: "頼むたびに、次も頼むしかなくなる。",
+    txt: "分からないから外に頼み、完成品を受け取っても、作り方は社内に残らない。次に変えたいことが出ると、また外に頼むことになります。原因は外注先や社員の姿勢ではなく、知識が社内に残る工程を持たない仕組みにあります。",
+  },
+];
+
+const steps = [
+  {
+    name: "頭の中を、見える形にする",
+    txt: "誰に何を届けたいか、どんな情報を使い、何ができればよいかを一緒に整理します。短い文章や表にした「中間データ」を作り、社長・社員・AIの間で、作りたいものがずれないようにします。",
+  },
+  {
+    name: "日本語でAIに頼む",
+    txt: "整理した内容を使い、普段の言葉でAIに仕事を頼みます。AIを勉強する科目にせず、日本語で指示してパソコン上の仕事を進める「PC操作の新しい型」として身につけます。",
+  },
+  {
+    name: "その場で動かし、確かめる",
+    txt: "作りたいものの範囲を絞り、画面や処理を実際に動かしてお見せします。目の前で確かめながら、「ここを変えたい」を反映していきます。",
+  },
+  {
+    name: "社内の1人が、同じことを作る",
+    txt: "社員の1人が、中間データと日本語の指示を使って、同じことを再現します。つまずいた箇所を一緒に直し、その人から社内に広げられる状態を作ります。",
+  },
+  {
+    name: "自分たちで次を作れたら、卒業する",
+    txt: "別の仕事でもAIを使い、必要な修正を自分たちで進められるかを確かめます。社内で回る状態になったら、支援を卒業します。",
+  },
+];
+
+/* 事例は匿名・業種のみ。数字は本人確認済みの A 社だけ（気付きDB 2026-09-29_FORTIFY） */
+const cases = [
+  {
+    tag: "広告代理店 A社",
+    ttl: "外注先の予定を待たず、特急の依頼も受けられるように。",
+    before: "Webサイト制作のコーディングを、1件 約15万円で外注していました。制作を進めるには、外注先の都合を待つ必要がありました。",
+    did: "川端の研修を1回受けたあと、社内でAIを使ってコーディングするようになりました。",
+    now: "そのコーディングの外注費は0円に。外注先の都合を待たずに制作を進められ、特急の依頼も受けられるようになりました。",
+    reveal: "実は、それまでの外注先は川端自身でした。自分の研修で、自分が受けていた仕事がなくなったのです。",
+  },
+  {
+    tag: "不動産広告 B社",
+    ttl: "外注していた制作物の多くを、社内で作れるように。",
+    before: "制作物を外注していました。",
+    did: "外注していた制作物を、AIを使って社内で作る取り組みを進めました。",
+    now: "以前は外に頼んでいた制作物の多くを、社内で作れるようになりました。",
+  },
+  {
+    tag: "不動産管理 C社",
+    ttl: "社員の1人が展開役となり、仕事の流れを変えている最中です。",
+    before: "申込書の処理から関係先への連絡まで、人の手で進める仕事がありました。",
+    did: "社員の1人が社内の展開役となり、その流れを半自動化する取り組みを進めています。",
+    now: "社内の社員が中心となって取り組んでいる段階です（進行中）。判断と送信は人が行います。",
+  },
+];
+
+const consultSteps = [
+  { name: "フォームから申し込む", txt: "やりたいことを1つ、普段の言葉でお書きください。「新しいサービスの案内ページを作りたい」など、短い説明で大丈夫です。" },
+  { name: "日程と相談方法を決める", txt: "川端から日程調整のご連絡を差し上げます。オンライン・訪問のご希望を伺い、当日扱う内容を確認します。" },
+  { name: "相談の場で、1つ作る", txt: "頭の中にあることを一緒に整理し、日本語でAIに頼んで、その場で動く形にします。やりたいことの核となる部分に範囲を絞った試作品を作り、実際の動きを見ていただきます。" },
+  { name: "その後は、必要な分だけ", txt: "社内で再現するために何が必要かを整理します。続けて支援が必要な場合は、取り組む範囲をご相談ください。相談だけで終えていただいても大丈夫です。" },
+];
+
+const notFor = [
+  { ttl: "AIに丸投げしたい。", txt: "目的を決めることや、結果を確かめて判断することは、人が担います。" },
+  { ttl: "社員に研修を受けさせて終わりにしたい。", txt: "受講後、実際の仕事で使い、使えない箇所を直すところまで取り組みます。" },
+];
+
+const faqs = [
+  { q: "本当に無料ですか？", a: "はい、初回相談は無料です。その後の支援を申し込むことは条件ではありません。" },
+  {
+    q: "その場で作るって本当ですか？ 何を持っていけばいいですか？",
+    a: "はい。やりたいことを1つ伺い、その場で動く試作品を作ってお見せします。実際の運用に向けた作り込みや確認は、別途整理します。「誰が、何をできるようにしたいか」を普段の言葉でお伝えください。参考になる画面や資料があれば、共有できる範囲でご用意ください。企画書や仕様書を整える必要はありません。",
+  },
+  { q: "ITが苦手でも大丈夫ですか？", a: "はい。普段の仕事を日本語で説明するところから始めます。何をAIに渡し、どう頼み、どこを確かめるかを、実際に作りながらお伝えします。" },
+  {
+    q: "研修を受けても、社員が使わなかったら？",
+    a: "使われていなければ、定着したとは考えません。仕事に合っているか、指示を出せるか、結果を判断できるかを確認し、使えない理由に合わせて、扱う仕事や手順を見直します。まず社内の1人が再現できるところから進めます。",
+  },
+  { q: "オンラインですか、訪問ですか？", a: "どちらにも対応しています。お申し込み後にご希望を伺い、日程とあわせて相談方法を決めます。" },
+  { q: "相談の後に契約を迫られませんか？", a: "その場で契約を迫ることはありません。必要に応じて、その後の支援内容をご案内します。作ったものと進め方を見て、自社に必要かどうかをお決めください。" },
+];
+---
+
+<Layout
+  title="アイデアをその場で形に｜初回相談無料｜AI軍師 川端康平"
+  description="やりたいことが、見積や順番待ちで止まっている経営者へ。AI軍師・川端康平が、無料の初回相談でアイデアを1つ、その場で動く形にしてお見せします。社員がAIを使って再現し、自走したら卒業する支援です。オンライン・訪問に対応。"
+  lp
+  lpCta={{ header: "無料で形にする", sticky: "無料相談で形にする" }}
+>
+  <main id="consultation-page" class="consultation-page" role="main">
+    <!-- 1. FV：対象の名指し → 主張 → 約束 → 申込。写真は本人（信頼を作るのは装飾ではなく人） -->
+    <section class="c-fv" aria-labelledby="fv-heading">
+      <div class="c-fv__inner">
+        <div class="c-fv__copy">
+          <p class="c-fv__target">やりたいことはあるのに、<br class="sp_only" />手が足りず止まっている<br class="pc_only" />中小企業の経営者へ。</p>
+          <h1 class="c-fv__ttl" id="fv-heading">
+            社長のアイデアが<br />形になるまでの<br /><em>「待ち時間」</em>を、<br />AIで短くします。
+          </h1>
+          <p class="c-fv__sub">
+            無料の初回相談で、やりたいことを1つ、<strong>その場で動く形にしてお見せします</strong>。そこから社員が同じことを再現し、自分たちで次のアイデアを形にできる組織を作ります。
+          </p>
+          <CtaBlock
+            label="無料相談で、アイデアを形にする"
+            note="やりたいことを1つ持ってきてください。オンライン・訪問に対応しています。"
+            tone="fv"
+          />
+        </div>
+        <figure class="c-fv__photo">
+          <picture>
+            <source media="(min-width: 769px)" srcset="/assets/images/consultation/fv-kawabata.webp" type="image/webp" />
+            <source media="(min-width: 769px)" srcset="/assets/images/consultation/fv-kawabata.jpg" />
+            <source srcset="/assets/images/consultation/fv-kawabata-sp.webp" type="image/webp" />
+            <img src="/assets/images/consultation/fv-kawabata-sp.jpg" alt="AI軍師 川端康平" width="800" height="952" loading="eager" fetchpriority="high" decoding="async" />
+          </picture>
+          <figcaption class="c-fv__caption">
+            <span class="c-fv__role">AI軍師（AI導入支援 × AI人材育成）</span>
+            <span class="c-fv__name">川端 康平</span>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- 2. 問題の言い直し：時間が足りないのではなく「発注の壁」で止まっている -->
+    <section class="c-sec c-sec--light c-wall" aria-labelledby="wall-heading">
+      <div class="c-container">
+        <header class="c-head">
+          <p class="c-head__en eng">The wall</p>
+          <h2 class="c-head__ttl" id="wall-heading">あの企画は、見積を待っている間に<br class="pc_only" />止まっていませんか。</h2>
+        </header>
+        <div class="c-wall__story">
+          <p>新しいサービスを思いついた。まずは案内ページを作って、お客さまの反応を見たい。</p>
+          <p>でも、社内に作れる人がいない。頼める相手を探し、説明をまとめ、見積を待つ。発注できても、着手は相手の予定が空いてから。</p>
+          <p>ようやく順番が来る頃には、別の仕事に追われ、あの企画は寝かされたまま。急ぎの依頼が来ても、制作が間に合うか分からず、受けると答えられない。</p>
+        </div>
+
+        <ol class="c-wall__flow" aria-label="発注の壁">
+          {wallFlow.map((s, i) => (
+            <li class={`c-wall__flow-item${i === wallFlow.length - 1 ? " is-end" : ""}`}>{s}</li>
+          ))}
+        </ol>
+
+        <p class="c-wall__point">
+          この<strong>「発注の壁」</strong>が、アイデアを止めています。社長や社員の能力が足りないわけではありません。何かを試すたびに、外に頼んで待つ工程が必要になっているのです。
+        </p>
+        <p class="c-wall__loss">待っている間にも、お客さまに試してもらい、反応を確かめる機会は過ぎていきます。</p>
+
+        <div class="c-check">
+          <p class="c-check__ttl">こんな場面が、社内にありませんか。</p>
+          <ul class="c-check__list">
+            {scenes.map((s) => <li class="c-check__item">{s}</li>)}
+          </ul>
+        </div>
+
+        <CtaBlock
+          lead="止まっている企画を1つ、相談の場で動かしてみましょう。初回相談は無料です。"
+          label="止まっている企画を形にする"
+          tone="light"
+        />
+      </div>
+    </section>
+
+    <!-- 4. なぜ今までうまくいかなかったか：悪者は人ではなく仕組み -->
+    <section class="c-sec c-why" aria-labelledby="why-heading">
+      <div class="c-container">
+        <header class="c-head">
+          <p class="c-head__en eng">Why it stalls</p>
+          <h2 class="c-head__ttl" id="why-heading">研修も外注も、<br class="sp_only" />なぜ続かなかったのか。</h2>
+        </header>
+        <div class="c-why__list">
+          {traps.map((t, i) => (
+            <article class="c-why__item">
+              <p class="c-why__num eng">{String(i + 1).padStart(2, "0")}</p>
+              <p class="c-why__name">{t.name}</p>
+              <h3 class="c-why__ttl">{t.ttl}</h3>
+              <p class="c-why__txt">{t.txt}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. 解決のメカニズム「その場で作る型」：順序があるので番号付きの縦の流れ -->
+    <section class="c-sec c-sec--deep c-method" aria-labelledby="method-heading">
+      <div class="c-container">
+        <header class="c-head">
+          <p class="c-head__en eng">Method</p>
+          <h2 class="c-head__ttl" id="method-heading">頭の中のアイデアを、<br />社員が再現できる仕事の型に。</h2>
+          <p class="c-head__lead">「その場で作る型」は、目の前の仕事を1つ作りながら、次も自分たちで作れるようにする進め方です。</p>
+        </header>
+        <ol class="c-method__list">
+          {steps.map((s, i) => (
+            <li class="c-method__item">
+              <p class="c-method__step eng">Step<span>{i + 1}</span></p>
+              <div class="c-method__body">
+                <h3 class="c-method__name">{s.name}</h3>
+                <p class="c-method__txt">{s.txt}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <!-- 6. 証拠：業種ごとの事例。「外注先は川端自身だった」はページ内でここ1回だけ -->
+    <section class="c-sec c-sec--light c-cases" aria-labelledby="cases-heading">
+      <div class="c-container">
+        <header class="c-head">
+          <p class="c-head__en eng">Cases</p>
+          <h2 class="c-head__ttl" id="cases-heading">外に頼んでいた仕事が、<br class="sp_only" />社内で動き始めた会社。</h2>
+        </header>
+        <div class="c-cases__list">
+          {cases.map((c) => (
+            <article class="c-case">
+              <p class="c-case__tag">{c.tag}</p>
+              <h3 class="c-case__ttl">{c.ttl}</h3>
+              <dl class="c-case__rows">
+                <div class="c-case__row"><dt>以前</dt><dd>{c.before}</dd></div>
+                <div class="c-case__row"><dt>やったこと</dt><dd>{c.did}</dd></div>
+                <div class="c-case__row is-now"><dt>いま</dt><dd>{c.now}</dd></div>
+              </dl>
+              {c.reveal && <p class="c-case__reveal">{c.reveal}</p>}
+            </article>
+          ))}
+        </div>
+        <p class="c-cases__self">
+          私自身も、AIを社員として働かせ、営業・発信・研修資料の作成・開発を一人で並行しています。AIに仕事を任せ始めてから、目の前の仕事に没頭する「フロー」の状態で働けるようになりました。
+        </p>
+
+        <CtaBlock
+          lead="「うちでもできそう」と思った仕事があれば、その1つをお持ちください。無料の初回相談で、実際に動く形を見ながら確かめられます。"
+          label="自社の仕事で、動く形を確かめる"
+          tone="light"
+        />
+      </div>
+    </section>
+
+    <!-- 8. 誰がやるか：作って見せる権威／遠回りの経歴（好意）／利用率で測る／卒業させる理由 -->
+    <section class="c-sec c-who" aria-labelledby="who-heading">
+      <div class="c-container">
+        <header class="c-head">
+          <p class="c-head__en eng">Who</p>
+          <h2 class="c-head__ttl" id="who-heading">作って見せて、<br class="sp_only" />社員が作れるところまで。</h2>
+        </header>
+        <div class="c-who__main">
+          <picture class="c-who__photo">
+            <source srcset="/assets/images/consultation/profile-kawabata.webp" type="image/webp" />
+            <img src="/assets/images/consultation/profile-kawabata.jpg" alt="川端康平" width="800" height="1055" loading="lazy" decoding="async" />
+          </picture>
+          <div class="c-who__body">
+            <p class="c-who__role">AI軍師（AI導入支援 × AI人材育成）</p>
+            <p class="c-who__name">川端 康平<span class="eng">Kohei Kawabata</span></p>
+            <p class="c-who__txt">AI軍師の仕事は、AIの知識を伝えるだけではありません。経営者と一緒に、社員がAIを使って自走する組織を作ることです。現役のWebエンジニアとして、相談の場で実際に作ってお見せします。</p>
+            <p class="c-who__txt">神戸大学法学部を卒業後、SIerの営業を経験。退職後はバンド活動、バーテンダー、植木職人を経て、フィリピン留学を機に37歳でWebエンジニアへ転身しました。フリーランスとして開発に携わり、現在はAI活用支援も行っています。</p>
+            <p class="c-who__txt">新卒で入ったIT業界で、顧客と開発会社の知識の差が、中小企業の変化を止める場面を見てきました。だから、作ったものと一緒に、作り方が社内に残ることを大切にしています。</p>
+          </div>
+        </div>
+        <div class="c-who__principles">
+          <div class="c-who__principle">
+            <h3 class="c-who__principle-ttl">測るのは、研修後の「利用率」です。</h3>
+            <p class="c-who__principle-txt">研修を受けた社員のうち、実際の仕事でAIを使っている人がどれだけいるか。この割合を成果の指標にします。満足度や削減できた時間だけでは、次のアイデアを自分たちで形にできるかは分かりません。使われていなければ、つまずいている箇所を見直します。</p>
+          </div>
+          <div class="c-who__principle">
+            <h3 class="c-who__principle-ttl">自走したら、卒業していただきます。</h3>
+            <p class="c-who__principle-txt">新しいことを始めるたびに川端の手が空くのを待つなら、また「発注の壁」ができてしまいます。社員が自分たちで作り、直し、次の仕事に使える状態を作るための支援です。そこまでできたら、卒業です。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. 初回相談で起きること：持ち帰れるもの（その場で作る試作品）がリスク反転になる -->
+    <section class="c-sec c-sec--light c-first" aria-labelledby="first-heading">
+      <div class="c-container">
+        <header class="c-head">
+          <p class="c-head__en eng">First session</p>
+          <h2 class="c-head__ttl" id="first-heading">やりたいことを1つ、<br class="sp_only" />その場で動く形にしてお見せします。</h2>
+        </header>
+        <ol class="c-first__list">
+          {consultSteps.map((s, i) => (
+            <li class={`c-first__item${i === 2 ? " is-key" : ""}`}>
+              <p class="c-first__num eng">{String(i + 1).padStart(2, "0")}</p>
+              <h3 class="c-first__name">{s.name}</h3>
+              <p class="c-first__txt">{s.txt}</p>
+            </li>
+          ))}
+        </ol>
+
+        <!-- 10. 向かない会社（絞り込み）。誠実さと、読み手の自己選別のため -->
+        <div class="c-notfor">
+          <p class="c-notfor__ttl">社内に、AIを使う人を作るための支援です。<br />次のようなお考えの場合は、向いていません。</p>
+          <ul class="c-notfor__list">
+            {notFor.map((n) => (
+              <li class="c-notfor__item"><strong>{n.ttl}</strong>{n.txt}</li>
+            ))}
+          </ul>
+          <p class="c-notfor__end">最初から全員が使える必要はありません。まず1人、仕事で使ってみる人がいる会社と、一緒に進めていきます。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11. FAQ -->
+    <section class="c-sec c-faq" aria-labelledby="faq-heading">
+      <div class="c-container">
+        <header class="c-head">
+          <p class="c-head__en eng">FAQ</p>
+          <h2 class="c-head__ttl" id="faq-heading">よくあるご質問</h2>
+        </header>
+        <dl class="c-faq__list">
+          {faqs.map((f) => (
+            <div class="c-faq__item">
+              <dt class="c-faq__q">{f.q}</dt>
+              <dd class="c-faq__a">{f.a}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </section>
+
+    <!-- 12. 最終の後押し → フォーム -->
+    <section class="c-sec c-sec--deep c-closing" aria-labelledby="closing-heading">
+      <div class="c-container">
+        <h2 class="c-closing__ttl" id="closing-heading">次にやりたいことを、<br class="sp_only" />待たせないために。</h2>
+        <p class="c-closing__txt">寝かせている企画でも、小さく試したかったことでも構いません。まず1つ、動く形を目の前で見てください。そこから、自分たちで作れる会社への進め方を考えます。</p>
+      </div>
+    </section>
+
+    {/* 広告・QR から来た人はすぐ下までスクロールするので、表示時ではなく読み込み時に動かす */}
+    <ConsultForm
+      client:load
+      heading="最初に形にしたいことを、1つ教えてください。"
+      lead="まとまった説明は不要です。「こんなことができたら」を一言お書きください。初回相談は無料。オンライン・訪問に対応しています。"
+      messageLabel="最初に形にしたいこと（一言で大丈夫です）"
+      messagePlaceholder="例：新しいサービスの案内ページを作りたい／見積書を毎回手で作っている　など"
+      submitLabel="このアイデアを無料相談で形にする"
+      doneTitle="お申し込みを受け付けました"
+      doneText="川端から日程調整のご連絡を差し上げます。当日は、やりたいことを1つ、その場で動く形にしてお見せします。"
+    />
+  </main>
+
+  <script is:inline>
+    // フォームが画面に入ったら追従CTAを隠す（表示そのものは main.js がスクロール量で制御）
+    document.addEventListener("DOMContentLoaded", () => {
+      const sticky = document.getElementById("js-sticky-cta");
+      const form = document.getElementById("contact");
+      if (!sticky || !form || !("IntersectionObserver" in window)) return;
+      new IntersectionObserver(([entry]) => {
+        sticky.classList.toggle("is-hidden-by-form", entry.isIntersecting);
+      }, { threshold: 0.05 }).observe(form);
+    });
+  </script>
+</Layout>

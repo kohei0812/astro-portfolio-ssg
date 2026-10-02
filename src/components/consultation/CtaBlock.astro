@@ -1,0 +1,10 @@
+---
+//src/components/consultation/CtaBlock.astro
+// LP内に何度も置く申込ボタン。読み手の気持ちが動く節の直後に置き、場所ごとに文言を変える。
+const { lead, label, note = "", tone = "dark" } = Astro.props;
+---
+<div class={`c-cta c-cta--${tone}`}>
+  {lead && <p class="c-cta__lead">{lead}</p>}
+  <a href="#contact" class="c-cta__btn">{label}</a>
+  {note && <p class="c-cta__note">{note}</p>}
+</div>

@@ -5,6 +5,8 @@ const {
   description = "「伝えたい想い」をカタチに。ホームページ制作でお悩みの方へ、丁寧なヒアリングと提案で理想を実現します。まずはお気軽にお問い合わせください。",
   ogImage = "/ogp.png",
   lang = "ja",
+  lp = false, // true: LP用のヘッダー・フッター（ナビなし）に差し替える
+  lpCta = undefined, // lp のとき { header, sticky } でボタン文言を渡す
 } = Astro.props;
 
 // 現在のパス取得
@@ -26,6 +28,8 @@ const getAlternateLanguageUrl = (targetLang: string) => {
 const ogLocale = isEnglish ? "en_US" : "ja_JP";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import LpHeader from "../components/lp/LpHeader.astro";
+import LpFooter from "../components/lp/LpFooter.astro";
 import "../assets/styles/style.scss";
 const scriptHtml = `
   <script src="/assets/js/main.js"></script>
@@ -184,9 +188,9 @@ const scriptHtml = `
     >
   </head>
   <body>
-    <Header />
+    {lp ? <LpHeader ctaLabel={lpCta?.header} stickyLabel={lpCta?.sticky} /> : <Header />}
     <slot />
-    <Footer />
+    {lp ? <LpFooter /> : <Footer />}
     <div set:html={scriptHtml} />
   </body>
 </html>
