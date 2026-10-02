@@ -131,6 +131,65 @@ const seminars = [
   },
 ];
 
+/* 組織で使う：root様への提案（クライアント/root/提案資料 v5）で詰めた筋立て。料金・root様限りの条件は載せない */
+const orgIssues = [
+  { icon: "graduate", name: "受講して終わる", txt: "研修が現場の業務につながらず、使われないまま終わります。" },
+  { icon: "laptop", name: "ITの土台でつまずく", txt: "ファイル操作などの入口でつまずき、使う前に諦めてしまいます。" },
+  { icon: "talk", name: "答えが一般論になる", txt: "会社の考え方を渡さないと、AIの答えが自社の判断に結びつきません。" },
+];
+
+const orgWays = [
+  {
+    key: "A",
+    icon: "layers",
+    name: "統一する",
+    txt: "幹部と担当者で業務フローを作り、AIで動くスキルにします。全員が同じスキルで業務を回します。",
+    flow: ["業務フローを作る", "スキルにする", "全員で回す"],
+  },
+  {
+    key: "B",
+    icon: "plant",
+    name: "育てる",
+    txt: "会社共通のAIに、指針・手順・判断の例をためていきます。現場で気づいた改善を戻し、AIを更新し続けます。",
+    flow: ["共通のAIを置く", "全員が使う", "改善を戻す"],
+  },
+];
+
+const orgSizes = [
+  {
+    size: "部署がまだ少ない会社",
+    issue: "幹部だけが使い、社員は様子見のまま止まりがち。",
+    way: "A 統一",
+    how: "業務フローをAIにして、全員で回します。",
+    goal: "幹部と展開役でスキルを足せる",
+    term: "約3か月",
+  },
+  {
+    size: "部署ごとに動く会社",
+    issue: "部署ごとにツールや使い方がばらばらになりがち。",
+    way: "A＋B 統一＋育てる",
+    how: "指針は全社で一つにし、部署ごとの手順を足します。",
+    goal: "部署の展開役が手順を足せる",
+    term: "約3か月",
+  },
+  {
+    size: "部署が多い会社",
+    issue: "上から統一しても、現場とずれていきがち。",
+    way: "B 育てる",
+    how: "全社で一つのAIを育て、現場の改善を戻す仕組みを作ります。",
+    goal: "社内でAIを更新し続けられる",
+    term: "約6か月",
+  },
+];
+
+const orgRisks = [
+  { name: "情報漏えい・個人情報", txt: "入力してよい情報を線引きします。" },
+  { name: "誤回答", txt: "根拠を確かめ、最終判断は人が行います。" },
+  { name: "属人化", txt: "手順をスキルとして共有します。" },
+  { name: "AI依存", txt: "判断の理由を残します。" },
+  { name: "ツールの乱立", txt: "使うツールと管理者をそろえます。" },
+];
+
 const extras = [
   { icon: "web", name: "Web制作", txt: "AI活用に付随するWebサイトの制作もご相談いただけます。", href: "/web" },
   { icon: "subsidy", name: "助成金の相談", txt: "業務改善助成金の活用についてご相談いただけます。", href: "/subsidy" },
@@ -184,14 +243,71 @@ const faq = [
       </div>
     </section>
 
-    <!-- 2. AI活用の5段階 -->
-    <section class="cp-sec cp-sec--gray" aria-labelledby="stairs-ttl">
+    <!-- 2. 組織で使う（会社のAIを一つにする） -->
+    <section class="cp-sec cp-sec--gray" aria-labelledby="org-ttl">
+      <span class="cp-watermark eng" aria-hidden="true">TEAM</span>
+      <div class="cp-container">
+        <header class="cp-head" data-reveal>
+          <p class="cp-head__en eng">For organizations</p>
+          <h2 class="cp-head__ttl" id="org-ttl">会社のAIを、一つにする。</h2>
+          <p class="cp-head__lead">AIは導入しても、組織では使われずに終わりがちです。必要なのは、会社共通のAIと、使い続ける仕組みです。</p>
+        </header>
+
+        <ul class="cs-org-issues">
+          {orgIssues.map((x, i) => (
+            <li data-reveal style={`--d: ${i * 0.08}s`}>
+              <LineIcon name={x.icon} size={40} />
+              <p class="cs-org-issues__name">{x.name}</p>
+              <p class="cs-org-issues__txt">{x.txt}</p>
+            </li>
+          ))}
+        </ul>
+
+        <h3 class="cs-subhead" data-reveal>方法は「統一する」か「育てる」か</h3>
+        <div class="cs-ways">
+          {orgWays.map((w, i) => (
+            <article class="cs-ways__item" data-reveal style={`--d: ${i * 0.1}s`}>
+              <p class="cs-ways__key eng">{w.key}</p>
+              <p class="cs-ways__name"><LineIcon name={w.icon} size={36} />{w.name}</p>
+              <p class="cs-ways__txt">{w.txt}</p>
+              <ol class="cs-ways__flow">{w.flow.map((f) => <li>{f}</li>)}</ol>
+            </article>
+          ))}
+          <p class="cs-ways__base" data-reveal style="--d: .2s"><span>共通の土台</span>言葉にした会社の指針（理念・判断の基準）。AIに渡す、いちばん良い材料です。</p>
+        </div>
+
+        <h3 class="cs-subhead" data-reveal>会社の形に合わせて選びます</h3>
+        <div class="cs-sizes">
+          {orgSizes.map((z, i) => (
+            <article class="cs-sizes__item" data-reveal style={`--d: ${i * 0.1}s`}>
+              <p class="cs-sizes__size">{z.size}</p>
+              <p class="cs-sizes__issue">{z.issue}</p>
+              <p class="cs-sizes__way">{z.way}</p>
+              <p class="cs-sizes__how">{z.how}</p>
+              <dl class="cs-sizes__goal">
+                <dt>卒業の形</dt><dd>{z.goal}</dd>
+                <dt>期間の目安</dt><dd>{z.term}</dd>
+              </dl>
+            </article>
+          ))}
+        </div>
+
+        <h3 class="cs-subhead" data-reveal>限界とリスクは、運用ルールで抑えます</h3>
+        <ul class="cs-risks" data-reveal>
+          {orgRisks.map((r) => <li><span class="cs-risks__name">{r.name}</span><span class="cs-risks__txt">{r.txt}</span></li>)}
+        </ul>
+        <p class="cs-risks-note" data-reveal>AIの出力はそのまま使わず、確認と情報の整理は人の役割として残します。</p>
+      </div>
+    </section>
+
+    <!-- 3. 一人ひとりのAI活用の5段階 -->
+    <section class="cp-sec" aria-labelledby="stairs-ttl">
       <span class="cp-watermark eng" aria-hidden="true">STAGE</span>
       <div class="cp-container">
         <header class="cp-head" data-reveal>
           <p class="cp-head__en eng">5 stages</p>
-          <h2 class="cp-head__ttl" id="stairs-ttl">AI活用の5段階</h2>
-          <p class="cp-head__lead">1つずつ仕事を頼むところから、AIが自ら動くところまで。最初の導入セッションで、いまの段階を確かめます。</p>
+          <h2 class="cp-head__ttl" id="stairs-ttl">一人ひとりのAI活用の5段階</h2>
+          <p class="cp-head__lead">組織の仕組みと並行して、一人ひとりの使い方も上げていきます。1つずつ仕事を頼むところから、AIが自ら動くところまで。最初の導入セッションで、いまの段階を確かめます。</p>
         </header>
         <ol class="cs-stairs">
           {stairs.map((s, i) => (
@@ -208,8 +324,8 @@ const faq = [
       </div>
     </section>
 
-    <!-- 3. サービス詳細 -->
-    <section class="cp-sec" aria-labelledby="detail-ttl">
+    <!-- 4. サービス詳細 -->
+    <section class="cp-sec cp-sec--gray" aria-labelledby="detail-ttl">
       <span class="cp-watermark eng" aria-hidden="true">SERVICE</span>
       <div class="cp-container">
         <header class="cp-head" data-reveal>
@@ -268,8 +384,8 @@ const faq = [
       </div>
     </section>
 
-    <!-- 4. 研修の中身 -->
-    <section class="cp-sec cp-sec--gray" aria-labelledby="training-ttl">
+    <!-- 5. 研修の中身 -->
+    <section class="cp-sec" aria-labelledby="training-ttl">
       <span class="cp-watermark eng" aria-hidden="true">TRAINING</span>
       <div class="cp-container">
         <header class="cp-head" data-reveal>
@@ -323,7 +439,7 @@ const faq = [
     </section>
 
     <!-- 6. よくある質問 -->
-    <section class="cp-sec" aria-labelledby="faq-ttl">
+    <section class="cp-sec cp-sec--gray" aria-labelledby="faq-ttl">
       <div class="cp-container">
         <header class="cp-head cp-head--center" data-reveal>
           <p class="cp-head__en eng">FAQ</p>

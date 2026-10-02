@@ -1251,3 +1251,482 @@ $ease: cubic-bezier(0.22, 1, 0.36, 1);
     margin-top: 88px;
   }
 }
+
+/*****************/
+/*** 組織で使う（会社のAIを一つにする）***/
+/*****************/
+#corp-page.cp-service-page {
+  /* グレーの面に置いたサービス詳細のチップは白に */
+  .cp-sec--gray .cs-detail__for li {
+    background-color: white;
+  }
+
+  .cs-org-issues {
+    display: grid;
+
+    li {
+      background-color: white;
+      color: $navy;
+    }
+
+    &__name {
+      color: $navy;
+      font-weight: bold;
+    }
+
+    &__txt {
+      color: $body;
+      font-weight: 400;
+      line-height: 1.8;
+    }
+  }
+
+  .cs-ways {
+    display: grid;
+
+    &__item {
+      position: relative;
+      background-color: white;
+      overflow: hidden;
+    }
+
+    &__key {
+      position: absolute;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba($navy, 0.22);
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    &__name {
+      display: flex;
+      align-items: center;
+      color: $navy;
+      font-weight: bold;
+    }
+
+    &__txt {
+      color: $body;
+      font-weight: 400;
+      line-height: 1.9;
+    }
+
+    /* 3つの手順を矢印でつなぐ */
+    &__flow {
+      display: flex;
+      align-items: center;
+
+      li {
+        flex: 1;
+        background-color: $gray;
+        color: $navy;
+        font-weight: bold;
+        text-align: center;
+        line-height: 1.4;
+      }
+
+      li + li {
+        position: relative;
+
+        &::before {
+          content: "";
+          position: absolute;
+          top: 50%;
+          width: 7px;
+          height: 7px;
+          border-top: 1.5px solid $red;
+          border-right: 1.5px solid $red;
+          transform: translateY(-50%) rotate(45deg);
+        }
+      }
+    }
+
+    &__base {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      background-color: $navy;
+      color: white;
+      font-weight: bold;
+      line-height: 1.7;
+
+      span {
+        flex-shrink: 0;
+        background-color: white;
+        color: $navy;
+        font-weight: bold;
+      }
+    }
+  }
+
+  .cs-sizes {
+    display: grid;
+
+    &__item {
+      display: flex;
+      flex-direction: column;
+      background-color: white;
+    }
+
+    &__size {
+      color: $navy;
+      font-weight: bold;
+    }
+
+    &__issue {
+      color: $body;
+      font-weight: 400;
+      line-height: 1.8;
+    }
+
+    &__way {
+      align-self: flex-start;
+      background-color: $navy;
+      color: white;
+      font-weight: bold;
+    }
+
+    &__how {
+      color: $ink;
+      font-weight: 500;
+      line-height: 1.8;
+    }
+
+    &__goal {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      margin-top: auto;
+      border-top: 1px solid $line;
+
+      dt {
+        color: $sub;
+        font-weight: bold;
+      }
+
+      dd {
+        color: $navy;
+        font-weight: bold;
+      }
+    }
+  }
+
+  .cs-risks {
+    display: grid;
+    background-color: white;
+
+    li {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &__name {
+      color: $navy;
+      font-weight: bold;
+    }
+
+    &__txt {
+      color: $body;
+      font-weight: 400;
+      line-height: 1.7;
+    }
+  }
+
+  .cs-risks-note {
+    color: $sub;
+    font-weight: 500;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  #corp-page.cp-service-page {
+    .cs-org-issues {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 96px;
+
+      li {
+        padding: 28px 28px 30px;
+      }
+
+      &__name {
+        margin-top: 14px;
+        font-size: 1.8rem;
+      }
+
+      &__txt {
+        margin-top: 8px;
+        font-size: 1.5rem;
+      }
+    }
+
+    .cs-ways {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-bottom: 96px;
+
+      &__item {
+        padding: 36px 36px 32px;
+      }
+
+      &__key {
+        top: -10px;
+        right: 16px;
+        font-size: 12rem;
+      }
+
+      &__name {
+        gap: 14px;
+        font-size: 2.4rem;
+      }
+
+      &__txt {
+        margin-top: 14px;
+        max-width: 26em;
+        font-size: 1.5rem;
+      }
+
+      &__flow {
+        gap: 22px;
+        margin-top: 24px;
+
+        li {
+          padding: 12px 6px;
+          font-size: 1.4rem;
+        }
+
+        li + li::before {
+          left: -15px;
+        }
+      }
+
+      &__base {
+        gap: 20px;
+        padding: 20px 28px;
+        font-size: 1.6rem;
+
+        span {
+          padding: 4px 12px;
+          font-size: 1.3rem;
+        }
+      }
+    }
+
+    .cs-sizes {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 96px;
+
+      &__item {
+        padding: 30px 28px 26px;
+      }
+
+      &__size {
+        font-size: 2rem;
+      }
+
+      &__issue {
+        margin-top: 10px;
+        font-size: 1.4rem;
+      }
+
+      &__way {
+        margin-top: 20px;
+        padding: 4px 12px;
+        font-size: 1.4rem;
+      }
+
+      &__how {
+        margin-top: 12px;
+        font-size: 1.5rem;
+      }
+
+      &__goal {
+        gap: 8px 16px;
+        margin-top: 24px;
+        padding-top: 18px;
+        font-size: 1.4rem;
+      }
+    }
+
+    .cs-risks {
+      grid-template-columns: repeat(5, 1fr);
+
+      li {
+        gap: 8px;
+        padding: 24px 22px;
+
+        & + li {
+          border-left: 1px solid $line;
+        }
+      }
+
+      &__name {
+        font-size: 1.6rem;
+      }
+
+      &__txt {
+        font-size: 1.4rem;
+      }
+    }
+
+    .cs-risks-note {
+      margin-top: 18px;
+      font-size: 1.4rem;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #corp-page.cp-service-page {
+    .cs-org-issues {
+      gap: 10px;
+      margin-bottom: 64px;
+
+      li {
+        display: grid;
+        grid-template-columns: 40px 1fr;
+        column-gap: 14px;
+        padding: 20px 18px;
+
+        .cp-icon {
+          grid-row: 1 / span 2;
+        }
+      }
+
+      &__name {
+        font-size: 1.6rem;
+      }
+
+      &__txt {
+        margin-top: 4px;
+        font-size: 1.4rem;
+      }
+    }
+
+    .cs-ways {
+      gap: 10px;
+      margin-bottom: 64px;
+
+      &__item {
+        padding: 26px 20px 22px;
+      }
+
+      &__key {
+        top: -6px;
+        right: 10px;
+        font-size: 8rem;
+      }
+
+      &__name {
+        gap: 10px;
+        font-size: 2rem;
+      }
+
+      &__txt {
+        margin-top: 10px;
+        font-size: 1.4rem;
+      }
+
+      &__flow {
+        gap: 16px;
+        margin-top: 18px;
+
+        li {
+          padding: 10px 4px;
+          font-size: 1.2rem;
+        }
+
+        li + li::before {
+          left: -11px;
+        }
+      }
+
+      &__base {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 18px 20px;
+        font-size: 1.5rem;
+
+        span {
+          padding: 3px 10px;
+          font-size: 1.2rem;
+        }
+      }
+    }
+
+    .cs-sizes {
+      gap: 10px;
+      margin-bottom: 64px;
+
+      &__item {
+        padding: 22px 20px;
+      }
+
+      &__size {
+        font-size: 1.8rem;
+      }
+
+      &__issue {
+        margin-top: 6px;
+        font-size: 1.4rem;
+      }
+
+      &__way {
+        margin-top: 14px;
+        padding: 3px 10px;
+        font-size: 1.3rem;
+      }
+
+      &__how {
+        margin-top: 8px;
+        font-size: 1.4rem;
+      }
+
+      &__goal {
+        gap: 6px 12px;
+        margin-top: 16px;
+        padding-top: 14px;
+        font-size: 1.3rem;
+      }
+    }
+
+    .cs-risks {
+      li {
+        gap: 2px;
+        padding: 14px 18px;
+
+        & + li {
+          border-top: 1px solid $line;
+        }
+      }
+
+      &__name {
+        font-size: 1.5rem;
+      }
+
+      &__txt {
+        font-size: 1.4rem;
+      }
+    }
+
+    .cs-risks-note {
+      margin-top: 14px;
+      font-size: 1.3rem;
+      line-height: 1.8;
+    }
+  }
+}
+
+/* 短い説明文で「がち。」「ます。」だけの行が出ないように */
+#corp-page.cp-service-page {
+  .cs-org-issues__txt,
+  .cs-ways__txt,
+  .cs-sizes__issue,
+  .cs-sizes__how,
+  .cs-risks__txt,
+  .cs-stairs__txt,
+  .cs-course__txt {
+    text-wrap: balance;
+  }
+}
