@@ -1,0 +1,34 @@
+---
+//src/components/corp/CorpHeader.astro
+// コーポレートサイト用のヘッダー（白地＋紺）。申込の導線は右端の「初回相談」1本だけ。
+// 英語版は作り直すまで切替リンクを出さない（2026-10-02 本人判断）。
+const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+const nav = [
+  { href: "/about", label: "私たちについて" },
+  { href: "/#service", label: "事業内容" },
+  { href: "/#works", label: "事例" },
+  { href: "/company", label: "会社概要" },
+];
+---
+<header class="corp-header" id="corp-header" role="banner">
+  <div class="corp-header__inner">
+    <a href="/" class="corp-header__logo eng" aria-label="トップページへ">DDDynamis</a>
+    <nav class="corp-header__nav" aria-label="メインメニュー">
+      <ul>
+        {nav.map((n) => (
+          <li><a href={n.href} class={path === n.href ? "is-current" : undefined}>{n.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+    <a href="/consultation" class="corp-header__cta">初回相談</a>
+    <button class="corp-header__menu" id="js-corp-menu" aria-label="メニューを開く" aria-expanded="false" aria-controls="corp-sp-nav">
+      <span></span><span></span>
+    </button>
+  </div>
+  <nav class="corp-sp-nav" id="corp-sp-nav" aria-label="メニュー">
+    <ul>
+      {nav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
+      <li><a href="/consultation" class="corp-sp-nav__cta">初回相談（無料）</a></li>
+    </ul>
+  </nav>
+</header>

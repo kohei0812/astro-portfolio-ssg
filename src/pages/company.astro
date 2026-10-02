@@ -1,0 +1,49 @@
+---
+/*
+  会社概要（2026-10-02 新設）。所在地・設立・連絡先は本人に確認後に記入する（今は載せない）。
+*/
+import Layout from "../layouts/Layout.astro";
+
+const rows = [
+  { th: "屋号", td: ["DDDynamis"] },
+  { th: "代表", td: ["川端 康平"] },
+  { th: "ブランド", td: ["AI軍師"] },
+  {
+    th: "事業内容",
+    td: [
+      "AI導入支援（業務の整理・AIで動く仕組みづくり・業務アプリ開発）",
+      "AI人材育成（研修・社内への展開・研修後の利用状況の追跡）",
+      "上記事業に付随するWeb制作・助成金の相談",
+    ],
+  },
+];
+---
+
+<Layout
+  title="会社概要｜DDDynamis・AI軍師"
+  description="DDDynamisの会社概要です。代表は川端康平、ブランドは「AI軍師」。中小企業向けのAI導入支援とAI人材育成を軸に、業務アプリ開発、Web制作、助成金の相談にも対応しています。事業内容と基本情報を掲載しています。"
+  corp
+>
+  <main id="corp-page" class="corp-page cp-company" role="main">
+    <header class="cp-page-head">
+      <div class="cp-container">
+        <p class="cp-head__en eng" data-reveal>Company</p>
+        <h1 class="cp-page-head__ttl" data-reveal style="--d: .1s">会社概要</h1>
+      </div>
+    </header>
+
+    <section class="cp-sec cp-company__sec" aria-label="会社概要">
+      <div class="cp-container">
+        <dl class="cp-company__table" data-reveal>
+          {rows.map((r) => (
+            <div class="cp-company__row">
+              <dt>{r.th}</dt>
+              <dd>{r.td.map((t) => <span>{t}</span>)}</dd>
+            </div>
+          ))}
+        </dl>
+        <p class="cp-company__note" data-reveal>ご相談・お問い合わせは、<a href="/consultation">初回相談のページ</a>からお送りください。</p>
+      </div>
+    </section>
+  </main>
+</Layout>

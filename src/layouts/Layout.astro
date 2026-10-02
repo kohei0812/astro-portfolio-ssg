@@ -8,6 +8,7 @@ const {
   lp = false, // true: LP用のヘッダー・フッター（ナビなし）に差し替える
   lpCta = undefined, // lp のとき { header, sticky } でボタン文言を渡す
   lpTagline = "", // lp のときヘッダーのロゴ横に出す一行（PCのみ）
+  corp = false, // true: コーポレートサイト用のヘッダー・フッター（白地＋紺）と corp.js
 } = Astro.props;
 
 // 現在のパス取得
@@ -31,6 +32,8 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import LpHeader from "../components/lp/LpHeader.astro";
 import LpFooter from "../components/lp/LpFooter.astro";
+import CorpHeader from "../components/corp/CorpHeader.astro";
+import CorpFooter from "../components/corp/CorpFooter.astro";
 import "../assets/styles/style.scss";
 const scriptHtml = `
   <script src="/assets/js/main.js"></script>
@@ -189,9 +192,10 @@ const scriptHtml = `
     >
   </head>
   <body>
-    {lp ? <LpHeader ctaLabel={lpCta?.header} stickyLabel={lpCta?.sticky} tagline={lpTagline} /> : <Header />}
+    {lp ? <LpHeader ctaLabel={lpCta?.header} stickyLabel={lpCta?.sticky} tagline={lpTagline} /> : corp ? <CorpHeader /> : <Header />}
     <slot />
-    {lp ? <LpFooter /> : <Footer />}
+    {lp ? <LpFooter /> : corp ? <CorpFooter /> : <Footer />}
+    {corp && <script is:inline src="/assets/js/corp.js"></script>}
     <div set:html={scriptHtml} />
   </body>
 </html>

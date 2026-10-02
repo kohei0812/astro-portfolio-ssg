@@ -1,0 +1,2228 @@
+@use "variables" as v;
+
+/*****************/
+/*** コーポレートサイト（トップ・私たちについて・会社概要）***/
+/*****************/
+/*
+  色は初回相談LPと同じ考え方：面は白と薄いグレーだけ。紺は強調色、赤は申込ボタンとラベルだけ。
+  動きの値は調査メモ（営業/サイト研究_コーポレートサイト改修_20261002.md）の目安：
+  現れる 16〜24px・0.7s・cubic-bezier(.22,1,.36,1)／見出しは行ごとに下から／写真はゆっくりズーム。
+  「動きを減らす」設定では移動・ズームを止め、不透明度だけにする（末尾）。
+*/
+
+$navy: v.$color-primary;
+$red: v.$color-accent;
+$ink: #1d2738;
+$body: #46536a;
+$sub: #6b7688;
+$line: rgba(23, 36, 57, 0.14);
+$gray: #f4f6f9;
+$ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+/* --- ヘッダー --------------------------------------- */
+.corp-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 101;
+  background-color: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  transition: box-shadow 0.3s ease;
+
+  &.is-scrolled {
+    box-shadow: 0 1px 0 $line;
+  }
+
+  &__inner {
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+  }
+
+  &__logo {
+    color: $navy;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+
+  &__nav ul {
+    display: flex;
+  }
+
+  &__nav a {
+    position: relative;
+    color: $ink;
+    font-weight: bold;
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 100%;
+      height: 2px;
+      background-color: $navy;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s $ease;
+    }
+
+    &:hover,
+    &.is-current {
+      opacity: 1;
+
+      &::after {
+        transform: scaleX(1);
+      }
+    }
+  }
+
+  &__cta {
+    background-color: $red;
+    color: white;
+    font-weight: bold;
+    letter-spacing: 0.04em;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      opacity: 1;
+      background-color: #b80019;
+    }
+  }
+
+  &__menu {
+    display: none;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    background: none;
+    border: none;
+    cursor: pointer;
+
+    span {
+      position: absolute;
+      left: 9px;
+      width: 22px;
+      height: 2px;
+      background-color: $navy;
+      transition: transform 0.3s $ease, top 0.3s $ease;
+
+      &:first-child {
+        top: 15px;
+      }
+
+      &:last-child {
+        top: 23px;
+      }
+    }
+
+    &[aria-expanded="true"] span {
+      &:first-child {
+        top: 19px;
+        transform: rotate(45deg);
+      }
+
+      &:last-child {
+        top: 19px;
+        transform: rotate(-45deg);
+      }
+    }
+  }
+}
+
+.corp-sp-nav {
+  display: none;
+}
+
+/* --- フッター --------------------------------------- */
+.corp-footer {
+  /* Layout.astro の footer { content-visibility: auto } で仮の高さ1200pxが入るのを打ち消す */
+  content-visibility: visible;
+  contain-intrinsic-size: none;
+  background-color: white;
+  border-top: 1px solid $line;
+  color: $sub;
+
+  &__inner {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+  }
+
+  &__logo {
+    color: $navy;
+    font-weight: 700;
+  }
+
+  &__tagline {
+    color: $ink;
+    font-weight: bold;
+  }
+
+  &__nav {
+    display: grid;
+
+    a {
+      color: $body;
+      font-weight: 500;
+
+      &:hover {
+        color: $navy;
+        opacity: 1;
+      }
+    }
+  }
+
+  &__copy {
+    text-align: center;
+    color: #9aa3b2;
+  }
+}
+
+/* --- ページ共通 ------------------------------------- */
+#corp-page {
+  background-color: white;
+  color: $ink;
+  overflow: hidden;
+
+  em {
+    font-style: normal;
+  }
+
+  p,
+  li {
+    text-wrap: pretty;
+  }
+
+  h2,
+  h3 {
+    text-wrap: balance;
+    word-break: auto-phrase;
+  }
+
+  .cp-container {
+    margin: 0 auto;
+  }
+
+  .cp-sec {
+    position: relative;
+
+    &--gray {
+      background-color: $gray;
+    }
+  }
+
+  .cp-head {
+    &--center {
+      text-align: center;
+
+      .cp-head__en {
+        justify-content: center;
+      }
+    }
+
+    &__en {
+      display: flex;
+      align-items: center;
+      color: $red;
+      font-weight: 700;
+      text-transform: uppercase;
+
+      &::before {
+        content: "";
+        height: 1px;
+        background-color: currentColor;
+      }
+    }
+
+    &__ttl {
+      color: $navy;
+      font-weight: bold;
+      line-height: 1.5;
+    }
+
+    &__lead {
+      color: $body;
+      font-weight: 500;
+      line-height: 2;
+    }
+  }
+
+  .cp-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    letter-spacing: 0.04em;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+
+    &--primary {
+      background-color: $red;
+      color: white;
+      box-shadow: 0 5px 0 #9c0016;
+
+      &:hover {
+        opacity: 1;
+        transform: translateY(3px);
+        box-shadow: 0 2px 0 #9c0016;
+      }
+    }
+
+    &--ghost {
+      color: $navy;
+      box-shadow: inset 0 0 0 1px $navy;
+
+      &:hover {
+        opacity: 1;
+        background-color: $navy;
+        color: white;
+      }
+    }
+  }
+
+  .cp-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    color: $navy;
+    font-weight: bold;
+
+    &::after {
+      content: "";
+      width: 28px;
+      height: 1px;
+      background-color: currentColor;
+      transition: width 0.3s $ease;
+    }
+
+    &:hover {
+      opacity: 1;
+
+      &::after {
+        width: 44px;
+      }
+    }
+  }
+
+  /* --- スクロールで現れる ----------------------------- */
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s $ease var(--d, 0s), transform 0.7s $ease var(--d, 0s);
+
+    &.is-in {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* 見出しは行ごとに下から（読み込み時に1回） */
+  .cp-line {
+    display: block;
+    overflow: hidden;
+
+    > span {
+      display: inline-block;
+      transform: translateY(105%);
+      animation: cp-line-up 0.9s $ease forwards;
+    }
+
+    &:nth-child(2) > span {
+      animation-delay: 0.12s;
+    }
+  }
+
+  .cp-mission .cp-line > span {
+    animation: none;
+    transition: transform 0.9s $ease;
+  }
+
+  /* ミッションは画面に入ってから行ごとに出す（corp.js が見出しに is-in を付ける） */
+  .cp-mission__ttl.is-in .cp-line > span {
+    transform: none;
+  }
+
+  .cp-mission__ttl.is-in .cp-line:nth-child(2) > span {
+    transition-delay: 0.12s;
+  }
+
+  /* --- 1. FV ----------------------------------------- */
+  .cp-fv {
+    position: relative;
+    display: grid;
+
+    &__eyebrow {
+      color: $red;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    &__ttl {
+      color: $navy;
+      font-weight: bold;
+      line-height: 1.35;
+      letter-spacing: 0.02em;
+    }
+
+    &__sub {
+      color: $body;
+      font-weight: 500;
+      line-height: 2;
+    }
+
+    &__what {
+      display: inline-block;
+      color: $ink;
+      font-weight: bold;
+      border-bottom: 2px solid $navy;
+    }
+
+    &__btns {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    /* 3枚をゆっくり切り替える（各6秒・全18秒ループ）。切替中に少しずつズーム */
+    &__visual {
+      position: relative;
+      overflow: hidden;
+      background-color: #e9edf2;
+    }
+
+    &__slide {
+      position: absolute;
+      inset: 0;
+      margin: 0;
+      opacity: 0;
+      animation: cp-fade 18s linear infinite;
+
+      picture {
+        display: block;
+        height: 100%;
+      }
+
+      img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        animation: cp-zoom 18s linear infinite;
+      }
+
+      /* 1枚目は読み込み直後から見えているように、少し進めた位置から始める */
+      &--1,
+      &--1 img {
+        animation-delay: -0.8s;
+      }
+
+      &--2,
+      &--2 img {
+        animation-delay: 6s;
+      }
+
+      &--3,
+      &--3 img {
+        animation-delay: 12s;
+      }
+    }
+
+    &__label {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      display: flex;
+      align-items: baseline;
+      background-color: white;
+      color: $navy;
+      font-weight: bold;
+
+      .eng {
+        color: $red;
+        font-weight: 700;
+      }
+    }
+  }
+
+  /* --- 2. 変化 ---------------------------------------- */
+  .cp-change {
+    &__compare {
+      display: grid;
+      align-items: stretch;
+    }
+
+    &__col {
+      border-top: 3px solid rgba(23, 36, 57, 0.25);
+
+      &.is-now {
+        border-top-color: $navy;
+      }
+    }
+
+    &__label {
+      color: $sub;
+      font-weight: bold;
+      letter-spacing: 0.1em;
+    }
+
+    &__col.is-now &__label {
+      color: $red;
+    }
+
+    &__big {
+      color: rgba(23, 36, 57, 0.45);
+      font-weight: bold;
+      line-height: 1.4;
+    }
+
+    &__col.is-now &__big {
+      color: $navy;
+
+      em {
+        box-shadow: inset 0 -0.2em 0 rgba(217, 1, 30, 0.18);
+      }
+    }
+
+    &__ttl {
+      color: $ink;
+      font-weight: bold;
+      line-height: 1.6;
+    }
+
+    &__txt {
+      color: $body;
+      font-weight: 500;
+      line-height: 2;
+    }
+
+    &__arrow {
+      position: relative;
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 14px;
+        height: 14px;
+        border-top: 2px solid $navy;
+        border-right: 2px solid $navy;
+        transform: translate(-70%, -50%) rotate(45deg);
+      }
+    }
+  }
+
+  .cp-statement {
+    text-align: center;
+    color: $navy;
+    font-weight: bold;
+    letter-spacing: 0.04em;
+    border-top: 1px solid $line;
+    border-bottom: 1px solid $line;
+
+    span {
+      display: inline-block;
+    }
+  }
+
+  /* --- 3. ミッション ---------------------------------- */
+  .cp-mission {
+    text-align: center;
+
+    .cp-head__en {
+      justify-content: center;
+    }
+
+    &__ttl {
+      color: $navy;
+      font-weight: bold;
+      line-height: 1.3;
+      letter-spacing: 0.04em;
+    }
+
+    &__txt {
+      color: $body;
+      font-weight: 500;
+      line-height: 2.1;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
+  /* --- 4. 代表と原点 ---------------------------------- */
+  .cp-origin {
+    &__inner {
+      display: grid;
+      align-items: center;
+    }
+
+    &__photo img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    &__name {
+      color: $navy;
+      font-weight: bold;
+      letter-spacing: 0.1em;
+
+      span {
+        display: block;
+        color: $sub;
+        letter-spacing: 0.02em;
+      }
+    }
+
+    &__txt {
+      color: $body;
+      font-weight: 500;
+      line-height: 2;
+    }
+  }
+
+  /* --- 5. 一本の筋 ------------------------------------ */
+  .cp-chain {
+    &__list {
+      position: relative;
+      --chain-progress: 0;
+
+      /* 中央の縦線：薄い線の上に、進み具合だけ紺の線を重ねる */
+      &::before,
+      &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        width: 2px;
+        height: 100%;
+      }
+
+      &::before {
+        background-color: $line;
+      }
+
+      &::after {
+        background-color: $navy;
+        transform: scaleY(var(--chain-progress));
+        transform-origin: top;
+      }
+    }
+
+    &__item {
+      position: relative;
+      display: grid;
+      align-items: center;
+    }
+
+    &__photo img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    &__dot {
+      position: absolute;
+      top: 50%;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background-color: white;
+      border: 2px solid $navy;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+    }
+
+    &__no {
+      color: $red;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+    }
+
+    &__name {
+      color: $navy;
+      font-weight: bold;
+      line-height: 1.5;
+    }
+
+    &__txt {
+      color: $body;
+      font-weight: 500;
+      line-height: 2;
+    }
+
+    &__end {
+      text-align: center;
+      color: $navy;
+      font-weight: bold;
+      line-height: 1.9;
+    }
+  }
+
+  /* --- 6. 事業内容 ------------------------------------ */
+  .cp-service {
+    &__list {
+      display: grid;
+    }
+
+    &__item {
+      background-color: white;
+      border-top: 3px solid $navy;
+    }
+
+    &__en {
+      color: $red;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    &__name {
+      color: $navy;
+      font-weight: bold;
+    }
+
+    &__catch {
+      color: $ink;
+      font-weight: bold;
+    }
+
+    &__txt {
+      color: $body;
+      font-weight: 500;
+      line-height: 2;
+    }
+
+    &__items li {
+      position: relative;
+      color: $ink;
+      font-weight: 500;
+      line-height: 1.7;
+      border-top: 1px solid $line;
+
+      &::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        width: 12px;
+        height: 1px;
+        background-color: $navy;
+      }
+    }
+  }
+
+  .cp-extras {
+    &__ttl {
+      color: $navy;
+      font-weight: bold;
+    }
+
+    &__list {
+      display: grid;
+    }
+
+    &__list a {
+      display: block;
+      height: 100%;
+      background-color: white;
+      transition: box-shadow 0.25s ease;
+
+      &:hover {
+        opacity: 1;
+        box-shadow: inset 0 0 0 1px $navy;
+      }
+    }
+
+    &__name {
+      display: block;
+      color: $navy;
+      font-weight: bold;
+    }
+
+    &__txt {
+      display: block;
+      color: $body;
+      font-weight: 500;
+      line-height: 1.8;
+    }
+  }
+
+  /* --- 7. 事例 ---------------------------------------- */
+  .cp-works__list {
+    display: grid;
+  }
+
+  .cp-work {
+    border-top: 1px solid $line;
+
+    &.is-feature {
+      border-top: 3px solid $navy;
+    }
+
+    &__tag {
+      color: $sub;
+      font-weight: bold;
+      letter-spacing: 0.06em;
+    }
+
+    &__ttl {
+      color: $navy;
+      font-weight: bold;
+      line-height: 1.6;
+    }
+
+    &__txt {
+      color: $body;
+      font-weight: 500;
+      line-height: 2;
+    }
+  }
+
+  /* --- 8. 自社の実践（写真帯の上に白いカード） --------- */
+  .cp-practice {
+    position: relative;
+
+    &__bg {
+      position: absolute;
+      inset: 0;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    &__inner {
+      position: relative;
+    }
+
+    &__card {
+      background-color: white;
+    }
+
+    &__ttl {
+      color: $navy;
+      font-weight: bold;
+      line-height: 1.6;
+    }
+
+    &__txt {
+      color: $body;
+      font-weight: 500;
+      line-height: 2;
+    }
+  }
+
+  /* --- 9. 大切にしていること -------------------------- */
+  .cp-values {
+    &__list {
+      display: grid;
+    }
+
+    &__item {
+      border-top: 1px solid $line;
+    }
+
+    &__no {
+      color: rgba(23, 36, 57, 0.22);
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    &__name {
+      color: $navy;
+      font-weight: bold;
+      line-height: 1.5;
+    }
+
+    &__txt {
+      color: $body;
+      font-weight: 500;
+      line-height: 1.9;
+    }
+  }
+
+  /* --- 10. 締め：上に写真の帯、その下に問いかけ ------------- */
+  .cp-closing {
+    text-align: center;
+    background-color: $gray;
+
+    &__band img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    &__ttl {
+      color: $navy;
+      font-weight: bold;
+      line-height: 1.5;
+    }
+
+    &__txt {
+      color: $body;
+      font-weight: 500;
+      line-height: 2;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+}
+
+@keyframes cp-line-up {
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes cp-fade {
+  0% { opacity: 0; }
+  4% { opacity: 1; }
+  33% { opacity: 1; }
+  38% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@keyframes cp-zoom {
+  0% { transform: scale(1.08); }
+  38% { transform: scale(1); }
+  100% { transform: scale(1); }
+}
+
+/*****************/
+/*** PC ***/
+/*****************/
+@media screen and (min-width: 769px) {
+  .corp-header {
+    height: 76px;
+
+    &__inner {
+      max-width: 1240px;
+      height: 100%;
+      padding: 0 40px;
+      gap: 40px;
+    }
+
+    &__logo {
+      font-size: 2.4rem;
+      margin-right: auto;
+    }
+
+    &__nav ul {
+      gap: 32px;
+    }
+
+    &__nav a {
+      font-size: 1.5rem;
+    }
+
+    &__cta {
+      padding: 12px 26px;
+      font-size: 1.4rem;
+    }
+  }
+
+  .corp-footer {
+    padding: 64px 0 40px;
+
+    &__inner {
+      max-width: 1100px;
+      padding: 0 40px;
+    }
+
+    &__logo {
+      font-size: 2.4rem;
+    }
+
+    &__tagline {
+      margin-top: 10px;
+      font-size: 1.4rem;
+    }
+
+    &__nav {
+      grid-template-columns: repeat(2, auto);
+      gap: 12px 48px;
+      font-size: 1.4rem;
+    }
+
+    &__copy {
+      margin-top: 48px;
+      font-size: 1.1rem;
+    }
+  }
+
+  #corp-page {
+    padding-top: 76px;
+
+    .cp-container {
+      max-width: 1100px;
+      padding: 0 40px;
+    }
+
+    .cp-sec {
+      padding: 140px 0;
+    }
+
+    .cp-head {
+      margin-bottom: 64px;
+
+      &__en {
+        gap: 16px;
+        font-size: 1.3rem;
+        letter-spacing: 0.2em;
+
+        &::before {
+          width: 36px;
+        }
+      }
+
+      &__ttl {
+        margin-top: 20px;
+        font-size: 3.6rem;
+      }
+
+      &__lead {
+        margin-top: 24px;
+        max-width: 760px;
+        font-size: 1.6rem;
+      }
+    }
+
+    .cp-btn {
+      padding: 20px 40px;
+      font-size: 1.6rem;
+
+      &--lg {
+        min-width: 380px;
+        padding: 24px 48px;
+        font-size: 1.8rem;
+      }
+    }
+
+    .cp-link {
+      font-size: 1.5rem;
+    }
+
+    .cp-fv {
+      grid-template-columns: minmax(0, 1fr) 46%;
+      min-height: calc(100vh - 76px);
+      max-height: 860px;
+
+      &__copy {
+        align-self: center;
+        padding: 80px 64px 80px max(40px, calc((100vw - 1100px) / 2 + 40px));
+      }
+
+      &__eyebrow {
+        font-size: 1.3rem;
+      }
+
+      &__ttl {
+        margin-top: 24px;
+        font-size: clamp(4.4rem, 4.6vw, 6.4rem);
+      }
+
+      &__sub {
+        margin-top: 32px;
+        max-width: 560px;
+        font-size: 1.7rem;
+      }
+
+      &__what {
+        margin-top: 24px;
+        padding-bottom: 6px;
+        font-size: 1.5rem;
+      }
+
+      &__btns {
+        margin-top: 40px;
+        gap: 16px;
+      }
+
+      &__label {
+        gap: 12px;
+        padding: 16px 28px;
+        font-size: 1.5rem;
+
+        .eng {
+          font-size: 1.3rem;
+        }
+      }
+    }
+
+    .cp-change {
+      &__compare {
+        grid-template-columns: 1fr 64px 1fr;
+      }
+
+      &__col {
+        padding-top: 32px;
+      }
+
+      &__label {
+        font-size: 1.4rem;
+      }
+
+      &__big {
+        margin-top: 16px;
+        font-size: 3.4rem;
+      }
+
+      &__ttl {
+        margin-top: 28px;
+        font-size: 1.9rem;
+      }
+
+      &__txt {
+        margin-top: 14px;
+        font-size: 1.6rem;
+      }
+    }
+
+    .cp-statement {
+      margin-top: 120px;
+      padding: 56px 20px;
+      font-size: clamp(2.8rem, 3vw, 4rem);
+    }
+
+    .cp-mission {
+      padding: 180px 0;
+
+      &__ttl {
+        margin-top: 32px;
+        font-size: clamp(6rem, 7vw, 9.6rem);
+      }
+
+      &__txt {
+        margin-top: 48px;
+        max-width: 720px;
+        font-size: 1.7rem;
+      }
+    }
+
+    .cp-origin {
+      &__inner {
+        grid-template-columns: 380px 1fr;
+        gap: 72px;
+      }
+
+      &__name {
+        font-size: 2.6rem;
+
+        span {
+          margin-top: 6px;
+          font-size: 1.3rem;
+        }
+      }
+
+      &__txt {
+        margin-top: 24px;
+        font-size: 1.6rem;
+      }
+
+      .cp-link {
+        margin-top: 32px;
+      }
+
+      .cp-head {
+        margin-bottom: 32px;
+      }
+    }
+
+    .cp-chain {
+      &__list {
+        &::before,
+        &::after {
+          left: 50%;
+          transform: translateX(-50%);
+        }
+
+        &::after {
+          transform: translateX(-50%) scaleY(var(--chain-progress));
+        }
+      }
+
+      &__item {
+        grid-template-columns: 1fr 1fr;
+        gap: 96px;
+        padding: 56px 0;
+
+        &.is-rev {
+          .cp-chain__photo {
+            order: 2;
+          }
+        }
+      }
+
+      &__dot {
+        left: 50%;
+      }
+
+      &__no {
+        font-size: 1.4rem;
+      }
+
+      &__name {
+        margin-top: 12px;
+        font-size: 2.6rem;
+      }
+
+      &__txt {
+        margin-top: 18px;
+        font-size: 1.6rem;
+      }
+
+      &__end {
+        margin-top: 80px;
+        font-size: 2.2rem;
+      }
+    }
+
+    .cp-service {
+      &__list {
+        grid-template-columns: 1fr 1fr;
+        gap: 32px;
+      }
+
+      &__item {
+        padding: 48px 48px 40px;
+      }
+
+      &__en {
+        font-size: 1.2rem;
+      }
+
+      &__name {
+        margin-top: 10px;
+        font-size: 2.8rem;
+      }
+
+      &__catch {
+        margin-top: 8px;
+        font-size: 1.8rem;
+      }
+
+      &__txt {
+        margin-top: 20px;
+        font-size: 1.5rem;
+      }
+
+      &__items {
+        margin-top: 24px;
+
+        li {
+          padding: 14px 0 14px 24px;
+          font-size: 1.5rem;
+
+          &::before {
+            top: 26px;
+          }
+        }
+      }
+    }
+
+    .cp-extras {
+      margin-top: 64px;
+
+      &__ttl {
+        font-size: 1.8rem;
+      }
+
+      &__list {
+        margin-top: 20px;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+
+        a {
+          padding: 26px 28px;
+        }
+      }
+
+      &__name {
+        font-size: 1.7rem;
+      }
+
+      &__txt {
+        margin-top: 6px;
+        font-size: 1.4rem;
+      }
+    }
+
+    .cp-works__list {
+      grid-template-columns: 1.3fr 1fr 1fr;
+      gap: 40px;
+    }
+
+    .cp-work {
+      padding-top: 32px;
+
+      &__tag {
+        font-size: 1.3rem;
+      }
+
+      &__ttl {
+        margin-top: 12px;
+        font-size: 2rem;
+      }
+
+      &.is-feature .cp-work__ttl {
+        font-size: 2.4rem;
+      }
+
+      &__txt {
+        margin-top: 16px;
+        font-size: 1.5rem;
+      }
+    }
+
+    .cp-practice {
+      padding: 160px 0;
+
+      &__card {
+        max-width: 620px;
+        padding: 56px 56px 52px;
+      }
+
+      &__ttl {
+        margin-top: 18px;
+        font-size: 2.8rem;
+      }
+
+      &__txt {
+        margin-top: 20px;
+        font-size: 1.6rem;
+      }
+    }
+
+    .cp-values {
+      &__list {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 32px;
+      }
+
+      &__item {
+        padding-top: 32px;
+      }
+
+      &__no {
+        font-size: 4rem;
+      }
+
+      &__name {
+        margin-top: 20px;
+        font-size: 2rem;
+      }
+
+      &__txt {
+        margin-top: 12px;
+        font-size: 1.5rem;
+      }
+    }
+
+    .cp-closing {
+      .cp-closing__inner {
+        padding: 120px 40px 140px;
+      }
+
+      &__ttl {
+        font-size: 4rem;
+      }
+
+      &__txt {
+        margin-top: 28px;
+        max-width: 680px;
+        font-size: 1.7rem;
+      }
+
+      .cp-btn {
+        margin-top: 48px;
+      }
+    }
+  }
+}
+
+/*****************/
+/*** SP ***/
+/*****************/
+@media screen and (max-width: 768px) {
+  .corp-header {
+    height: 60px;
+
+    &__inner {
+      height: 100%;
+      padding: 0 12px 0 20px;
+      gap: 10px;
+    }
+
+    &__logo {
+      font-size: 2rem;
+      margin-right: auto;
+    }
+
+    &__nav {
+      display: none;
+    }
+
+    &__cta {
+      padding: 9px 14px;
+      font-size: 1.2rem;
+    }
+
+    &__menu {
+      display: block;
+    }
+  }
+
+  .corp-sp-nav {
+    display: block;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 60px);
+    background-color: white;
+    padding: 24px 20px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-8px);
+    transition: opacity 0.3s $ease, transform 0.3s $ease;
+
+    &.is-open {
+      opacity: 1;
+      pointer-events: auto;
+      transform: none;
+    }
+
+    li {
+      border-bottom: 1px solid $line;
+    }
+
+    a {
+      display: block;
+      padding: 20px 4px;
+      color: $navy;
+      font-size: 1.7rem;
+      font-weight: bold;
+    }
+
+    &__cta {
+      color: $red !important;
+    }
+  }
+
+  .corp-footer {
+    padding: 48px 20px 32px;
+
+    &__inner {
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    &__logo {
+      font-size: 2.2rem;
+    }
+
+    &__tagline {
+      margin-top: 8px;
+      font-size: 1.3rem;
+    }
+
+    &__nav {
+      grid-template-columns: 1fr 1fr;
+      gap: 12px 16px;
+      font-size: 1.3rem;
+    }
+
+    &__copy {
+      margin-top: 32px;
+      font-size: 1rem;
+    }
+  }
+
+  #corp-page {
+    padding-top: 60px;
+
+    .cp-container {
+      padding: 0 20px;
+    }
+
+    .cp-sec {
+      padding: 80px 0;
+    }
+
+    .cp-head {
+      margin-bottom: 36px;
+
+      &__en {
+        gap: 12px;
+        font-size: 1.1rem;
+        letter-spacing: 0.18em;
+
+        &::before {
+          width: 24px;
+        }
+      }
+
+      &__ttl {
+        margin-top: 14px;
+        font-size: 2.2rem;
+      }
+
+      &__lead {
+        margin-top: 18px;
+        font-size: 1.5rem;
+      }
+    }
+
+    .cp-btn {
+      padding: 18px 24px;
+      font-size: 1.5rem;
+
+      &--lg {
+        width: 100%;
+        padding: 20px 24px;
+        font-size: 1.6rem;
+      }
+    }
+
+    .cp-link {
+      font-size: 1.4rem;
+    }
+
+    .cp-fv {
+      display: flex;
+      flex-direction: column-reverse;
+
+      &__visual {
+        height: 62vw;
+      }
+
+      &__copy {
+        padding: 32px 20px 64px;
+      }
+
+      &__eyebrow {
+        font-size: 1.1rem;
+      }
+
+      &__ttl {
+        margin-top: 16px;
+        font-size: 3.6rem;
+      }
+
+      &__sub {
+        margin-top: 20px;
+        font-size: 1.5rem;
+      }
+
+      &__what {
+        margin-top: 18px;
+        padding-bottom: 4px;
+        font-size: 1.3rem;
+      }
+
+      &__btns {
+        margin-top: 28px;
+        gap: 12px;
+
+        .cp-btn {
+          flex: 1 1 100%;
+        }
+      }
+
+      &__label {
+        gap: 8px;
+        padding: 10px 16px;
+        font-size: 1.3rem;
+
+        .eng {
+          font-size: 1.1rem;
+        }
+      }
+    }
+
+    .cp-change {
+      &__compare {
+        gap: 0;
+      }
+
+      &__col {
+        padding-top: 24px;
+      }
+
+      &__arrow {
+        height: 56px;
+
+        &::before {
+          transform: translate(-50%, -70%) rotate(135deg);
+        }
+      }
+
+      &__label {
+        font-size: 1.3rem;
+      }
+
+      &__big {
+        margin-top: 12px;
+        font-size: 2.6rem;
+      }
+
+      &__ttl {
+        margin-top: 20px;
+        font-size: 1.7rem;
+      }
+
+      &__txt {
+        margin-top: 10px;
+        font-size: 1.5rem;
+      }
+    }
+
+    .cp-statement {
+      margin-top: 72px;
+      padding: 36px 20px;
+      font-size: 2.2rem;
+      line-height: 1.6;
+    }
+
+    .cp-mission {
+      padding: 110px 0;
+
+      &__ttl {
+        margin-top: 24px;
+        font-size: 4.6rem;
+      }
+
+      &__txt {
+        margin-top: 32px;
+        font-size: 1.5rem;
+        text-align: left;
+      }
+    }
+
+    .cp-origin {
+      &__inner {
+        gap: 36px;
+      }
+
+      &__photo {
+        width: 72%;
+      }
+
+      &__name {
+        font-size: 2.2rem;
+
+        span {
+          margin-top: 4px;
+          font-size: 1.2rem;
+        }
+      }
+
+      &__txt {
+        margin-top: 18px;
+        font-size: 1.5rem;
+      }
+
+      .cp-link {
+        margin-top: 24px;
+      }
+
+      .cp-head {
+        margin-bottom: 24px;
+      }
+    }
+
+    .cp-chain {
+      &__list {
+        padding-left: 28px;
+
+        &::before,
+        &::after {
+          left: 6px;
+        }
+      }
+
+      &__item {
+        gap: 20px;
+        padding: 32px 0;
+      }
+
+      &__dot {
+        left: -22px;
+        top: 32px;
+        transform: translate(-50%, 0);
+      }
+
+      &__no {
+        font-size: 1.2rem;
+      }
+
+      &__name {
+        margin-top: 8px;
+        font-size: 2rem;
+      }
+
+      &__txt {
+        margin-top: 12px;
+        font-size: 1.5rem;
+      }
+
+      &__end {
+        margin-top: 48px;
+        font-size: 1.7rem;
+        text-align: left;
+      }
+    }
+
+    .cp-service {
+      &__list {
+        gap: 20px;
+      }
+
+      &__item {
+        padding: 32px 22px 26px;
+      }
+
+      &__en {
+        font-size: 1.1rem;
+      }
+
+      &__name {
+        margin-top: 8px;
+        font-size: 2.4rem;
+      }
+
+      &__catch {
+        margin-top: 6px;
+        font-size: 1.6rem;
+      }
+
+      &__txt {
+        margin-top: 14px;
+        font-size: 1.5rem;
+      }
+
+      &__items {
+        margin-top: 18px;
+
+        li {
+          padding: 12px 0 12px 22px;
+          font-size: 1.4rem;
+
+          &::before {
+            top: 23px;
+          }
+        }
+      }
+    }
+
+    .cp-extras {
+      margin-top: 44px;
+
+      &__ttl {
+        font-size: 1.6rem;
+      }
+
+      &__list {
+        margin-top: 14px;
+        gap: 12px;
+
+        a {
+          padding: 20px 20px;
+        }
+      }
+
+      &__name {
+        font-size: 1.6rem;
+      }
+
+      &__txt {
+        margin-top: 4px;
+        font-size: 1.4rem;
+      }
+    }
+
+    .cp-works__list {
+      gap: 32px;
+    }
+
+    .cp-work {
+      padding-top: 24px;
+
+      &__tag {
+        font-size: 1.2rem;
+      }
+
+      &__ttl {
+        margin-top: 8px;
+        font-size: 1.9rem;
+      }
+
+      &__txt {
+        margin-top: 12px;
+        font-size: 1.5rem;
+      }
+    }
+
+    .cp-practice {
+      padding: 200px 0 0;
+
+      &__inner {
+        padding: 0;
+      }
+
+      &__card {
+        padding: 36px 20px 48px;
+      }
+
+      &__ttl {
+        margin-top: 14px;
+        font-size: 2.2rem;
+      }
+
+      &__txt {
+        margin-top: 14px;
+        font-size: 1.5rem;
+      }
+    }
+
+    .cp-values {
+      &__list {
+        grid-template-columns: 1fr 1fr;
+        gap: 28px 16px;
+      }
+
+      &__item {
+        padding-top: 20px;
+      }
+
+      &__no {
+        font-size: 3rem;
+      }
+
+      &__name {
+        margin-top: 12px;
+        font-size: 1.6rem;
+      }
+
+      &__txt {
+        margin-top: 8px;
+        font-size: 1.3rem;
+      }
+    }
+
+    .cp-closing {
+      .cp-closing__inner {
+        padding: 72px 20px 88px;
+      }
+
+      &__ttl {
+        font-size: 2.6rem;
+      }
+
+      &__txt {
+        margin-top: 20px;
+        font-size: 1.5rem;
+        text-align: left;
+      }
+
+      .cp-btn {
+        margin-top: 36px;
+      }
+    }
+  }
+}
+
+/* --- 動きを減らす設定：移動とズームを止め、不透明度だけ ---- */
+@media (prefers-reduced-motion: reduce) {
+  #corp-page {
+    [data-reveal] {
+      transform: none;
+      transition: opacity 0.2s linear;
+    }
+
+    .cp-line > span {
+      transform: none !important;
+      animation: none !important;
+    }
+
+    .cp-fv__slide {
+      animation: none;
+
+      &--1 {
+        opacity: 1;
+      }
+
+      img {
+        animation: none;
+      }
+    }
+  }
+}
+
+/*****************/
+/*** 下層ページ（私たちについて・会社概要）***/
+/*****************/
+#corp-page {
+  .cp-page-head {
+    border-bottom: 1px solid $line;
+
+    &__ttl {
+      color: $navy;
+      font-weight: bold;
+      letter-spacing: 0.04em;
+    }
+
+    &__lead {
+      color: $ink;
+      font-weight: bold;
+      line-height: 1.9;
+    }
+  }
+
+  /* 読み物の本文。1行の長さを抑えて読みやすく */
+  .cp-article {
+    &__body {
+      color: $body;
+      font-weight: 500;
+      line-height: 2.1;
+
+      /* 共通の p のリセットに負けないよう、段落に直接指定する */
+      p {
+        line-height: 2.1;
+      }
+
+      h3 {
+        position: relative;
+        color: $navy;
+        font-weight: bold;
+        line-height: 1.6;
+        border-top: 1px solid $line;
+
+        &::before {
+          content: "";
+          position: absolute;
+          top: -2px;
+          left: 0;
+          width: 48px;
+          height: 3px;
+          background-color: $navy;
+        }
+      }
+
+      a {
+        display: inline;
+        color: $navy;
+        font-weight: bold;
+        text-decoration: underline;
+        text-underline-offset: 0.3em;
+      }
+    }
+  }
+
+  .cp-target {
+    background-color: white;
+    border-top: 3px solid $navy;
+    text-align: left;
+    margin-left: auto;
+    margin-right: auto;
+
+    &__label {
+      color: $red;
+      font-weight: bold;
+      letter-spacing: 0.06em;
+    }
+
+    &__ttl {
+      color: $navy;
+      font-weight: bold;
+      line-height: 1.6;
+    }
+
+    &__txt {
+      color: $body;
+      font-weight: 500;
+      line-height: 2;
+    }
+  }
+
+  .cp-story__band {
+    margin: 0;
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  .cp-message {
+    &__inner {
+      display: grid;
+      align-items: start;
+    }
+
+    &__photo img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    &__sign {
+      color: $sub;
+      font-weight: bold;
+      text-align: right;
+
+      span {
+        display: block;
+        color: $navy;
+        letter-spacing: 0.14em;
+      }
+    }
+  }
+
+  .cp-company {
+    &__table {
+      border-top: 2px solid $navy;
+    }
+
+    &__row {
+      display: grid;
+      border-bottom: 1px solid $line;
+
+      dt {
+        color: $navy;
+        font-weight: bold;
+      }
+
+      dd {
+        color: $ink;
+        font-weight: 500;
+        line-height: 1.9;
+
+        span {
+          display: block;
+        }
+      }
+    }
+
+    &__note {
+      color: $body;
+      font-weight: 500;
+      line-height: 1.9;
+
+      a {
+        display: inline;
+        color: $navy;
+        font-weight: bold;
+        text-decoration: underline;
+        text-underline-offset: 0.3em;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 769px) {
+  #corp-page {
+    .cp-page-head {
+      padding: 120px 0 80px;
+
+      &__ttl {
+        margin-top: 20px;
+        font-size: 4.8rem;
+      }
+
+      &__lead {
+        margin-top: 28px;
+        font-size: 2rem;
+      }
+    }
+
+    .cp-article {
+      &__inner {
+        max-width: 860px;
+      }
+
+      &__body {
+        font-size: 1.7rem;
+
+        p + p {
+          margin-top: 24px;
+        }
+
+        h3 {
+          margin: 56px 0 20px;
+          padding-top: 28px;
+          font-size: 2.2rem;
+        }
+      }
+    }
+
+    .cp-target {
+      margin-top: 72px;
+      max-width: 760px;
+      padding: 40px 48px;
+
+      &__label {
+        font-size: 1.3rem;
+      }
+
+      &__ttl {
+        margin-top: 10px;
+        font-size: 2.4rem;
+      }
+
+      &__txt {
+        margin-top: 12px;
+        font-size: 1.6rem;
+      }
+    }
+
+    .cp-story__band {
+      margin-top: 100px;
+    }
+
+    .cp-message {
+      &__inner {
+        grid-template-columns: 340px 1fr;
+        gap: 72px;
+      }
+
+      &__sign {
+        margin-top: 40px;
+        font-size: 1.4rem;
+
+        span {
+          margin-top: 6px;
+          font-size: 2.4rem;
+        }
+      }
+    }
+
+    .cp-company {
+      &__sec {
+        padding-top: 80px;
+      }
+
+      &__row {
+        grid-template-columns: 200px 1fr;
+        padding: 28px 8px;
+
+        dt {
+          font-size: 1.6rem;
+        }
+
+        dd {
+          font-size: 1.6rem;
+        }
+      }
+
+      &__note {
+        margin-top: 40px;
+        font-size: 1.5rem;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #corp-page {
+    .cp-page-head {
+      padding: 64px 0 44px;
+
+      &__ttl {
+        margin-top: 14px;
+        font-size: 3.2rem;
+      }
+
+      &__lead {
+        margin-top: 18px;
+        font-size: 1.6rem;
+      }
+    }
+
+    .cp-article__body {
+      font-size: 1.55rem;
+
+      p + p {
+        margin-top: 18px;
+      }
+
+      h3 {
+        margin: 40px 0 14px;
+        padding-top: 22px;
+        font-size: 1.8rem;
+      }
+    }
+
+    .cp-target {
+      margin-top: 44px;
+      padding: 26px 20px;
+
+      &__label {
+        font-size: 1.2rem;
+      }
+
+      &__ttl {
+        margin-top: 8px;
+        font-size: 1.9rem;
+      }
+
+      &__txt {
+        margin-top: 10px;
+        font-size: 1.5rem;
+      }
+    }
+
+    .cp-story__band {
+      margin-top: 56px;
+    }
+
+    .cp-message {
+      &__inner {
+        gap: 32px;
+      }
+
+      &__photo {
+        width: 68%;
+      }
+
+      &__sign {
+        margin-top: 28px;
+        font-size: 1.3rem;
+
+        span {
+          margin-top: 4px;
+          font-size: 2rem;
+        }
+      }
+    }
+
+    .cp-company {
+      &__sec {
+        padding-top: 48px;
+      }
+
+      &__row {
+        grid-template-columns: 1fr;
+        gap: 6px;
+        padding: 20px 4px;
+
+        dt {
+          font-size: 1.4rem;
+        }
+
+        dd {
+          font-size: 1.5rem;
+        }
+      }
+
+      &__note {
+        margin-top: 28px;
+        font-size: 1.4rem;
+      }
+    }
+  }
+}

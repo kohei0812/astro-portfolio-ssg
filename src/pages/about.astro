@@ -1,0 +1,204 @@
+---
+/*
+  私たちについて（2026-10-02 新設）。思想・原体験・代表メッセージの全文はここに置き、トップは入口に留める。
+  話の運び：これまでといま → ミッションと支援先 → 原体験 → 一本の筋 → 提供すること → 事例と自社の実践 → 大切にしていること → 代表メッセージ → 初回相談
+  文言は Codex 案（営業/コーポレートサイト_文言_Codex案_20261002.md の B）。
+  原体験は「システム投資が大企業にしかできなかった構造」が論点。中小企業側に原因があるように読める書き方はしない（本人指示）。
+*/
+import Layout from "../layouts/Layout.astro";
+
+const chain = [
+  { name: "AIで、会社の馬力を上げる。", txt: "AIを社員として働かせるために、会社の仕事を見直し、任せられる業務を整理します。業務を知る人が必要な仕組みを作り、実際の仕事で使って、確かめながら直していきます。AIを使える人が増えることを、会社全体の仕事を進める力につなげます。" },
+  { name: "人の時間を取り戻す。", txt: "AIが担える仕事を任せ、人が使える時間を生み出します。その時間を新たな仕事で埋めるだけでなく、人を育てることや、落ち着いて考えることに使ってほしいと考えています。働く人に、時間を報酬として還元することも、私たちが目指す姿のひとつです。" },
+  { name: "人と人が繋がる時間を増やす。", txt: "ここから先に、私たちが目指す組織の姿があります。幹部が従業員と向き合い、理念が一人ひとりの仕事にどうつながるかを話し、1on1で思いや困りごとを聴く。AIで生まれた時間を、そうした関係を築くための時間にしていきたいと考えています。" },
+  { name: "人と向き合うことを、会社の文化にする。", txt: "理念は、日々の仕事や判断に結びついてこそ、会社の力になります。対話や関係づくりが続き、人を育てることが日常になる。その文化が、AIによる仕事の変化と重なることで、組織は全体として強くなると考えています。" },
+];
+
+const values = [
+  { name: "自走したら卒業。", txt: "会社の人が自分たちでAIを使い、必要な仕組みを変えられるようになることを目指します。支援を受け続けることを前提にせず、自走できるようになったら卒業です。" },
+  { name: "成果は、研修後のAI利用率で測る。", txt: "研修の満足度だけでは、仕事が変わったかは分かりません。1か月後に、誰が、何に、どれだけAIを使っているかを追跡し、実業務での利用を確かめます。" },
+  { name: "パッケージを売らない。", txt: "会社によって、任せたい業務も、必要な支援も違います。業務と状況を見て、必要な分だけ、一緒にやります。" },
+  { name: "成果を決めるのは、プロンプトではなく情報整理。", txt: "仕事の目的、使う資料、判断の基準が整理されていると、AIに仕事を任せやすくなります。元の資料とAIへの依頼の間に、業務に必要な情報を使える形に整えた「中間データ」を用意することを大切にしています。" },
+];
+---
+
+<Layout
+  title="私たちについて｜DDDynamis・AI軍師"
+  description="中小企業を、強くする。DDDynamisが目指すのは、AIで人の時間を取り戻し、人と向き合う時間を増やすことです。代表・川端康平の原体験、AI導入支援と人材育成に込めた考え、自走したら卒業という支援の方針をご紹介します。"
+  corp
+>
+  <main id="corp-page" class="corp-page cp-about" role="main">
+    <!-- ページの冒頭 -->
+    <header class="cp-page-head">
+      <div class="cp-container">
+        <p class="cp-head__en eng" data-reveal>About us</p>
+        <h1 class="cp-page-head__ttl" data-reveal style="--d: .1s">私たちについて</h1>
+        <p class="cp-page-head__lead" data-reveal style="--d: .2s">中小企業を、強くする。<br />AIで人の時間を取り戻し、その時間を人に使える会社を増やします。</p>
+      </div>
+    </header>
+
+    <!-- 1. これまでといま -->
+    <section class="cp-sec cp-article" aria-labelledby="a1">
+      <div class="cp-container cp-article__inner">
+        <header class="cp-head" data-reveal>
+          <p class="cp-head__en eng">What has changed</p>
+          <h2 class="cp-head__ttl" id="a1">AIの変化を、<br class="sp_only" />中小企業の機会に。</h2>
+        </header>
+        <div class="cp-article__body" data-reveal>
+          <p>AIによって、会社の仕事の進め方が変わっています。大企業で活用が進む一方、人手不足のなかで毎日の業務を回す中小企業には、仕組みを見直す時間を取りにくい現実があります。このままでは、仕事に使える時間や事業を進める力の差が広がりかねません。</p>
+          <p>けれども、私たちはAIを中小企業にとっての機会だと考えています。</p>
+          <h3>これまで｜業務を変えるには、大きな投資が必要でした。</h3>
+          <p>システムをつくるには、多額の費用と多くの人手が必要でした。DXで時間をつくり、人を育てる経営は、その投資ができる大企業を中心に実現してきました。中小企業に届かなかったのは、会社の意欲の問題ではなく、大きな投資を前提とする仕組みの問題です。</p>
+          <h3>いま｜会社の人自身が、仕組みを作れるようになりました。</h3>
+          <p>ClaudeやChatGPTなどのAIは、道具そのものの利用料として月数千円から使えます。これは支援費用を含む金額ではありませんが、業務を変え始めるための道具が、中小企業にも手の届くものになったということです。</p>
+          <p>業務を理解している経営者や現場の人自身が仕組みを作る時代になりました。人が日本語でやりたいことを伝え、AIが作り、人が確かめて直していく。その取り組みをエンジニアが支えることで、中小企業も自分たちの仕事を変え、時間を生み出せるようになっています。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. ミッションと支援先 -->
+    <section class="cp-sec cp-sec--gray cp-mission" aria-labelledby="a2">
+      <div class="cp-container">
+        <p class="cp-head__en eng" data-reveal>Our mission</p>
+        <h2 class="cp-mission__ttl" id="a2" data-reveal>
+          <span class="cp-line"><span>中小企業を、</span></span>
+          <span class="cp-line"><span>強くする。</span></span>
+        </h2>
+        <p class="cp-mission__txt" data-reveal style="--d: .3s">DDDynamisは、AIで会社の馬力を上げ、人の時間を取り戻します。その時間を、人と向き合い、人を育てるために使える会社を増やしたいと考えています。日本経済を支える中小企業の一社一社が強くなることを、私たちの仕事の中心に置いています。</p>
+        <div class="cp-target" data-reveal>
+          <p class="cp-target__label">私たちが主に支援する会社</p>
+          <p class="cp-target__ttl">従業員5〜50人ほど、社長が現場も見ている会社。</p>
+          <p class="cp-target__txt">社長が経営を考えながら現場も見ている会社で、日々の仕事をAIに任せられるようにし、人に使える時間を取り戻すところから始めます。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. 原体験 -->
+    <section class="cp-sec cp-article cp-story" aria-labelledby="a3">
+      <div class="cp-container cp-article__inner">
+        <header class="cp-head" data-reveal>
+          <p class="cp-head__en eng">Origin</p>
+          <h2 class="cp-head__ttl" id="a3">業務変革を、<br class="sp_only" />大企業だけのものにしない。</h2>
+        </header>
+        <div class="cp-article__body" data-reveal>
+          <p>私は神戸大学法学部を卒業し、新卒でSIerに営業として入りました。システムをつくるには、多額の費用と多くの人手が必要で、その投資ができるのは大企業でした。時間をつくり、人を育てるための仕組みが、投資できる会社にしか届かない。その構造を、最初の職場で目にしました。</p>
+          <p>そこで開発現場の炎上と同僚の死に直面し、私は1年で会社を辞めました。</p>
+          <p>退職後はバンド活動、バーテンダー、植木職人を経験しました。37歳でフィリピンへ留学し、Webエンジニアの道へ進みました。フリーランスとして開発に携わり、いまはAI活用を支援しています。</p>
+          <p>中小企業がDXから取り残されてきたのは、大きなお金と人手を先に用意しなければならない、これまでのやり方によるものでした。AIによって、そこを変えられるようになりました。業務を知っている会社の人自身が仕組みを作り、エンジニアがそれを支える。私が作るだけで終わらず、会社の人が自分たちの仕事を変えていける。その形を中小企業に届けたいと思っています。遠回りをして戻ってきたこの仕事で、人の時間を取り戻すことに取り組んでいます。</p>
+        </div>
+      </div>
+      <figure class="cp-story__band" data-reveal aria-hidden="true">
+        <picture>
+          <source media="(min-width: 769px)" srcset="/assets/images/corp/band-town.webp" type="image/webp" />
+          <source media="(min-width: 769px)" srcset="/assets/images/corp/band-town.jpg" />
+          <source srcset="/assets/images/corp/band-town-sp.webp" type="image/webp" />
+          <img src="/assets/images/corp/band-town-sp.jpg" alt="" width="800" height="600" loading="lazy" decoding="async" />
+        </picture>
+      </figure>
+    </section>
+
+    <!-- 4. 一本の筋（トップより詳しく） -->
+    <section class="cp-sec cp-sec--gray cp-chain cp-chain--about" aria-labelledby="a4">
+      <div class="cp-container">
+        <header class="cp-head cp-head--center" data-reveal>
+          <p class="cp-head__en eng">How we strengthen</p>
+          <h2 class="cp-head__ttl" id="a4">AIで生まれた時間が、<br />人を育てる文化につながる。</h2>
+        </header>
+        <ol class="cp-chain__list" data-chain>
+          {chain.map((c, i) => (
+            <li class={`cp-chain__item${i % 2 ? " is-rev" : ""}`}>
+              <picture class="cp-chain__photo" data-reveal>
+                <source srcset={`/assets/images/corp/chain-${i + 1}.webp`} type="image/webp" />
+                <img src={`/assets/images/corp/chain-${i + 1}.jpg`} alt="" width="1000" height="750" loading="lazy" decoding="async" />
+              </picture>
+              <span class="cp-chain__dot" aria-hidden="true"></span>
+              <div class="cp-chain__body" data-reveal style="--d: .1s">
+                <p class="cp-chain__no eng">{String(i + 1).padStart(2, "0")}</p>
+                <h3 class="cp-chain__name">{c.name}</h3>
+                <p class="cp-chain__txt">{c.txt}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+        <p class="cp-chain__end" data-reveal>問いは「何時間削減できるか」ではなく、<br class="pc_only" />「AIで生まれた時間で、何を実現したいか」です。</p>
+      </div>
+    </section>
+
+    <!-- 5. 提供すること／6. 事例と自社の実践 -->
+    <section class="cp-sec cp-article" aria-labelledby="a5">
+      <div class="cp-container cp-article__inner">
+        <header class="cp-head" data-reveal>
+          <p class="cp-head__en eng">What we do</p>
+          <h2 class="cp-head__ttl" id="a5">いま、私たちが提供すること</h2>
+        </header>
+        <div class="cp-article__body" data-reveal>
+          <h3>AI導入支援とAI人材育成。</h3>
+          <p>AI導入支援では、業務を見せていただき、AIに任せられる仕事を整理して、実業務でひとつ動かします。必要な業務アプリの開発まで、現役エンジニアが対応します。</p>
+          <p>AI人材育成では、AIを「学ぶ科目」ではなく、「PC操作の新しい型」として伝えます。日本語で頼めばPCが動く体験から、自分の仕事に結びつけていきます。研修は、驚かせる、自分事化、その場で成功させる、自分で作らせる、社内へ広げる、1か月後に利用状況を追跡する、という6ステップです。</p>
+          <p>この2つの事業を通じて、AIの使い方を教えるのではなく、業務そのものを作り替えることに取り組みます。<a href="/web">Web制作</a>や<a href="/subsidy">助成金の相談</a>にも、必要に応じて対応します。</p>
+          <h3>自分たちで仕事を進める力が、社内に残る。</h3>
+          <p>広告代理店A社では、1回の研修でWebサイト制作のコーディングを内製化し、1件約15万円のコーディング外注がゼロになりました。その外注先は、私自身でした。A社は特急の依頼も受けられるようになりました。私への発注がなくなっても、会社にできることが増えるなら、それが支援の成果だと考えています。</p>
+          <p>不動産広告B社では、外注していた制作物の多くを社内で作れるようになりました。不動産管理C社では、社員1人が社内への展開役となり、申込書の処理から関係先への連絡までを半自動化する取り組みが進行中です。</p>
+          <h3>私たちも、AIを社員として働かせています。</h3>
+          <p>DDDynamisでは、私が営業・発信・研修資料の作成・開発を一人で並行しています。AIに仕事を任せるようになってから、目の前の仕事に没頭する、フローの状態で働けるようになりました。自分自身が業務を作り替えるなかで得た経験を、支援にも生かしています。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. 大切にしていること -->
+    <section class="cp-sec cp-sec--gray cp-values cp-values--about" aria-labelledby="a7">
+      <div class="cp-container">
+        <header class="cp-head" data-reveal>
+          <p class="cp-head__en eng">Our values</p>
+          <h2 class="cp-head__ttl" id="a7">大切にしていること</h2>
+        </header>
+        <ol class="cp-values__list">
+          {values.map((v, i) => (
+            <li class="cp-values__item" data-reveal style={`--d: ${i * 0.08}s`}>
+              <p class="cp-values__no eng">{String(i + 1).padStart(2, "0")}</p>
+              <h3 class="cp-values__name">{v.name}</h3>
+              <p class="cp-values__txt">{v.txt}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <!-- 8. 代表メッセージ -->
+    <section class="cp-sec cp-message" aria-labelledby="a8">
+      <div class="cp-container cp-message__inner">
+        <picture class="cp-message__photo" data-reveal>
+          <source srcset="/assets/images/consultation/profile-kawabata.webp" type="image/webp" />
+          <img src="/assets/images/consultation/profile-kawabata.jpg" alt="DDDynamis代表 川端康平" width="800" height="1053" loading="lazy" decoding="async" />
+        </picture>
+        <div class="cp-message__body">
+          <header class="cp-head" data-reveal>
+            <p class="cp-head__en eng">Message</p>
+            <h2 class="cp-head__ttl" id="a8">取り戻した時間を、<br />人に使える会社へ。</h2>
+          </header>
+          <div class="cp-article__body" data-reveal>
+            <p>私は、AIで会社の馬力が上がった先に、人と向き合う時間が増えてほしいと思っています。経営者や幹部が、従業員の話を落ち着いて聴ける。会社の理念を、目の前の仕事と結びつけて話せる。そんな時間が日常にある会社を増やしたいのです。</p>
+            <p>私自身、AIに仕事を任せるようになって、目の前の仕事に没頭できるようになりました。だからこそ、支援の入口でも、何時間削減できるかより、AIで生まれた時間で何を実現したいかを伺いたいと思っています。</p>
+            <p>必要な仕組みは、現役エンジニアとして私も手を動かして作ります。そして、会社の人が自分たちで変えていけるようになったら卒業です。取り戻した時間が、人を育て、関係を築き、会社を強くする。その始まりを、一社ずつ形にしていきます。</p>
+          </div>
+          <p class="cp-message__sign" data-reveal>DDDynamis代表<span>川端 康平</span></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. 初回相談へ -->
+    <section class="cp-closing" aria-labelledby="a9">
+      <picture class="cp-closing__band" aria-hidden="true">
+        <source media="(min-width: 769px)" srcset="/assets/images/corp/band-connect.webp" type="image/webp" />
+        <source media="(min-width: 769px)" srcset="/assets/images/corp/band-connect.jpg" />
+        <source srcset="/assets/images/corp/band-connect-sp.webp" type="image/webp" />
+        <img src="/assets/images/corp/band-connect-sp.jpg" alt="" width="800" height="600" loading="lazy" decoding="async" />
+      </picture>
+      <div class="cp-container cp-closing__inner" data-reveal>
+        <h2 class="cp-closing__ttl" id="a9">AIで生まれた時間で、<br />誰と向き合いますか？</h2>
+        <p class="cp-closing__txt">会社の仕事をどう変えたいか、その先でどんな時間をつくりたいかをお聞かせください。初回相談では、実際の業務をもとに、AIに任せられることから一緒に考えます。</p>
+        <a href="/consultation" class="cp-btn cp-btn--primary cp-btn--lg">初回相談について</a>
+      </div>
+    </section>
+  </main>
+</Layout>
