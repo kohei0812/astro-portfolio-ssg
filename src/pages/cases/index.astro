@@ -26,7 +26,12 @@ import { cases, shortCases, casesPage } from "../../data/cases.js";
         <div class="ck-list">
           {cases.map((c, i) => (
             <a href={`/cases/${c.slug}`} class="ck-card" data-reveal style={`--d: ${i * 0.08}s`}>
-              <CasePanel c={c} />
+              {c.diagram ? (
+                <picture class="ck-card__img">
+                  <source srcset={`/assets/images/cases/${c.diagram.src}.webp`} type="image/webp" />
+                  <img src={`/assets/images/cases/${c.diagram.src}.jpg`} alt="" width="1600" height="900" loading="lazy" decoding="async" />
+                </picture>
+              ) : <CasePanel c={c} />}
               <div class="ck-card__body">
                 <p class="ck-card__label">{c.industry}</p>
                 <h2 class="ck-card__ttl">{c.cardTitle}</h2>
@@ -49,6 +54,12 @@ import { cases, shortCases, casesPage } from "../../data/cases.js";
         <ul class="ck-shorts">
           {shortCases.map((s, i) => (
             <li data-reveal style={`--d: ${i * 0.08}s`}>
+              {s.img && (
+                <picture class="ck-shorts__img">
+                  <source srcset={`/assets/images/cases/${s.img}.webp`} type="image/webp" />
+                  <img src={`/assets/images/cases/${s.img}.jpg`} alt="" width="1600" height="900" loading="lazy" decoding="async" />
+                </picture>
+              )}
               <p class="ck-shorts__label"><LineIcon name={s.icon} size={36} />{s.industry}</p>
               <p class="ck-shorts__txt">{s.text}</p>
             </li>

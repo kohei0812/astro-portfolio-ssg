@@ -1132,3 +1132,146 @@ $eng: "Montserrat", "Montserrat Fallback", "Helvetica Neue", Helvetica, Arial, s
     color: rgba(255, 255, 255, 0.08);
   }
 }
+
+/* 図解（事例の詳細） */
+#corp-page.cp-cases {
+  .ck-diagram {
+    margin: 0;
+    background-color: white;
+    box-shadow: inset 0 0 0 1px $line;
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+  }
+}
+
+@media screen and (min-width: 769px) {
+  #corp-page.cp-cases {
+    .ck-diagram-sec {
+      padding-bottom: 0;
+    }
+
+    .ck-diagram {
+      padding: 24px;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #corp-page.cp-cases {
+    .ck-diagram-sec {
+      padding-bottom: 0;
+    }
+
+    .ck-diagram {
+      margin: 0 -8px;
+      padding: 8px;
+    }
+  }
+}
+
+/* 一覧カードの図解サムネイル */
+#corp-page.cp-cases .ck-card__img {
+  display: block;
+  background-color: white;
+  border-right: 1px solid $line;
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  #corp-page.cp-cases .ck-card__img {
+    padding: 16px;
+    align-self: center;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #corp-page.cp-cases .ck-card__img {
+    padding: 8px;
+    border-right: none;
+    border-bottom: 1px solid $line;
+  }
+}
+
+#corp-page.cp-cases .ck-shorts__img {
+  display: block;
+  margin-bottom: 14px;
+  box-shadow: inset 0 0 0 1px $line;
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+}
+
+/* 詳細の見出し横の挿絵（進行中の事例） */
+#corp-page.cp-cases {
+  .ck-hero__img {
+    position: relative;
+    display: block;
+    background-color: white;
+    box-shadow: inset 0 0 0 1px $line;
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  .ck-hero__status {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    background-color: $navy;
+    color: white;
+    font-size: 1.3rem;
+    font-weight: bold;
+
+    &::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: #5fd38d;
+    }
+  }
+}
+
+/* 図解をタップで拡大（スマホでは文字が小さいため、原寸を新しいタブで開く） */
+.zoom-link {
+  position: relative;
+  display: block;
+
+  &__hint {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .zoom-link__hint {
+    position: absolute;
+    right: 6px;
+    bottom: 6px;
+    display: inline-block;
+    padding: 4px 10px;
+    background-color: rgba(23, 36, 57, 0.85);
+    color: white;
+    font-size: 1.1rem;
+    font-weight: bold;
+  }
+}

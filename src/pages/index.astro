@@ -41,6 +41,7 @@ const chain = [
 const services = [
   {
     icon: "gear",
+    img: "illust-adoption",
     en: "AI Adoption",
     name: "AI導入支援",
     catch: "実際の仕事を、ひとつ動かす。",
@@ -49,6 +50,7 @@ const services = [
   },
   {
     icon: "growth",
+    img: "illust-training",
     en: "AI Training",
     name: "AI人材育成",
     catch: "研修のあとに、使う人を増やす。",
@@ -71,18 +73,23 @@ const extras = [
 /* 事例は匿名・業種のみ。数字は本人確認済みの A 社だけ */
 const works = [
   {
+    img: "ad-agency-diagram",
+    href: "/cases/ad-agency",
     tag: "広告代理店 A社",
     ttl: "川端自身への外注が、1件約15万円から0円に。",
     txt: "1回の研修で、Webサイト制作のコーディングを社内で行えるようになり、それまで1件約15万円かかっていたコーディング外注がゼロになりました。その外注先は川端自身でしたが、A社は内製化によって特急の依頼も受けられるようになりました。",
   },
   {
     icon: "web",
+    img: "realestate-ad-diagram",
     tag: "不動産広告 B社",
     ttl: "外注していた制作物の多くを、社内で作れるように。",
     txt: "AI活用によって、外注していた制作物の多くを社内で作れるようになりました。社内で対応できる制作業務の範囲が広がっています。",
   },
   {
     icon: "app",
+    img: "real-estate-diagram",
+    href: "/cases/real-estate",
     tag: "不動産管理 C社",
     ttl: "社員1人が展開役となり、業務の半自動化を進行中。",
     txt: "社員1人が社内への展開役となり、AI活用を広げています。申込書の処理から関係先への連絡までを半自動化する取り組みが、現在進んでいます。",
@@ -289,7 +296,13 @@ const closingTimes = [
         <div class="cp-service__list">
           {services.map((s, i) => (
             <article class="cp-service__item" data-reveal style={`--d: ${i * 0.12}s`}>
-              <div class="cp-service__icon"><LineIcon name={s.icon} size={56} /></div>
+              {/* 挿絵は ChatGPT で作成（2026-10-03）。無ければアイコン */}
+              {s.img ? (
+                <picture class="cp-service__illust">
+                  <source srcset={`/assets/images/corp/${s.img}.webp`} type="image/webp" />
+                  <img src={`/assets/images/corp/${s.img}.jpg`} alt="" width="1000" height="750" loading="lazy" decoding="async" />
+                </picture>
+              ) : <div class="cp-service__icon"><LineIcon name={s.icon} size={56} /></div>}
               <p class="cp-service__en eng">{s.en}</p>
               <h3 class="cp-service__name">{s.name}</h3>
               <p class="cp-service__catch">{s.catch}</p>
@@ -329,17 +342,14 @@ const closingTimes = [
         <div class="cp-works__list">
           {works.map((w, i) => (
             <article class={`cp-work${i === 0 ? " is-feature" : ""}`} data-reveal style={`--d: ${i * 0.1}s`}>
-              {i === 0 && (
-                <p class="cp-work__figure" aria-label="外注費 1件約15万円から0円">
-                  <span class="cp-work__before"><small>外注費 1件</small><s>約15万円</s></span>
-                  <span class="cp-work__arrow" aria-hidden="true"></span>
-                  <span class="cp-work__after">0<small>円</small></span>
-                </p>
-              )}
-              {w.icon && <div class="cp-work__icon"><LineIcon name={w.icon} size={52} /></div>}
+              {/* 図解は ChatGPT で作成（2026-10-03）。事例ページと共通の画像 */}
+              <picture class="cp-work__img">
+                <source srcset={`/assets/images/cases/${w.img}.webp`} type="image/webp" />
+                <img src={`/assets/images/cases/${w.img}.jpg`} alt="" width="1600" height="900" loading="lazy" decoding="async" />
+              </picture>
               <p class="cp-work__tag">{w.tag}</p>
               <h3 class="cp-work__ttl">{w.ttl}</h3>
-              <p class="cp-work__txt">{w.txt}</p>
+              <p class="cp-work__txt">{w.txt}{w.href && <a href={w.href} class="cp-work__more">詳しく見る</a>}</p>
             </article>
           ))}
         </div>

@@ -21,6 +21,11 @@ export const cases = [
     icon: "web",
     industry: "広告代理店",
     figure: { label: "Web制作の外注費（1件）", before: "約15万円", after: "0" },
+    diagram: {
+      src: "ad-agency-diagram",
+      title: "外注していた工程を、社内のAIへ",
+      alt: "支援の前は広告代理店が外部デザイナーと外注先（1件約15万円）の間で調整を重ねていた。支援の後は社内で社員がAIを使ってコーディングし、外注費0円、特急対応も可能に。",
+    },
     cardTitle: "研修1回で、Web制作の外注費が1件約15万円から0円に",
     cardText: "コーディングを社内に移し、急ぎの依頼にも応えられるようになりました。",
     tags: ["研修1回", "外注費ゼロ", "特急対応"],
@@ -61,6 +66,12 @@ export const cases = [
     icon: "building",
     industry: "不動産管理会社",
     status: "進行中",
+    heroImg: "real-estate-scene",
+    diagram: {
+      src: "real-estate-diagram",
+      title: "入居申込の流れを、AIでつなぐ",
+      alt: "申込書PDF、AIが読み取り、基幹システムに入力、契約書のたたき台、保証会社へ依頼、明細の6工程を矢印でつないだ流れ図。契約書と保証会社への依頼の工程では、判断と送信は人が行う。",
+    },
     cardTitle: "見積書の自動作成が完成し、担当者自身が不具合を直せるように",
     cardText: "入居申込や売上集計の自動化と、社内への展開を進めています。",
     tags: ["見積書の自動作成", "展開役の育成", "進行中"],
@@ -106,6 +117,12 @@ export const cases = [
     icon: "scissors",
     industry: "美容院",
     status: "進行中",
+    heroImg: "beauty-salon-scene",
+    diagram: {
+      src: "beauty-salon-diagram",
+      title: "紙と二重管理から、つながったカルテへ",
+      alt: "支援の前は紙のカルテとレジの会計ソフトで二重管理。支援の後は、オーナーがAIで作った顧客カルテのアプリを、会計は今のソフトのままデータでつなぎ、スタッフだけがログインして使う。",
+    },
     cardTitle: "オーナーが顧客カルテを自作し、スタッフが使える形で公開",
     cardText: "会計は今の仕組みのまま、スタッフによる試用に向けて準備しています。",
     tags: ["カルテづくり", "オーナーが自作", "進行中"],
@@ -145,7 +162,7 @@ export const cases = [
 ];
 
 export const shortCases = [
-  { icon: "doc", industry: "不動産広告の会社", text: "作図や不動産の制作物、提案書を、AIを使って社内で作れるようになりました。外注していた制作物の多くを、社内で作っています。" },
+  { icon: "doc", img: "realestate-ad-diagram", industry: "不動産広告の会社", text: "作図や不動産の制作物、提案書を、AIを使って社内で作れるようになりました。外注していた制作物の多くを、社内で作っています。" },
   { icon: "handshake", industry: "福祉事業所", text: "支援記録の日報データから、個別支援計画書を自動で作る仕組みを作りました。" },
   { icon: "scissors", industry: "美容院", text: "研修1回のあと、社長が自社の管理アプリを自分で完成させました。" },
 ];

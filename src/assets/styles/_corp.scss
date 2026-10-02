@@ -3929,3 +3929,68 @@ $ease: cubic-bezier(0.22, 1, 0.36, 1);
     }
   }
 }
+
+/* 事業内容カードの挿絵（ChatGPT で作成、2026-10-03） */
+#corp-page .cp-service__illust {
+  display: block;
+  background-color: white;
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  #corp-page .cp-service__illust {
+    margin-bottom: 24px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #corp-page .cp-service__illust {
+    margin-bottom: 16px;
+  }
+}
+
+/* 事例カードの図解（2026-10-03） */
+#corp-page {
+  .cp-work__img {
+    display: block;
+    align-self: end;
+    background-color: white;
+    box-shadow: inset 0 0 0 1px $line;
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  .cp-work__more {
+    display: block;
+    margin-top: 14px;
+    color: $navy;
+    font-weight: bold;
+    text-decoration: underline;
+    text-underline-offset: 0.3em;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  #corp-page .cp-work__img {
+    margin-bottom: 20px;
+    padding: 6px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #corp-page .cp-work__img {
+    margin-bottom: 14px;
+    padding: 4px;
+  }
+}

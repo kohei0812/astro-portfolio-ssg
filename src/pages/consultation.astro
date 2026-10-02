@@ -64,6 +64,7 @@ const steps = [
 /* 事例は匿名・業種のみ。数字は本人確認済みの A 社だけ（気付きDB 2026-09-29_FORTIFY） */
 const cases = [
   {
+    img: "ad-agency-diagram",
     tag: "広告代理店 A社",
     ttl: "外注先の予定を待たず、特急の依頼も受けられるように。",
     before: "Webサイト制作のコーディングを、1件 約15万円で外注していました。制作を進めるには、外注先の都合を待つ必要がありました。",
@@ -72,6 +73,7 @@ const cases = [
     reveal: "実は、それまでの外注先は川端自身でした。自分の研修で、自分が受けていた仕事がなくなったのです。",
   },
   {
+    img: "realestate-ad-diagram",
     tag: "不動産広告 B社",
     ttl: "外注していた制作物の多くを、社内で作れるように。",
     before: "制作物を外注していました。",
@@ -79,6 +81,7 @@ const cases = [
     now: "以前は外に頼んでいた制作物の多くを、社内で作れるようになりました。",
   },
   {
+    img: "real-estate-diagram",
     tag: "不動産管理 C社",
     ttl: "社員の1人が展開役となり、仕事の流れを変えている最中です。",
     before: "申込書の処理から関係先への連絡まで、人の手で進める仕事がありました。",
@@ -210,6 +213,12 @@ const faqs = [
           <p class="c-head__en eng">Why it stalls</p>
           <h2 class="c-head__ttl" id="why-heading">研修も外注も、<br class="sp_only" />なぜ続かなかったのか。</h2>
         </header>
+        <figure class="c-figure">
+          <a href="/assets/images/consultation/diagram-why.jpg" target="_blank" rel="noopener" class="zoom-link" aria-label="図を拡大して見る"><picture>
+            <source srcset="/assets/images/consultation/diagram-why.webp" type="image/webp" />
+            <img src="/assets/images/consultation/diagram-why.jpg" alt="勉強化の罠（研修が勉強になり、元のやり方に戻る循環）と、外注のループ（頼んで完成品を受け取っても作り方が残らず、また頼む循環）の図。" width="1600" height="900" loading="lazy" decoding="async" />
+          </picture><span class="zoom-link__hint">タップで拡大</span></a>
+        </figure>
         <div class="c-why__list">
           {traps.map((t, i) => (
             <article class="c-why__item">
@@ -261,6 +270,10 @@ const faqs = [
         <div class="c-cases__list">
           {cases.map((c) => (
             <article class="c-case">
+              <picture class="c-case__img">
+                <source srcset={`/assets/images/cases/${c.img}.webp`} type="image/webp" />
+                <img src={`/assets/images/cases/${c.img}.jpg`} alt="" width="1600" height="900" loading="lazy" decoding="async" />
+              </picture>
               <p class="c-case__tag">{c.tag}</p>
               <h3 class="c-case__ttl">{c.ttl}</h3>
               <dl class="c-case__rows">
@@ -326,6 +339,12 @@ const faqs = [
           <p class="c-head__en eng">First session</p>
           <h2 class="c-head__ttl" id="first-heading">やりたいことを1つ、<br class="sp_only" />その場で動く形にしてお見せします。</h2>
         </header>
+        <figure class="c-figure">
+          <a href="/assets/images/consultation/diagram-first.jpg" target="_blank" rel="noopener" class="zoom-link" aria-label="図を拡大して見る"><picture>
+            <source srcset="/assets/images/consultation/diagram-first.webp" type="image/webp" />
+            <img src="/assets/images/consultation/diagram-first.jpg" alt="初回相談の流れ。1 フォームから申し込む、2 日程を決める、3 その場で1つ作る、4 必要な分だけ。" width="1600" height="900" loading="lazy" decoding="async" />
+          </picture><span class="zoom-link__hint">タップで拡大</span></a>
+        </figure>
         <ol class="c-first__list">
           {consultSteps.map((s, i) => (
             <li class={`c-first__item${i === 2 ? " is-key" : ""}`}>

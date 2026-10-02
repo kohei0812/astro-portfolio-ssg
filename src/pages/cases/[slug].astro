@@ -27,7 +27,15 @@ const others = cases.filter((x) => x.slug !== c.slug);
             <h1 class="ck-hero__ttl">{c.h1}</h1>
             <p class="ck-hero__lead">{c.lead}</p>
           </div>
-          <div data-reveal style="--d: .15s"><CasePanel c={c} /></div>
+          <div data-reveal style="--d: .15s">
+            {c.heroImg ? (
+              <picture class="ck-hero__img">
+                <source srcset={`/assets/images/cases/${c.heroImg}.webp`} type="image/webp" />
+                <img src={`/assets/images/cases/${c.heroImg}.jpg`} alt="" width="1000" height="750" decoding="async" />
+                <span class="ck-hero__status">{c.status}</span>
+              </picture>
+            ) : <CasePanel c={c} />}
+          </div>
         </div>
         <dl class="ck-summary" data-reveal style="--d: .2s">
           {c.summary.map((s) => (
@@ -36,6 +44,24 @@ const others = cases.filter((x) => x.slug !== c.slug);
         </dl>
       </div>
     </header>
+
+    <!-- 図解（ChatGPT で作成。2026-10-03 本人指示「事例に図解がない時点でおかしい」） -->
+    {c.diagram && (
+      <section class="cp-sec ck-diagram-sec" aria-labelledby="diagram-ttl">
+        <div class="cp-container">
+          <header class="cp-head" data-reveal>
+            <p class="cp-head__en eng">At a glance</p>
+            <h2 class="cp-head__ttl" id="diagram-ttl">{c.diagram.title}</h2>
+          </header>
+          <figure class="ck-diagram" data-reveal>
+            <a href={`/assets/images/cases/${c.diagram.src}.jpg`} target="_blank" rel="noopener" class="zoom-link" aria-label="図を拡大して見る"><picture>
+              <source srcset={`/assets/images/cases/${c.diagram.src}.webp`} type="image/webp" />
+              <img src={`/assets/images/cases/${c.diagram.src}.jpg`} alt={c.diagram.alt} width="1600" height="900" loading="lazy" decoding="async" />
+            </picture><span class="zoom-link__hint">タップで拡大</span></a>
+          </figure>
+        </div>
+      </section>
+    )}
 
     <!-- 支援の前 → 変わったこと -->
     <section class="cp-sec" aria-labelledby="ba-ttl">

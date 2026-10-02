@@ -1692,3 +1692,43 @@ $gray: #f4f6f9;
     }
   }
 }
+
+/* 図解（ChatGPT で作成、2026-10-03 本人指示「文章ばかりだと離脱される」） */
+#consultation-page .c-figure {
+  margin: 0;
+  background-color: white;
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  #consultation-page .c-figure {
+    margin-bottom: 48px;
+    padding: 16px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #consultation-page .c-figure {
+    margin: 0 -8px 28px;
+    padding: 6px;
+  }
+}
+
+#consultation-page .c-case__img {
+  display: block;
+  margin-bottom: 18px;
+  background-color: white;
+  box-shadow: inset 0 0 0 1px rgba(23, 36, 57, 0.12);
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+}
+

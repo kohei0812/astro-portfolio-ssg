@@ -265,17 +265,17 @@ const faq = [
         </ul>
 
         <h3 class="cs-subhead" data-reveal>方法は「統一する」か「育てる」か</h3>
-        <div class="cs-ways">
+        <figure class="cs-figure" data-reveal>
+          <a href="/assets/images/service/org-ab.jpg" target="_blank" rel="noopener" class="zoom-link" aria-label="図を拡大して見る"><picture>
+            <source srcset="/assets/images/service/org-ab.webp" type="image/webp" />
+            <img src="/assets/images/service/org-ab.jpg" alt="会社共通のAIを中心に、A 統一する（幹部と担当者が業務フローをスキルにし、全員で回す）と、B 育てる（全員が使い、改善を戻す）の2つの進め方。土台は会社の指針。" width="1600" height="900" loading="lazy" decoding="async" />
+          </picture><span class="zoom-link__hint">タップで拡大</span></a>
+        </figure>
+        <ul class="cs-ways-note">
           {orgWays.map((w, i) => (
-            <article class="cs-ways__item" data-reveal style={`--d: ${i * 0.1}s`}>
-              <p class="cs-ways__key eng">{w.key}</p>
-              <p class="cs-ways__name"><LineIcon name={w.icon} size={36} />{w.name}</p>
-              <p class="cs-ways__txt">{w.txt}</p>
-              <ol class="cs-ways__flow">{w.flow.map((f) => <li>{f}</li>)}</ol>
-            </article>
+            <li data-reveal style={`--d: ${i * 0.1}s`}><span class="cs-ways-note__key eng">{w.key}</span><p><strong>{w.name}</strong>{w.txt}</p></li>
           ))}
-          <p class="cs-ways__base" data-reveal style="--d: .2s"><span>共通の土台</span>言葉にした会社の指針（理念・判断の基準）。AIに渡す、いちばん良い材料です。</p>
-        </div>
+        </ul>
 
         <h3 class="cs-subhead" data-reveal>会社の形に合わせて選びます</h3>
         <div class="cs-sizes">
@@ -393,6 +393,13 @@ const faq = [
           <p class="cp-head__en eng">Training program</p>
           <h2 class="cp-head__ttl" id="training-ttl">法人AI研修の中身</h2>
         </header>
+
+        <figure class="cs-figure cs-figure--training" data-reveal>
+          <a href="/assets/images/service/training-flow.jpg" target="_blank" rel="noopener" class="zoom-link" aria-label="図を拡大して見る"><picture>
+            <source srcset="/assets/images/service/training-flow.webp" type="image/webp" />
+            <img src="/assets/images/service/training-flow.jpg" alt="研修のあと、展開役が社内へ広げ、1か月後にAI利用率が上がっていく流れ。" width="1600" height="900" loading="lazy" decoding="async" />
+          </picture><span class="zoom-link__hint">タップで拡大</span></a>
+        </figure>
 
         <h3 class="cs-subhead" data-reveal>6つのステップで進めます</h3>
         <p data-reveal>どの研修も同じ順で進めます。最後は、1か月後に誰が・何に・どれだけ使っているかを確かめ、経営者へご報告します。</p>

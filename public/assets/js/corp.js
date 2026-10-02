@@ -87,6 +87,20 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     return bottoms.length;
   };
+  // いちばん短い行の幅（改行を入れた結果、途中に「リを、」のような短い行ができていないかを見る）
+  const minLineWidth = (el) => {
+    const r = document.createRange();
+    r.selectNodeContents(el);
+    const lines = {};
+    [...r.getClientRects()].forEach((x) => {
+      if (x.width <= 0) return;
+      const k = Object.keys(lines).find((b) => Math.abs(b - x.bottom) < 2) ?? x.bottom;
+      lines[k] = lines[k] || [Infinity, -Infinity];
+      lines[k][0] = Math.min(lines[k][0], x.left);
+      lines[k][1] = Math.max(lines[k][1], x.right);
+    });
+    return Math.min(...Object.values(lines).map(([l, rr]) => rr - l));
+  };
   const fix = () => {
     document.querySelectorAll(SEL).forEach((el) => {
       if (el.dataset.orig !== undefined) {
@@ -108,7 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       for (const k of cands.slice(0, 6)) {
         el.innerHTML = html.slice(0, k + 1) + '<br class="orphan-br" />' + html.slice(k + 1);
-        if (!short() && lineCount(el) <= lines) return;
+        if (!short() && lineCount(el) <= lines && minLineWidth(el) > em * 3.5) return;
       }
       el.innerHTML = html;
       el.style.textWrap = "balance";

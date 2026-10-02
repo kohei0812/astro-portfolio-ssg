@@ -1752,3 +1752,117 @@ $ease: cubic-bezier(0.22, 1, 0.36, 1);
     }
   }
 }
+
+/* 図解（ChatGPT で作成、2026-10-03） */
+#corp-page.cp-service-page {
+  .cs-figure {
+    margin: 0;
+    background-color: white;
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  .cs-ways-note {
+    display: grid;
+
+    li {
+      display: flex;
+      align-items: baseline;
+    }
+
+    &__key {
+      flex-shrink: 0;
+      color: $red;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    p {
+      color: $body;
+      font-weight: 400;
+      line-height: 1.9;
+
+      strong {
+        display: block;
+        color: $navy;
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 769px) {
+  #corp-page.cp-service-page {
+    .cs-figure {
+      padding: 24px;
+    }
+
+    .cs-ways-note {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+      margin: 32px 0 96px;
+
+      li {
+        gap: 16px;
+      }
+
+      &__key {
+        font-size: 4rem;
+      }
+
+      p {
+        font-size: 1.5rem;
+
+        strong {
+          font-size: 1.8rem;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #corp-page.cp-service-page {
+    .cs-figure {
+      margin: 0 -8px;
+      padding: 8px;
+    }
+
+    .cs-ways-note {
+      gap: 18px;
+      margin: 24px 0 64px;
+
+      li {
+        gap: 12px;
+      }
+
+      &__key {
+        font-size: 3rem;
+      }
+
+      p {
+        font-size: 1.4rem;
+
+        strong {
+          font-size: 1.6rem;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 769px) {
+  #corp-page.cp-service-page .cs-figure--training {
+    margin-bottom: 80px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #corp-page.cp-service-page .cs-figure--training {
+    margin-bottom: 48px;
+  }
+}
