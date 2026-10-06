@@ -8,13 +8,48 @@
 import Layout from "../layouts/Layout.astro";
 import LineIcon from "../components/corp/LineIcon.astro";
 
-const flow = [
-  { icon: "talk", name: "初回相談（無料）", txt: "やりたいことを1つ伺い、動く形をその場でお見せします。", cls: "is-free" },
-  { icon: "laptop", name: "初回AI導入セッション", txt: "2時間で現在地を確かめ、実業務を1つ改善します。" },
-  { icon: "handshake", name: "顧問 または 研修", txt: "人数に合わせて、支援の形を選びます。", fork: ["〜5名：顧問", "6名〜：研修"] },
-  { icon: "megaphone", name: "社内の展開役を育成", txt: "社内でAI活用を広げる担当者を1人育てます。" },
-  { icon: "measure", name: "1か月後の利用率を確認", txt: "誰が、何に、どれだけAIを使っているかを確かめます。" },
-  { icon: "graduate", name: "自走したら卒業", txt: "社内で活用を続けられる状態になったら、支援を終えます。", cls: "is-goal" },
+/* コース（2026-10-05 本人決定）：事業規模ではなく「誰の仕事を変えるか」で分ける。料金は載せない */
+const courses = [
+  {
+    id: "ikki",
+    en: "Ikki-tousen course",
+    name: "一騎当千コース",
+    catch: "AI秘書を持ち、1人で千人分の仕事を。",
+    txt: "社長や個人事業主など、ご自身の仕事を変えるコースです。AIに資料を読ませ、作業を自動で回し、最後は方針に沿って毎朝AIのほうから今日の仕事を知らせてくる秘書をつくります。",
+    rows: [
+      ["変える仕事", "あなた自身の仕事"],
+      ["中身", "セミナー（初級・中級・上級）"],
+      ["進め方", "セミナー／伴走（個別・少人数グループ）／構築代行"],
+      ["ゴール", "AI秘書が、自分から報告に来る"],
+    ],
+    href: "#ikki-course",
+  },
+  {
+    id: "gunshi",
+    en: "AI Gunshi course",
+    name: "AI軍師コース",
+    catch: "社員がAIで自走する組織をつくる。",
+    txt: "社員が業務でAIを使い、社内で広げ続ける組織をつくるコースです。会社共通のAIと使い続ける仕組みを整え、社内の展開役を育てます。成果指標は研修後のAI利用率です。",
+    rows: [
+      ["変える仕事", "社員・部署の仕事"],
+      ["中身", "9回パッケージ・会社共通のAIづくり"],
+      ["進め方", "AI軍師顧問（〜5名）／法人AI研修・9回パッケージ（6名〜）"],
+      ["ゴール", "社内の展開役を中心に、AI活用を続けられる"],
+    ],
+    href: "#org",
+  },
+];
+
+/* 進め方：コースごとに、人数や関わり方に合わせて柔軟に選ぶ。料金は載せない */
+const ikkiWays = [
+  { name: "セミナー", tag: "1対多", txt: "初級・中級・上級（各2時間）。前半で説明と手を動かすワーク、後半で質疑応答と活用の発表を行います。", fit: "自分で手を動かして作りたい" },
+  { name: "伴走", tag: "個別・少人数グループ", txt: "あなたの環境で、一緒にAI秘書を組みます。時間単位で、必要な分だけ。", fit: "自分の業務で、確実に動く形まで進めたい" },
+  { name: "構築代行", tag: "おまかせ", txt: "こちらでAI秘書を組みます。あなたは方針を決めて、判断を返すだけです。", fit: "手を動かす時間を取れない" },
+];
+
+const gunshiWays = [
+  { name: "AI軍師顧問", tag: "〜5名", txt: "決まった一式を前提にせず、時間単位で必要な分だけ。業務の相談に応じながらその場で自動化を組み、社内の展開役を育てます。", fit: "少人数で、業務ごとに改善を重ねたい" },
+  { name: "法人AI研修（9回パッケージ）", tag: "6名〜", txt: "45分×9回に準備回を加えた研修です。実業務を題材に6ステップで進め、1か月後のAI利用率を経営者へ報告します。", fit: "複数の社員が、実務でAIを使う機会をつくりたい" },
 ];
 
 const stairs = [
@@ -52,134 +87,12 @@ const details = [
     incl: ["業務のヒアリングと、AIに任せられる業務の整理", "AI活用の5段階による現在地の判定", "Claude等の導入", "実業務を1つ改善する実践"],
     goal: "自社での使いどころを、1つの業務で実感できます。",
   },
-  {
-    id: "advisor",
-    icon: "handshake",
-    en: "AI advisor",
-    name: "AI軍師顧問",
-    tag: "継続支援",
-    photo: { src: "chain-2", alt: "机の上の腕時計とコーヒー、開いた手帳", w: 1000, h: 750 },
-    catch: "必要な分だけ、実装まで一緒に。",
-    txt: "決まった支援一式を前提にせず、時間単位で必要な分だけ一緒に取り組みます。業務の相談に応じながら、その場で自動化を組み、実装まで進めます。ゴールは長く続く契約ではなく、私たちがいなくてもAIを活用できる会社になることです。",
-    for: ["日々の業務に合わせて、相談と改善を重ねたい", "社内にAI活用を広げる担当者を置きたい"],
-    incl: ["業務に合わせたAI活用の相談", "その場での自動化の作成と実装", "社内の展開役となる担当者の育成"],
-    goal: "担当者を中心に、社内でAI活用を進められる状態になったら卒業です。",
-  },
-  {
-    id: "training",
-    icon: "growth",
-    en: "AI training",
-    name: "法人AI研修",
-    tag: "6名以上",
-    photo: { src: "band-team", alt: "夕暮れの橋を並んで歩く人たちのシルエット", w: 1920, h: 720 },
-    catch: "受講後に使うところまでが、研修です。",
-    txt: "自社の実業務を使ったハンズオン研修です。AIは学ぶ科目ではなく、日本語で頼めばPCが動く、新しい操作の型として伝えます。成果指標は研修満足度ではなく、研修後のAI利用率です。",
-    for: ["複数の従業員が、実務でAIを使う機会をつくりたい", "受講後にどれだけ使われたかまで確かめたい"],
-    incl: ["実業務を題材にした操作と実践", "9回パッケージ、または初級・中級・上級のセミナー", "受講1か月後のAI利用率を経営者へ報告"],
-    goal: "受講者が仕事でAIを使い、社内へ広げていく状態をつくります。",
-  },
-  {
-    id: "development",
-    icon: "app",
-    en: "Development",
-    name: "業務アプリ開発",
-    photo: { src: "fv-hands", alt: "ノートパソコンのキーボードを打つ手元", w: 900, h: 1125 },
-    catch: "業務に合う仕組みを、開発する。",
-    txt: "顧問の時間内では収まらない業務アプリや自動化を、現役エンジニアが開発します。既存システムとの連携も含め、必要な仕組みをつくります。",
-    for: ["自社の業務に合わせたアプリが必要", "既存システムとつなげて、作業を自動化したい"],
-    incl: ["業務アプリの開発", "業務の自動化の実装", "既存システムとの連携"],
-    goal: "業務に必要な機能を、動く仕組みとして形にします。",
-  },
 ];
 
-const six = ["驚かせる", "自分事化", "その場で成功させる", "自分で作らせる", "社内へ広げる", "1か月後に追跡"];
-
-const course = [
-  { no: "00", name: "準備", txt: "研修を始める前に、受講の環境を整えます。", cls: "is-zero" },
-  { no: "01", name: "見える世界が変わる", txt: "AIでできることを体験し、自分の仕事で使う場面を見つけます。" },
-  { no: "02", name: "AIの正体と頼み方", txt: "AIの基本を知り、意図が伝わる頼み方を実践します。" },
-  { no: "03", name: "仕事場はPCの中", txt: "PCの中にある仕事と情報を捉え直し、AIに任せる作業を考えます。" },
-  { no: "04", name: "情報設計（中間データ）", txt: "プロンプトの工夫より先に、AIが使える形に情報を整えます。" },
-  { no: "05", name: "AIを育てる", txt: "メモリとスキルで、業務に必要な情報や手順をAIに持たせます。" },
-  { no: "06", name: "安全とルール", txt: "業務でAIを使うときの注意と、社内で守るルールを決めます。" },
-  { no: "07", name: "自動化とエージェント", txt: "作業を自動で回す仕組みと、AIが仕事を進める形を扱います。" },
-  { no: "08", name: "作る人へ", txt: "自分の業務に必要な仕組みを、自分で作ります。" },
-  { no: "09", name: "会社のAIリーダーになる", txt: "実践を社内へ共有し、利用率を追いかける進め方を身につけます。", cls: "is-last" },
-];
-
-const seminars = [
-  {
-    name: "初級",
-    stage: "段階1",
-    on: [1],
-    learn: "冒頭でセキュリティの約束を確認し、実業務のタスクをAIに頼む練習をします。",
-    take: "自分の仕事でAIに頼む手順と、職場で試す宿題。",
-  },
-  {
-    name: "中級",
-    stage: "段階2・3",
-    on: [2, 3],
-    learn: "作業とデータをつなぎ、繰り返す作業を自動化する方法を扱います。",
-    take: "自社の業務をつなぐ・自動化する進め方と、実践の宿題。",
-  },
-  {
-    name: "上級",
-    stage: "段階4・5",
-    on: [4, 5],
-    learn: "方針に沿って提案し、自ら情報を集めて声をかけるAI秘書の仕組みを扱います。",
-    take: "AI秘書に任せる役割と、伝える方針の整理のしかた。",
-  },
-];
-
-/* 組織で使う：root様への提案（クライアント/root/提案資料 v5）で詰めた筋立て。料金・root様限りの条件は載せない */
 const orgIssues = [
   { icon: "graduate", name: "受講して終わる", txt: "研修が現場の業務につながらず、使われないまま終わります。" },
   { icon: "laptop", name: "ITの土台でつまずく", txt: "ファイル操作などの入口でつまずき、使う前に諦めてしまいます。" },
   { icon: "talk", name: "答えが一般論になる", txt: "会社の考え方を渡さないと、AIの答えが自社の判断に結びつきません。" },
-];
-
-const orgWays = [
-  {
-    key: "A",
-    icon: "layers",
-    name: "統一する",
-    txt: "幹部と担当者で業務フローを作り、AIで動くスキルにします。全員が同じスキルで業務を回します。",
-    flow: ["業務フローを作る", "スキルにする", "全員で回す"],
-  },
-  {
-    key: "B",
-    icon: "plant",
-    name: "育てる",
-    txt: "会社共通のAIに、指針・手順・判断の例をためていきます。現場で気づいた改善を戻し、AIを更新し続けます。",
-    flow: ["共通のAIを置く", "全員が使う", "改善を戻す"],
-  },
-];
-
-const orgSizes = [
-  {
-    size: "部署がまだ少ない会社",
-    issue: "幹部だけが使い、社員は様子見のまま止まりがち。",
-    way: "A 統一",
-    how: "業務フローをAIにして、全員で回します。",
-    goal: "幹部と展開役でスキルを足せる",
-    term: "約3か月",
-  },
-  {
-    size: "部署ごとに動く会社",
-    issue: "部署ごとにツールや使い方がばらばらになりがち。",
-    way: "A＋B 統一＋育てる",
-    how: "指針は全社で一つにし、部署ごとの手順を足します。",
-    goal: "部署の展開役が手順を足せる",
-    term: "約3か月",
-  },
-  {
-    size: "部署が多い会社",
-    issue: "上から統一しても、現場とずれていきがち。",
-    way: "B 育てる",
-    how: "全社で一つのAIを育て、現場の改善を戻す仕組みを作ります。",
-    goal: "社内でAIを更新し続けられる",
-    term: "約6か月",
-  },
 ];
 
 const orgRisks = [
@@ -191,23 +104,25 @@ const orgRisks = [
 ];
 
 const extras = [
+  { icon: "app", name: "業務アプリ開発", txt: "顧問の時間では収まらない業務アプリや自動化を、現役エンジニアが開発します。", href: "/consultation" },
   { icon: "web", name: "Web制作", txt: "AI活用に付随するWebサイトの制作もご相談いただけます。", href: "/web" },
   /* 助成金・補助金は提携パートナーが担当するため、詳しい説明ページは置かない（2026-10-02 本人判断） */
   { icon: "subsidy", name: "助成金・補助金の相談", txt: "活用できる制度は、提携する専門家と連携してご案内します。", href: "/consultation" },
 ];
 
 const faq = [
-  { q: "費用はどのように決まりますか？", a: "初回相談で業務を伺ったうえで、必要な分だけをご提案します。決まったパッケージをお売りすることはしていません。" },
+  { q: "一騎当千コースとAI軍師コース、どちらを選べばよいですか？", a: "会社の規模ではなく、変えたい仕事で選びます。社長ご自身の仕事を変えるなら一騎当千コース、社員や部署へ広げるならAI軍師コースです。社長が先に一騎当千コースで使い、AI軍師コースで社員へ広げる順番もおすすめです。" },
+  { q: "費用はどのように決まりますか？", a: "時間単位・人数単位の標準料金をもとに、初回相談で業務を伺って必要な分だけをご提案します。標準料金は資料でご覧いただけます。" },
   { q: "どのAIを使いますか？", a: "主にClaudeを使います。導入するAIは、相談で伺う業務内容に合わせて決めます。" },
   { q: "ITが苦手でも大丈夫ですか？", a: "はい。AIを学ぶ科目ではなく、日本語で頼めばPCが動く、新しい操作の型として扱います。実際の仕事を題材に、操作しながら進めます。" },
-  { q: "研修と顧問、どちらがよいですか？", a: "6名以上で実業務に取り組むなら研修、少人数で個別の業務改善を重ねるなら顧問が目安です。人数と取り組みたい業務を伺ってご提案します。" },
+  { q: "AI軍師コースの顧問と研修は、どう違いますか？", a: "人数で選びます。5名ほどまでなら、時間単位で業務ごとに改善を重ねる顧問。6名以上なら、9回パッケージの研修で全員の使い方をそろえます。" },
   { q: "卒業後はどうなりますか？", a: "育てた社内の展開役を中心に、日々の業務でAIを使い続けていただきます。支援を続けることを前提にせず、社内で進められることを卒業の目安にしています。" },
 ];
 ---
 
 <Layout
   title="サービス｜DDDynamis・AI軍師"
-  description="DDDynamisのAI軍師は、初回相談から導入セッション、顧問、法人AI研修、業務アプリ開発まで、必要な分だけ支援します。社内の展開役を育て、自走したら卒業。無料の初回相談では、やりたいことをその場で動く形にしてお見せします。"
+  description="DDDynamisは、一人を強化する一騎当千コースと、組織でAIを活用するAI軍師コースで、人数や関わり方に合わせて必要な分だけ支援します。社内の展開役を育て、自走したら卒業。無料の初回相談では、やりたいことをその場で動く形にしてお見せします。"
   corp
 >
   <main id="corp-page" class="corp-page cp-service-page" role="main">
@@ -219,38 +134,77 @@ const faq = [
       </div>
     </header>
 
-    <!-- 1. 支援の流れ -->
-    <section class="cp-sec" aria-labelledby="flow-ttl">
-      <span class="cp-watermark eng" aria-hidden="true">FLOW</span>
+    <!-- 0. 2つのコース -->
+    <section class="cp-sec cp-sec--gray" aria-labelledby="course-ttl">
+      <span class="cp-watermark eng" aria-hidden="true">COURSE</span>
       <div class="cp-container">
         <header class="cp-head" data-reveal>
-          <p class="cp-head__en eng">Flow</p>
-          <h2 class="cp-head__ttl" id="flow-ttl">支援の流れ</h2>
-          <p class="cp-head__lead">初回相談から卒業まで。どの段階からでも始められ、必要なところだけをお手伝いします。</p>
+          <p class="cp-head__en eng">Courses</p>
+          <h2 class="cp-head__ttl" id="course-ttl">2つのコース</h2>
+          <p class="cp-head__lead">一人を強化するなら一騎当千、組織で活用するならAI軍師。進め方は、人数や関わり方に合わせて選べます。</p>
         </header>
-        <ol class="cs-flow">
-          {flow.map((f, i) => (
-            <li class={`cs-flow__item ${f.cls ?? ""}`} data-reveal style={`--d: ${i * 0.08}s`}>
-              <span class="cs-flow__icon"><LineIcon name={f.icon} size={36} /></span>
-              <span class="cs-flow__no eng">STEP {String(i + 1).padStart(2, "0")}</span>
-              <p class="cs-flow__name">{f.name}</p>
-              {f.fork && (
-                <p class="cs-flow__fork">{f.fork.map((x) => <span>{x}</span>)}</p>
-              )}
-              <p class="cs-flow__txt">{f.txt}</p>
-            </li>
+        <div class="cs-courses">
+          {courses.map((c, i) => (
+            <article class="cs-courses__item" id={c.id} data-reveal style={`--d: ${i * 0.1}s`}>
+              <p class="cs-courses__en eng">{c.en}</p>
+              <h3 class="cs-courses__name">{c.name}</h3>
+              <p class="cs-courses__catch">{c.catch}</p>
+              <p class="cs-courses__txt">{c.txt}</p>
+              <dl class="cs-courses__rows">
+                {c.rows.map(([k, v]) => <><dt>{k}</dt><dd>{v}</dd></>)}
+              </dl>
+              <a href={c.href} class="cp-link cs-courses__more">中身を見る</a>
+            </article>
           ))}
-        </ol>
+        </div>
       </div>
     </section>
 
-    <!-- 2. 組織で使う（会社のAIを一つにする） -->
-    <section class="cp-sec cp-sec--gray" aria-labelledby="org-ttl">
+    <!-- 1. 一騎当千コース：AI活用の5段階 -->
+    <section class="cp-sec" id="ikki-course" aria-labelledby="stairs-ttl" style="scroll-margin-top: 100px">
+      <span class="cp-watermark eng" aria-hidden="true">STAGE</span>
+      <div class="cp-container">
+        <header class="cp-head" data-reveal>
+          <p class="cp-head__en eng">Ikki-tousen course</p>
+          <h2 class="cp-head__ttl" id="stairs-ttl">一騎当千コース：AI活用の5段階を登る</h2>
+          <p class="cp-head__lead">ご自身の仕事で、この5段階を一段ずつ登ります。1つずつ仕事を頼むところから、AIが自分から動く秘書まで。最初の導入セッションで、いまの段階を確かめます。</p>
+        </header>
+        <ol class="cs-stairs">
+          {stairs.map((s, i) => (
+            <li class="cs-stairs__step" data-reveal style={`--d: ${i * 0.1}s`}>
+              {i === 0 && <span class="cs-stairs__here">多くの人はここ</span>}
+              <p class="cs-stairs__no eng"><small>STAGE</small>{i + 1}</p>
+              <p class="cs-stairs__name">{s.name}</p>
+              <p class="cs-stairs__txt">{s.txt}</p>
+              <p class="cs-stairs__seminar">セミナー{s.seminar}</p>
+            </li>
+          ))}
+        </ol>
+        <p class="cs-stairs-note" data-reveal>段階1から一段ずつ。<em>あなたの仕事に必要な段階</em>まで進めます。</p>
+
+        <h3 class="cs-subhead" data-reveal>進め方</h3>
+        <div class="cs-sizes cs-sizes--ways">
+          {ikkiWays.map((w, i) => (
+            <article class="cs-sizes__item" data-reveal style={`--d: ${i * 0.1}s`}>
+              <p class="cs-sizes__size">{w.name}</p>
+              <p class="cs-sizes__way">{w.tag}</p>
+              <p class="cs-sizes__how">{w.txt}</p>
+              <dl class="cs-sizes__goal"><dt>向く方</dt><dd>{w.fit}</dd></dl>
+            </article>
+          ))}
+        </div>
+
+        <p class="cs-doc-cta" data-reveal><span>セミナー各回の中身と料金は、資料でご覧いただけます。</span><a href="/document" class="cp-btn cp-btn--ghost">資料を受け取る（無料）</a></p>
+      </div>
+    </section>
+
+    <!-- 2. AI軍師コース：組織で使う（会社のAIを一つにする） -->
+    <section class="cp-sec cp-sec--gray" id="org" aria-labelledby="org-ttl" style="scroll-margin-top: 100px">
       <span class="cp-watermark eng" aria-hidden="true">TEAM</span>
       <div class="cp-container">
         <header class="cp-head" data-reveal>
-          <p class="cp-head__en eng">For organizations</p>
-          <h2 class="cp-head__ttl" id="org-ttl">会社のAIを、一つにする。</h2>
+          <p class="cp-head__en eng">AI Gunshi course</p>
+          <h2 class="cp-head__ttl" id="org-ttl">AI軍師コース：会社のAIを、一つにする。</h2>
           <p class="cp-head__lead">AIは導入しても、組織では使われずに終わりがちです。必要なのは、会社共通のAIと、使い続ける仕組みです。</p>
         </header>
 
@@ -264,31 +218,14 @@ const faq = [
           ))}
         </ul>
 
-        <h3 class="cs-subhead" data-reveal>方法は「統一する」か「育てる」か</h3>
-        <figure class="cs-figure" data-reveal>
-          <a href="/assets/images/service/org-ab.jpg" target="_blank" rel="noopener" class="zoom-link" aria-label="図を拡大して見る"><picture>
-            <source srcset="/assets/images/service/org-ab.webp" type="image/webp" />
-            <img src="/assets/images/service/org-ab.jpg" alt="会社共通のAIを中心に、A 統一する（幹部と担当者が業務フローをスキルにし、全員で回す）と、B 育てる（全員が使い、改善を戻す）の2つの進め方。土台は会社の指針。" width="1600" height="900" loading="lazy" decoding="async" />
-          </picture><span class="zoom-link__hint">タップで拡大</span></a>
-        </figure>
-        <ul class="cs-ways-note">
-          {orgWays.map((w, i) => (
-            <li data-reveal style={`--d: ${i * 0.1}s`}><span class="cs-ways-note__key eng">{w.key}</span><p><strong>{w.name}</strong>{w.txt}</p></li>
-          ))}
-        </ul>
-
-        <h3 class="cs-subhead" data-reveal>会社の形に合わせて選びます</h3>
-        <div class="cs-sizes">
-          {orgSizes.map((z, i) => (
+        <h3 class="cs-subhead" data-reveal>進め方は、人数で選びます</h3>
+        <div class="cs-sizes cs-sizes--ways cs-sizes--two">
+          {gunshiWays.map((w, i) => (
             <article class="cs-sizes__item" data-reveal style={`--d: ${i * 0.1}s`}>
-              <p class="cs-sizes__size">{z.size}</p>
-              <p class="cs-sizes__issue">{z.issue}</p>
-              <p class="cs-sizes__way">{z.way}</p>
-              <p class="cs-sizes__how">{z.how}</p>
-              <dl class="cs-sizes__goal">
-                <dt>卒業の形</dt><dd>{z.goal}</dd>
-                <dt>期間の目安</dt><dd>{z.term}</dd>
-              </dl>
+              <p class="cs-sizes__size">{w.name}</p>
+              <p class="cs-sizes__way">{w.tag}</p>
+              <p class="cs-sizes__how">{w.txt}</p>
+              <dl class="cs-sizes__goal"><dt>向く方</dt><dd>{w.fit}</dd></dl>
             </article>
           ))}
         </div>
@@ -298,40 +235,18 @@ const faq = [
           {orgRisks.map((r) => <li><span class="cs-risks__name">{r.name}</span><span class="cs-risks__txt">{r.txt}</span></li>)}
         </ul>
         <p class="cs-risks-note" data-reveal>AIの出力はそのまま使わず、確認と情報の整理は人の役割として残します。</p>
+        <p class="cs-doc-cta" data-reveal><span>進め方の詳細・9回パッケージの中身・料金は、資料でご覧いただけます。</span><a href="/document" class="cp-btn cp-btn--ghost">資料を受け取る（無料）</a></p>
       </div>
     </section>
 
-    <!-- 3. 一人ひとりのAI活用の5段階 -->
-    <section class="cp-sec" aria-labelledby="stairs-ttl">
-      <span class="cp-watermark eng" aria-hidden="true">STAGE</span>
-      <div class="cp-container">
-        <header class="cp-head" data-reveal>
-          <p class="cp-head__en eng">5 stages</p>
-          <h2 class="cp-head__ttl" id="stairs-ttl">一人ひとりのAI活用の5段階</h2>
-          <p class="cp-head__lead">組織の仕組みと並行して、一人ひとりの使い方も上げていきます。1つずつ仕事を頼むところから、AIが自ら動くところまで。最初の導入セッションで、いまの段階を確かめます。</p>
-        </header>
-        <ol class="cs-stairs">
-          {stairs.map((s, i) => (
-            <li class="cs-stairs__step" data-reveal style={`--d: ${i * 0.1}s`}>
-              {i === 0 && <span class="cs-stairs__here">多くの会社はここ</span>}
-              <p class="cs-stairs__no eng"><small>STAGE</small>{i + 1}</p>
-              <p class="cs-stairs__name">{s.name}</p>
-              <p class="cs-stairs__txt">{s.txt}</p>
-              <p class="cs-stairs__seminar">セミナー{s.seminar}</p>
-            </li>
-          ))}
-        </ol>
-        <p class="cs-stairs-note" data-reveal>段階1から一段ずつ。<em>その会社の仕事に必要な段階</em>まで進めます。</p>
-      </div>
-    </section>
-
-    <!-- 4. サービス詳細 -->
-    <section class="cp-sec cp-sec--gray" aria-labelledby="detail-ttl">
+    <!-- 3. はじめ方（両コース共通） -->
+    <section class="cp-sec" aria-labelledby="detail-ttl">
       <span class="cp-watermark eng" aria-hidden="true">SERVICE</span>
       <div class="cp-container">
         <header class="cp-head" data-reveal>
-          <p class="cp-head__en eng">Services</p>
-          <h2 class="cp-head__ttl" id="detail-ttl">支援の内容</h2>
+          <p class="cp-head__en eng">Getting started</p>
+          <h2 class="cp-head__ttl" id="detail-ttl">はじめ方</h2>
+          <p class="cp-head__lead">どちらのコースも、初回相談と導入セッションから始めます。</p>
         </header>
 
         <div class="cs-details">
@@ -385,67 +300,6 @@ const faq = [
       </div>
     </section>
 
-    <!-- 5. 研修の中身 -->
-    <section class="cp-sec" aria-labelledby="training-ttl">
-      <span class="cp-watermark eng" aria-hidden="true">TRAINING</span>
-      <div class="cp-container">
-        <header class="cp-head" data-reveal>
-          <p class="cp-head__en eng">Training program</p>
-          <h2 class="cp-head__ttl" id="training-ttl">法人AI研修の中身</h2>
-        </header>
-
-        <figure class="cs-figure cs-figure--training" data-reveal>
-          <a href="/assets/images/service/training-flow.jpg" target="_blank" rel="noopener" class="zoom-link" aria-label="図を拡大して見る"><picture>
-            <source srcset="/assets/images/service/training-flow.webp" type="image/webp" />
-            <img src="/assets/images/service/training-flow.jpg" alt="研修のあと、展開役が社内へ広げ、1か月後にAI利用率が上がっていく流れ。" width="1600" height="900" loading="lazy" decoding="async" />
-          </picture><span class="zoom-link__hint">タップで拡大</span></a>
-        </figure>
-
-        <h3 class="cs-subhead" data-reveal>6つのステップで進めます</h3>
-        <p data-reveal>どの研修も同じ順で進めます。最後は、1か月後に誰が・何に・どれだけ使っているかを確かめ、経営者へご報告します。</p>
-        <ol class="cs-six">
-          {six.map((s, i) => (
-            <li class={i === 5 ? "is-track" : undefined} data-reveal style={`--d: ${i * 0.06}s`}>{s}</li>
-          ))}
-        </ol>
-
-        <h3 class="cs-subhead" data-reveal>9回パッケージ</h3>
-        <p data-reveal>45分×9回に準備回を加えた構成です。最後に、社内でAI活用を引っ張るリーダーが立つことを目指します。</p>
-        <ol class="cs-course">
-          {course.map((c, i) => (
-            <li class={`cs-course__item ${c.cls ?? ""}`} data-reveal style={`--d: ${(i % 5) * 0.06}s`}>
-              <p class="cs-course__no eng">{c.no === "00" ? "PREP" : `#${c.no}`}</p>
-              <p class="cs-course__name">{c.name}</p>
-              <p class="cs-course__txt">{c.txt}</p>
-            </li>
-          ))}
-        </ol>
-
-        <h3 class="cs-subhead" data-reveal>セミナー（初級・中級・上級）</h3>
-        <p data-reveal>各2時間。AI活用の5段階に合わせて選べます。初級・中級は宿題があり、次の回の冒頭で成果を発表します。</p>
-        <div class="cs-seminar">
-          {seminars.map((s, i) => (
-            <article class="cs-seminar__item" data-reveal style={`--d: ${i * 0.1}s`}>
-              <div>
-                <p class="cs-seminar__level"><span class="cs-seminar__name">{s.name}</span><span class="cs-seminar__stage">{s.stage}</span></p>
-                <p class="cs-seminar__bar" aria-hidden="true">
-                  {[1, 2, 3, 4, 5].map((n) => <span class={s.on.includes(n) ? "is-on" : undefined}></span>)}
-                </p>
-              </div>
-              <dl>
-                <dt>扱うこと</dt>
-                <dd>{s.learn}</dd>
-              </dl>
-              <dl>
-                <dt>持ち帰るもの</dt>
-                <dd>{s.take}</dd>
-              </dl>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-
     <!-- 6. よくある質問 -->
     <section class="cp-sec cp-sec--gray" aria-labelledby="faq-ttl">
       <div class="cp-container">
@@ -476,6 +330,7 @@ const faq = [
         <h2 class="cp-closing__ttl" id="sv-closing">まずは、やりたいことを1つ。</h2>
         <p class="cp-closing__txt">その仕事をAIに任せるとどう変わるか、初回相談で一緒に確かめましょう。初回相談は無料です。</p>
         <a href="/consultation" class="cp-btn cp-btn--primary cp-btn--lg">初回相談について</a>
+        <a href="/document" class="cp-btn cp-btn--ghost cp-btn--lg cs-closing-doc">資料を受け取る</a>
       </div>
     </section>
   </main>

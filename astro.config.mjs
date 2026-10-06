@@ -17,6 +17,8 @@ export default defineConfig({
       changefreq: 'weekly',
       priority: 0.7,
       lastmod: new Date(),
+      // 資料請求後のページは検索・サイトマップに出さない
+      filter: (page) => !page.includes('/document/materials'),
     })
   ],
   compressHTML: false,

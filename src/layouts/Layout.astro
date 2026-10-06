@@ -9,6 +9,7 @@ const {
   lpCta = undefined, // lp のとき { header, sticky } でボタン文言を渡す
   lpTagline = "", // lp のときヘッダーのロゴ横に出す一行（PCのみ）
   corp = false, // true: コーポレートサイト用のヘッダー・フッター（白地＋紺）と corp.js
+  noindex = false, // true: 検索に出さない（資料請求後のページなど）
 } = Astro.props;
 
 // 現在のパス取得
@@ -63,7 +64,7 @@ const scriptHtml = `
     <!-- SEO基本 -->
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
     <link rel="canonical" href={`https://www.dddynamis.com${Astro.url.pathname}`} />
 
     <!-- OGP -->

@@ -1,0 +1,259 @@
+---
+/*
+  資料請求後のページ（2026-10-05）。/document のフォーム送信後に表示する。検索・サイトマップには出さない（noindex＋astro.config の filter）。
+  サービスページから移した「2コースの詳しい中身」と標準料金。料金は 事業計画/Dynamis_価格表_2026-10.html と一騎当千セミナー1人3万円（2026-10-05）を正本にする。
+  ルート様限りの卸価格・協業条件は載せない。業種・規模で個別に提案する前提で「標準料金」と書く。
+  スタイルはサービスページと同じ（cp-service-page）。料金表だけ _corp-service.scss の cs-price。
+*/
+import Layout from "../../layouts/Layout.astro";
+
+const six = ["驚かせる", "自分事化", "その場で成功させる", "自分で作らせる", "社内へ広げる", "1か月後に追跡"];
+
+const course = [
+  { no: "00", name: "準備", txt: "研修を始める前に、受講の環境を整えます。", cls: "is-zero" },
+  { no: "01", name: "見える世界が変わる", txt: "AIでできることを体験し、自分の仕事で使う場面を見つけます。" },
+  { no: "02", name: "AIの正体と頼み方", txt: "AIの基本を知り、意図が伝わる頼み方を実践します。" },
+  { no: "03", name: "仕事場はPCの中", txt: "PCの中にある仕事と情報を捉え直し、AIに任せる作業を考えます。" },
+  { no: "04", name: "情報設計（中間データ）", txt: "プロンプトの工夫より先に、AIが使える形に情報を整えます。" },
+  { no: "05", name: "AIを育てる", txt: "メモリとスキルで、業務に必要な情報や手順をAIに持たせます。" },
+  { no: "06", name: "安全とルール", txt: "業務でAIを使うときの注意と、社内で守るルールを決めます。" },
+  { no: "07", name: "自動化とエージェント", txt: "作業を自動で回す仕組みと、AIが仕事を進める形を扱います。" },
+  { no: "08", name: "作る人へ", txt: "自分の業務に必要な仕組みを、自分で作ります。" },
+  { no: "09", name: "会社のAIリーダーになる", txt: "実践を社内へ共有し、利用率を追いかける進め方を身につけます。", cls: "is-last" },
+];
+
+const seminars = [
+  {
+    name: "初級",
+    stage: "段階1",
+    on: [1],
+    learn: "冒頭でセキュリティの約束を確認し、実業務のタスクをAIに頼む練習をします。",
+    take: "自分の仕事でAIに頼む手順と、職場で試す宿題。",
+  },
+  {
+    name: "中級",
+    stage: "段階2・3",
+    on: [2, 3],
+    learn: "資料をAIに読ませ、チャット・フォルダ・端末をつないで、繰り返す作業を定期実行にします。",
+    take: "自分の業務フォルダと現況ファイル、すぐ使える依頼文。",
+  },
+  {
+    name: "上級",
+    stage: "段階4・5",
+    on: [4, 5],
+    learn: "方針を持たせ、気付きや録音を入口に、毎朝AIのほうから今日の順番が届くAI秘書をつくります。",
+    take: "方針ファイルと、AI秘書の組み立て方。",
+  },
+];
+
+/* 組織で使う：root様への提案（クライアント/root/提案資料 v5）で詰めた筋立て。料金・root様限りの条件は載せない */
+const orgWays = [
+  {
+    key: "A",
+    icon: "layers",
+    name: "統一する",
+    txt: "幹部と担当者で業務フローを作り、AIで動くスキルにします。全員が同じスキルで業務を回します。",
+    flow: ["業務フローを作る", "スキルにする", "全員で回す"],
+  },
+  {
+    key: "B",
+    icon: "plant",
+    name: "育てる",
+    txt: "会社共通のAIに、指針・手順・判断の例をためていきます。現場で気づいた改善を戻し、AIを更新し続けます。",
+    flow: ["共通のAIを置く", "全員が使う", "改善を戻す"],
+  },
+];
+
+const orgSizes = [
+  {
+    size: "部署がまだ少ない会社",
+    issue: "幹部だけが使い、社員は様子見のまま止まりがち。",
+    way: "A 統一",
+    how: "業務フローをAIにして、全員で回します。",
+    goal: "幹部と展開役でスキルを足せる",
+    term: "約3か月",
+  },
+  {
+    size: "部署ごとに動く会社",
+    issue: "部署ごとにツールや使い方がばらばらになりがち。",
+    way: "A＋B 統一＋育てる",
+    how: "指針は全社で一つにし、部署ごとの手順を足します。",
+    goal: "部署の展開役が手順を足せる",
+    term: "約3か月",
+  },
+  {
+    size: "部署が多い会社",
+    issue: "上から統一しても、現場とずれていきがち。",
+    way: "B 育てる",
+    how: "全社で一つのAIを育て、現場の改善を戻す仕組みを作ります。",
+    goal: "社内でAIを更新し続けられる",
+    term: "約6か月",
+  },
+];
+
+const prices = [
+  { group: "はじめ方（両コース共通）", rows: [
+    ["初回相談", "30分・オンライン", "無料"],
+    ["初回AI導入セッション", "〜5名・2時間", "30,000円"],
+    ["スポットAI顧問", "1〜2名・単発", "50,000円 / 1時間"],
+  ] },
+  { group: "一騎当千コース（一人を強化）", rows: [
+    ["セミナー（初級・中級・上級）", "各2時間", "30,000円 / 人"],
+    ["伴走（個別）", "時間単位", "30,000円 / 1時間"],
+    ["伴走（少人数グループ）・構築代行", "範囲を伺って", "お見積り"],
+  ] },
+  { group: "AI軍師コース（組織で活用）", rows: [
+    ["AI軍師顧問", "〜5名・時間単位", "30,000円 / 1時間"],
+    ["法人AI研修", "6名〜", "半日 20,000円 / 人・1日 35,000円 / 人"],
+    ["9回パッケージ", "人数・期間に合わせて", "お見積り"],
+  ] },
+  { group: "あわせて", rows: [
+    ["業務アプリ開発", "要件を伺って", "お見積り"],
+  ] },
+];
+---
+
+<Layout title="資料｜コースの詳しい中身と料金｜DDDynamis" description="一騎当千コースとAI軍師コースの詳しい中身と標準料金。" corp noindex>
+  <main id="corp-page" class="corp-page cp-service-page" role="main">
+    <header class="cp-page-head">
+      <div class="cp-container">
+        <p class="cp-head__en eng" data-reveal>Document</p>
+        <h1 class="cp-page-head__ttl" data-reveal style="--d: .1s">コースの詳しい中身と料金</h1>
+        <p class="cp-page-head__lead" data-reveal style="--d: .2s">資料請求ありがとうございます。<br />このページは、お申し込みいただいた方だけにご案内しています。</p>
+      </div>
+    </header>
+
+    <section class="cp-sec" aria-labelledby="m-ikki">
+      <span class="cp-watermark eng" aria-hidden="true">STAGE</span>
+      <div class="cp-container">
+        <header class="cp-head" data-reveal>
+          <p class="cp-head__en eng">Ikki-tousen course</p>
+          <h2 class="cp-head__ttl" id="m-ikki">一騎当千コースの中身</h2>
+          <p class="cp-head__lead">AI活用の5段階を、ご自身の仕事で一段ずつ登ります。中級・上級は、前半1時間で説明と手を動かすワーク、後半1時間で質疑応答と活用の発表を行います。</p>
+        </header>
+        <div class="cs-seminar">
+          {seminars.map((s, i) => (
+            <article class="cs-seminar__item" data-reveal style={`--d: ${i * 0.1}s`}>
+              <div>
+                <p class="cs-seminar__level"><span class="cs-seminar__name">{s.name}</span><span class="cs-seminar__stage">{s.stage}</span></p>
+                <p class="cs-seminar__bar" aria-hidden="true">
+                  {[1, 2, 3, 4, 5].map((n) => <span class={s.on.includes(n) ? "is-on" : undefined}></span>)}
+                </p>
+              </div>
+              <dl>
+                <dt>扱うこと</dt>
+                <dd>{s.learn}</dd>
+              </dl>
+              <dl>
+                <dt>持ち帰るもの</dt>
+                <dd>{s.take}</dd>
+              </dl>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="cp-sec cp-sec--gray" aria-labelledby="m-gunshi">
+      <span class="cp-watermark eng" aria-hidden="true">TEAM</span>
+      <div class="cp-container">
+        <header class="cp-head" data-reveal>
+          <p class="cp-head__en eng">AI Gunshi course</p>
+          <h2 class="cp-head__ttl" id="m-gunshi">AI軍師コースの中身</h2>
+        </header>
+        <h3 class="cs-subhead" data-reveal>方法は「統一する」か「育てる」か</h3>
+        <figure class="cs-figure" data-reveal>
+          <a href="/assets/images/service/org-ab.jpg" target="_blank" rel="noopener" class="zoom-link" aria-label="図を拡大して見る"><picture>
+            <source srcset="/assets/images/service/org-ab.webp" type="image/webp" />
+            <img src="/assets/images/service/org-ab.jpg" alt="会社共通のAIを中心に、A 統一する（幹部と担当者が業務フローをスキルにし、全員で回す）と、B 育てる（全員が使い、改善を戻す）の2つの進め方。土台は会社の指針。" width="1600" height="900" loading="lazy" decoding="async" />
+          </picture><span class="zoom-link__hint">タップで拡大</span></a>
+        </figure>
+        <ul class="cs-ways-note">
+          {orgWays.map((w, i) => (
+            <li data-reveal style={`--d: ${i * 0.1}s`}><span class="cs-ways-note__key eng">{w.key}</span><p><strong>{w.name}</strong>{w.txt}</p></li>
+          ))}
+        </ul>
+
+        <h3 class="cs-subhead" data-reveal>会社の形に合わせて選びます</h3>
+        <div class="cs-sizes">
+          {orgSizes.map((z, i) => (
+            <article class="cs-sizes__item" data-reveal style={`--d: ${i * 0.1}s`}>
+              <p class="cs-sizes__size">{z.size}</p>
+              <p class="cs-sizes__issue">{z.issue}</p>
+              <p class="cs-sizes__way">{z.way}</p>
+              <p class="cs-sizes__how">{z.how}</p>
+              <dl class="cs-sizes__goal">
+                <dt>卒業の形</dt><dd>{z.goal}</dd>
+                <dt>期間の目安</dt><dd>{z.term}</dd>
+              </dl>
+            </article>
+          ))}
+        </div>
+
+        <figure class="cs-figure cs-figure--training" data-reveal>
+          <a href="/assets/images/service/training-flow.jpg" target="_blank" rel="noopener" class="zoom-link" aria-label="図を拡大して見る"><picture>
+            <source srcset="/assets/images/service/training-flow.webp" type="image/webp" />
+            <img src="/assets/images/service/training-flow.jpg" alt="研修のあと、展開役が社内へ広げ、1か月後にAI利用率が上がっていく流れ。" width="1600" height="900" loading="lazy" decoding="async" />
+          </picture><span class="zoom-link__hint">タップで拡大</span></a>
+        </figure>
+
+        <h3 class="cs-subhead" data-reveal>6つのステップで進めます</h3>
+        <p data-reveal>どの研修も同じ順で進めます。最後は、1か月後に誰が・何に・どれだけ使っているかを確かめ、経営者へご報告します。</p>
+        <ol class="cs-six">
+          {six.map((s, i) => (
+            <li class={i === 5 ? "is-track" : undefined} data-reveal style={`--d: ${i * 0.06}s`}>{s}</li>
+          ))}
+        </ol>
+
+        <h3 class="cs-subhead" data-reveal>9回パッケージの中身</h3>
+        <p data-reveal>45分×9回に準備回を加えた構成です。最後に、社内でAI活用を引っ張るリーダーが立つことを目指します。</p>
+        <ol class="cs-course">
+          {course.map((c, i) => (
+            <li class={`cs-course__item ${c.cls ?? ""}`} data-reveal style={`--d: ${(i % 5) * 0.06}s`}>
+              <p class="cs-course__no eng">{c.no === "00" ? "PREP" : `#${c.no}`}</p>
+              <p class="cs-course__name">{c.name}</p>
+              <p class="cs-course__txt">{c.txt}</p>
+            </li>
+          ))}
+        </ol>
+
+      </div>
+    </section>
+
+    <section class="cp-sec" aria-labelledby="m-price">
+      <span class="cp-watermark eng" aria-hidden="true">PRICE</span>
+      <div class="cp-container">
+        <header class="cp-head" data-reveal>
+          <p class="cp-head__en eng">Price</p>
+          <h2 class="cp-head__ttl" id="m-price">標準料金</h2>
+          <p class="cp-head__lead">決まった一式はお売りしません。必要な分だけ、一緒に取り組みます。業種や規模に合わせて、初回相談で個別にご提案します。</p>
+        </header>
+        <div class="cs-price" data-reveal>
+          {prices.map((g) => (
+            <table>
+              <caption>{g.group}</caption>
+              <tbody>
+                {g.rows.map(([name, unit, yen]) => <tr><th>{name}</th><td class="cs-price__unit">{unit}</td><td class="cs-price__yen">{yen}</td></tr>)}
+              </tbody>
+            </table>
+          ))}
+        </div>
+        <p class="cs-price-note" data-reveal>表示はすべて税別です。遠方の場合は交通費を実費で申し受けます（オンラインにも対応しています）。</p>
+      </div>
+    </section>
+
+    <section class="cp-closing" aria-labelledby="m-closing">
+      <picture class="cp-closing__band" aria-hidden="true">
+        <source media="(min-width: 769px)" srcset="/assets/images/corp/band-connect.webp" type="image/webp" />
+        <source media="(min-width: 769px)" srcset="/assets/images/corp/band-connect.jpg" />
+        <source srcset="/assets/images/corp/band-connect-sp.webp" type="image/webp" />
+        <img src="/assets/images/corp/band-connect-sp.jpg" alt="" width="800" height="600" loading="lazy" decoding="async" />
+      </picture>
+      <div class="cp-container cp-closing__inner" data-reveal>
+        <h2 class="cp-closing__ttl" id="m-closing">まずは、やりたいことを1つ。</h2>
+        <p class="cp-closing__txt">どちらのコースが合うかも含めて、初回相談で一緒に確かめましょう。初回相談は無料です。</p>
+        <a href="/consultation" class="cp-btn cp-btn--primary cp-btn--lg">初回相談について</a>
+      </div>
+    </section>
+  </main>
+</Layout>

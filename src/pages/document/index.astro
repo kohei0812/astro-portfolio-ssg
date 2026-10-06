@@ -1,0 +1,40 @@
+---
+/*
+  資料請求（2026-10-05）。サービスページの「資料を受け取る」から来る。
+  送信すると /document/materials（noindex）へ移り、コースの詳しい中身と標準料金を見られる。
+  フォームは DocumentForm.jsx（送信先は初回相談と同じ Google フォーム、件名【資料請求】）。
+*/
+import Layout from "../../layouts/Layout.astro";
+import DocumentForm from "../../components/consultation/DocumentForm.jsx";
+
+const contents = [
+  "一騎当千コース：セミナー初級・中級・上級で扱うこと",
+  "AI軍師コース：会社の形に合わせた進め方と期間の目安",
+  "AI軍師コース：6つのステップと9回パッケージの中身",
+  "両コースの標準料金",
+];
+---
+
+<Layout title="資料請求｜DDDynamis・AI軍師" description="一騎当千コースとAI軍師コースの詳しい中身と標準料金をまとめた資料です。フォームを送信すると、すぐにご覧いただけます。" corp>
+  <main id="corp-page" class="corp-page cp-service-page" role="main">
+    <header class="cp-page-head">
+      <div class="cp-container">
+        <p class="cp-head__en eng" data-reveal>Document</p>
+        <h1 class="cp-page-head__ttl" data-reveal style="--d: .1s">資料請求</h1>
+        <p class="cp-page-head__lead" data-reveal style="--d: .2s">2つのコースの詳しい中身と標準料金を、送信後すぐにご覧いただけます。</p>
+      </div>
+    </header>
+    <section class="cp-sec" aria-labelledby="doc-ttl">
+      <div class="cp-container">
+        <header class="cp-head" data-reveal>
+          <p class="cp-head__en eng">Contents</p>
+          <h2 class="cp-head__ttl" id="doc-ttl">資料でわかること</h2>
+        </header>
+        <ul class="cs-doc-list" data-reveal>
+          {contents.map((c) => <li>{c}</li>)}
+        </ul>
+      </div>
+    </section>
+    <DocumentForm client:load />
+  </main>
+</Layout>

@@ -1866,3 +1866,277 @@ $ease: cubic-bezier(0.22, 1, 0.36, 1);
     margin-bottom: 48px;
   }
 }
+
+/* --- 2つのコース（2026-10-05）。cs-sizes と同じ考え方：白いカード・紺の見出し --- */
+#corp-page.cp-service-page {
+  .cs-courses {
+    display: grid;
+
+    &__item {
+      display: flex;
+      flex-direction: column;
+      background-color: white;
+      border-top: 3px solid $navy;
+      scroll-margin-top: 100px;
+    }
+
+    &__en {
+      color: $red;
+      font-weight: bold;
+      letter-spacing: 0.08em;
+    }
+
+    &__name {
+      color: $navy;
+      font-weight: bold;
+    }
+
+    &__catch {
+      color: $ink;
+      font-weight: bold;
+    }
+
+    &__txt {
+      color: $body;
+      line-height: 1.9;
+    }
+
+    &__rows {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      border-top: 1px solid $line;
+
+      dt {
+        color: $sub;
+        font-weight: bold;
+        white-space: nowrap;
+      }
+
+      dd {
+        color: $navy;
+        font-weight: 500;
+        line-height: 1.7;
+      }
+    }
+
+    &__more {
+      align-self: flex-start;
+      margin-top: auto;
+    }
+  }
+
+  #seminar {
+    scroll-margin-top: 100px;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  #corp-page.cp-service-page .cs-courses {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+
+    &__item { padding: 40px 40px 36px; }
+    &__en { font-size: 1.3rem; }
+    &__name { margin-top: 8px; font-size: 2.8rem; }
+    &__catch { margin-top: 14px; font-size: 1.8rem; }
+    &__txt { margin-top: 14px; font-size: 1.5rem; }
+    &__rows { gap: 12px 24px; margin: 28px 0 28px; padding-top: 24px; font-size: 1.5rem; }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #corp-page.cp-service-page .cs-courses {
+    gap: 12px;
+
+    &__item { padding: 26px 20px 24px; }
+    &__en { font-size: 1.2rem; }
+    &__name { margin-top: 6px; font-size: 2.2rem; }
+    &__catch { margin-top: 10px; font-size: 1.6rem; }
+    &__txt { margin-top: 10px; font-size: 1.4rem; }
+    &__rows { gap: 10px 16px; margin: 20px 0; padding-top: 18px; font-size: 1.4rem; }
+  }
+}
+
+/* 進め方のカード（cs-sizes を流用。2026-10-05） */
+@media screen and (min-width: 769px) {
+  #corp-page.cp-service-page .cs-sizes--ways {
+    margin-bottom: 72px;
+  }
+}
+@media screen and (max-width: 768px) {
+  #corp-page.cp-service-page .cs-sizes--ways {
+    margin-bottom: 48px;
+  }
+}
+#corp-page.cp-service-page .cs-sizes--ways .cs-sizes__goal dt { white-space: nowrap; }
+@media screen and (min-width: 769px) {
+  #corp-page.cp-service-page .cs-sizes--two { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* --- 資料請求への導線・資料ページの料金表（2026-10-05） --- */
+#corp-page.cp-service-page {
+  .cs-doc-cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px 24px;
+    margin-top: 56px;
+    padding: 24px 28px;
+    background-color: white;
+    border-left: 3px solid $red;
+    color: $ink;
+    font-weight: bold;
+    line-height: 1.7;
+
+    .cp-btn { padding: 12px 28px; font-size: 1.5rem; }
+  }
+
+  .cs-doc-list {
+    display: grid;
+    gap: 12px;
+
+    li {
+      padding-left: 24px;
+      position: relative;
+      color: $ink;
+      font-weight: bold;
+      line-height: 1.7;
+
+      &::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0.75em;
+        width: 12px;
+        height: 2px;
+        background-color: $red;
+      }
+    }
+  }
+
+  .cs-price {
+    display: grid;
+    gap: 32px;
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: white;
+    }
+
+    caption {
+      padding-bottom: 12px;
+      color: $navy;
+      font-weight: bold;
+      text-align: left;
+    }
+
+    th, td {
+      padding: 16px 20px;
+      border-top: 1px solid $line;
+      text-align: left;
+      vertical-align: top;
+      line-height: 1.6;
+    }
+
+    tr:last-child th, tr:last-child td { border-bottom: 1px solid $line; }
+    th { color: $ink; font-weight: bold; }
+    &__unit { color: $sub; }
+    &__yen { color: $navy; font-weight: bold; white-space: nowrap; }
+  }
+
+  .cs-price-note { margin-top: 24px; color: $sub; }
+  .cs-closing-doc { margin-left: 16px; background-color: white; }
+}
+
+@media screen and (min-width: 769px) {
+  #corp-page.cp-service-page {
+    .cs-doc-list { font-size: 1.7rem; }
+    .cs-price { font-size: 1.6rem; caption { font-size: 1.8rem; } th { width: 38%; } }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #corp-page.cp-service-page {
+    .cs-doc-cta { margin-top: 40px; padding: 20px; font-size: 1.4rem; .cp-btn { width: 100%; } }
+    .cs-doc-list { font-size: 1.5rem; }
+    .cs-price {
+      font-size: 1.4rem;
+      caption { font-size: 1.6rem; }
+      tr { display: grid; grid-template-columns: 1fr auto; border-top: 1px solid $line; }
+      th, td { border: none; padding: 10px 12px; }
+      th { grid-column: 1 / -1; padding-bottom: 0; }
+      tr:last-child th, tr:last-child td { border-bottom: none; }
+      tr:last-child { border-bottom: 1px solid $line; }
+      &__yen { white-space: normal; text-align: right; }
+    }
+    .cs-closing-doc { margin: 12px 0 0; }
+  }
+}
+@media screen and (min-width: 769px) {
+  #corp-page.cp-service-page .cs-doc-cta { font-size: 1.6rem; }
+}
+
+/* 資料請求フォーム（紺地）：初回相談ページ専用の装飾が効かないので、ここで読みやすくする（2026-10-05） */
+#corp-page.cp-service-page #contact {
+  .consult-style {
+    margin: 0;
+    padding: 0;
+    border: none;
+
+    &__options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 28px;
+      margin-top: 8px;
+    }
+
+    &__option {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: white;
+      font-size: 1.6rem;
+      line-height: 1.5;
+      cursor: pointer;
+
+      input {
+        flex-shrink: 0;
+        width: 18px;
+        height: 18px;
+        accent-color: white;
+      }
+    }
+  }
+
+  .form-privacy {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 1.4rem;
+    line-height: 1.8;
+
+    a {
+      color: white;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+  }
+
+  .form-submit {
+    background-color: $red;
+    box-shadow: 0 5px 0 #9c0016;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #corp-page.cp-service-page #contact {
+    .consult-style__options { flex-direction: column; gap: 12px; }
+    .consult-style__option { font-size: 1.5rem; }
+    .form-privacy { font-size: 1.3rem; }
+  }
+}
+#corp-page.cp-service-page #contact {
+  .consult-style { margin-bottom: 28px; }
+  .form-privacy, .form-privacy a { display: inline; }
+  .form-privacy { display: block; margin-bottom: 24px; }
+}
