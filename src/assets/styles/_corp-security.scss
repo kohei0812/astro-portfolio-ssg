@@ -1182,3 +1182,69 @@ $gray: #f4f6f9;
   word-break: auto-phrase;
   text-wrap: balance;
 }
+
+/* 提案：冗長化とデータの暗号化（2026-10-08）。cron の提案より強く見せる */
+#corp-page.cp-security-page .sp-cron--strong {
+  border-top: 4px solid #ff4d5e;
+
+  .sp-cron__list {
+    display: grid;
+    gap: 12px;
+    list-style: none;
+  }
+
+  .sp-cron__list li {
+    padding: 14px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.06);
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.8;
+  }
+
+  .sp-cron__list b {
+    display: block;
+    color: white;
+    font-weight: bold;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  #corp-page.cp-security-page .sp-cron--strong {
+    .sp-cron__ttl {
+      font-size: 2.6rem;
+    }
+
+    .sp-cron__list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-top: 22px;
+    }
+
+    .sp-cron__list li {
+      font-size: 1.4rem;
+    }
+
+    .sp-cron__list b {
+      font-size: 1.6rem;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #corp-page.cp-security-page .sp-cron--strong {
+    .sp-cron__ttl {
+      font-size: 2rem;
+    }
+
+    .sp-cron__list {
+      margin-top: 16px;
+    }
+
+    .sp-cron__list li {
+      font-size: 1.3rem;
+    }
+
+    .sp-cron__list b {
+      font-size: 1.5rem;
+    }
+  }
+}
