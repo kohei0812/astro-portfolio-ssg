@@ -976,3 +976,209 @@ $gray: #f4f6f9;
     }
   }
 }
+
+/* /security：インフラの3段階・自社の構成（2026-10-08） */
+#corp-page.cp-security-page {
+  .sp-tiers {
+    display: grid;
+
+    li {
+      background-color: white;
+      box-shadow: inset 0 0 0 1px $line;
+
+      &.is-top {
+        box-shadow: inset 0 0 0 2px $navy;
+      }
+    }
+
+    &__name {
+      color: $navy;
+      font-weight: bold;
+    }
+
+    &__fit {
+      color: $red;
+      font-weight: bold;
+      line-height: 1.7;
+    }
+
+    &__how {
+      color: $body;
+      font-weight: 400;
+      line-height: 1.85;
+    }
+  }
+
+  .sp-own__note {
+    color: $body;
+    line-height: 1.9;
+
+    a {
+      display: inline;
+      color: $navy;
+      font-weight: bold;
+      text-decoration: underline;
+      text-underline-offset: 0.3em;
+    }
+  }
+}
+
+@media screen and (min-width: 769px) {
+  #corp-page.cp-security-page {
+    .sp-tiers {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 40px;
+
+      li {
+        padding: 26px 26px 28px;
+      }
+
+      &__name {
+        font-size: 1.9rem;
+      }
+
+      &__fit {
+        margin-top: 10px;
+        font-size: 1.4rem;
+      }
+
+      &__how {
+        margin-top: 8px;
+        font-size: 1.5rem;
+      }
+    }
+
+    .sp-defs--3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .sp-own__note {
+      margin-top: 40px;
+      font-size: 1.5rem;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #corp-page.cp-security-page {
+    .sp-tiers {
+      gap: 10px;
+      margin-top: 28px;
+
+      li {
+        padding: 20px 18px;
+      }
+
+      &__name {
+        font-size: 1.7rem;
+      }
+
+      &__fit {
+        margin-top: 6px;
+        font-size: 1.3rem;
+      }
+
+      &__how {
+        margin-top: 6px;
+        font-size: 1.4rem;
+      }
+    }
+
+    .sp-own__note {
+      margin-top: 28px;
+      font-size: 1.4rem;
+    }
+  }
+}
+
+/* 次世代のcron の提案（2026-10-08） */
+#corp-page.cp-security-page .sp-cron {
+  background-color: $navy;
+  color: white;
+
+  &__label {
+    color: #ff4d5e;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  &__ttl {
+    color: white;
+    font-weight: bold;
+    line-height: 1.5;
+  }
+
+  &__txt {
+    color: rgba(255, 255, 255, 0.88);
+    line-height: 1.9;
+  }
+
+  &__fit {
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.8;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  #corp-page.cp-security-page .sp-cron {
+    margin-top: 48px;
+    padding: 36px 40px;
+
+    &__label {
+      font-size: 1.2rem;
+    }
+
+    &__ttl {
+      margin-top: 10px;
+      font-size: 2.2rem;
+    }
+
+    &__txt {
+      margin-top: 14px;
+      font-size: 1.6rem;
+    }
+
+    &__fit {
+      margin-top: 18px;
+      padding-top: 16px;
+      font-size: 1.4rem;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #corp-page.cp-security-page .sp-cron {
+    margin-top: 32px;
+    padding: 24px 20px;
+
+    &__label {
+      font-size: 1.1rem;
+    }
+
+    &__ttl {
+      margin-top: 8px;
+      font-size: 1.8rem;
+    }
+
+    &__txt {
+      margin-top: 10px;
+      font-size: 1.4rem;
+    }
+
+    &__fit {
+      margin-top: 14px;
+      padding-top: 12px;
+      font-size: 1.3rem;
+    }
+  }
+}
+
+/* 長い項目名（インフラの選定・設計・構築）を語の切れ目で折る */
+#corp-page .sp-menu__name,
+#corp-page .cs-security__name {
+  word-break: auto-phrase;
+  text-wrap: balance;
+}

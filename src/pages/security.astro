@@ -43,7 +43,7 @@ const checks = [
 const menu = [
   { icon: "measure", name: "公開前チェック", txt: "アプリの設定を確認し、見直す点を報告します。" },
   { icon: "code", name: "修正", txt: "直し方の提案と、修正作業を行います。" },
-  { icon: "layers", name: "本番環境の構築", txt: "サーバー、ドメイン（アプリのアドレス）、通信の暗号化、バックアップを整えます。" },
+  { icon: "layers", name: "インフラの選定・設計・構築", txt: "利用人数や扱うデータに合わせて、サーバーやクラウドの構成を選び、設計・構築します。" },
   { icon: "gear", name: "公開後の運用", txt: "アプリの稼働状況と、必要な更新を見守ります。" },
 ];
 
@@ -56,11 +56,21 @@ const steps = [
   { name: "運用", txt: "公開後も、必要な分だけ運用を依頼できます。" },
 ];
 
-const practice = [
-  { name: "管理用の入口と権限を絞る", txt: "ログインを鍵で管理し、外に管理用の入口を開けずに接続しています。操作の権限も必要最小限です。" },
-  { name: "変更の記録を残して公開する", txt: "いつ、何を変えたかが残る方法で、アプリをサーバーに反映しています。" },
-  { name: "通信を暗号化する", txt: "画面とサーバーの間でやり取りする情報に、暗号化を設定しています。" },
-  { name: "止まったときに備える", txt: "別のサーバーへ切り替えられる構成にし、データのバックアップも取っています。" },
+/* チェックだけでは足りない：規模とデータでインフラを選ぶ（2026-10-08 本人指示） */
+const tiers = [
+  { name: "小さく始める", fit: "社内の数人で使い、公開してよい情報を中心に扱うアプリ。", how: "必要な機能と管理の手間を見極め、小さな構成から始めます。" },
+  { name: "しっかり守る", fit: "社外の人も使い、顧客情報を扱うアプリ。", how: "誰がどの情報に触れられるかを整理し、権限・通信の暗号化・バックアップを含めて設計します。" },
+  { name: "止めない・漏らさない", fit: "業務の要になり、多くの個人情報を扱うアプリ。", how: "管理用の入口と権限を絞り、サーバーの切り替えとデータの戻し方まで設計します。" },
+];
+
+/* 自社の本番構成（根拠：本人の note「AWS推奨のSession Manager運用。その先で、本番サーバーからcronもなくしてみた」2026-08-07） */
+const ownSetup = [
+  { name: "管理用の入口を開けない（SSM）", txt: "サーバーに入るための入口（SSH）を外に開けず、鍵も配りません。誰が入れるかはAWSの権限設定で管理します。" },
+  { name: "本番サーバーに定期処理（cron）も置かない", txt: "定期処理は手元のMacから呼び出すだけにし、本番サーバーは届いたリクエストを処理するだけの受け身にしています。" },
+  { name: "呼び出し口を4重に絞る", txt: "接続元のIP制限・認証・POSTのみ許可・何度やり直しても同じ結果になる設計（冪等性）を組み合わせています。" },
+  { name: "権限は必要最小限", txt: "作業に必要な範囲だけ、操作やアクセスを許可しています。" },
+  { name: "変更の記録を残して公開", txt: "Gitで変更履歴を管理し、何を変えたかが残る方法で公開・更新しています。" },
+  { name: "通信の暗号化と、止まったときの備え", txt: "SSLで通信を暗号化し、1台が止まっても切り替わる構成と、バックアップ・戻し方を用意しています。" },
 ];
 
 const faq = [
@@ -168,6 +178,64 @@ const faq = [
       </div>
     </section>
 
+    <!-- チェックだけでは足りない：インフラの選定・設計（2026-10-08） -->
+    <section class="cp-sec cp-sec--gray" aria-labelledby="sp-tier-ttl">
+      <span class="cp-watermark eng" aria-hidden="true">DESIGN</span>
+      <div class="cp-container">
+        <header class="cp-head" data-reveal>
+          <p class="cp-head__en eng">Infrastructure design</p>
+          <h2 class="cp-head__ttl" id="sp-tier-ttl">チェックだけでは、<br class="sp_only" />足りません。</h2>
+          <p class="cp-head__lead">公開前のチェックは、多くのAI事業者も行う基本の対応です。本当に差が出るのは、アプリの規模と扱うデータに合わせて、インフラ（アプリを動かすサーバーやクラウドの構成）を選び、設計できるかです。</p>
+        </header>
+        <figure class="sp-fig" data-reveal>
+          <a href="/assets/images/corp/security-tiers.jpg" target="_blank" rel="noopener" class="zoom-link" aria-label="図を拡大して見る"><picture>
+            <source srcset="/assets/images/corp/security-tiers.webp" type="image/webp" />
+            <img src="/assets/images/corp/security-tiers.jpg" alt="アプリの規模（社内の数人から社外の顧客）とデータの重さ（公開してよい情報から個人情報・顧客情報）で、小さく始める・しっかり守る・止めない・漏らさないの3段階からインフラを選ぶ図。" width="1600" height="900" loading="lazy" decoding="async" />
+          </picture><span class="zoom-link__hint">タップで拡大</span></a>
+        </figure>
+        <ol class="sp-tiers">
+          {tiers.map((t, i) => (
+            <li class={i === 2 ? "is-top" : undefined} data-reveal style={`--d: ${i * 0.08}s`}>
+              <p class="sp-tiers__name">{t.name}</p>
+              <p class="sp-tiers__fit">{t.fit}</p>
+              <p class="sp-tiers__how">{t.how}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <!-- 自社ではこんな構成です：実績で見せる（根拠は本人の note 記事） -->
+    <section class="cp-sec sp-own" aria-labelledby="sp-own-ttl">
+      <span class="cp-watermark eng" aria-hidden="true">PROOF</span>
+      <div class="cp-container">
+        <header class="cp-head" data-reveal>
+          <p class="cp-head__en eng">Our setup</p>
+          <h2 class="cp-head__ttl" id="sp-own-ttl">自社では、<br class="sp_only" />こんな構成で動かしています。</h2>
+          <p class="cp-head__lead">言葉で「できます」と書くのは簡単です。だから、自社のサーバー（AWS）で実際に動かしている構成をお見せします。</p>
+        </header>
+        <figure class="sp-fig" data-reveal>
+          <a href="/assets/images/corp/security-own.jpg" target="_blank" rel="noopener" class="zoom-link" aria-label="図を拡大して見る"><picture>
+            <source srcset="/assets/images/corp/security-own.webp" type="image/webp" />
+            <img src="/assets/images/corp/security-own.jpg" alt="自社の本番構成。利用者は暗号化された通信でサーバーに接続。管理者はSSMで接続し、SSHの入口は開けていない。定期処理は手元のMacからHTTPSで呼び出し、本番サーバーには定期処理を置かない。変更はGitから反映し、バックアップを取っている。" width="1600" height="900" loading="lazy" decoding="async" />
+          </picture><span class="zoom-link__hint">タップで拡大</span></a>
+        </figure>
+        <dl class="sp-defs sp-defs--3">
+          {ownSetup.map((o, i) => (
+            <div data-reveal style={`--d: ${(i % 3) * 0.06}s`}><dt>{o.name}</dt><dd>{o.txt}</dd></div>
+          ))}
+        </dl>
+        <!-- 次世代のcron（2026-10-08 本人：ローカルPCを起爆剤にルーティンを回すのはエージェント活用と親和性が高い。向き不向きは note の記述どおり） -->
+        <div class="sp-cron" data-reveal>
+          <p class="sp-cron__label eng">Proposal</p>
+          <h3 class="sp-cron__ttl">次世代のcron：手元のPCを起点に、ルーティンを回す。</h3>
+          <p class="sp-cron__txt">本番サーバーに定期処理を持たせず、手元のPCが「いつ実行するか」を決めて呼び出します。本番サーバーは受け身になり、守るべき入口が減ります。手元のPCではAIエージェントも動かせるので、毎日のルーティンをAIに任せる仕組みとも相性のよい構成です。</p>
+          <p class="sp-cron__fit">向いているのは、日次・週次の処理や小〜中規模のサービスです。分単位の実行や、24時間止められないシステムでは、クラウドの定期実行サービスを組み合わせます。</p>
+        </div>
+        <p class="sp-own__note" data-reveal>設計の考え方は、noteで詳しく公開しています。<a href="https://note.com/kohei_dynamis/n/n4df0289cf640" target="_blank" rel="noopener">AWS推奨のSession Manager運用。その先で、本番サーバーからcronもなくしてみた</a></p>
+      </div>
+    </section>
+
     <!-- 頼めること・進め方 -->
     <section class="cp-sec cp-sec--gray" aria-labelledby="sp-menu-ttl">
       <div class="cp-container">
@@ -211,13 +279,8 @@ const faq = [
           <header class="cp-head" data-reveal>
             <p class="cp-head__en eng">Engineer</p>
             <h2 class="cp-head__ttl" id="sp-who-ttl">担当するのは、<br />現役のWebエンジニアです。</h2>
-            <p class="cp-head__lead">DDDynamis代表の川端康平です。自社のサーバー構築でも、次のことを実践しています。</p>
+            <p class="cp-head__lead">DDDynamis代表の川端康平です。AIで社員がアプリを作れるように育てる側と、そのアプリを本番で動かす側の、両方を担当します。</p>
           </header>
-          <dl class="sp-defs">
-            {practice.map((p, i) => (
-              <div data-reveal style={`--d: ${i * 0.06}s`}><dt>{p.name}</dt><dd>{p.txt}</dd></div>
-            ))}
-          </dl>
           <p class="sp-who__end" data-reveal>確認結果は、専門用語だけで済ませず、何をどう見直すかが分かる言葉でお伝えします。</p>
         </div>
       </div>
