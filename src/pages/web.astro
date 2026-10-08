@@ -8,6 +8,8 @@ import Layout from "../layouts/Layout.astro";
 import LineIcon from "../components/corp/LineIcon.astro";
 
 const menus = [
+  // 2026-10-08 本人指示：差別化の柱「インフラ・セキュリティ」。横長の目立つカードにする（is-wide）
+  { icon: "gear", name: "AIアプリの公開・運用支援", txt: "AIで作ったアプリの公開前チェック、修正、本番環境の構築（サーバー・ドメイン・SSL・バックアップ）、公開後の運用に対応します。", wide: true },
   { icon: "web", name: "ホームページ制作・リニューアル", txt: "シンプルなLPから、しっかりした構成のサイトまで対応します。" },
   { icon: "talk", name: "多言語対応", txt: "日本語と英語の切り替えや、翻訳の整備など、インバウンド向けの対応を行います。" },
   { icon: "growth", name: "アクセス解析の導入", txt: "Google アナリティクスと Search Console を導入し、見るべき数字を整えます。" },
@@ -52,7 +54,7 @@ const envs = ["AWS", "VPS", "Linux（Ubuntu）", "nginx", "Git", "Docker", "Verc
         </figure>
         <ul class="cw-menu">
           {menus.map((m, i) => (
-            <li data-reveal style={`--d: ${(i % 3) * 0.08}s`}>
+            <li class={m.wide ? "is-wide" : undefined} data-reveal style={`--d: ${(i % 3) * 0.08}s`}>
               <LineIcon name={m.icon} size={44} />
               <p class="cw-menu__name">{m.name}</p>
               <p class="cw-menu__txt">{m.txt}</p>

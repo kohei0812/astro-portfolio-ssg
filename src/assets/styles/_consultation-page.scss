@@ -1732,3 +1732,24 @@ $gray: #f4f6f9;
   }
 }
 
+
+/* 公開前の確認（2026-10-08） */
+#consultation-page .c-security__txt {
+  max-width: 42em;
+  color: #46536a;
+  line-height: 2;
+}
+
+@media screen and (min-width: 769px) {
+  #consultation-page .c-security__txt {
+    margin-bottom: 32px;
+    font-size: 1.6rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #consultation-page .c-security__txt {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+  }
+}

@@ -104,6 +104,7 @@ const notFor = [
 
 const faqs = [
   { q: "本当に無料ですか？", a: "はい、初回相談は無料です。その後の支援を申し込むことは条件ではありません。" },
+  { q: "AIで作ったアプリのセキュリティが心配です。", a: "画面が動くことに加えて、管理画面に誰が入れるか、設定ファイルが公開されていないかなども確認が必要です。初回相談では、アプリの用途や気になる点をお聞かせください。公開前の確認と、必要な修正をご提案します。" },
   {
     q: "その場で作るって本当ですか？ 何を持っていけばいいですか？",
     a: "はい。やりたいことを1つ伺い、その場で動く試作品を作ってお見せします。実際の運用に向けた作り込みや確認は、別途整理します。「誰が、何をできるようにしたいか」を普段の言葉でお伝えください。参考になる画面や資料があれば、共有できる範囲でご用意ください。企画書や仕様書を整える必要はありません。",
@@ -327,6 +328,23 @@ const faqs = [
             <p class="c-who__principle-txt">新しいことを始めるたびに川端の手が空くのを待つなら、また「発注の壁」ができてしまいます。社員が自分たちで作り、直し、次の仕事に使える状態を作るための支援です。そこまでできたら、卒業です。</p>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- 8.5 公開前の確認（2026-10-08 本人指示：差別化の柱「インフラ・セキュリティ」）。「防げる」と断言しない -->
+    <section class="c-sec c-sec--light c-security" aria-labelledby="security-heading">
+      <div class="c-container">
+        <header class="c-head">
+          <p class="c-head__en eng">Security</p>
+          <h2 class="c-head__ttl" id="security-heading">作りたい業務アプリを、<br />公開まで一緒に形にします。</h2>
+        </header>
+        <p class="c-security__txt">自社の仕事に合うアプリを、AIで作るところから一緒に進めます。公開の前には、設定や情報の扱い方も確認します。最近の報道で相次ぐ情報漏えいの多くは、修正の当て忘れや、持たなくていいデータを持っていたことが原因でした。</p>
+        <figure class="c-figure c-security__fig">
+          <a href="/assets/images/corp/security-check.jpg" target="_blank" rel="noopener" class="zoom-link" aria-label="図を拡大して見る"><picture>
+            <source srcset="/assets/images/corp/security-check.webp" type="image/webp" />
+            <img src="/assets/images/corp/security-check.jpg" alt="公開前に確認すること：APIキーの置き場所、ログインと権限、データベースの公開設定、更新の当て忘れ、バックアップと戻し方、通信の暗号化、持たなくていいデータ。" width="1600" height="900" loading="lazy" decoding="async" />
+          </picture><span class="zoom-link__hint">タップで拡大</span></a>
+        </figure>
       </div>
     </section>
 

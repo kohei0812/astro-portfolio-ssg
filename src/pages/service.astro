@@ -118,6 +118,19 @@ const faq = [
   { q: "AI軍師コースの顧問と研修は、どう違いますか？", a: "人数で選びます。5名ほどまでなら、時間単位で業務ごとに改善を重ねる顧問。6名以上なら、9回パッケージの研修で全員の使い方をそろえます。" },
   { q: "卒業後はどうなりますか？", a: "育てた社内の展開役を中心に、日々の業務でAIを使い続けていただきます。支援を続けることを前提にせず、社内で進められることを卒業の目安にしています。" },
 ];
+/* 公開・運用とセキュリティ（2026-10-08）。「防げる」と断言しない */
+const securityMenu = [
+  { name: "公開前チェック", txt: "アプリの設定を確認し、公開前に見直す点をお伝えします。" },
+  { name: "修正", txt: "見つかった問題の直し方を提案し、修正作業まで対応します。" },
+  { name: "本番環境の構築", txt: "サーバー・ドメイン・SSL・バックアップを整え、実際に使う環境を構築します。" },
+  { name: "公開後の運用", txt: "公開後の稼働状況や更新を見守り、運用を支援します。" },
+];
+const securityFor = [
+  "AIでアプリを作ったものの、公開してよいか迷っている",
+  "直すべき点が分かっても、自社では修正が難しい",
+  "公開後のサーバー管理や更新を任せたい",
+];
+
 ---
 
 <Layout
@@ -236,6 +249,30 @@ const faq = [
         </ul>
         <p class="cs-risks-note" data-reveal>AIの出力はそのまま使わず、確認と情報の整理は人の役割として残します。</p>
         <p class="cs-doc-cta" data-reveal><span>進め方の詳細・9回パッケージの中身・料金は、資料でご覧いただけます。</span><a href="/document" class="cp-btn cp-btn--ghost">資料を受け取る（無料）</a></p>
+      </div>
+    </section>
+
+    <!-- 2.5 公開・運用とセキュリティ（2026-10-08 本人指示：差別化の柱）。トップの節（原因・確認項目の図解）と内容を重ねず、頼める作業を見せる -->
+    <section class="cp-sec cs-security" aria-labelledby="security-ttl">
+      <span class="cp-watermark eng" aria-hidden="true">SECURITY</span>
+      <div class="cp-container">
+        <header class="cp-head" data-reveal>
+          <p class="cp-head__en eng">Security &amp; operations</p>
+          <h2 class="cp-head__ttl" id="security-ttl">AIで作ったアプリの、<br />公開と運用まで。</h2>
+          <p class="cp-head__lead">公開に必要な作業を、アプリの状態に合わせてご依頼いただけます。作成済みのアプリも、確認から修正、運用まで対応します。</p>
+        </header>
+        <ol class="cs-security__menu">
+          {securityMenu.map((m, i) => (
+            <li data-reveal style={`--d: ${i * 0.08}s`}>
+              <p class="cs-security__name">{m.name}</p>
+              <p class="cs-security__txt">{m.txt}</p>
+            </li>
+          ))}
+        </ol>
+        <div class="cs-security__for" data-reveal>
+          <p>こんな方に</p>
+          <ul>{securityFor.map((x) => <li>{x}</li>)}</ul>
+        </div>
       </div>
     </section>
 

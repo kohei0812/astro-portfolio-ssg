@@ -123,6 +123,13 @@ const closingTimes = [
   { icon: "flag", name: "理念を伝える時間" },
   { icon: "idea", name: "次の仕事を考える時間" },
 ];
+/* 公開前のセキュリティ：最近の報道に多い原因（社名は出さない） */
+const securityCauses = [
+  { icon: "gear", name: "修正の当て忘れ", txt: "修正プログラムが出ていても適用されず、不正アクセスにつながった例があります。" },
+  { icon: "web", name: "外部サービス経由", txt: "予約システムやネットショップなど、使っているサービスや委託先を経由して、中小の事業者も被害を受けています。" },
+  { icon: "doc", name: "持たなくていいデータ", txt: "本人確認書類の画像や認証情報など、持たなくていい情報を残していたことが、被害を大きくしています。" },
+];
+
 ---
 
 <Layout
@@ -356,6 +363,39 @@ const closingTimes = [
           ))}
         </div>
         <p class="cp-service__more" data-reveal><a href="/cases" class="cp-link">事例をもっと見る</a></p>
+      </div>
+    </section>
+
+    <!-- 7.5 公開前のセキュリティ（2026-10-08 本人指示：差別化の柱に「インフラ・セキュリティ」）。
+         表現ルール：「防げる」と断言しない／社名を出さない。素材 GD/営業/マーケ運用/情報漏えい事例調査_20261008.md -->
+    <section class="cp-sec cp-sec--gray cp-security" aria-labelledby="security-ttl">
+      <span class="cp-watermark eng" aria-hidden="true">SECURITY</span>
+      <div class="cp-container">
+        <header class="cp-head" data-reveal>
+          <p class="cp-head__en eng">Security &amp; operations</p>
+          <h2 class="cp-head__ttl" id="security-ttl">AIで作ったアプリは、<br />公開前に一度確かめましょう。</h2>
+          <p class="cp-head__lead">社員が自分たちの業務に合うアプリを作れることは、AI活用の大きな一歩です。ただ、最近の報道では、情報漏えいや不正アクセスの公表が相次いでいます。</p>
+        </header>
+        <p class="cp-security__sub" data-reveal>最近の報道に多い原因</p>
+        <ul class="cp-security__causes">
+          {securityCauses.map((c, i) => (
+            <li data-reveal style={`--d: ${i * 0.08}s`}>
+              <LineIcon name={c.icon} size={40} />
+              <p class="cp-security__name">{c.name}</p>
+              <p class="cp-security__txt">{c.txt}</p>
+            </li>
+          ))}
+        </ul>
+        <figure class="cp-security__fig" data-reveal>
+          <picture>
+            <source srcset="/assets/images/corp/security-check.webp" type="image/webp" />
+            <img src="/assets/images/corp/security-check.jpg" alt="公開前に確認すること：APIキーの置き場所、ログインと権限、データベースの公開設定、更新の当て忘れ、バックアップと戻し方、通信の暗号化、持たなくていいデータ。" width="1600" height="900" loading="lazy" decoding="async" />
+          </picture>
+        </figure>
+        <div class="cp-security__end" data-reveal>
+          <p>エンジニア出身の代表・川端康平が、公開前の確認から、公開・運用まで対応します。</p>
+          <a href="/consultation" class="cp-btn cp-btn--primary">公開前の確認を相談する（無料）</a>
+        </div>
       </div>
     </section>
 

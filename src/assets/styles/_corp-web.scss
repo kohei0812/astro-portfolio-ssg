@@ -274,3 +274,28 @@ $gray: #f4f6f9;
     margin-bottom: 32px;
   }
 }
+
+/* 公開・運用支援（2026-10-08）：横長で強調 */
+#corp-page.cp-web-page .cw-menu li.is-wide {
+  background-color: #172439;
+  color: white;
+  box-shadow: none;
+
+  .cw-menu__name {
+    color: white;
+  }
+
+  .cw-menu__txt {
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .cp-icon {
+    color: white;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  #corp-page.cp-web-page .cw-menu li.is-wide {
+    grid-column: 1 / -1;
+  }
+}
