@@ -916,11 +916,14 @@ $ease: cubic-bezier(0.22, 1, 0.36, 1);
 
     &__nav a {
       font-size: 1.5rem;
+      white-space: nowrap;
     }
 
     &__cta {
+      flex-shrink: 0;
       padding: 12px 26px;
       font-size: 1.4rem;
+      white-space: nowrap;
     }
   }
 
@@ -3992,5 +3995,31 @@ $ease: cubic-bezier(0.22, 1, 0.36, 1);
   #corp-page .cp-work__img {
     margin-bottom: 14px;
     padding: 4px;
+  }
+}
+
+/* ナビ5項目（2026-10-08 セキュリティ追加）で 769〜1023px が折り返すため詰める。PC 指定より後に置く */
+@media screen and (min-width: 769px) and (max-width: 1023px) {
+  .corp-header {
+    &__inner {
+      padding: 0 24px;
+      gap: 20px;
+    }
+
+    &__logo {
+      font-size: 2.1rem;
+    }
+
+    &__nav ul {
+      gap: 18px;
+    }
+
+    &__nav a {
+      font-size: 1.4rem;
+    }
+
+    &__cta {
+      padding: 10px 16px;
+    }
   }
 }
