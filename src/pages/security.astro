@@ -10,6 +10,13 @@
 import Layout from "../layouts/Layout.astro";
 import LineIcon from "../components/corp/LineIcon.astro";
 
+/* インターネットの向こう側の今（数字は確かな出典がないので使わない） */
+const threats = [
+  { name: "24時間、自動で探される", txt: "攻撃は自動化されています。公開されたサーバーやアプリは、昼も夜も弱点を探され続けます。" },
+  { name: "攻撃にもAIが使われる", txt: "最近の報道では、攻撃にAIが悪用されている可能性が指摘されています。" },
+  { name: "中小企業も狙われる", txt: "大企業だけではありません。使っているサービスを経由して、中小の事業者も被害に遭っています。" },
+];
+
 const forWho = [
   { icon: "laptop", name: "自分で作った方", txt: "アプリは動いたものの、公開してよいか迷っている方へ。" },
   { icon: "idea", name: "これから作る方", txt: "業務で使う前提で、気をつける点を先に知っておきたい方へ。" },
@@ -75,9 +82,30 @@ const faq = [
       <div class="cp-container">
         <p class="cp-head__en eng" data-reveal>AI app security</p>
         <h1 class="cp-page-head__ttl" data-reveal style="--d: .1s">AIで作ったアプリの、<br class="sp_only" />公開前チェック</h1>
-        <p class="cp-page-head__lead" data-reveal style="--d: .2s">AIで、業務に合うアプリを自分たちで作れるようになりました。<br class="pc_only" />最近の報道では情報漏えいの公表が相次いでいます。公開の前に、一度確かめましょう。</p>
+        <p class="cp-page-head__lead" data-reveal style="--d: .2s">サイバー被害が激増しています。<br />AIで業務に合うアプリを自分たちで作れるようになった今、公開の前に一度確かめましょう。</p>
       </div>
     </header>
+
+    <!-- インターネットの向こう側の今（2026-10-08 本人指示：煽り気味に。本人は年末年始に複数回サーバーを潰された経験があり、誇張ではない） -->
+    <section class="cp-sec sp-threat" aria-labelledby="sp-threat-ttl">
+      <div class="cp-container">
+        <header class="cp-head" data-reveal>
+          <p class="cp-head__en eng">Threats</p>
+          <h2 class="cp-head__ttl" id="sp-threat-ttl">公開したその日から、<br />狙われています。</h2>
+        </header>
+        <figure class="sp-fig sp-threat__fig" data-reveal>
+          <a href="/assets/images/corp/security-threats.jpg" target="_blank" rel="noopener" class="zoom-link" aria-label="図を拡大して見る"><picture>
+            <source srcset="/assets/images/corp/security-threats.webp" type="image/webp" />
+            <img src="/assets/images/corp/security-threats.jpg" alt="公開したアプリを、自動で弱点を探すプログラム、AIを悪用した攻撃、身代金ウイルス、なりすましメール、流出したパスワードが24時間365日取り囲んでいる図。" width="1600" height="900" loading="lazy" decoding="async" />
+          </picture><span class="zoom-link__hint">タップで拡大</span></a>
+        </figure>
+        <ul class="sp-threat__facts">
+          {threats.map((t, i) => (
+            <li data-reveal style={`--d: ${i * 0.08}s`}><p class="sp-threat__name">{t.name}</p><p class="sp-threat__txt">{t.txt}</p></li>
+          ))}
+        </ul>
+      </div>
+    </section>
 
     <!-- こんな方へ -->
     <section class="cp-sec" aria-labelledby="sp-for-ttl">
