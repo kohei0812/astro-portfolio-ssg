@@ -1,0 +1,230 @@
+---
+/*
+  AIで作ったアプリの公開前チェック（2026-10-08 新設。本人指示：差別化の柱「インフラ・セキュリティ」の専用ページ）。
+  検索・SNS・広告からの受け皿。トップ・サービス・LP・Web の節からここへつなぐ。
+  文言：Codex 案（scratchpad/codex/security_page.md）を図解の語に合わせて手直し。素材 GD/営業/マーケ運用/情報漏えい事例調査_20261008.md
+  表現ルール：「防げる」「安全」「保証」と断言しない／社名を出さない／「作っていい。公開の前に確かめよう」の立場。
+  図解は ChatGPT で作成（原本 GD/営業/サイト素材/図解_ChatGPT_20261003/security-*_20261008.png）。
+  スタイルは _corp-security.scss（.cp-security-page）。
+*/
+import Layout from "../layouts/Layout.astro";
+import LineIcon from "../components/corp/LineIcon.astro";
+
+const forWho = [
+  { icon: "laptop", name: "自分で作った方", txt: "アプリは動いたものの、公開してよいか迷っている方へ。" },
+  { icon: "idea", name: "これから作る方", txt: "業務で使う前提で、気をつける点を先に知っておきたい方へ。" },
+  { icon: "handshake", name: "外注で作った方", txt: "納品されたアプリの設定を、自社では確かめきれない方へ。" },
+];
+
+const holes = [
+  { name: "APIキーの直書き", txt: "APIキーは、外部サービスを使うための認証情報です。動かすためにプログラムへ直接書き、そのまま公開すると、第三者に知られるおそれがあります。" },
+  { name: "設定ファイルの公開", txt: "「.env」などの設定ファイルには、パスワードなどが入ることがあります。公開するファイルから除き忘れると、中身が見えてしまいます。" },
+  { name: "ログインなしの管理画面", txt: "管理機能が動いても、ログインを求める仕組みがなければ、URLを知る人が開けてしまいます。" },
+  { name: "外から見えるデータベース", txt: "データベースは、アプリの情報を保存する場所です。接続を許す相手の設定が広すぎると、外から情報を見られるおそれがあります。" },
+];
+
+const checks = [
+  { name: "APIキー・パスワードの置き場所", txt: "認証情報の保管先と、それを見られる人を確認します。公開するファイルに紛れ込んでいないかも調べます。" },
+  { name: "ログインと権限", txt: "利用者ごとに、見られる情報と操作できる範囲を確認します。必要な人に、必要な分だけを許す設定かを見ます。" },
+  { name: "データベースの公開設定", txt: "保存した情報を、誰が読めて、誰が書き換えられるかを確認します。" },
+  { name: "更新の当て忘れ", txt: "アプリやサーバーで使うソフトウェアに、適用していない修正プログラムがないかを確認します。" },
+  { name: "バックアップと戻し方", txt: "データの控えを取る頻度と保存先、止まったときに戻す手順を確認します。" },
+  { name: "通信の暗号化（SSL）", txt: "画面とサーバーの間でやり取りする情報が、暗号化される設定かを確認します。" },
+  { name: "持たなくていいデータ", txt: "本人確認書類の画像やパスワードなどを、必要以上に保存していないかを確認し、持つ必要があるかを見直します。" },
+];
+
+const menu = [
+  { icon: "measure", name: "公開前チェック", txt: "アプリの設定を確認し、見直す点を報告します。" },
+  { icon: "code", name: "修正", txt: "直し方の提案と、修正作業を行います。" },
+  { icon: "layers", name: "本番環境の構築", txt: "サーバー、ドメイン（アプリのアドレス）、通信の暗号化、バックアップを整えます。" },
+  { icon: "gear", name: "公開後の運用", txt: "アプリの稼働状況と、必要な更新を見守ります。" },
+];
+
+const steps = [
+  { name: "初回相談", txt: "無料の初回相談で、アプリの用途と気になる点を伺います。" },
+  { name: "アプリの共有", txt: "画面共有などで、相談して決めた範囲を見せていただきます。" },
+  { name: "結果の報告", txt: "確認結果を、直す優先順位とともにお伝えします。" },
+  { name: "修正", txt: "自社で直すか、修正を任せるかを選べます。" },
+  { name: "公開", txt: "修正後の状態を確認し、公開へ進みます。" },
+  { name: "運用", txt: "公開後も、必要な分だけ運用を依頼できます。" },
+];
+
+const practice = [
+  { name: "管理用の入口と権限を絞る", txt: "ログインを鍵で管理し、外に管理用の入口を開けずに接続しています。操作の権限も必要最小限です。" },
+  { name: "変更の記録を残して公開する", txt: "いつ、何を変えたかが残る方法で、アプリをサーバーに反映しています。" },
+  { name: "通信を暗号化する", txt: "画面とサーバーの間でやり取りする情報に、暗号化を設定しています。" },
+  { name: "止まったときに備える", txt: "別のサーバーへ切り替えられる構成にし、データのバックアップも取っています。" },
+];
+
+const faq = [
+  { q: "外注先が作ったアプリでも相談できますか？", a: "はい。外注先が作ったアプリも対象です。" },
+  { q: "すでに公開しているアプリでも相談できますか？", a: "はい。公開済みのアプリについても、設定の確認や見直しをご相談いただけます。" },
+  { q: "どのAIで作ったものでも相談できますか？", a: "はい。Claude Code・ChatGPTなど、使ったAIは問いません。" },
+  { q: "コードや画面を見せるのが不安です。", a: "最初からすべてを見せていただく必要はありません。共有する範囲と方法を相談して決め、その範囲で確認できることをお伝えします。" },
+  { q: "費用はどう決まりますか？", a: "初回相談は無料です。お話を伺ったうえで、必要な作業の範囲と費用をご案内します。" },
+];
+---
+
+<Layout
+  title="AIで作ったアプリの公開前チェック｜DDDynamis・AI軍師"
+  description="AIで作った業務アプリを、公開前に一度確認しませんか。現役Webエンジニアが、設定の確認から修正、本番環境の構築、公開後の運用まで対応します。外注先が作ったアプリや公開済みのアプリも相談できます。初回相談は無料です。"
+  corp
+>
+  <main id="corp-page" class="corp-page cp-security-page" role="main">
+    <header class="cp-page-head">
+      <div class="cp-container">
+        <p class="cp-head__en eng" data-reveal>AI app security</p>
+        <h1 class="cp-page-head__ttl" data-reveal style="--d: .1s">AIで作ったアプリの、<br class="sp_only" />公開前チェック</h1>
+        <p class="cp-page-head__lead" data-reveal style="--d: .2s">AIで、業務に合うアプリを自分たちで作れるようになりました。<br class="pc_only" />最近の報道では情報漏えいの公表が相次いでいます。公開の前に、一度確かめましょう。</p>
+      </div>
+    </header>
+
+    <!-- こんな方へ -->
+    <section class="cp-sec" aria-labelledby="sp-for-ttl">
+      <div class="cp-container">
+        <h2 class="visually-hidden" id="sp-for-ttl">こんな方へ</h2>
+        <ul class="sp-for">
+          {forWho.map((f, i) => (
+            <li data-reveal style={`--d: ${i * 0.08}s`}>
+              <LineIcon name={f.icon} size={44} />
+              <p class="sp-for__name">{f.name}</p>
+              <p class="sp-for__txt">{f.txt}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- AIで作ったアプリに多い穴 -->
+    <section class="cp-sec cp-sec--gray" aria-labelledby="sp-holes-ttl">
+      <span class="cp-watermark eng" aria-hidden="true">RISK</span>
+      <div class="cp-container">
+        <header class="cp-head" data-reveal>
+          <p class="cp-head__en eng">Common holes</p>
+          <h2 class="cp-head__ttl" id="sp-holes-ttl">AIで作ったアプリに多い穴</h2>
+          <p class="cp-head__lead">AIは「動くもの」を作るのは得意ですが、公開してよい作りかどうかは、指示しないと確かめないことが多くあります。</p>
+        </header>
+        <figure class="sp-fig" data-reveal>
+          <a href="/assets/images/corp/security-holes.jpg" target="_blank" rel="noopener" class="zoom-link" aria-label="図を拡大して見る"><picture>
+            <source srcset="/assets/images/corp/security-holes.webp" type="image/webp" />
+            <img src="/assets/images/corp/security-holes.jpg" alt="AIで作ったアプリに多い穴：APIキーの直書き、設定ファイルの公開、ログインなしの管理画面、外から見えるデータベース。" width="1600" height="900" loading="lazy" decoding="async" />
+          </picture><span class="zoom-link__hint">タップで拡大</span></a>
+        </figure>
+        <dl class="sp-defs sp-defs--2">
+          {holes.map((h, i) => (
+            <div data-reveal style={`--d: ${(i % 2) * 0.08}s`}><dt>{h.name}</dt><dd>{h.txt}</dd></div>
+          ))}
+        </dl>
+      </div>
+    </section>
+
+    <!-- 公開前に確認すること -->
+    <section class="cp-sec" aria-labelledby="sp-check-ttl">
+      <span class="cp-watermark eng" aria-hidden="true">CHECK</span>
+      <div class="cp-container">
+        <header class="cp-head" data-reveal>
+          <p class="cp-head__en eng">Before release</p>
+          <h2 class="cp-head__ttl" id="sp-check-ttl">公開前に確認すること</h2>
+        </header>
+        <figure class="sp-fig" data-reveal>
+          <a href="/assets/images/corp/security-check.jpg" target="_blank" rel="noopener" class="zoom-link" aria-label="図を拡大して見る"><picture>
+            <source srcset="/assets/images/corp/security-check.webp" type="image/webp" />
+            <img src="/assets/images/corp/security-check.jpg" alt="公開前に確認すること7項目の図。" width="1600" height="900" loading="lazy" decoding="async" />
+          </picture><span class="zoom-link__hint">タップで拡大</span></a>
+        </figure>
+        <ol class="sp-checks">
+          {checks.map((c, i) => (
+            <li data-reveal style={`--d: ${(i % 2) * 0.06}s`}><p class="sp-checks__name">{c.name}</p><p class="sp-checks__txt">{c.txt}</p></li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <!-- 頼めること・進め方 -->
+    <section class="cp-sec cp-sec--gray" aria-labelledby="sp-menu-ttl">
+      <div class="cp-container">
+        <header class="cp-head" data-reveal>
+          <p class="cp-head__en eng">What we do</p>
+          <h2 class="cp-head__ttl" id="sp-menu-ttl">頼めること</h2>
+        </header>
+        <ul class="sp-menu">
+          {menu.map((m, i) => (
+            <li data-reveal style={`--d: ${i * 0.08}s`}>
+              <LineIcon name={m.icon} size={40} />
+              <p class="sp-menu__name">{m.name}</p>
+              <p class="sp-menu__txt">{m.txt}</p>
+            </li>
+          ))}
+        </ul>
+
+        <h3 class="sp-subhead" data-reveal>進め方</h3>
+        <figure class="sp-fig sp-fig--steps" data-reveal>
+          <a href="/assets/images/corp/security-steps.jpg" target="_blank" rel="noopener" class="zoom-link" aria-label="図を拡大して見る"><picture>
+            <source srcset="/assets/images/corp/security-steps.webp" type="image/webp" />
+            <img src="/assets/images/corp/security-steps.jpg" alt="進め方：初回相談（無料）、アプリを見せてもらう、確認結果の報告、修正、公開、運用。" width="1600" height="441" loading="lazy" decoding="async" />
+          </picture><span class="zoom-link__hint">タップで拡大</span></a>
+        </figure>
+        <ol class="sp-steps">
+          {steps.map((s, i) => (
+            <li data-reveal style={`--d: ${(i % 3) * 0.06}s`}><span class="sp-steps__no eng">{String(i + 1).padStart(2, "0")}</span><p class="sp-steps__name">{s.name}</p><p class="sp-steps__txt">{s.txt}</p></li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <!-- 担当するのは -->
+    <section class="cp-sec" aria-labelledby="sp-who-ttl">
+      <div class="cp-container sp-who">
+        <picture class="sp-who__photo" data-reveal>
+          <source srcset="/assets/images/consultation/profile-kawabata.webp" type="image/webp" />
+          <img src="/assets/images/consultation/profile-kawabata.jpg" alt="DDDynamis代表 川端康平" width="800" height="1053" loading="lazy" decoding="async" />
+        </picture>
+        <div>
+          <header class="cp-head" data-reveal>
+            <p class="cp-head__en eng">Engineer</p>
+            <h2 class="cp-head__ttl" id="sp-who-ttl">担当するのは、<br />現役のWebエンジニアです。</h2>
+            <p class="cp-head__lead">DDDynamis代表の川端康平です。自社のサーバー構築でも、次のことを実践しています。</p>
+          </header>
+          <dl class="sp-defs">
+            {practice.map((p, i) => (
+              <div data-reveal style={`--d: ${i * 0.06}s`}><dt>{p.name}</dt><dd>{p.txt}</dd></div>
+            ))}
+          </dl>
+          <p class="sp-who__end" data-reveal>確認結果は、専門用語だけで済ませず、何をどう見直すかが分かる言葉でお伝えします。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- よくある質問 -->
+    <section class="cp-sec cp-sec--gray" aria-labelledby="sp-faq-ttl">
+      <div class="cp-container">
+        <header class="cp-head cp-head--center" data-reveal>
+          <p class="cp-head__en eng">FAQ</p>
+          <h2 class="cp-head__ttl" id="sp-faq-ttl">よくある質問</h2>
+        </header>
+        <div class="sp-faq" data-reveal>
+          {faq.map((f) => (
+            <details class="sp-faq__item">
+              <summary><span class="sp-faq__q eng">Q</span><span>{f.q}</span></summary>
+              <p class="sp-faq__body"><span class="sp-faq__a eng">A</span><span>{f.a}</span></p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="cp-closing" aria-labelledby="sp-closing">
+      <picture class="cp-closing__band" aria-hidden="true">
+        <source media="(min-width: 769px)" srcset="/assets/images/corp/band-connect.webp" type="image/webp" />
+        <source media="(min-width: 769px)" srcset="/assets/images/corp/band-connect.jpg" />
+        <source srcset="/assets/images/corp/band-connect-sp.webp" type="image/webp" />
+        <img src="/assets/images/corp/band-connect-sp.jpg" alt="" width="800" height="600" loading="lazy" decoding="async" />
+      </picture>
+      <div class="cp-container cp-closing__inner" data-reveal>
+        <h2 class="cp-closing__ttl" id="sp-closing">まずは、公開に向けた相談から。</h2>
+        <p class="cp-closing__txt">まだ形になっていなくても、次に何を確かめるかを一緒に整理します。初回相談は無料です。</p>
+        <a href="/consultation" class="cp-btn cp-btn--primary cp-btn--lg">公開前の確認を相談する</a>
+      </div>
+    </section>
+  </main>
+</Layout>
