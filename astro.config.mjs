@@ -27,8 +27,9 @@ export default defineConfig({
       minify: true,
       rollupOptions: {
         output: {
-          manualChunks: {
-            'swiper': ['swiper']
+          manualChunks(id) {
+            // rolldown（astro 7 / vite 8）は関数形式のみ。swiper を別チャンクに分ける
+            if (id.includes('/node_modules/swiper/')) return 'swiper';
           }
         }
       }
