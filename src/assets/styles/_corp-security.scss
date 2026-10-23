@@ -1248,3 +1248,343 @@ $gray: #f4f6f9;
     }
   }
 }
+
+/* PHP 緊急脆弱性のファーストビュー（2026-10-23、完全に煽り） */
+#corp-page.cp-security-page .sp-php {
+  position: relative;
+  background:
+    radial-gradient(circle at 85% 0%, rgba(230, 0, 18, 0.45), transparent 45%),
+    radial-gradient(circle at 0% 100%, rgba(230, 0, 18, 0.25), transparent 40%),
+    #0c1424;
+  color: white;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 6px;
+    background: repeating-linear-gradient(-45deg, #e60012 0 14px, #0c1424 14px 28px);
+  }
+
+  .cp-container {
+    position: relative;
+  }
+
+  &__label {
+    display: inline-block;
+    border: 2px solid #ff3344;
+    color: #ff5a68;
+    font-weight: bold;
+    letter-spacing: 0.08em;
+    animation: sp-php-blink 1.6s steps(2, start) infinite;
+  }
+
+  &__ttl {
+    color: white;
+    font-weight: 900;
+    line-height: 1.3;
+    letter-spacing: 0.02em;
+
+    em {
+      color: #ff3344;
+      font-style: normal;
+    }
+  }
+
+  &__lead {
+    color: rgba(255, 255, 255, 0.88);
+    font-weight: 500;
+    line-height: 1.9;
+  }
+
+  &__checks {
+    display: grid;
+    list-style: none;
+
+    li {
+      position: relative;
+      background-color: rgba(230, 0, 18, 0.14);
+      border-left: 4px solid #ff3344;
+      color: white;
+      font-weight: bold;
+      line-height: 1.6;
+
+      &::before {
+        content: "\26A0";
+        margin-right: 0.5em;
+        color: #ff5a68;
+      }
+    }
+  }
+
+  &__more {
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+
+    p {
+      color: rgba(255, 255, 255, 0.82);
+      line-height: 1.9;
+    }
+  }
+
+  &__h {
+    color: white;
+    font-weight: bold;
+    line-height: 1.5;
+  }
+
+  &__services {
+    display: grid;
+    list-style: none;
+
+    li {
+      background-color: white;
+      color: $ink;
+    }
+  }
+
+  &__name {
+    color: #e60012;
+    font-weight: bold;
+  }
+
+  &__txt {
+    color: $body;
+    line-height: 1.8;
+  }
+
+  &__after {
+    display: grid;
+    list-style: none;
+
+    li {
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.6;
+    }
+
+    b {
+      display: block;
+      color: white;
+    }
+  }
+
+  &__cta {
+    text-align: center;
+
+    p {
+      color: white;
+      font-weight: bold;
+    }
+  }
+}
+
+@keyframes sp-php-blink {
+  to {
+    opacity: 0.45;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #corp-page.cp-security-page .sp-php__label {
+    animation: none;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  #corp-page.cp-security-page .sp-php {
+    padding: 80px 0 80px;
+
+    &__label {
+      padding: 6px 16px;
+      font-size: 1.4rem;
+    }
+
+    &__ttl {
+      margin-top: 20px;
+      font-size: 5.6rem;
+    }
+
+    &__lead {
+      max-width: 860px;
+      margin-top: 24px;
+      font-size: 1.7rem;
+    }
+
+    &__checks {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      max-width: 860px;
+      margin-top: 32px;
+
+      li {
+        padding: 14px 18px;
+        font-size: 1.6rem;
+      }
+    }
+
+    &__more {
+      margin-top: 48px;
+      padding-top: 32px;
+
+      p {
+        max-width: 860px;
+        margin-top: 12px;
+        font-size: 1.6rem;
+      }
+    }
+
+    &__h {
+      font-size: 2.6rem;
+    }
+
+    &__services {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 40px;
+
+      li {
+        padding: 24px 24px 26px;
+      }
+    }
+
+    &__name {
+      font-size: 2rem;
+    }
+
+    &__txt {
+      margin-top: 10px;
+      font-size: 1.4rem;
+    }
+
+    &__after {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 20px;
+
+      li {
+        padding: 14px 14px 16px;
+        font-size: 1.3rem;
+      }
+
+      b {
+        margin-bottom: 6px;
+        font-size: 1.5rem;
+      }
+    }
+
+    &__cta {
+      margin-top: 48px;
+
+      p {
+        margin-bottom: 18px;
+        font-size: 2rem;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1023px) {
+  #corp-page.cp-security-page .sp-php {
+    &__ttl {
+      font-size: 4.4rem;
+    }
+
+    &__services {
+      grid-template-columns: 1fr;
+    }
+
+    &__after {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #corp-page.cp-security-page .sp-php {
+    padding: 48px 0 52px;
+
+    &__label {
+      padding: 5px 12px;
+      font-size: 1.2rem;
+    }
+
+    &__ttl {
+      margin-top: 16px;
+      font-size: 3rem;
+    }
+
+    &__lead {
+      margin-top: 18px;
+      font-size: 1.5rem;
+    }
+
+    &__checks {
+      gap: 8px;
+      margin-top: 24px;
+
+      li {
+        padding: 12px 14px;
+        font-size: 1.4rem;
+      }
+    }
+
+    &__more {
+      margin-top: 36px;
+      padding-top: 26px;
+
+      p {
+        margin-top: 10px;
+        font-size: 1.4rem;
+      }
+    }
+
+    &__h {
+      font-size: 2rem;
+    }
+
+    &__services {
+      gap: 12px;
+      margin-top: 28px;
+
+      li {
+        padding: 20px 18px;
+      }
+    }
+
+    &__name {
+      font-size: 1.8rem;
+    }
+
+    &__txt {
+      margin-top: 8px;
+      font-size: 1.4rem;
+    }
+
+    &__after {
+      gap: 8px;
+      margin-top: 16px;
+
+      li {
+        padding: 12px 14px;
+        font-size: 1.3rem;
+      }
+
+      b {
+        margin-bottom: 4px;
+        font-size: 1.4rem;
+      }
+    }
+
+    &__cta {
+      margin-top: 36px;
+
+      p {
+        margin-bottom: 14px;
+        font-size: 1.6rem;
+      }
+    }
+  }
+}
