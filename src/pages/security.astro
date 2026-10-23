@@ -6,9 +6,12 @@
   表現ルール：「防げる」「安全」「保証」と断言しない／社名を出さない／「作っていい。公開の前に確かめよう」の立場。
   図解は ChatGPT で作成（原本 GD/営業/サイト素材/図解_ChatGPT_20261003/security-*_20261008.png）。
   スタイルは _corp-security.scss（.cp-security-page）。
+  2026-10-23 LP化（本人指示：PHP緊急脆弱性の広告の着地）：Layout は lp（ナビなし・追従CTA）＋ corp（corp.js）。ボタンはすべてページ内フォーム #contact へ。
+  構成の根拠は 営業/広告/2026-10_PHP緊急脆弱性/LP研究_PHP脆弱性LP構成_20261023.md。文言は Codex（scratchpad/codex/lp_copy.md）。
 */
 import Layout from "../layouts/Layout.astro";
 import LineIcon from "../components/corp/LineIcon.astro";
+import ConsultForm from "../components/consultation/ConsultForm.jsx";
 
 /* インターネットの向こう側の今（数字は確かな出典がないので使わない） */
 const threats = [
@@ -93,6 +96,7 @@ const phpServices = [
   { name: "PHPの更新", txt: "サーバーのPHPそのものを、修正版（8.5.12／8.4.27／8.3.36／8.2.35）以上へ更新し、表示やお問い合わせフォームの動きまで確認します。修正版のない古いPHPからの移行も対応します。" },
   { name: "セキュリティの見直し", txt: "PHP、WordPress、プラグイン、AIで作ったアプリ、管理画面まで、攻撃の入口になり得る箇所を確認します。秘密鍵の管理、バックアップ、復旧手順まで見直します。" },
   { name: "サーバーの引っ越し", txt: "更新や復旧を続けられる環境へ、サイトとデータを移します。サーバー会社がどこまで対応するかを確かめ、自社で管理すべきことと担当者をはっきりさせます。" },
+  { name: "AIアプリ公開前点検", txt: "APIキーの置き場所、管理画面の認証、データベースの公開設定を確認します。修正の当て忘れも点検し、公開前に手を入れるべき箇所を整理します。" },
 ];
 const phpAfter = [
   { name: "常時バックアップ", txt: "データの控えを、別の場所に取り続ける" },
@@ -103,38 +107,68 @@ const phpAfter = [
 ];
 
 const faq = [
+  { q: "古いPHPのサイトでも対応できますか？", a: "まず現在の構成を確認し、更新による影響を調べます。そのうえで、移行も含めた対応方法を検討します。" },
+  { q: "制作会社と連絡が取れません。", a: "サーバー契約や管理画面へのアクセス状況から、確認できることを探します。資料がそろっていなくても、手元にある情報でご相談ください。" },
+  { q: "レンタルサーバーでも確認は必要ですか？", a: "レンタルサーバーでも、利用中のPHPが今回の脆弱性の影響を受けるか確認が必要です。サーバー会社の対応状況と、ご自身で必要な設定変更を確認します。" },
+  { q: "費用はいくらですか？", a: "対応範囲を相談のうえで決め、その内容に沿ったお見積もりを提示します。ご依頼の判断は、見積もりをご覧いただいてからで大丈夫です。" },
   { q: "外注先が作ったアプリでも相談できますか？", a: "はい。外注先が作ったアプリも対象です。" },
   { q: "すでに公開しているアプリでも相談できますか？", a: "はい。公開済みのアプリについても、設定の確認や見直しをご相談いただけます。" },
   { q: "どのAIで作ったものでも相談できますか？", a: "はい。Claude Code・ChatGPTなど、使ったAIは問いません。" },
   { q: "コードや画面を見せるのが不安です。", a: "最初からすべてを見せていただく必要はありません。共有する範囲と方法を相談して決め、その範囲で確認できることをお伝えします。" },
-  { q: "費用はどう決まりますか？", a: "初回相談は無料です。お話を伺ったうえで、必要な作業の範囲と費用をご案内します。" },
 ];
 ---
 
 <Layout
   title="PHP緊急脆弱性・AIアプリのセキュリティ対策｜DDDynamis・AI軍師"
-  description="あなたのWebサイト、PHP使ってないですか？2026年10月、PHPに緊急レベルの脆弱性が公表されました。WordPressのサイトも対象です。PHPの更新、セキュリティの見直し、サーバーの引っ越しまで、現役Webエンジニアが対応します。AIで作った業務アプリを、公開前に一度確認しませんか。現役Webエンジニアが、設定の確認から修正、本番環境の構築、公開後の運用まで対応します。外注先が作ったアプリや公開済みのアプリも相談できます。初回相談は無料です。"
+  description="あなたのWebサイト、PHP使ってないですか？2026年10月、PHPに緊急レベルの脆弱性が公表されました。WordPressのサイトも対象です。PHPの更新、セキュリティの見直し、サーバーの引っ越し、AIで作ったアプリの公開前チェックまで、現役Webエンジニアが対応します。初回相談は無料です。"
   corp
+  lp
+  lpCta={{ header: "無料で相談する", sticky: "PHPの対応を無料相談" }}
+  lpTagline="現役Webエンジニアが直接対応します。"
 >
   <main id="corp-page" class="corp-page cp-security-page" role="main">
     <!-- PHP 緊急脆弱性（2026-10-23）。落ち着いたら外して、下の page-head の見出しを h1 に戻す -->
     <section class="sp-php" aria-labelledby="sp-php-ttl">
       <div class="cp-container">
-        <p class="sp-php__label" data-reveal>2026年10月｜PHP緊急警告</p>
-        <h1 class="sp-php__ttl" id="sp-php-ttl" data-reveal style="--d: .1s">あなたのWebサイト、<br /><em>PHP</em>使ってないですか？</h1>
-        <p class="sp-php__lead" data-reveal style="--d: .2s">PHPは、多くのWebサイトを動かすプログラムの言語です。2026年10月、攻撃に悪用される欠陥「脆弱性」が緊急レベルで2件公表され、外からプログラムを実行されてサーバーを乗っ取られるおそれがあります。WordPressで作ったサイトやPHPのお問い合わせフォームも対象で、WordPressやプラグインを更新しただけでは直りません。</p>
-        <ul class="sp-php__checks" data-reveal style="--d: .3s">
+        <div class="sp-php__fv">
+          <div class="sp-php__fvcopy">
+            <p class="sp-php__label" data-reveal>2026年10月｜PHP緊急警告</p>
+            <h1 class="sp-php__ttl" id="sp-php-ttl" data-reveal style="--d: .1s">あなたのWebサイト、<br /><em>PHP</em>使ってないですか？</h1>
+            <p class="sp-php__sub" data-reveal style="--d: .2s">2026年10月21日、PHPに緊急レベルの脆弱性が公表されました。PHP 8.1以前には公式の修正版がなく、プラグインの更新だけでは直りません。</p>
+            <div class="sp-cta sp-cta--fv" data-reveal style="--d: .3s">
+              <a href="#contact" class="sp-cta__btn">自社の状況を相談する</a>
+              <p class="sp-cta__note">初回無料・オンライン可。しつこい営業はしません。</p>
+            </div>
+          </div>
+          <figure class="sp-php__fvimg" data-reveal style="--d: .2s">
+            <picture>
+              <source srcset="/assets/images/corp/security-fv-php.webp" type="image/webp" />
+              <img src="/assets/images/corp/security-fv-php.jpg" alt="緊急警告 PHP脆弱性。自社サイト、PHP使ってませんか？ 現役Webエンジニア・AI軍師 川端康平" width="1200" height="800" loading="eager" fetchpriority="high" decoding="async" />
+            </picture>
+          </figure>
+        </div>
+        <ul class="sp-php__checks" data-reveal>
           {phpChecks.map((c) => <li>{c}</li>)}
         </ul>
+        <div class="sp-php__more" data-reveal>
+          <h2 class="sp-php__h">2026年10月、何が起きたか</h2>
+          <p>PHPは、多くのWebサイトを動かすプログラムの言語です。2026年10月、攻撃に悪用される欠陥「脆弱性」が緊急レベルで2件公表され、外からプログラムを実行されてサーバーを乗っ取られるおそれがあります。WordPressで作ったサイトやPHPのお問い合わせフォームも対象で、WordPressやプラグインを更新しただけでは直りません。</p>
+          <p class="sp-php__src">出典：<a href="https://www.php.net/archive/2026.php#2026-10-21-5" target="_blank" rel="noopener">PHP公式の告知（2026年10月21日）</a>。修正版は 8.5.12／8.4.27／8.3.36／8.2.35 以上。<time datetime="2026-10-23">2026年10月23日</time>時点の情報です。</p>
+        </div>
         <div class="sp-php__more" data-reveal>
           <h2 class="sp-php__h">PHP以外も、放置は危険です</h2>
           <p>Node.jsなど、ほかの言語・部品でも脆弱性の公表が続いています。非エンジニアの社員がAIで作ったアプリを公開し、使っている部品への影響を誰も確認していないなら、「動いているから大丈夫」で放置していませんか。</p>
         </div>
+        <h2 class="sp-php__h sp-php__h--menu" data-reveal>ご相談いただけること</h2>
         <ul class="sp-php__services">
           {phpServices.map((v, i) => (
             <li data-reveal style={`--d: ${i * 0.08}s`}><p class="sp-php__name">{v.name}</p><p class="sp-php__txt">{v.txt}</p></li>
           ))}
         </ul>
+        <div class="sp-cta" data-reveal>
+          <p class="sp-cta__lead">どの対応が必要か、迷っていても大丈夫です</p>
+          <a href="#contact" class="sp-cta__btn">必要な対応を相談する</a>
+        </div>
         <div class="sp-php__more" data-reveal>
           <h2 class="sp-php__h">やられた後、戻せないでは済みません</h2>
           <p>被害は防げない前提で備えます。侵入を防ぐ対策に加え、被害を抑えて業務を戻す準備まで必要です。</p>
@@ -142,10 +176,7 @@ const faq = [
             {phpAfter.map((a) => <li><b>{a.name}</b>{a.txt}</li>)}
           </ul>
         </div>
-        <div class="sp-php__cta" data-reveal>
-          <p>「知らなかった」で、顧客に説明できますか？</p>
-          <a href="/consultation?utm_source=security&utm_medium=web&utm_campaign=php" class="cp-btn cp-btn--primary cp-btn--lg">初回相談（無料）を申し込む</a>
-        </div>
+        <p class="sp-php__cost" data-reveal>費用について：対応範囲を相談のうえで決め、その内容に沿ったお見積もりを提示します。</p>
       </div>
     </section>
 
@@ -351,10 +382,14 @@ const faq = [
         <div>
           <header class="cp-head" data-reveal>
             <p class="cp-head__en eng">Engineer</p>
-            <h2 class="cp-head__ttl" id="sp-who-ttl">担当するのは、<br />現役のWebエンジニアです。</h2>
-            <p class="cp-head__lead">DDDynamis代表の川端康平です。AIで社員がアプリを作れるように育てる側と、そのアプリを本番で動かす側の、両方を担当します。</p>
+            <h2 class="cp-head__ttl" id="sp-who-ttl">現役エンジニアの私が<br />直接対応します</h2>
+            <p class="cp-head__lead">DDDynamis代表の川端康平です。自社の本番サーバーも、私自身が設計・運用しています。SSHを開けず、SSMで管理しています。保存データとバックアップを暗号化し、毎日バックアップを取り、復元できることも確認済みです。</p>
           </header>
           <p class="sp-who__end" data-reveal>確認結果は、専門用語だけで済ませず、何をどう見直すかが分かる言葉でお伝えします。</p>
+          <div class="sp-cta sp-cta--left" data-reveal>
+            <p class="sp-cta__lead">専門用語に直さず、そのままどうぞ</p>
+            <a href="#contact" class="sp-cta__btn">代表に相談する</a>
+          </div>
         </div>
       </div>
     </section>
@@ -377,18 +412,37 @@ const faq = [
       </div>
     </section>
 
-    <section class="cp-closing" aria-labelledby="sp-closing">
-      <picture class="cp-closing__band" aria-hidden="true">
-        <source media="(min-width: 769px)" srcset="/assets/images/corp/band-connect.webp" type="image/webp" />
-        <source media="(min-width: 769px)" srcset="/assets/images/corp/band-connect.jpg" />
-        <source srcset="/assets/images/corp/band-connect-sp.webp" type="image/webp" />
-        <img src="/assets/images/corp/band-connect-sp.jpg" alt="" width="800" height="600" loading="lazy" decoding="async" />
-      </picture>
-      <div class="cp-container cp-closing__inner" data-reveal>
-        <h2 class="cp-closing__ttl" id="sp-closing">まずは、公開に向けた相談から。</h2>
-        <p class="cp-closing__txt">まだ形になっていなくても、次に何を確かめるかを一緒に整理します。初回相談は無料です。</p>
-        <a href="/consultation" class="cp-btn cp-btn--primary cp-btn--lg">公開前の確認を相談する</a>
+    <!-- 最終CTA＋ページ内フォーム（LP化 2026-10-23：広告からの着地で離脱させない） -->
+    <section class="cp-sec sp-final" aria-labelledby="sp-final-ttl">
+      <div class="cp-container" data-reveal>
+        <h2 class="sp-final__ttl" id="sp-final-ttl">動かなくなってからでは遅いです</h2>
+        <p class="sp-final__txt">問い合わせが途切れてから、サイトの異常に気づくかもしれません。事業への影響が出る前に、確認すべきことを一緒に整理しましょう。</p>
       </div>
     </section>
+    {/* フォームの装飾は初回相談LPと共用（_consultation-page.scss が #consultation-page の中だけに効くため、id をそろえる） */}
+    <div class="sp-form" id="consultation-page">
+      <ConsultForm
+        client:load
+        heading="御社の気がかりをお聞かせください"
+        lead="止められない業務や、対応で気がかりなこともお聞かせください。内容を確認し、ご相談の進め方をご案内します。"
+        messageLabel="確認したいこと・現在の状況"
+        messagePlaceholder="例：自社サイトが今回の脆弱性に関係するか知りたいです。社員がAIで作ったアプリもあり、顧客情報を扱う予定なので、公開前に見てほしいです。"
+        submitLabel="この内容で相談を送信する"
+        doneTitle="ご相談を受け付けました"
+        doneText="内容を確認のうえ、ご記入の連絡先へご連絡します。"
+      />
+    </div>
   </main>
+
+  <script is:inline>
+    // フォームが画面に入ったら追従CTAを隠す（/consultation と同じ。表示そのものは main.js がスクロール量で制御）
+    document.addEventListener("DOMContentLoaded", () => {
+      const sticky = document.getElementById("js-sticky-cta");
+      const form = document.getElementById("contact");
+      if (!sticky || !form || !("IntersectionObserver" in window)) return;
+      new IntersectionObserver(([entry]) => {
+        sticky.classList.toggle("is-hidden-by-form", entry.isIntersecting);
+      }, { threshold: 0.05 }).observe(form);
+    });
+  </script>
 </Layout>
