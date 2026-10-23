@@ -4023,3 +4023,38 @@ $ease: cubic-bezier(0.22, 1, 0.36, 1);
     }
   }
 }
+
+/* サービス欄：コース名の右に筆文字のあしらい（2026-10-23） */
+#corp-page .cp-service {
+  &__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: 12px;
+  }
+
+  &__name {
+    flex: none;
+  }
+
+  /* 名前の右に収まる幅（PC カード内幅 約400px − 名前 約200px）。収まらない幅では名前の下に回る */
+  &__brush {
+    display: block;
+    flex: 0 1 172px;
+    min-width: 0;
+    transform: rotate(-4deg);
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #corp-page .cp-service__brush {
+    flex-basis: 170px;
+    margin-top: 4px;
+  }
+}
