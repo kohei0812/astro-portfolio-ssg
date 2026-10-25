@@ -1843,3 +1843,207 @@ $gray: #f4f6f9;
     }
   }
 }
+
+/* 入口商品：無料Webサイト簡易診断（2026-10-25）。暗い PHP 節の中に白いカードで「商品」として浮かせる */
+#corp-page.cp-security-page .sp-diag {
+  background-color: white;
+  border-top: 6px solid #e60012;
+  border-radius: 8px;
+  color: $navy;
+
+  &__label {
+    color: #e60012;
+    font-weight: bold;
+    letter-spacing: 0.1em;
+  }
+
+  &__ttl {
+    color: $navy;
+    font-weight: 900;
+    line-height: 1.4;
+  }
+
+  &__lead,
+  &__deliver,
+  &__who {
+    line-height: 1.9;
+  }
+
+  &__h {
+    color: $navy;
+    font-weight: bold;
+    border-left: 4px solid #e60012;
+  }
+
+  &__checks,
+  &__steps {
+    display: grid;
+    list-style: none;
+
+    li {
+      background-color: #f4f6fa;
+      line-height: 1.7;
+    }
+
+    b {
+      display: block;
+      color: $navy;
+    }
+  }
+
+  &__no {
+    display: block;
+    color: #e60012;
+    font-weight: bold;
+  }
+
+  &__deliver {
+    font-weight: bold;
+  }
+
+  &__note {
+    color: #5b6475;
+    line-height: 1.8;
+  }
+
+  .sp-cta__lead {
+    color: $navy;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  #corp-page.cp-security-page .sp-diag {
+    margin-top: 48px;
+    padding: 40px 48px 44px;
+
+    &__label {
+      font-size: 1.4rem;
+    }
+
+    &__ttl {
+      margin-top: 6px;
+      font-size: 3.4rem;
+    }
+
+    &__lead {
+      margin-top: 14px;
+      font-size: 1.6rem;
+    }
+
+    &__h {
+      margin-top: 32px;
+      padding-left: 12px;
+      font-size: 2rem;
+    }
+
+    &__checks {
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    // 4ステップは 3+1 で余らせない：中間幅は 2×2、広い画面で 4 列
+    &__steps {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+
+      @media (min-width: 1000px) {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+    }
+
+    &__checks li,
+    &__steps li {
+      padding: 16px 18px;
+      font-size: 1.4rem;
+    }
+
+    b {
+      margin-bottom: 6px;
+      font-size: 1.7rem;
+    }
+
+    &__no {
+      font-size: 1.3rem;
+    }
+
+    &__deliver {
+      margin-top: 24px;
+      font-size: 1.6rem;
+    }
+
+    &__who {
+      margin-top: 6px;
+      font-size: 1.5rem;
+    }
+
+    &__note {
+      margin-top: 10px;
+      font-size: 1.3rem;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #corp-page.cp-security-page .sp-diag {
+    margin-top: 36px;
+    padding: 28px 18px 30px;
+
+    &__label {
+      font-size: 1.2rem;
+    }
+
+    &__ttl {
+      margin-top: 4px;
+      font-size: 2.4rem;
+    }
+
+    &__lead {
+      margin-top: 12px;
+      font-size: 1.4rem;
+    }
+
+    &__h {
+      margin-top: 26px;
+      padding-left: 10px;
+      font-size: 1.7rem;
+    }
+
+    &__checks,
+    &__steps {
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    &__checks li,
+    &__steps li {
+      padding: 14px;
+      font-size: 1.3rem;
+    }
+
+    b {
+      margin-bottom: 4px;
+      font-size: 1.5rem;
+    }
+
+    &__no {
+      font-size: 1.2rem;
+    }
+
+    &__deliver {
+      margin-top: 20px;
+      font-size: 1.4rem;
+    }
+
+    &__who {
+      margin-top: 6px;
+      font-size: 1.3rem;
+    }
+
+    &__note {
+      margin-top: 10px;
+      font-size: 1.2rem;
+    }
+  }
+}

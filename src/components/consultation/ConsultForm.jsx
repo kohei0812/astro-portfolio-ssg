@@ -14,13 +14,17 @@ const FIELD_IDS = {
   message: "entry.1810273391"
 };
 const SUBJECT = "【初回相談】お申し込み";
+// 2026-10-25 追加：mode="diagnosis" で「無料Webサイト簡易診断」の申込に切り替える（/security）。
+// 診断対象のURLと所有者・管理者であることの確認を必須にし、件名と GA4 の form 名を分ける。
+const DIAG_SUBJECT = "【無料診断】お申し込み";
 const STYLES = ["オンライン", "訪問", "どちらでもよい"];
 // どこで知ったか（任意）。2026-10-03 追加：月次レポートで流入経路を本人の申告で確かめるため（GD/営業/マーケ運用）
 const SOURCES = ["X", "Instagram", "Facebook", "名刺", "BNI", "セミナー・研修", "検索", "ご紹介", "その他"];
 
-const initialData = { company: '', name: '', email: '', tel: '', style: STYLES[0], source: '', message: '' };
+const initialData = { company: '', name: '', email: '', tel: '', style: STYLES[0], source: '', message: '', url: '', authority: false };
 
-export default function ConsultForm({ heading, lead, submitLabel, doneTitle, doneText, messageLabel = 'ご相談したいこと（任意）', messagePlaceholder = '' }) {
+export default function ConsultForm({ heading, lead, submitLabel, doneTitle, doneText, messageLabel = 'ご相談したいこと（任意）', messagePlaceholder = '', mode = 'consult', urlLabel = 'サイトのURL', urlPlaceholder = 'https://example.com', authorityLabel = 'このサイトの所有者、または管理を任されています' }) {
+  const isDiag = mode === 'diagnosis';
   const [formData, setFormData] = useState(initialData);
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -28,8 +32,8 @@ export default function ConsultForm({ heading, lead, submitLabel, doneTitle, don
   const honeypotRef = useRef(null);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    const { name, value, type, checked } = e.target;
+    setFormData(prev => ({ ...prev, [name]: type === 'checkbox' ? checked : value }));
     if (errors[name]) setErrors(prev => ({ ...prev, [name]: '' }));
   };
 
@@ -41,6 +45,8 @@ export default function ConsultForm({ heading, lead, submitLabel, doneTitle, don
     if (!formData.name.trim()) newErrors.name = 'お名前をご入力ください';
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) newErrors.email = '正しいメールアドレスをご入力ください';
     if (formData.tel.trim() && !/^[0-9０-９+\-－() ]{9,16}$/.test(formData.tel.trim())) newErrors.tel = '電話番号の形式をご確認ください';
+    if (isDiag && !/^https?:\/\/[^\s.]+\.[^\s]+$/.test(formData.url.trim())) newErrors.url = 'https:// から始まるURLをご入力ください';
+    if (isDiag && !formData.authority) newErrors.authority = '所有者・管理者の方のみお申し込みいただけます';
     if (formData.message.length > 2000) newErrors.message = '2000文字以内でご入力ください';
 
     setErrors(newErrors);
@@ -54,9 +60,10 @@ export default function ConsultForm({ heading, lead, submitLabel, doneTitle, don
     setIsSubmitting(true);
     try {
       const body = [
+        ...(isDiag ? [`診断するサイト: ${formData.url.trim()}`, `所有者・管理者の確認: はい`] : []),
         `会社名・屋号: ${formData.company.trim()}`,
         `電話番号: ${formData.tel.trim() || '（未記入）'}`,
-        `希望の形式: ${formData.style}`,
+        ...(isDiag ? [] : [`希望の形式: ${formData.style}`]),
         `どこで知ったか: ${formData.source || '（未選択）'}`,
         '',
         formData.message.trim() || '（記入なし）'
@@ -65,13 +72,13 @@ export default function ConsultForm({ heading, lead, submitLabel, doneTitle, don
       const submitData = new FormData();
       submitData.append(FIELD_IDS.name, formData.name.trim());
       submitData.append(FIELD_IDS.email, formData.email.trim());
-      submitData.append(FIELD_IDS.subject, SUBJECT);
+      submitData.append(FIELD_IDS.subject, isDiag ? DIAG_SUBJECT : SUBJECT);
       submitData.append(FIELD_IDS.message, body);
 
       await fetch(GOOGLE_FORM_URL, { method: 'POST', body: submitData, mode: 'no-cors' });
 
       // GA4：初回相談の申込みをキーイベント（generate_lead）として送る
-      if (typeof window.gtag === 'function') window.gtag('event', 'generate_lead', { form: 'consultation', page: location.pathname, heard_from: formData.source || 'unknown' });
+      if (typeof window.gtag === 'function') window.gtag('event', 'generate_lead', { form: isDiag ? 'diagnosis' : 'consultation', page: location.pathname, heard_from: formData.source || 'unknown' });
 
       setIsSubmitted(true);
       setFormData(initialData);
@@ -116,6 +123,15 @@ export default function ConsultForm({ heading, lead, submitLabel, doneTitle, don
             style={{ position: 'absolute', left: '-9999px', visibility: 'hidden' }}
           />
 
+          {isDiag && (
+            <div className="form-group">
+              <label htmlFor="url" className="form-label">{urlLabel} <span className="required">*</span></label>
+              <input type="url" id="url" name="url" inputMode="url" autoComplete="url" value={formData.url} onChange={handleChange}
+                className={`form-input ${errors.url ? 'error' : ''}`} placeholder={urlPlaceholder} />
+              {errors.url && <span className="error-message">{errors.url}</span>}
+            </div>
+          )}
+
           <div className="form-group">
             <label htmlFor="company" className="form-label">会社名・屋号 <span className="required">*</span></label>
             <input type="text" id="company" name="company" autoComplete="organization" value={formData.company} onChange={handleChange}
@@ -145,7 +161,7 @@ export default function ConsultForm({ heading, lead, submitLabel, doneTitle, don
             {errors.email && <span className="error-message">{errors.email}</span>}
           </div>
 
-          <fieldset className="form-group consult-style">
+          {!isDiag && <fieldset className="form-group consult-style">
             <legend className="form-label">ご希望の形式</legend>
             <div className="consult-style__options">
               {STYLES.map((s) => (
@@ -155,7 +171,7 @@ export default function ConsultForm({ heading, lead, submitLabel, doneTitle, don
                 </label>
               ))}
             </div>
-          </fieldset>
+          </fieldset>}
 
           <div className="form-group">
             <label htmlFor="source" className="form-label">どこで知りましたか（任意）</label>
@@ -172,6 +188,17 @@ export default function ConsultForm({ heading, lead, submitLabel, doneTitle, don
               placeholder={messagePlaceholder} />
             {errors.message && <span className="error-message">{errors.message}</span>}
           </div>
+
+          {isDiag && (
+            <div className="form-group">
+              <label className="consult-style__option">
+                <input type="checkbox" name="authority" checked={formData.authority} onChange={handleChange} />
+                <span>{authorityLabel} <span className="required">*</span></span>
+              </label>
+              {/* チェックボックスの横に回り込まないよう、エラーは次の行に出す */}
+              {errors.authority && <span className="error-message" style={{ display: 'block' }}>{errors.authority}</span>}
+            </div>
+          )}
 
           <p className="form-privacy">送信いただいた情報は、<a href="/privacy" target="_blank" rel="noopener">プライバシーポリシー</a>に沿って取り扱います。</p>
 

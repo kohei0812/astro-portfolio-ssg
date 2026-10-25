@@ -8,10 +8,27 @@
   スタイルは _corp-security.scss（.cp-security-page）。
   2026-10-23 LP化（本人指示：PHP緊急脆弱性の広告の着地）：Layout は lp（ナビなし・追従CTA）＋ corp（corp.js）。ボタンはすべてページ内フォーム #contact へ。
   構成の根拠は 営業/広告/2026-10_PHP緊急脆弱性/LP研究_PHP脆弱性LP構成_20261023.md。文言は Codex（scratchpad/codex/lp_copy.md）。
+  2026-10-25 入口商品「無料Webサイト簡易診断」を載せる（本人指示：「相談して」止まりをやめ、最速でコンバージョンを取る）。
+  ボタンはすべて診断の申し込みへ。フォームは ConsultForm の mode="diagnosis"。文言は Codex（GD/営業/広告/2026-10_PHP緊急脆弱性/無料診断_文言_20261025.json）。
 */
 import Layout from "../layouts/Layout.astro";
 import LineIcon from "../components/corp/LineIcon.astro";
 import ConsultForm from "../components/consultation/ConsultForm.jsx";
+
+/* 無料Webサイト簡易診断（外から見える範囲だけ。所有者確認ができないサイトは診断しない） */
+const diagChecks = [
+  { name: "暗号化通信", txt: "SSL（通信の暗号化）と証明書を確認します。" },
+  { name: "ソフトの版", txt: "PHP・WordPress・追加機能の版と既知の弱点を確認します。" },
+  { name: "公開ファイル", txt: "設定ファイル・バックアップ・.git（変更履歴）などの公開を確認します。" },
+  { name: "管理画面", txt: "サイトの管理画面が外から見える状態かを確認します。" },
+  { name: "保護の設定", txt: "ヘッダー（通信時に送る設定情報）のセキュリティ設定を点検します。" },
+];
+const diagSteps = [
+  { name: "申し込み", txt: "フォームにサイトのURLを入力してお申し込みください。" },
+  { name: "所有者確認", txt: "申込メールのドメイン（@以降）などで確認します。" },
+  { name: "外から点検", txt: "ログインの試行や攻撃にあたる検査は行いません。" },
+  { name: "結果をお届け", txt: "「今すぐ対応／近いうちに対応／様子見」の3段でメール送付します。" },
+];
 
 /* インターネットの向こう側の今（数字は確かな出典がないので使わない） */
 const threats = [
@@ -107,10 +124,13 @@ const phpAfter = [
 ];
 
 const faq = [
+  { q: "無料で何を見てもらえますか？", a: "外から見える範囲で、暗号化通信と証明書、PHP・WordPress・追加機能の版と既知の弱点、公開されてはいけないファイル、管理画面の露出、セキュリティ関連の設定を点検します。ログインの試行や攻撃にあたる検査は行いません。" },
+  { q: "所有者確認とは何をするのですか？", a: "申込メールのドメイン（@以降）が対象サイトのドメインと同じ場合は、そのまま点検へ進みます。異なる場合は、確認用の文字列をサイトのトップページかDNS（ドメインの管理設定）に置いていただきます。確認できないサイトは診断しません。" },
+  { q: "無料診断のあとに売り込まれませんか？", a: "その先の詳細診断と報告会、改修、保守は任意です。どれもお見積りを確認してから、利用するかどうかをご判断いただけます。" },
   { q: "古いPHPのサイトでも対応できますか？", a: "まず現在の構成を確認し、更新による影響を調べます。そのうえで、移行も含めた対応方法を検討します。" },
   { q: "制作会社と連絡が取れません。", a: "サーバー契約や管理画面へのアクセス状況から、確認できることを探します。資料がそろっていなくても、手元にある情報でご相談ください。" },
   { q: "レンタルサーバーでも確認は必要ですか？", a: "レンタルサーバーでも、利用中のPHPが今回の脆弱性の影響を受けるか確認が必要です。サーバー会社の対応状況と、ご自身で必要な設定変更を確認します。" },
-  { q: "費用はいくらですか？", a: "対応範囲を相談のうえで決め、その内容に沿ったお見積もりを提示します。ご依頼の判断は、見積もりをご覧いただいてからで大丈夫です。" },
+  { q: "費用はいくらですか？", a: "Webサイトの簡易診断は無料です。その先の詳細診断と報告会、改修、保守は、お見積りを見てからご判断いただけます。" },
   { q: "外注先が作ったアプリでも相談できますか？", a: "はい。外注先が作ったアプリも対象です。" },
   { q: "すでに公開しているアプリでも相談できますか？", a: "はい。公開済みのアプリについても、設定の確認や見直しをご相談いただけます。" },
   { q: "どのAIで作ったものでも相談できますか？", a: "はい。Claude Code・ChatGPTなど、使ったAIは問いません。" },
@@ -120,10 +140,10 @@ const faq = [
 
 <Layout
   title="PHP緊急脆弱性・AIアプリのセキュリティ対策｜DDDynamis・AI軍師"
-  description="あなたのWebサイト、PHP使ってないですか？2026年10月、PHPに緊急レベルの脆弱性が公表されました。WordPressのサイトも対象です。PHPの更新、セキュリティの見直し、サーバーの引っ越し、AIで作ったアプリの公開前チェックまで、現役Webエンジニアが対応します。初回相談は無料です。"
+  description="あなたのWebサイト、PHP使ってないですか？2026年10月、PHPに緊急レベルの脆弱性が公表されました。WordPressのサイトも対象です。PHPの更新、セキュリティの見直し、サーバーの引っ越し、AIで作ったアプリの公開前チェックまで、現役Webエンジニアが対応します。まずは無料Webサイト簡易診断から。"
   corp
   lp
-  lpCta={{ header: "無料で相談する", sticky: "PHPの対応を無料相談" }}
+  lpCta={{ header: "無料診断に申込", sticky: "無料診断を申し込む" }}
   lpTagline="現役Webエンジニアが直接対応します。"
 >
   <main id="corp-page" class="corp-page cp-security-page" role="main">
@@ -136,8 +156,8 @@ const faq = [
             <h1 class="sp-php__ttl" id="sp-php-ttl" data-reveal style="--d: .1s">あなたのWebサイト、<br /><em>PHP</em>使ってないですか？</h1>
             <p class="sp-php__sub" data-reveal style="--d: .2s">2026年10月21日、PHPに緊急レベルの脆弱性が公表されました。PHP 8.1以前には公式の修正版がなく、プラグインの更新だけでは直りません。</p>
             <div class="sp-cta sp-cta--fv" data-reveal style="--d: .3s">
-              <a href="#contact" class="sp-cta__btn">自社の状況を相談する</a>
-              <p class="sp-cta__note">初回無料・オンライン可。しつこい営業はしません。</p>
+              <a href="#contact" class="sp-cta__btn">無料診断を申し込む</a>
+              <p class="sp-cta__note">所有者確認のうえ、外から見える範囲を点検します。</p>
             </div>
           </div>
           <figure class="sp-php__fvimg" data-reveal style="--d: .2s">
@@ -150,6 +170,26 @@ const faq = [
         <ul class="sp-php__checks" data-reveal>
           {phpChecks.map((c) => <li>{c}</li>)}
         </ul>
+        <!-- 入口商品：無料Webサイト簡易診断（2026-10-25）。チェックリストで「うちも？」と思った直後に置く -->
+        <div class="sp-diag" id="diagnosis" data-reveal>
+          <p class="sp-diag__label eng">Free check</p>
+          <h2 class="sp-diag__ttl">無料Webサイト簡易診断</h2>
+          <p class="sp-diag__lead">中小企業・店舗の自社サイトを、外から見える範囲で点検します。WordPress・PHPのサイトや、AIで作って公開したアプリも対象です。</p>
+          <h3 class="sp-diag__h">点検すること</h3>
+          <ul class="sp-diag__checks">
+            {diagChecks.map((c) => <li><b>{c.name}</b>{c.txt}</li>)}
+          </ul>
+          <h3 class="sp-diag__h">診断の流れ</h3>
+          <ol class="sp-diag__steps">
+            {diagSteps.map((s, i) => <li><span class="sp-diag__no eng">{String(i + 1).padStart(2, "0")}</span><b>{s.name}</b>{s.txt}</li>)}
+          </ol>
+          <p class="sp-diag__deliver">結果は専門用語に頼らない言葉で、原則3営業日以内にお送りします。</p>
+          <p class="sp-diag__who">現役Webエンジニアの川端康平が直接点検します。自社のAWS（クラウド基盤）も自分で設計・運用しています。</p>
+          <p class="sp-diag__note">所有者確認ができないサイトは診断しません。無料診断はすべての穴を見つける保証ではありません。</p>
+          <div class="sp-cta">
+            <a href="#contact" class="sp-cta__btn">自社サイトの無料診断に申込</a>
+          </div>
+        </div>
         <div class="sp-php__more" data-reveal>
           <h2 class="sp-php__h">2026年10月、何が起きたか</h2>
           <p>PHPは、多くのWebサイトを動かすプログラムの言語です。2026年10月、攻撃に悪用される欠陥「脆弱性」が緊急レベルで2件公表され、外からプログラムを実行されてサーバーを乗っ取られるおそれがあります。WordPressで作ったサイトやPHPのお問い合わせフォームも対象で、WordPressやプラグインを更新しただけでは直りません。</p>
@@ -166,8 +206,8 @@ const faq = [
           ))}
         </ul>
         <div class="sp-cta" data-reveal>
-          <p class="sp-cta__lead">どの対応が必要か、迷っていても大丈夫です</p>
-          <a href="#contact" class="sp-cta__btn">必要な対応を相談する</a>
+          <p class="sp-cta__lead">どの対応が必要か、まず無料診断で確かめます</p>
+          <a href="#contact" class="sp-cta__btn">無料診断を申し込む</a>
         </div>
         <div class="sp-php__more" data-reveal>
           <h2 class="sp-php__h">やられた後、戻せないでは済みません</h2>
@@ -176,7 +216,7 @@ const faq = [
             {phpAfter.map((a) => <li><b>{a.name}</b>{a.txt}</li>)}
           </ul>
         </div>
-        <p class="sp-php__cost" data-reveal>費用について：対応範囲を相談のうえで決め、その内容に沿ったお見積もりを提示します。</p>
+        <p class="sp-php__cost" data-reveal>費用について：Webサイトの簡易診断は無料です。その先の詳細診断と報告会、改修、保守は、お見積りを見てからご判断いただけます。</p>
       </div>
     </section>
 
@@ -388,7 +428,7 @@ const faq = [
           <p class="sp-who__end" data-reveal>確認結果は、専門用語だけで済ませず、何をどう見直すかが分かる言葉でお伝えします。</p>
           <div class="sp-cta sp-cta--left" data-reveal>
             <p class="sp-cta__lead">専門用語に直さず、そのままどうぞ</p>
-            <a href="#contact" class="sp-cta__btn">代表に相談する</a>
+            <a href="#contact" class="sp-cta__btn">川端に無料診断を申し込む</a>
           </div>
         </div>
       </div>
@@ -423,13 +463,14 @@ const faq = [
     <div class="sp-form" id="consultation-page">
       <ConsultForm
         client:load
-        heading="御社の気がかりをお聞かせください"
-        lead="止められない業務や、対応で気がかりなこともお聞かせください。内容を確認し、ご相談の進め方をご案内します。"
-        messageLabel="確認したいこと・現在の状況"
-        messagePlaceholder="例：自社サイトが今回の脆弱性に関係するか知りたいです。社員がAIで作ったアプリもあり、顧客情報を扱う予定なので、公開前に見てほしいです。"
-        submitLabel="この内容で相談を送信する"
-        doneTitle="ご相談を受け付けました"
-        doneText="内容を確認のうえ、ご記入の連絡先へご連絡します。"
+        mode="diagnosis"
+        heading="無料Webサイト簡易診断のお申し込み"
+        lead="点検する自社サイトのURLをご入力ください。お申し込み後、所有者確認についての案内をメールでお送りします。"
+        messageLabel="気になっていること（任意）"
+        messagePlaceholder="例：WordPressの更新や設定に見落としがないか気になっています。"
+        submitLabel="無料診断を申し込む"
+        doneTitle="お申し込みを受け付けました"
+        doneText="所有者確認についての案内をメールでお送りします。申込メールのドメイン（@以降）がサイトと同じ場合は、そのまま点検へ進みます。異なる場合は、案内に沿って確認用の文字列を設置してください。所有者確認ができたら点検を行い、結果をメールでお送りします。結果送付は原則3営業日以内です。"
       />
     </div>
   </main>
