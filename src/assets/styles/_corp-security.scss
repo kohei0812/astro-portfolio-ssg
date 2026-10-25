@@ -1863,6 +1863,14 @@ $gray: #f4f6f9;
     line-height: 1.4;
   }
 
+  // 商品名を主役に、説明は一段小さく（2026-10-25 PHPチェッカー）
+  &__ttlsub {
+    display: block;
+    margin-top: 0.3em;
+    font-size: 0.5em;
+    font-weight: bold;
+  }
+
   &__lead,
   &__deliver,
   &__who {
@@ -1922,7 +1930,7 @@ $gray: #f4f6f9;
 
     &__ttl {
       margin-top: 6px;
-      font-size: 3.4rem;
+      font-size: 5rem;
     }
 
     &__lead {
@@ -1996,7 +2004,7 @@ $gray: #f4f6f9;
 
     &__ttl {
       margin-top: 4px;
-      font-size: 2.4rem;
+      font-size: 3.4rem;
     }
 
     &__lead {

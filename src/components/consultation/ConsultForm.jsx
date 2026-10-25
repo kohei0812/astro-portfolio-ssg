@@ -16,7 +16,7 @@ const FIELD_IDS = {
 const SUBJECT = "【初回相談】お申し込み";
 // 2026-10-25 追加：mode="diagnosis" で「無料Webサイト簡易診断」の申込に切り替える（/security）。
 // 診断対象のURLと所有者・管理者であることの確認を必須にし、件名と GA4 の form 名を分ける。
-const DIAG_SUBJECT = "【無料診断】お申し込み";
+const DIAG_SUBJECT = "【PHPチェッカー】お申し込み";
 const STYLES = ["オンライン", "訪問", "どちらでもよい"];
 // どこで知ったか（任意）。2026-10-03 追加：月次レポートで流入経路を本人の申告で確かめるため（GD/営業/マーケ運用）
 const SOURCES = ["X", "Instagram", "Facebook", "名刺", "BNI", "セミナー・研修", "検索", "ご紹介", "その他"];
