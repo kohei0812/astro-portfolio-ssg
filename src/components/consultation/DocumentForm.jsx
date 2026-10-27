@@ -15,7 +15,7 @@ const FIELD_IDS = {
 };
 const SUBJECT = "【資料請求】";
 const MATERIALS_URL = "/document/materials";
-const COURSES = ["一騎当千コース（一人を強化）", "AI TANKコース（組織で活用）", "まだ決めていない"];
+const COURSES = ["超える力コース（一人を強化）", "想いの連鎖コース（組織で活用）", "まだ決めていない"];
 const SIZES = ["1名（個人・一人企業）", "2〜5名", "6〜30名", "31〜100名", "101名以上"];
 const SOURCES = ["X", "Instagram", "Facebook", "名刺", "BNI", "セミナー・研修", "検索", "ご紹介", "その他"];
 

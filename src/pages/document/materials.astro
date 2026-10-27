@@ -1,7 +1,7 @@
 ---
 /*
   資料請求後のページ（2026-10-05）。/document のフォーム送信後に表示する。検索・サイトマップには出さない（noindex＋astro.config の filter）。
-  サービスページから移した「2コースの詳しい中身」と標準料金。料金は 事業計画/Dynamis_価格表_2026-10.html と一騎当千セミナー1人3万円（2026-10-05）を正本にする。
+  サービスページから移した「2コースの詳しい中身」と標準料金。料金は 事業計画/Dynamis_価格表_2026-10.html と超える力（旧 一騎当千）セミナー1人3万円（2026-10-05）を正本にする。
   ルート様限りの卸価格・協業条件は載せない。業種・規模で個別に提案する前提で「標準料金」と書く。
   スタイルはサービスページと同じ（cp-service-page）。料金表だけ _corp-service.scss の cs-price。
 */
@@ -97,12 +97,12 @@ const prices = [
     ["初回AI導入セッション", "〜5名・2時間", "30,000円"],
     ["スポットAI顧問", "1〜2名・単発", "50,000円 / 1時間"],
   ] },
-  { group: "一騎当千コース（一人を強化）", rows: [
+  { group: "超える力コース（一人を強化）", rows: [
     ["セミナー（初級・中級・上級）", "各2時間", "30,000円 / 人"],
     ["伴走（個別）", "時間単位", "30,000円 / 1時間"],
     ["伴走（少人数グループ）・構築代行", "範囲を伺って", "お見積り"],
   ] },
-  { group: "AI TANKコース（組織で活用）", rows: [
+  { group: "想いの連鎖コース（組織で活用）", rows: [
     ["AI TANK顧問", "〜5名・時間単位", "30,000円 / 1時間"],
     ["法人AI研修", "6名〜", "半日 20,000円 / 人・1日 35,000円 / 人"],
     ["9回パッケージ", "人数・期間に合わせて", "お見積り"],
@@ -113,7 +113,7 @@ const prices = [
 ];
 ---
 
-<Layout title="資料｜コースの詳しい中身と料金｜DDDynamis" description="一騎当千コースとAI TANKコースの詳しい中身と標準料金。" corp noindex>
+<Layout title="資料｜コースの詳しい中身と料金｜DDDynamis" description="超える力コースと想いの連鎖コースの詳しい中身と標準料金。" corp noindex>
   <main id="corp-page" class="corp-page cp-service-page" role="main">
     <header class="cp-page-head">
       <div class="cp-container">
@@ -127,8 +127,8 @@ const prices = [
       <span class="cp-watermark eng" aria-hidden="true">STAGE</span>
       <div class="cp-container">
         <header class="cp-head" data-reveal>
-          <p class="cp-head__en eng">Ikki-tousen course</p>
-          <h2 class="cp-head__ttl" id="m-ikki">一騎当千コースの中身</h2>
+          <p class="cp-head__en eng">Koeru-chikara course</p>
+          <h2 class="cp-head__ttl" id="m-ikki">超える力コースの中身</h2>
           <p class="cp-head__lead">AI活用の5段階を、ご自身の仕事で一段ずつ登ります。中級・上級は、前半1時間で説明と手を動かすワーク、後半1時間で質疑応答と活用の発表を行います。</p>
         </header>
         <div class="cs-seminar">
@@ -158,8 +158,8 @@ const prices = [
       <span class="cp-watermark eng" aria-hidden="true">TEAM</span>
       <div class="cp-container">
         <header class="cp-head" data-reveal>
-          <p class="cp-head__en eng">AI Gunshi course</p>
-          <h2 class="cp-head__ttl" id="m-gunshi">AI TANKコースの中身</h2>
+          <p class="cp-head__en eng">Omoi-no-rensa course</p>
+          <h2 class="cp-head__ttl" id="m-gunshi">想いの連鎖コースの中身</h2>
         </header>
         <h3 class="cs-subhead" data-reveal>方法は「統一する」か「育てる」か</h3>
         <figure class="cs-figure" data-reveal>
