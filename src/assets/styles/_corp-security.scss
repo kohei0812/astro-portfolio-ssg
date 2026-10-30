@@ -1917,9 +1917,35 @@ $gray: #f4f6f9;
   .sp-cta__lead {
     color: $navy;
   }
+
+  // 継続商品：定期診断（2026-10-30）。無料診断のカードより一段控えめに、紺の線で区別する
+  &--mon {
+    border-top-color: $navy;
+
+    .sp-diag__label {
+      color: $navy;
+    }
+  }
+
+  &__price {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 0.6em;
+    padding: 0.25em 0.8em;
+    background-color: $navy;
+    border-radius: 999px;
+    color: white;
+    font-size: 0.42em;
+    font-weight: bold;
+    white-space: nowrap;
+  }
 }
 
 @media screen and (min-width: 769px) {
+  #corp-page.cp-security-page .sp-diag--mon .sp-diag__ttl {
+    font-size: 3.6rem;
+  }
+
   #corp-page.cp-security-page .sp-diag {
     margin-top: 48px;
     padding: 40px 48px 44px;
@@ -1994,6 +2020,10 @@ $gray: #f4f6f9;
 }
 
 @media screen and (max-width: 768px) {
+  #corp-page.cp-security-page .sp-diag--mon .sp-diag__ttl {
+    font-size: 2.8rem;
+  }
+
   #corp-page.cp-security-page .sp-diag {
     margin-top: 36px;
     padding: 28px 18px 30px;
