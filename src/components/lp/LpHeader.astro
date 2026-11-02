@@ -2,7 +2,7 @@
 //src/components/lp/LpHeader.astro
 // LP用のヘッダー。離脱口を作らないため、ナビは置かずロゴと申込ボタンだけにする。
 // 追従CTA（#js-sticky-cta）の表示制御は public/assets/js/main.js を共用している。
-// nav：ページ内のアンカーだけを置く（離脱口にはしない）。2026-11-03 本人指示で /security に PHPチェッカー・デプロイサービスを追加。PC のみ表示
+// nav：ページ内のアンカーだけを置く（離脱口にはしない）。2026-11-03 本人指示で /security に PHPチェッカー・アプリ公開サービスを追加。PC のみ表示
 const { ctaLabel = "無料で相談する", stickyLabel = "無料で相談する", tagline = "", nav = [] } = Astro.props;
 ---
 <header class="lp-header" id="lp-header" role="banner">
