@@ -192,4 +192,26 @@ const { name, size = 48 } = Astro.props;
       <path d="M17 26l26-20" />
     </>
   )}
+  {/* /security の「しないこと」（2026-11-03）：ログインしない／攻撃しない／所有者確認なしで進めない */}
+  {name === "nologin" && (
+    <>
+      <rect x="12" y="22" width="24" height="18" rx="2" />
+      <path d="M17 22v-6a7 7 0 0 1 14 0v6" />
+      <path d="M6 42L42 6" />
+    </>
+  )}
+  {name === "noattack" && (
+    <>
+      <circle cx="24" cy="24" r="18" />
+      <path d="M26 12l-8 13h7l-3 11 9-14h-7z" />
+      <path d="M11.3 11.3l25.4 25.4" />
+    </>
+  )}
+  {name === "owner" && (
+    <>
+      <path d="M8 22L24 9l16 13" />
+      <path d="M12 19v21h24V19" />
+      <path d="M18 30l4 4 8-8" />
+    </>
+  )}
 </svg>

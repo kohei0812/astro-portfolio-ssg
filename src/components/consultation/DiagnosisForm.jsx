@@ -161,6 +161,11 @@ export default function DiagnosisForm() {
               <h3>本診断のご案内</h3>
               <p>ご入力のメールアドレスに、川端から所有者確認のご案内をお送りします。確認が取れたら外から本診断を行い、結果は川端がお持ちして、対策の優先順位と一緒にご説明します。</p>
             </div>
+            {/* 結果の直下に相談の入口（2026-11-03 Shido 鈴木様の助言 #3。初回相談 LP へ） */}
+            <div className="diag-form__consult">
+              <p>気になる項目があれば、対応の優先順位からご相談いただけます。</p>
+              <a href="/consultation?from=php-checker" className="diag-form__consult-btn">改善・対策を相談する</a>
+            </div>
             <p className="diag-form__note">簡易診断は Mozilla HTTP Observatory の公開ツールで、通信の設定だけを見ています。ログインの試行や攻撃にあたる検査は行っていません。すべての穴を見つける保証ではありません。</p>
           </div>
         </div>
