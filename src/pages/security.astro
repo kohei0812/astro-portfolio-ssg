@@ -13,7 +13,7 @@
 */
 import Layout from "../layouts/Layout.astro";
 import LineIcon from "../components/corp/LineIcon.astro";
-import ConsultForm from "../components/consultation/ConsultForm.jsx";
+import DiagnosisForm from "../components/consultation/DiagnosisForm.jsx";
 
 /* PHPチェッカー＝無料Webサイト簡易診断（外から見える範囲だけ。所有者確認ができないサイトは診断しない） */
 const diagChecks = [
@@ -25,10 +25,17 @@ const diagChecks = [
   { name: "なりすまし対策", txt: "SPF・DMARC（なりすましを見分ける設定）の有無と弱さを確認します。" },
 ];
 const diagSteps = [
-  { name: "URLで申込", txt: "フォームに自社サイトのURLを入力してお申し込みください。" },
-  { name: "所有者確認", txt: "申込メールのドメイン（@以降）などで、サイトの所有者を確認します。" },
-  { name: "外から点検", txt: "ログインの試行や攻撃にあたる検査は行いません。" },
-  { name: "メールで結果", txt: "「今すぐ対応／近いうちに対応／様子見」の3段でお伝えします。" },
+  { name: "4つを入力", txt: "会社名・お名前・サイトのURL・メールアドレスを入れます。" },
+  { name: "その場で簡易結果", txt: "通信の設定を外から確かめ、この画面に結果を出します。" },
+  { name: "メールで所有者確認", txt: "本診断の前に、ご入力のメールでサイトの所有者を確認します。ログインの試行や攻撃にあたる検査は行いません。" },
+  { name: "結果をお持ちして説明", txt: "本診断の結果を「今すぐ対応／近いうちに対応／様子見」の3段にまとめ、川端がお持ちしてご説明します。" },
+];
+
+/* FV の右：インターネット通信が戦争状態であること（勉強会「インターネットの今」v4 の2枚目） */
+const warFacts = [
+  { name: "宣戦布告がない", txt: "国家が関わるサイバー攻撃が、平時から続いています。" },
+  { name: "狙われるのは民間", txt: "金融・医療・物流・製造など、企業の仕組みが標的です。" },
+  { name: "欧州は備えを始めた", txt: "市民に、最低72時間の自立を呼びかけています。" },
 ];
 
 /* 定期診断（2026-10-30 本人決定：月1万円・税別・毎週。改修は含まない。文言は Codex） */
@@ -171,7 +178,7 @@ const placeNotes = [
 
 const faq = [
   { q: "PHPチェッカーは、PHPだけを調べるのですか？", a: "PHPを入り口に、サイト全体を外から見える範囲で点検します。WordPress・追加機能の版と既知の弱点、SSL（通信の暗号化）と証明書、公開されてはいけないファイル、管理画面の露出、セキュリティ関連の設定も対象です。なりすましメール対策は、そのドメインの公開DNS（ドメインの管理設定）で確認し、メールの送受信は行いません。" },
-  { q: "所有者確認は、どのように行いますか？", a: "申込メールのドメイン（@以降）が対象サイトと同じ場合は、そのまま点検へ進みます。異なる場合は、確認用の文字列をトップページかDNS（ドメインの管理設定）に置いていただきます。確認できないサイトは診断しません。" },
+  { q: "所有者確認は、どのように行いますか？", a: "ご入力のメールアドレスのドメイン（@以降）が対象サイトと同じ場合は、そのまま点検へ進みます。異なる場合は、確認用の文字列をトップページかDNS（ドメインの管理設定）に置いていただきます。確認できないサイトは診断しません。" },
   { q: "見つかった箇所の対応も頼めますか？", a: "詳細診断と報告会、改修、保守も承ります。ご利用は任意ですので、お見積りを見てからご判断いただけます。" },
   { q: "古いPHPのサイトでも対応できますか？", a: "まず現在の構成を確認し、更新による影響を調べます。そのうえで、移行も含めた対応方法を検討します。" },
   { q: "制作会社と連絡が取れません。", a: "サーバー契約や管理画面へのアクセス状況から、確認できることを探します。資料がそろっていなくても、手元にある情報でご相談ください。" },
@@ -188,77 +195,85 @@ const faq = [
 ---
 
 <Layout
-  title="無料のPHPチェッカー｜PHP緊急脆弱性・AIアプリのセキュリティ対策｜DDDynamis・AI TANK"
-  description="あなたのWebサイト、PHP使ってないですか？2026年10月、PHPに緊急レベルの脆弱性が公表されました。WordPressのサイトも対象です。PHPの更新、セキュリティの見直し、サーバーの引っ越し、AIで作ったアプリの公開前チェックまで、現役Webエンジニアが対応します。まずは無料のPHPチェッカーで自社サイトを点検できます。"
+  title="インターネット通信はもう安全ではない｜無料のWebサイト簡易診断 PHPチェッカー｜DDDynamis・AI TANK"
+  description="宣戦布告のないサイバー攻撃が平時から続き、狙われているのは民間企業の仕組みです。2026年10月のPHP緊急脆弱性を皮切りに、ほぼすべての言語・部品で弱点の公表が続いています。無料のPHPチェッカーで、自社サイトの通信の設定をその場で簡易診断できます。本診断・更新・保守まで、現役Webエンジニアが直接対応します。"
   corp
   lp
-  lpCta={{ header: "PHPチェッカー", sticky: "PHPチェッカーに申込" }}
+  lpCta={{ header: "無料で簡易診断", sticky: "無料で簡易診断する" }}
   lpTagline="現役Webエンジニアが直接対応します。"
 >
   <main id="corp-page" class="corp-page cp-security-page" role="main">
-    <!-- PHP 緊急脆弱性（2026-10-23）。落ち着いたら外して、下の page-head の見出しを h1 に戻す -->
+    <!-- 冒頭（2026-11-03 本人指示）：白基調。FV は「インターネット通信は戦争状態」、PHP はその具体例として2番目に置く。
+         論理の順は勉強会「インターネットの今」v4（AI活用支援/勉強会_インターネットの今_202611）：通信は安全でない → PHPを皮切りに弱点の公表が続く → 攻撃側のAIに追いつけない → 入られない前提・戻せる前提 -->
     <section class="sp-php" aria-labelledby="sp-php-ttl">
       <div class="cp-container">
         <div class="sp-php__fv">
           <div class="sp-php__fvcopy">
-            <p class="sp-php__label" data-reveal>2026年10月｜PHP緊急警告</p>
-            <h1 class="sp-php__ttl" id="sp-php-ttl" data-reveal style="--d: .1s">あなたのWebサイト、<br /><em>PHP</em>使ってないですか？</h1>
-            <p class="sp-php__sub" data-reveal style="--d: .2s">2026年10月21日、PHPに緊急レベルの脆弱性が公表されました。PHP 8.1以前には公式の修正版がなく、プラグインの更新だけでは直りません。</p>
+            <p class="sp-php__label" data-reveal>インターネットの今｜2026年11月</p>
+            <h1 class="sp-php__ttl" id="sp-php-ttl" data-reveal style="--d: .1s"><span class="sp-php__nb">インターネット通信は、</span><span class="sp-php__nb">もう<em>安全ではありません。</em></span></h1>
+            <p class="sp-php__sub" data-reveal style="--d: .2s">宣戦布告のないサイバー攻撃が、平時から続いています。狙われているのは、民間企業の仕組みです。自社のサイトやアプリが今どう見えているか、まず外から確かめましょう。</p>
             <div class="sp-cta sp-cta--fv" data-reveal style="--d: .3s">
-              <a href="#contact" class="sp-cta__btn">無料のPHPチェッカーに申込</a>
-              <p class="sp-cta__note">自社サイトのURLを入力してお申し込みください。</p>
+              <a href="#contact" class="sp-cta__btn">無料で簡易診断する</a>
+              <p class="sp-cta__note">4つ入れるだけ。結果はその場で出ます。</p>
             </div>
           </div>
-          <figure class="sp-php__fvimg" data-reveal style="--d: .2s">
-            <picture>
-              <source srcset="/assets/images/corp/security-fv-php.webp" type="image/webp" />
-              <img src="/assets/images/corp/security-fv-php.jpg" alt="緊急警告 PHP脆弱性。自社サイト、PHP使ってませんか？ 現役Webエンジニア・AI TANK 川端康平" width="1200" height="800" loading="eager" fetchpriority="high" decoding="async" />
-            </picture>
-          </figure>
+          <ul class="sp-php__facts" data-reveal style="--d: .2s">
+            {warFacts.map((f) => <li><b>{f.name}</b>{f.txt}</li>)}
+            <li class="sp-php__quote">NATOの言葉：「戦争ではない。しかし平和でもない。」</li>
+          </ul>
         </div>
+
+        <div class="sp-php__more" data-reveal>
+          <h2 class="sp-php__h">PHPを皮切りに、弱点の公表が日々続く</h2>
+          <p>2026年10月21日、PHPに緊急レベルの脆弱性が公表されました。外からプログラムを実行されてサーバーを乗っ取られるおそれがあり、WordPressで作ったサイトやPHPのお問い合わせフォームも対象です。PHP 8.1以前には公式の修正版がなく、プラグインの更新だけでは直りません。</p>
+          <p>PHPだけの話ではありません。Python・Node.js、WordPress・Laravel・Next.jsなど、ほぼすべての言語・部品で弱点の公表が続いています。私たちが使うインターネット全体の話です。</p>
+          <p class="sp-php__src">出典：<a href="https://www.php.net/archive/2026.php#2026-10-21-5" target="_blank" rel="noopener">PHP公式の告知（2026年10月21日）</a>。修正版は 8.5.12／8.4.27／8.3.36／8.2.35 以上。<time datetime="2026-10-23">2026年10月23日</time>時点の情報です。</p>
+        </div>
+        <h3 class="sp-php__h sp-php__h--menu" data-reveal>ひとつでも当てはまれば、まず点検を</h3>
         <ul class="sp-php__checks" data-reveal>
           {phpChecks.map((c) => <li>{c}</li>)}
         </ul>
-        <!-- 入口商品：無料Webサイト簡易診断（2026-10-25）。チェックリストで「うちも？」と思った直後に置く -->
+
+        <div class="sp-php__more" data-reveal>
+          <h2 class="sp-php__h">攻撃側のAIに、人の手では追いつけない</h2>
+          <p>攻撃する側は、休まず自動で、悪用を抑える制限のないAIも使って弱点を探しています。守る側が人の手で更新と確認を続けるだけでは、守り切れません。入られない前提で入口を減らし、入られても被害を小さく、戻せる前提で備えます。</p>
+          <ul class="sp-php__after">
+            {phpAfter.map((a) => <li><b>{a.name}</b>{a.txt}</li>)}
+          </ul>
+        </div>
+
+        <!-- 入口商品：PHPチェッカー（2026-10-25）。2026-11-03 本人指示：4項目・その場で簡易結果 → 本診断はメールで所有者確認 → 結果を持参して説明 -->
         <div class="sp-diag" id="diagnosis" data-reveal>
           <p class="sp-diag__label eng">Free check</p>
           <h2 class="sp-diag__ttl">PHPチェッカー<span class="sp-diag__ttlsub">無料のWebサイト簡易診断</span></h2>
           <p class="sp-diag__lead">PHPを入り口に、サイト全体を外から点検します。中小企業・店舗のWordPress・PHPの自社サイトや、AIで作って公開したアプリが対象です。</p>
-          <h3 class="sp-diag__h">無料で点検する6つの項目</h3>
+          <h3 class="sp-diag__h">点検する6つの項目</h3>
           <ul class="sp-diag__checks">
             {diagChecks.map((c) => <li><b>{c.name}</b>{c.txt}</li>)}
           </ul>
-          <h3 class="sp-diag__h">URLの入力から、結果のお届けまで</h3>
+          <h3 class="sp-diag__h">URLの入力から、結果のご説明まで</h3>
           <ol class="sp-diag__steps">
             {diagSteps.map((s, i) => <li><span class="sp-diag__no eng">{String(i + 1).padStart(2, "0")}</span><b>{s.name}</b>{s.txt}</li>)}
           </ol>
-          <p class="sp-diag__deliver">結果は専門用語に頼らない言葉でまとめ、原則3営業日以内にお届けします。</p>
+          <p class="sp-diag__deliver">本診断の結果は、専門用語に頼らない言葉でまとめ、川端が直接お持ちしてご説明します。</p>
           <p class="sp-diag__who">現役Webエンジニアの川端康平が直接点検します。自社のAWS（クラウド基盤）も自分で設計・運用しています。</p>
-          <p class="sp-diag__note">所有者確認ができないサイトは診断しません。PHPチェッカーは、すべての穴を見つける保証ではありません。</p>
+          <p class="sp-diag__note">その場で出る簡易結果は、外から誰でも見られる通信の設定の一部です。所有者確認ができないサイトは本診断しません。すべての穴を見つける保証ではありません。</p>
           <div class="sp-cta">
-            <a href="#contact" class="sp-cta__btn">無料でサイト点検を申し込む</a>
+            <a href="#contact" class="sp-cta__btn">無料で簡易診断する</a>
           </div>
         </div>
-        <!-- 継続商品：定期診断（2026-10-30）。無料診断のあとに続けて見守る。申し込みは無料診断の結果送付時に案内（専用フォームなし） -->
+        <!-- 継続商品：定期診断（2026-10-30）。本診断のあとに続けて見守る（専用フォームなし） -->
         <div class="sp-diag sp-diag--mon" id="monitor" data-reveal>
           <p class="sp-diag__label eng">Regular check</p>
           <h2 class="sp-diag__ttl">定期診断<span class="sp-diag__price">月額1万円（税別）</span></h2>
-          <p class="sp-diag__lead">無料のPHPチェッカーのあとも、続けて状態を確認したい方に向けたサービスです。対象は、PHPチェッカーで所有者確認が済んだサイトです。</p>
+          <p class="sp-diag__lead">PHPチェッカーのあとも、続けて状態を確認したい方に向けたサービスです。対象は、本診断で所有者確認が済んだサイトです。</p>
           <ul class="sp-diag__checks">
             {monitorPoints.map((p) => <li>{p}</li>)}
           </ul>
-          <p class="sp-diag__deliver">無料のPHPチェッカーの結果をお届けするときに、定期診断のお申し込みをご案内します。</p>
+          <p class="sp-diag__deliver">本診断の結果をご説明するときに、定期診断をご案内します。</p>
           <p class="sp-diag__note">改修（直す作業）は含まず、保守は別途ご相談・お見積りとなります。すべての穴を見つける保証ではありません。</p>
         </div>
-        <div class="sp-php__more" data-reveal>
-          <h2 class="sp-php__h">2026年10月、何が起きたか</h2>
-          <p>PHPは、多くのWebサイトを動かすプログラムの言語です。2026年10月、攻撃に悪用される欠陥「脆弱性」が緊急レベルで2件公表され、外からプログラムを実行されてサーバーを乗っ取られるおそれがあります。WordPressで作ったサイトやPHPのお問い合わせフォームも対象で、WordPressやプラグインを更新しただけでは直りません。</p>
-          <p class="sp-php__src">出典：<a href="https://www.php.net/archive/2026.php#2026-10-21-5" target="_blank" rel="noopener">PHP公式の告知（2026年10月21日）</a>。修正版は 8.5.12／8.4.27／8.3.36／8.2.35 以上。<time datetime="2026-10-23">2026年10月23日</time>時点の情報です。</p>
-        </div>
-        <div class="sp-php__more" data-reveal>
-          <h2 class="sp-php__h">PHP以外も、放置は危険です</h2>
-          <p>Node.jsなど、ほかの言語・部品でも脆弱性の公表が続いています。非エンジニアの社員がAIで作ったアプリを公開し、使っている部品への影響を誰も確認していないなら、「動いているから大丈夫」で放置していませんか。</p>
-        </div>
+
         <h2 class="sp-php__h sp-php__h--menu" data-reveal>ご相談いただけること</h2>
         <ul class="sp-php__services">
           {phpServices.map((v, i) => (
@@ -267,14 +282,7 @@ const faq = [
         </ul>
         <div class="sp-cta" data-reveal>
           <p class="sp-cta__lead">どの対応が必要か、まずPHPチェッカーで確かめます</p>
-          <a href="#contact" class="sp-cta__btn">自社サイトの無料点検に申込</a>
-        </div>
-        <div class="sp-php__more" data-reveal>
-          <h2 class="sp-php__h">やられた後、戻せないでは済みません</h2>
-          <p>被害は防げない前提で備えます。侵入を防ぐ対策に加え、被害を抑えて業務を戻す準備まで必要です。</p>
-          <ul class="sp-php__after">
-            {phpAfter.map((a) => <li><b>{a.name}</b>{a.txt}</li>)}
-          </ul>
+          <a href="#contact" class="sp-cta__btn">無料で簡易診断する</a>
         </div>
         <p class="sp-php__cost" data-reveal>費用について：PHPチェッカー（Webサイトの簡易診断）は無料で、ご希望の方が選べる定期診断は月額1万円（税別）、AIで作ったアプリの公開・セキュリティ保守は月額20万円〜（税別）です。詳細診断と報告会、改修は、お見積りを見てからご判断いただけます。</p>
       </div>
@@ -526,7 +534,7 @@ const faq = [
           <p class="sp-who__end" data-reveal>確認結果は、専門用語だけで済ませず、何をどう見直すかが分かる言葉でお伝えします。</p>
           <div class="sp-cta sp-cta--left" data-reveal>
             <p class="sp-cta__lead">専門用語に直さず、そのままどうぞ</p>
-            <a href="#contact" class="sp-cta__btn">川端に無料点検を申し込む</a>
+            <a href="#contact" class="sp-cta__btn">無料で簡易診断する</a>
           </div>
         </div>
       </div>
@@ -559,18 +567,8 @@ const faq = [
     </section>
     {/* フォームの装飾は初回相談LPと共用（_consultation-page.scss が #consultation-page の中だけに効くため、id をそろえる） */}
     <div class="sp-form" id="consultation-page">
-      <ConsultForm
-        client:load
-        mode="diagnosis"
-        heading="PHPチェッカーのお申し込み（無料）"
-        lead="点検する自社サイトのURLをご入力ください。お申し込み後、所有者確認についてメールでご案内します。"
-        messageLabel="気になっていること（任意）"
-        urlLabel="点検する自社サイトのURL"
-        messagePlaceholder="例：PHPの版や、公開したままのファイルに見落としがないか気になっています。"
-        submitLabel="PHPチェッカーを無料で申し込む"
-        doneTitle="PHPチェッカーのお申し込みを受け付けました"
-        doneText="申込メールのドメイン（@以降）がサイトと同じ場合は、そのまま点検へ進みます。異なる場合は、メールの案内に沿って確認用の文字列をトップページかDNS（ドメインの管理設定）に置いてください。所有者確認後に外から点検し、結果は原則3営業日以内にメールでお送りします。"
-      />
+      {/* 簡易診断フォーム（2026-11-03：4項目・2列・その場で結果。本診断はメールで所有者確認→結果を持参） */}
+      <DiagnosisForm client:load />
     </div>
   </main>
 

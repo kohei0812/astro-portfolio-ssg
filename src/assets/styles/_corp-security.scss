@@ -1254,14 +1254,12 @@ $gray: #f4f6f9;
   }
 }
 
-/* PHP 緊急脆弱性のファーストビュー（2026-10-23、完全に煽り） */
+/* セキュリティ LP の冒頭（2026-10-23 PHP 緊急脆弱性の煽り → 2026-11-03 本人指示で白基調に。
+   「怪しい見た目」をやめ、FV は「インターネット通信は戦争状態」の訴求。論理は勉強会「インターネットの今」v4 の順） */
 #corp-page.cp-security-page .sp-php {
   position: relative;
-  background:
-    radial-gradient(circle at 85% 0%, rgba(230, 0, 18, 0.45), transparent 45%),
-    radial-gradient(circle at 0% 100%, rgba(230, 0, 18, 0.25), transparent 40%),
-    #0c1424;
-  color: white;
+  background-color: white;
+  color: $ink;
   overflow: hidden;
 
   &::before {
@@ -1270,8 +1268,8 @@ $gray: #f4f6f9;
     left: 0;
     right: 0;
     top: 0;
-    height: 6px;
-    background: repeating-linear-gradient(-45deg, #e60012 0 14px, #0c1424 14px 28px);
+    height: 4px;
+    background-color: $navy;
   }
 
   .cp-container {
@@ -1280,27 +1278,32 @@ $gray: #f4f6f9;
 
   &__label {
     display: inline-block;
-    border: 2px solid #ff3344;
-    color: #ff5a68;
+    border: 1px solid $navy;
+    color: $navy;
     font-weight: bold;
     letter-spacing: 0.08em;
-    animation: sp-php-blink 1.6s steps(2, start) infinite;
+  }
+
+  // 見出しは句ごとに折り返す（「、」「。」だけが次の行に落ちないように）
+  &__nb {
+    display: inline-block;
   }
 
   &__ttl {
-    color: white;
+    color: $navy;
     font-weight: 900;
-    line-height: 1.3;
+    line-height: 1.35;
     letter-spacing: 0.02em;
 
     em {
-      color: #ff3344;
+      color: $navy;
       font-style: normal;
+      background: linear-gradient(transparent 70%, rgba(23, 36, 57, 0.12) 70%);
     }
   }
 
   &__lead {
-    color: rgba(255, 255, 255, 0.88);
+    color: $body;
     font-weight: 500;
     line-height: 1.9;
   }
@@ -1311,31 +1314,25 @@ $gray: #f4f6f9;
 
     li {
       position: relative;
-      background-color: rgba(230, 0, 18, 0.14);
-      border-left: 4px solid #ff3344;
-      color: white;
+      background-color: $gray;
+      border-left: 4px solid $navy;
+      color: $ink;
       font-weight: bold;
       line-height: 1.6;
-
-      &::before {
-        content: "\26A0";
-        margin-right: 0.5em;
-        color: #ff5a68;
-      }
     }
   }
 
   &__more {
-    border-top: 1px solid rgba(255, 255, 255, 0.18);
+    border-top: 1px solid $line;
 
     p {
-      color: rgba(255, 255, 255, 0.82);
+      color: $body;
       line-height: 1.9;
     }
   }
 
   &__h {
-    color: white;
+    color: $navy;
     font-weight: bold;
     line-height: 1.5;
   }
@@ -1345,13 +1342,13 @@ $gray: #f4f6f9;
     list-style: none;
 
     li {
-      background-color: white;
+      background-color: $gray;
       color: $ink;
     }
   }
 
   &__name {
-    color: #e60012;
+    color: $navy;
     font-weight: bold;
   }
 
@@ -1365,14 +1362,14 @@ $gray: #f4f6f9;
     list-style: none;
 
     li {
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: rgba(255, 255, 255, 0.8);
+      border: 1px solid $line;
+      color: $body;
       line-height: 1.6;
     }
 
     b {
       display: block;
-      color: white;
+      color: $navy;
     }
   }
 
@@ -1380,21 +1377,9 @@ $gray: #f4f6f9;
     text-align: center;
 
     p {
-      color: white;
+      color: $navy;
       font-weight: bold;
     }
-  }
-}
-
-@keyframes sp-php-blink {
-  to {
-    opacity: 0.45;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  #corp-page.cp-security-page .sp-php__label {
-    animation: none;
   }
 }
 
@@ -1409,7 +1394,7 @@ $gray: #f4f6f9;
 
     &__ttl {
       margin-top: 20px;
-      font-size: 5.6rem;
+      font-size: 4.6rem;
     }
 
     &__lead {
@@ -1494,7 +1479,7 @@ $gray: #f4f6f9;
 @media screen and (min-width: 769px) and (max-width: 1023px) {
   #corp-page.cp-security-page .sp-php {
     &__ttl {
-      font-size: 4.4rem;
+      font-size: 3.8rem;
     }
 
     &__services {
@@ -1518,7 +1503,7 @@ $gray: #f4f6f9;
 
     &__ttl {
       margin-top: 16px;
-      font-size: 3rem;
+      font-size: 2.6rem;
     }
 
     &__lead {
@@ -1609,17 +1594,33 @@ $gray: #f4f6f9;
     min-width: 0;
   }
 
-  .sp-php__fvimg {
+  /* FV の右：戦争状態の3つの事実（2026-11-03。PHP の警告画像から差し替え） */
+  .sp-php__facts {
     flex: 1 1 360px;
     max-width: 460px;
     min-width: 0;
+    list-style: none;
+    border-top: 4px solid $navy;
+    background-color: $gray;
 
-    img {
+    li {
+      padding: 18px 24px;
+      border-bottom: 1px solid $line;
+      color: $body;
+      font-size: 1.5rem;
+      line-height: 1.7;
+    }
+
+    b {
       display: block;
-      width: 100%;
-      height: auto;
-      border: 1px solid rgba(255, 51, 68, 0.5);
-      box-shadow: 0 0 40px rgba(230, 0, 18, 0.35);
+      color: $navy;
+      font-size: 1.7rem;
+    }
+
+    .sp-php__quote {
+      border-bottom: none;
+      color: $navy;
+      font-weight: bold;
     }
   }
 
@@ -1629,7 +1630,7 @@ $gray: #f4f6f9;
   }
 
   .sp-php__sub {
-    color: rgba(255, 255, 255, 0.9);
+    color: $body;
     font-weight: bold;
     line-height: 1.8;
   }
@@ -1639,26 +1640,22 @@ $gray: #f4f6f9;
     background: none;
     border: none;
     padding-left: 0;
-    color: #ff5a68;
-
-    &::before {
-      content: none;
-    }
+    color: $navy;
   }
 
   .sp-php__src {
-    color: rgba(255, 255, 255, 0.6);
+    color: #6b7688;
 
     a {
       display: inline;
-      color: rgba(255, 255, 255, 0.85);
+      color: $body;
       text-decoration: underline;
     }
   }
 
   .sp-php__cost {
-    border-left: 3px solid #ff3344;
-    color: rgba(255, 255, 255, 0.85);
+    border-left: 3px solid $navy;
+    color: $body;
     line-height: 1.8;
   }
 
@@ -1691,12 +1688,12 @@ $gray: #f4f6f9;
     }
 
     &__note {
-      color: rgba(255, 255, 255, 0.75);
+      color: #6b7688;
     }
   }
 
   .sp-php .sp-cta__lead {
-    color: white;
+    color: $navy;
   }
 
   .sp-who .sp-cta__lead {
@@ -1704,17 +1701,18 @@ $gray: #f4f6f9;
   }
 
   .sp-final {
-    background-color: #0c1424;
+    background-color: $gray;
+    border-top: 1px solid $line;
     text-align: center;
 
     &__ttl {
-      color: white;
+      color: $navy;
       font-weight: 900;
       line-height: 1.4;
     }
 
     &__txt {
-      color: rgba(255, 255, 255, 0.85);
+      color: $body;
       line-height: 1.9;
     }
   }
@@ -1852,12 +1850,13 @@ $gray: #f4f6f9;
 /* 入口商品：無料Webサイト簡易診断（2026-10-25）。暗い PHP 節の中に白いカードで「商品」として浮かせる */
 #corp-page.cp-security-page .sp-diag {
   background-color: white;
-  border-top: 6px solid #e60012;
-  border-radius: 8px;
+  border: 1px solid $line;
+  border-top: 4px solid $navy;
+  border-radius: 4px;
   color: $navy;
 
   &__label {
-    color: #e60012;
+    color: $navy;
     font-weight: bold;
     letter-spacing: 0.1em;
   }
@@ -1885,7 +1884,7 @@ $gray: #f4f6f9;
   &__h {
     color: $navy;
     font-weight: bold;
-    border-left: 4px solid #e60012;
+    border-left: 4px solid $navy;
   }
 
   &__checks,
@@ -1906,7 +1905,7 @@ $gray: #f4f6f9;
 
   &__no {
     display: block;
-    color: #e60012;
+    color: $navy;
     font-weight: bold;
   }
 
@@ -2220,6 +2219,178 @@ $gray: #f4f6f9;
           }
         }
       }
+    }
+  }
+}
+
+/*****************/
+/*** PHPチェッカーの簡易診断フォーム（DiagnosisForm.jsx、2026-11-03）***/
+/*****************/
+/* 4項目を2列で1画面に収め、送信後はその場で進み具合→簡易結果を出す。見た目の土台は _consultation-page.scss の #contact */
+#consultation-page .diag-form {
+  .contact-form__form {
+    max-width: 760px;
+  }
+
+  .contact-form__desc {
+    margin-bottom: 32px;
+  }
+
+  .form-group {
+    margin-bottom: 0;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px 24px;
+    margin-bottom: 24px;
+  }
+
+  &__checking,
+  &__result {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 40px 48px;
+    background-color: white;
+    border-top: 3px solid $navy;
+    color: $ink;
+  }
+
+  &__checking {
+    text-align: center;
+  }
+
+  &__checking-ttl,
+  &__result-url {
+    font-size: 1.5rem;
+    color: $body;
+    word-break: break-all;
+  }
+
+  &__bar {
+    height: 8px;
+    margin: 24px 0 16px;
+    background-color: $gray;
+    overflow: hidden;
+
+    span {
+      display: block;
+      height: 100%;
+      background-color: $navy;
+      transform-origin: left;
+      animation: diag-progress linear forwards;
+    }
+  }
+
+  &__step {
+    font-size: 1.7rem;
+    font-weight: bold;
+    color: $navy;
+  }
+
+  &__grade {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin: 12px 0 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid $line;
+  }
+
+  &__grade-label {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
+  &__grade-val {
+    font-size: 4.8rem;
+    font-weight: bold;
+    line-height: 1;
+    color: $navy;
+  }
+
+  &__items li {
+    position: relative;
+    padding: 14px 0 14px 32px;
+    border-bottom: 1px solid $line;
+    font-size: 1.5rem;
+    line-height: 1.8;
+
+    b {
+      display: block;
+      font-size: 1.6rem;
+    }
+
+    &::before {
+      position: absolute;
+      top: 16px;
+      left: 0;
+      font-weight: bold;
+    }
+
+    &.is-ok::before {
+      content: "○";
+      color: #1f7a4a;
+    }
+
+    &.is-warn::before {
+      content: "△";
+      color: #b26b00;
+    }
+
+    &.is-ng::before {
+      content: "×";
+      color: $red;
+    }
+  }
+
+  &__rest {
+    margin-top: 20px;
+    font-size: 1.5rem;
+    line-height: 1.9;
+  }
+
+  &__next {
+    margin-top: 28px;
+    padding: 20px 24px;
+    background-color: $gray;
+
+    h3 {
+      font-size: 1.8rem;
+      color: $navy;
+      margin-bottom: 8px;
+    }
+
+    p {
+      font-size: 1.5rem;
+      line-height: 1.9;
+    }
+  }
+
+  &__note {
+    margin-top: 16px;
+    font-size: 1.2rem;
+    color: $body;
+    line-height: 1.8;
+  }
+}
+
+@keyframes diag-progress {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@media screen and (max-width: 768px) {
+  #consultation-page .diag-form {
+    &__grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    &__checking,
+    &__result {
+      padding: 28px 20px;
     }
   }
 }
