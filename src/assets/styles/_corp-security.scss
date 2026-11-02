@@ -2090,3 +2090,136 @@ $gray: #f4f6f9;
     }
   }
 }
+
+/* /security：本番の置き場所（Dynamis ネットワーク）の比較（2026-11-02）。白カード・紺文字、非公開側は2pxの紺枠 */
+#corp-page.cp-security-page {
+  .sp-place {
+    display: grid;
+    gap: 16px;
+
+    article {
+      background-color: white;
+      box-shadow: inset 0 0 0 1px $line;
+
+      &.is-top {
+        box-shadow: inset 0 0 0 2px $navy;
+      }
+    }
+
+    &__name {
+      color: $navy;
+      font-weight: bold;
+      line-height: 1.5;
+    }
+
+    dl > div {
+      border-top: 1px solid $line;
+    }
+
+    dt {
+      color: #8a94a6;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    dd {
+      color: #46536a;
+      line-height: 1.8;
+    }
+
+    &__notes {
+      li {
+        position: relative;
+        padding-left: 1.2em;
+        color: #6b7688;
+        line-height: 1.8;
+
+        &::before {
+          content: "※";
+          position: absolute;
+          left: 0;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 769px) {
+  #corp-page.cp-security-page {
+    .sp-place {
+      grid-template-columns: repeat(2, 1fr);
+      margin-top: 40px;
+
+      article {
+        padding: 30px 30px 26px;
+      }
+
+      &__name {
+        font-size: 2rem;
+        margin-bottom: 14px;
+      }
+
+      dl > div {
+        display: grid;
+        grid-template-columns: 8.5em 1fr;
+        gap: 12px;
+        padding: 14px 0;
+      }
+
+      dd {
+        font-size: 1.5rem;
+      }
+
+      &__notes {
+        margin-top: 28px;
+
+        li {
+          font-size: 1.4rem;
+
+          & + li {
+            margin-top: 6px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #corp-page.cp-security-page {
+    .sp-place {
+      margin-top: 24px;
+      gap: 12px;
+
+      article {
+        padding: 22px 18px 16px;
+      }
+
+      &__name {
+        font-size: 1.7rem;
+        margin-bottom: 10px;
+      }
+
+      dl > div {
+        padding: 12px 0;
+      }
+
+      dd {
+        margin-top: 4px;
+        font-size: 1.4rem;
+      }
+
+      &__notes {
+        margin-top: 20px;
+
+        li {
+          font-size: 1.3rem;
+
+          & + li {
+            margin-top: 6px;
+          }
+        }
+      }
+    }
+  }
+}
