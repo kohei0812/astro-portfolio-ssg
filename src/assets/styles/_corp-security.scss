@@ -2394,3 +2394,9 @@ $gray: #f4f6f9;
     }
   }
 }
+
+/* LP ヘッダーのページ内リンク（2026-11-03）の着地点。固定ヘッダーに隠れないように */
+#corp-page.cp-security-page #diagnosis,
+#corp-page.cp-security-page #maintenance {
+  scroll-margin-top: 96px;
+}

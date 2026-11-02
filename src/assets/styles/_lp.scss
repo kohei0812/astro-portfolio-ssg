@@ -39,6 +39,19 @@
     letter-spacing: 0.02em;
   }
 
+  &__nav {
+    display: none;
+
+    a {
+      color: v.$color-primary;
+      font-weight: bold;
+      text-decoration: underline;
+      text-decoration-color: rgba(23, 36, 57, 0.3);
+      text-underline-offset: 0.35em;
+      white-space: nowrap;
+    }
+  }
+
   &__cta {
     display: inline-block;
     background-color: v.$color-accent;
@@ -106,9 +119,19 @@
       letter-spacing: 0.04em;
     }
 
+    &__nav {
+      display: flex;
+      gap: 24px;
+      margin-left: auto;
+      margin-right: 28px;
+      font-size: 1.4rem;
+    }
+
     &__cta {
+      flex-shrink: 0;
       padding: 12px 26px;
       font-size: 1.4rem;
+      white-space: nowrap;
     }
   }
 
@@ -124,6 +147,13 @@
       margin-top: 18px;
       font-size: 1.1rem;
     }
+  }
+}
+
+/* 769〜1099px：ページ内リンクがあるときはロゴ横の一行を外して、1行に収める */
+@media screen and (min-width: 769px) and (max-width: 1099px) {
+  .lp-header:has(.lp-header__nav) .lp-header__tagline {
+    display: none;
   }
 }
 

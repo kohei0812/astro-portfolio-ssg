@@ -8,6 +8,7 @@ const {
   lp = false, // true: LP用のヘッダー・フッター（ナビなし）に差し替える
   lpCta = undefined, // lp のとき { header, sticky } でボタン文言を渡す
   lpTagline = "", // lp のときヘッダーのロゴ横に出す一行（PCのみ）
+  lpNav = [], // lp のときヘッダーに置くページ内リンク [{ href, label }]（PCのみ）
   corp = false, // true: コーポレートサイト用のヘッダー・フッター（白地＋紺）と corp.js
   noindex = false, // true: 検索に出さない（資料請求後のページなど）
 } = Astro.props;
@@ -207,7 +208,7 @@ const scriptHtml = `
     >
   </head>
   <body>
-    {lp ? <LpHeader ctaLabel={lpCta?.header} stickyLabel={lpCta?.sticky} tagline={lpTagline} /> : corp ? <CorpHeader /> : <Header />}
+    {lp ? <LpHeader ctaLabel={lpCta?.header} stickyLabel={lpCta?.sticky} tagline={lpTagline} nav={lpNav} /> : corp ? <CorpHeader /> : <Header />}
     <slot />
     {lp ? <LpFooter /> : corp ? <CorpFooter /> : <Footer />}
     {corp && <script is:inline src="/assets/js/corp.js"></script>}

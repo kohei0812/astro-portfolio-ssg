@@ -2,7 +2,8 @@
 //src/components/lp/LpHeader.astro
 // LP用のヘッダー。離脱口を作らないため、ナビは置かずロゴと申込ボタンだけにする。
 // 追従CTA（#js-sticky-cta）の表示制御は public/assets/js/main.js を共用している。
-const { ctaLabel = "無料で相談する", stickyLabel = "無料で相談する", tagline = "" } = Astro.props;
+// nav：ページ内のアンカーだけを置く（離脱口にはしない）。2026-11-03 本人指示で /security に PHPチェッカー・デプロイサービスを追加。PC のみ表示
+const { ctaLabel = "無料で相談する", stickyLabel = "無料で相談する", tagline = "", nav = [] } = Astro.props;
 ---
 <header class="lp-header" id="lp-header" role="banner">
   <div class="lp-header__inner">
@@ -10,6 +11,11 @@ const { ctaLabel = "無料で相談する", stickyLabel = "無料で相談する
       <span class="lp-header__logo eng">DDDynamis</span>
       {tagline && <span class="lp-header__tagline">{tagline}</span>}
     </p>
+    {nav.length > 0 && (
+      <nav class="lp-header__nav" aria-label="ページ内リンク">
+        {nav.map((n) => <a href={n.href}>{n.label}</a>)}
+      </nav>
+    )}
     <a href="#contact" class="lp-header__cta">{ctaLabel}</a>
   </div>
 </header>
