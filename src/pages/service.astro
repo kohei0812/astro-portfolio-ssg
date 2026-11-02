@@ -2,7 +2,7 @@
 /*
   サービス（2026-10-02 新設）。料金は載せない（本人判断。「初回相談は無料」だけ書く）。
   中身は 営業/サービス棚卸し_20261002.md、文言は Codex 案（scratchpad/codex/service_copy.md）を元に調整。
-  載せないもの：外部講師・講師陣向け研修（BtoB）、1to1コーチング・セキュリティ講座・FDE講座（企画中）、スポット顧問。
+  載せないもの：外部講師・講師陣向け研修（BtoB）、セキュリティ講座・FDE講座（企画中）、スポット顧問。1on1コーチングと経営コンサルは 2026-11-02 から「卒業のその先」節に載せる。
   スタイルは _corp-service.scss（共通部品は _corp.scss）。
 */
 import Layout from "../layouts/Layout.astro";
@@ -125,6 +125,12 @@ const securityMenu = [
   { name: "インフラの選定・設計・構築", txt: "利用人数や扱うデータに合わせて、アプリを動かすサーバーやクラウドの構成を選び、必要な備えを設計・構築します。" },
   { name: "公開後の運用", txt: "公開後の稼働状況や更新を見守り、運用を支援します。" },
 ];
+/* 卒業のその先（2026-11-02 本人指示）。1on1 の担い手は川端自身（提携先に出さない）、税務は税理士の領分 */
+const afterMenu = [
+  { name: "1on1コーチング", txt: "斜め上の先輩と後輩を組み合わせ、直属の上司には話しにくい相談の場をつくります。川端が組み合わせを設計し、先輩に聞き方を伝え、記録と振り返りにAIを使います。" },
+  { name: "経営コンサル", txt: "提携する税理士事務所とともに、税務・財務の数字とAI・ITによる仕組みの両面から経営の相談に乗ります。税務の判断や助言は税理士が担います。" },
+];
+
 const securityFor = [
   "AIでアプリを作ったものの、公開してよいか迷っている",
   "直すべき点が分かっても、自社では修正が難しい",
@@ -274,6 +280,25 @@ const securityFor = [
           <ul>{securityFor.map((x) => <li>{x}</li>)}</ul>
         </div>
         <p class="cs-security__more" data-reveal><a href="/security" class="cp-link">AIアプリのセキュリティとインフラ設計を詳しく見る</a></p>
+      </div>
+    </section>
+
+    <!-- 2.6 卒業のその先（2026-11-02 本人指示：クロスセルの 1on1コーチングと経営コンサル〔税理士事務所と協業〕を載せる。料金は載せない。文言は Codex（scratchpad/codex/out_1102.json）。部品は 2.5 の .cs-security__menu を流用） -->
+    <section class="cp-sec cp-sec--gray cs-security" aria-labelledby="after-ttl">
+      <div class="cp-container">
+        <header class="cp-head" data-reveal>
+          <p class="cp-head__en eng">After graduation</p>
+          <h2 class="cp-head__ttl" id="after-ttl">卒業のその先</h2>
+          <p class="cp-head__lead">AIの導入で生まれた時間を、人の育成や経営の見直しに活かすための支援です。自社でAIを使えるようになった、その先の組織づくりを二つの支援でお手伝いします。</p>
+        </header>
+        <ol class="cs-security__menu">
+          {afterMenu.map((m, i) => (
+            <li data-reveal style={`--d: ${i * 0.08}s`}>
+              <p class="cs-security__name">{m.name}</p>
+              <p class="cs-security__txt">{m.txt}</p>
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
 
