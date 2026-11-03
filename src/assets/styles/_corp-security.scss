@@ -4040,3 +4040,14 @@ $gray: #f4f6f9;
     }
   }
 }
+
+// 料金は「お見積り」の1枠に（2026-11-03 月額20万円〜を伏せた）
+#corp-page.aa-page .aa-svc__price dd {
+  font-size: 1.7rem;
+}
+
+@media screen and (min-width: 769px) {
+  #corp-page.aa-page .aa-maint__price {
+    font-size: 1.8rem;
+  }
+}
