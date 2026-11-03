@@ -31,7 +31,10 @@ const C = {
         "txt": "市民に、最低72時間は自力で生活できる備えを呼びかけています。"
       }
     ],
-    "quote": "NATOの言葉：「戦争ではない。しかし平和でもない。」"
+    "harm": {
+      "name": "実害が出ている",
+      "txt": "2026年10月、GMOのクラウドサービスへの不正アクセスで利用者の証券口座に不正な取引が相次ぎ、暗号資産交換所のバイナンスからは約63億ドルが流出しました。"
+    }
   },
   "ai": {
     "h2": "攻撃側のAIに、守る側のAIでは勝てない",
@@ -293,8 +296,10 @@ const networkIcons = ["lock", "nologin", "layers"];
       <div class="cp-container">
         <ul class="aa-fv__facts" data-reveal style="--d: .2s">
           {C.fv.facts.map((f) => <li><b>{f.name}</b>{f.txt}</li>)}
-          <li class="aa-fv__quote">{C.fv.quote}</li>
+          <li class="aa-fv__quote"><b>{C.fv.harm.name}</b>{C.fv.harm.txt}</li>
         </ul>
+        {/* 2026-11-03 本人指示：「戦争状態」と食い違う NATO の言葉は外し、実害（GMO・暗号資産）に差し替え */}
+        <p class="aa-fv__src">出典：<a href="https://group.gmo/info/alert/2026102703/" target="_blank" rel="noopener">GMOインターネットグループ「お名前.com デスクトップクラウド」への不正アクセスに関するお知らせ（第10報）</a>、<a href="https://www.jiji.com/jc/article?k=2026110100186&g=int" target="_blank" rel="noopener">時事通信（2026年11月1日）</a>。<time datetime="2026-11-03">2026年11月3日</time>時点の情報です。</p>
       </div>
     </section>
 

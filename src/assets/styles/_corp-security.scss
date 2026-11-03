@@ -3697,3 +3697,40 @@ $gray: #f4f6f9;
     }
   }
 }
+
+// FV の4つ目：実害（2026-11-03 NATO の言葉から差し替え）。紺地の中の見出しも白に
+#corp-page.aa-page {
+  .aa-fv__quote {
+    display: block;
+    font-weight: normal;
+
+    b {
+      color: white;
+    }
+  }
+
+  .aa-fv__src {
+    position: relative;
+    z-index: 1;
+    margin-top: 10px;
+    color: #6b7688;
+    font-size: 1.2rem;
+    line-height: 1.7;
+
+    a {
+      display: inline;
+      color: inherit;
+      text-decoration: underline;
+    }
+  }
+}
+
+@media screen and (min-width: 769px) {
+  #corp-page.aa-page .aa-fv__facts {
+    margin-bottom: 0;
+  }
+
+  #corp-page.aa-page .aa-fv__src {
+    margin-bottom: 40px;
+  }
+}
