@@ -3906,3 +3906,137 @@ $gray: #f4f6f9;
     white-space: nowrap;
   }
 }
+
+// 本体：AIで作ったアプリの公開サービス（2026-11-03）。ページの主役なので色帯で目立たせる
+#corp-page.aa-page {
+  .aa-svc-sec {
+    background-color: #eaf0fa;
+    border-top: 4px solid $navy;
+  }
+
+  #service {
+    scroll-margin-top: 96px;
+  }
+
+  .aa-svc__label {
+    color: $red;
+    font-weight: bold;
+    letter-spacing: 0.12em;
+    text-align: center;
+  }
+
+  .aa-svc {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 14px;
+    margin-top: 32px;
+    list-style: none;
+
+    li {
+      position: relative;
+      padding: 28px 20px 24px;
+      background-color: white;
+      border-top: 4px solid $navy;
+      color: $body;
+      font-size: 1.4rem;
+      line-height: 1.8;
+    }
+
+    .cp-icon {
+      display: block;
+      color: $navy;
+    }
+
+    b {
+      display: block;
+      margin: 12px 0 6px;
+      color: $navy;
+      font-size: 1.8rem;
+      line-height: 1.5;
+    }
+  }
+
+  .aa-svc__no {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    color: rgba(23, 36, 57, 0.25);
+    font-size: 2.4rem;
+    font-weight: bold;
+  }
+
+  .aa-svc__price {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    max-width: 960px;
+    margin: 28px auto 0;
+
+    > div {
+      flex: 1 1 360px;
+      min-width: 0;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 4px 16px;
+      padding: 18px 24px;
+      background-color: white;
+      border: 2px solid $navy;
+    }
+
+    dt {
+      color: $ink;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    dd {
+      color: $navy;
+      font-size: 2rem;
+      font-weight: 900;
+    }
+  }
+
+  .aa-svc-sec .sp-cta {
+    margin-top: 32px;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  #corp-page.aa-page .aa-svc li {
+    font-size: 1.5rem;
+  }
+}
+
+// 「なぜ任せるべきか」の導入（2026-11-03：サービスの直後に理由の節が続く流れ）
+#corp-page.aa-page .aa-why {
+  display: inline-block;
+  margin-bottom: 12px;
+  padding: 4px 14px;
+  background-color: $navy;
+  color: white;
+  font-size: 1.4rem;
+  font-weight: bold;
+  letter-spacing: 0.04em;
+}
+
+@media screen and (max-width: 768px) {
+  #corp-page.aa-page .aa-svc {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+
+    li {
+      padding: 20px 14px 18px;
+      font-size: 1.3rem;
+    }
+
+    li:last-child {
+      grid-column: 1 / -1;
+    }
+
+    b {
+      font-size: 1.6rem;
+    }
+  }
+}

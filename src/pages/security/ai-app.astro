@@ -262,6 +262,16 @@ const C = {
   }
 };
 
+/* 本体：AIで作ったアプリの公開サービス（2026-11-03 本人指示「本体セクションがない」）。
+   項目の文言は旧ページの「頼めること」（10/08 版）と保守の流れから流用。料金は既存の表記（保守 月額20万円〜、その他はお見積り） */
+const service = [
+  { icon: "measure", name: "公開前チェック", txt: "アプリの設定を確認し、見直す点を報告します。" },
+  { icon: "code", name: "修正", txt: "直し方の提案と、修正作業を行います。" },
+  { icon: "layers", name: "インフラの選定・設計・構築", txt: "利用人数や扱うデータに合わせて、サーバーやクラウドの構成を選び、設計・構築します。" },
+  { icon: "app", name: "公開", txt: "設定と権限を確かめたうえで、サーバーへ公開します。" },
+  { icon: "gear", name: "公開後の保守", txt: "更新・バックアップ・監視・弱点が公表されたときの対応を、月額で続けます。" },
+];
+
 /* 節ごとのアイコン（LineIcon） */
 const threeIcons = ["key", "door", "db"];
 const fourIcons = ["box", "lock", "refresh", "restore"];
@@ -275,7 +285,7 @@ const networkIcons = ["lock", "nologin", "layers"];
   corp
   lp
   lpCta={{ header: "無料で相談する", sticky: "無料で相談する" }}
-  lpNav={[{ href: "/security", label: "PHPチェッカー" }, { href: "#maintenance", label: "保守" }, { href: "#network", label: "Dynamisネットワーク" }]}
+  lpNav={[{ href: "/security", label: "PHPチェッカー" }, { href: "#service", label: "サービス" }, { href: "#maintenance", label: "保守" }, { href: "#network", label: "Dynamisネットワーク" }]}
   lpTagline="現役Webエンジニアが直接対応します。"
 >
   <main id="corp-page" class="corp-page cp-security-page aa-page" role="main">
@@ -306,11 +316,37 @@ const networkIcons = ["lock", "nologin", "layers"];
       </div>
     </section>
 
+    <!-- 本体：AIで作ったアプリの公開サービス（2026-11-03 本人指示で追加。FV の次に置き、続く節で「なぜ任せるべきか」を示す） -->
+    <section class="cp-sec aa-svc-sec" id="service" aria-labelledby="aa-svc-ttl">
+      <div class="cp-container">
+        <p class="aa-svc__label eng" data-reveal>Our service</p>
+        <h2 class="aa-h aa-h--center" id="aa-svc-ttl" data-reveal>AIで作ったアプリの公開サービス</h2>
+        <p class="aa-lead aa-lead--center" data-reveal>社内ポータルやLINE連携の業務アプリなど、AIで作ったアプリを、公開前のチェックから公開、公開後の保守まで、現役Webエンジニアが一貫して担います。作業はすべて訪問して（リモートでも対応可）、お客様の環境の中で行います。</p>
+        <ol class="aa-svc">
+          {service.map((v, i) => (
+            <li data-reveal style={`--d: ${i * 0.06}s`}>
+              <span class="aa-svc__no eng">{String(i + 1).padStart(2, "0")}</span>
+              <LineIcon name={v.icon} size={44} />
+              <b>{v.name}</b>{v.txt}
+            </li>
+          ))}
+        </ol>
+        <dl class="aa-svc__price" data-reveal>
+          <div><dt>公開前チェック・修正・インフラの構築</dt><dd>お見積り</dd></div>
+          <div><dt>公開と公開後の保守</dt><dd>月額20万円〜（税別）</dd></div>
+        </dl>
+        <div class="sp-cta" data-reveal>
+          <a href="#contact" class="sp-cta__btn">無料で相談する</a>
+        </div>
+      </div>
+    </section>
+
     <!-- 2. 攻撃側のAIに、守る側のAIでは勝てない（資料3枚目） -->
     <section class="cp-sec cp-sec--gray" aria-labelledby="aa-ai-ttl">
       <div class="cp-container">
         <div class="sp-split">
           <div class="sp-split__txt">
+            <p class="aa-why" data-reveal>なぜ、公開と保守を任せるべきなのか</p>
             <h2 class="aa-h" id="aa-ai-ttl" data-reveal>{C.ai.h2}</h2>
             <p class="aa-lead" data-reveal>{C.ai.lead}</p>
             <ul class="aa-vs" data-reveal>
