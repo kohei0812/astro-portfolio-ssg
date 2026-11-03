@@ -3684,3 +3684,16 @@ $gray: #f4f6f9;
     }
   }
 }
+
+// 2カラムの節の見出しは列幅が狭いので一段小さく、「：」で分けた行は途中で折り返さない（2026-11-03「シェルタ／ー」の段落ちを修正）
+@media screen and (min-width: 769px) {
+  #corp-page.aa-page {
+    .sp-split .aa-h {
+      font-size: 3.2rem;
+    }
+
+    .aa-h__line {
+      white-space: nowrap;
+    }
+  }
+}
