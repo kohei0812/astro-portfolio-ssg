@@ -280,19 +280,22 @@ const networkIcons = ["lock", "nologin", "layers"];
 >
   <main id="corp-page" class="corp-page cp-security-page aa-page" role="main">
     <!-- 1. FV：資料2枚目。横幅いっぱいのメインビジュアルに見出しとCTAを重ねる -->
-    <section class="aa-fv" aria-labelledby="aa-fv-ttl">
-      <picture class="aa-fv__bg">
-        <source srcset="/assets/images/corp/aiapp-fv.webp" type="image/webp" />
-        <img src="/assets/images/corp/aiapp-fv.jpg" alt="攻撃の矢が一斉に向かう会社のビルの前で、盾を構えた聖騎士が矢を防いでいるイラスト" width="1672" height="941" decoding="async" fetchpriority="high" />
-      </picture>
-      <div class="cp-container aa-fv__in">
+    <section class="aa-fv aa-fv--dark" aria-labelledby="aa-fv-ttl">
+      <div class="aa-fv__row">
+        <div class="cp-container aa-fv__in">
         <p class="aa-fv__label" data-reveal>{C.fv.label}</p>
         <h1 class="aa-fv__ttl" id="aa-fv-ttl" data-reveal style="--d: .1s">{C.fv.h1.split("\n").map((l) => <span>{l}</span>)}</h1>
         <p class="aa-fv__sub" data-reveal style="--d: .2s">{C.fv.sub}</p>
         <div class="sp-cta sp-cta--fv" data-reveal style="--d: .3s">
           <a href="#contact" class="sp-cta__btn">{C.fv.cta}</a>
         </div>
+        </div>
+        <picture class="aa-fv__art">
+          <source srcset="/assets/images/corp/aiapp-fv-battle.webp" type="image/webp" />
+          <img src="/assets/images/corp/aiapp-fv-battle.jpg" alt="炎の上がる戦場で、左から飛んでくる攻撃を、先頭に立つ聖騎士が展開した光の壁で受け止め、後ろの会社と社員を守っているイラスト" width="1672" height="941" decoding="async" fetchpriority="high" />
+        </picture>
       </div>
+
       <div class="cp-container">
         <ul class="aa-fv__facts" data-reveal style="--d: .2s">
           {C.fv.facts.map((f) => <li><b>{f.name}</b>{f.txt}</li>)}

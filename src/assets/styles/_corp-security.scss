@@ -3734,3 +3734,134 @@ $gray: #f4f6f9;
     margin-bottom: 40px;
   }
 }
+
+// FV を戦場の絵に（2026-11-03 本人指示：「戦争状態」と絵のギャップをなくす）。暗い絵の上に白い文字
+#corp-page.aa-page .aa-fv--dark {
+  background-color: #0b1020;
+
+  .aa-fv__label {
+    border-color: rgba(255, 255, 255, 0.7);
+    color: white;
+  }
+
+  .aa-fv__ttl {
+    color: white;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+  }
+
+  .aa-fv__sub {
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
+  }
+
+  .aa-fv__src {
+    color: rgba(255, 255, 255, 0.75);
+  }
+}
+
+@media screen and (min-width: 769px) {
+  #corp-page.aa-page .aa-fv--dark {
+    &::after {
+      background: linear-gradient(90deg, rgba(8, 12, 24, 0.82) 0%, rgba(8, 12, 24, 0.6) 34%, rgba(8, 12, 24, 0) 58%);
+    }
+
+    .aa-fv__in {
+      padding-top: 96px;
+      padding-bottom: 72px;
+    }
+  }
+}
+
+// FV（戦場の絵）は文字の列と絵を横に並べる：左から攻撃→壁→騎士→会社の流れを切らずに全部見せる（2026-11-03）
+#corp-page.aa-page .aa-fv--dark {
+  &::after {
+    content: none;
+  }
+
+  .aa-fv__art img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  #corp-page.aa-page .aa-fv--dark {
+    .aa-fv__row {
+      display: flex;
+      align-items: center;
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+
+    .aa-fv__in {
+      flex: 1 1 380px;
+      min-width: 0;
+      max-width: none;
+      margin: 0;
+      padding: 48px 32px 48px 40px;
+
+      > *,
+      > .aa-fv__ttl {
+        max-width: none;
+      }
+    }
+
+    .aa-fv__ttl span {
+      white-space: normal;
+    }
+
+    .aa-fv__art {
+      flex: 0 0 60%;
+      min-width: 0;
+    }
+
+    .aa-fv__facts {
+      margin-top: 0;
+    }
+
+    .aa-fv__src {
+      margin-bottom: 32px;
+    }
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  #corp-page.aa-page .aa-fv--dark .aa-fv__in {
+    padding-left: 80px;
+  }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1100px) {
+  #corp-page.aa-page .aa-fv--dark {
+    .aa-fv__art {
+      flex-basis: 54%;
+    }
+
+    .aa-fv__ttl {
+      font-size: 3.2rem;
+    }
+
+    .aa-fv__sub {
+      font-size: 1.5rem;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #corp-page.aa-page .aa-fv--dark .aa-fv__row {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+}
+
+// 文字の列の幅に合わせて見出しを縮め、1行ずつ折り返さない（「インターネットは／、」の段落ちを防ぐ）
+@media screen and (min-width: 769px) {
+  #corp-page.aa-page .aa-fv--dark .aa-fv__ttl {
+    font-size: clamp(2.6rem, 3.1vw, 4.4rem);
+
+    span {
+      white-space: nowrap;
+    }
+  }
+}
