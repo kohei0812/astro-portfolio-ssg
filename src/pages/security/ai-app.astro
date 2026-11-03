@@ -410,7 +410,7 @@ const networkIcons = ["lock", "nologin", "layers"];
       <div class="cp-container">
         <div class="sp-split sp-split--rev">
           <div class="sp-split__txt">
-            <h2 class="aa-h" id="aa-net-ttl" data-reveal>{C.network.h2}</h2>
+            <h2 class="aa-h" id="aa-net-ttl" data-reveal>{C.network.h2.split("：").map((t, i, a) => <span class="aa-h__line">{i < a.length - 1 ? t + "：" : t}</span>)}</h2>
             <p class="aa-lead" data-reveal>{C.network.lead}</p>
             <ul class="aa-net" data-reveal>
               {C.network.items.map((n, i) => <li><LineIcon name={networkIcons[i]} size={32} /><b>{n.name}</b>{n.txt}</li>)}

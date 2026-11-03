@@ -3532,3 +3532,120 @@ $gray: #f4f6f9;
     }
   }
 }
+
+/* 文字サイズの調整（2026-11-03 本人承認）：日本の企業サイトの目安（本文15〜16px・行間1.8〜2.0、見出し32〜40px）にそろえる。
+   指定漏れで 10px（html 62.5% のまま）になっていた本文もここで指定する */
+#corp-page.aa-page {
+  .aa-vs li,
+  .aa-premise > div,
+  .aa-four li,
+  .aa-next li,
+  .aa-net li,
+  .aa-note,
+  .aa-own {
+    font-size: 1.4rem;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  #corp-page.aa-page {
+    .aa-fv__ttl {
+      font-size: 4.8rem;
+    }
+
+    .aa-fv__sub {
+      font-size: 1.8rem;
+    }
+
+    .aa-fv__facts {
+      li {
+        font-size: 1.5rem;
+      }
+
+      b {
+        font-size: 1.7rem;
+      }
+    }
+
+    .aa-h {
+      font-size: 3.6rem;
+    }
+
+    .aa-lead {
+      font-size: 1.7rem;
+      line-height: 2;
+    }
+
+    .aa-vs li,
+    .aa-premise > div,
+    .aa-four li,
+    .aa-next li,
+    .aa-net li,
+    .aa-note,
+    .aa-own,
+    .aa-steps3 li,
+    .aa-three__ng,
+    .aa-three__ok,
+    .aa-timeline li,
+    .aa-maint__trust li {
+      font-size: 1.5rem;
+      line-height: 1.8;
+    }
+
+    .aa-vs b,
+    .aa-premise b,
+    .aa-steps3 b,
+    .aa-timeline b,
+    .aa-net b {
+      font-size: 1.8rem;
+    }
+
+    .aa-three__name,
+    .aa-four b {
+      font-size: 2rem;
+    }
+
+    .aa-maint__price {
+      font-size: 2rem;
+    }
+  }
+
+  // PHP のページのカード本文も同じ基準に
+  #corp-page.cp-security-page {
+    .sp-diag__checks li,
+    .sp-diag__steps li,
+    .sp-php__txt,
+    .sp-promise__txt,
+    .sp-price__note {
+      font-size: 1.5rem;
+      line-height: 1.8;
+    }
+  }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1100px) {
+  #corp-page.aa-page {
+    .aa-fv__ttl {
+      font-size: 3.6rem;
+    }
+
+    .aa-h {
+      font-size: 3rem;
+    }
+  }
+}
+
+// 見出しの改行位置（2026-11-03）：FV は1行ずつ折り返さない、「：」の後で改行
+#corp-page.aa-page .aa-h__line {
+  display: block;
+}
+
+@media screen and (min-width: 769px) {
+  #corp-page.aa-page .aa-fv__in > .aa-fv__ttl {
+    max-width: 60%;
+
+    span {
+      white-space: nowrap;
+    }
+  }
+}
