@@ -3865,3 +3865,44 @@ $gray: #f4f6f9;
     }
   }
 }
+
+// 見出し「インターネット通信は、／すでに戦争状態にあります。」（2026-11-03）は1行13字なので一段小さく
+@media screen and (min-width: 769px) {
+  #corp-page.aa-page .aa-fv--dark .aa-fv__ttl {
+    font-size: clamp(2.1rem, 2.4vw, 3.8rem);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #corp-page.aa-page .aa-fv--dark .aa-fv__ttl {
+    font-size: 2.3rem;
+  }
+}
+
+// FV の背景を炎上する炎に（2026-11-03 本人指示：黒い背景のところを炎に）。文字が読めるよう上から薄く暗くし、絵の左端は炎に溶け込ませる
+#corp-page.aa-page .aa-fv--dark {
+  background:
+    linear-gradient(180deg, rgba(14, 6, 4, 0.45) 0%, rgba(14, 6, 4, 0.15) 50%, rgba(14, 6, 4, 0.55) 100%),
+    url("/assets/images/corp/aiapp-fv-flames.jpg") center bottom / cover no-repeat,
+    #1a0805;
+
+  .aa-fv__ttl,
+  .aa-fv__sub,
+  .aa-fv__label {
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.85), 0 0 2px rgba(0, 0, 0, 0.6);
+  }
+}
+
+@media screen and (min-width: 769px) {
+  #corp-page.aa-page .aa-fv--dark .aa-fv__art {
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 10%);
+    mask-image: linear-gradient(90deg, transparent 0, #000 10%);
+  }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1100px) {
+  #corp-page.aa-page .aa-fv--dark .aa-fv__label {
+    font-size: 1.1rem;
+    white-space: nowrap;
+  }
+}
