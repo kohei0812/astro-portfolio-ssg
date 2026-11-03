@@ -4051,3 +4051,45 @@ $gray: #f4f6f9;
     font-size: 1.8rem;
   }
 }
+
+// Dynamisネットワークの節は宇宙の背景（2026-11-03 本人指示）。暗い背景の上は白い文字
+#corp-page.aa-page .aa-space {
+  background:
+    linear-gradient(180deg, rgba(5, 8, 24, 0.35), rgba(5, 8, 24, 0.55)),
+    url("/assets/images/corp/aiapp-space.jpg") center / cover no-repeat,
+    #070b1f;
+  color: white;
+
+  .aa-h {
+    color: white;
+  }
+
+  .aa-lead {
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .aa-net {
+    li {
+      border-bottom-color: rgba(255, 255, 255, 0.18);
+      color: rgba(255, 255, 255, 0.82);
+    }
+
+    b {
+      color: white;
+    }
+
+    .cp-icon {
+      color: #9cc4ff;
+    }
+  }
+
+  .aa-note {
+    background-color: rgba(255, 255, 255, 0.08);
+    border-left-color: #9cc4ff;
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .sp-split__img img {
+    box-shadow: 0 0 0 1px rgba(156, 196, 255, 0.35), 0 20px 50px rgba(0, 0, 0, 0.45);
+  }
+}
