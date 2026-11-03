@@ -21,12 +21,12 @@ import DiagnosisForm from "../components/consultation/DiagnosisForm.jsx";
 
 /* PHPチェッカー＝無料Webサイト簡易診断（外から見える範囲だけ。所有者確認ができないサイトは診断しない） */
 const diagChecks = [
-  { name: "ソフトの版", txt: "PHP・WordPress・追加機能の版と既知の弱点を確認します。" },
-  { name: "通信の暗号化", txt: "SSL（通信の暗号化）と証明書を確認します。" },
-  { name: "公開ファイル", txt: "設定ファイル・バックアップ・.git（変更履歴）などの公開を確認します。" },
-  { name: "管理画面の露出", txt: "管理画面が外から見える状態かを確認します。" },
-  { name: "保護の設定", txt: "ヘッダー（通信時に送る設定情報）のセキュリティ設定を点検します。" },
-  { name: "なりすまし対策", txt: "SPF・DMARC（なりすましを見分ける設定）の有無と弱さを確認します。" },
+  { icon: "layers", name: "ソフトの版", txt: "PHP・WordPress・追加機能の版と既知の弱点を確認します。" },
+  { icon: "lock", name: "通信の暗号化", txt: "SSLと証明書を確認します。" },
+  { icon: "doc", name: "公開ファイル", txt: "設定ファイル・バックアップ・.gitなどの公開を確認します。" },
+  { icon: "door", name: "管理画面の露出", txt: "管理画面が外から見える状態かを確認します。" },
+  { icon: "gear", name: "保護の設定", txt: "通信のセキュリティ設定を点検します。" },
+  { icon: "mail", name: "なりすまし対策", txt: "SPF・DMARCの有無と弱さを確認します。" },
 ];
 const diagSteps = [
   { name: "4つを入力", txt: "会社名・お名前・サイトのURL・メールアドレスを入れます。" },
@@ -60,19 +60,19 @@ const promises = [
 /* 料金表（2026-11-03 定期診断は年額12万円・税別・契約期間1年。1日あたりの言い換えは Shido 鈴木様の助言。12万÷365≒329円） */
 const priceRows = [
   { name: "PHPチェッカー", price: "無料", note: "簡易診断・本診断・結果のご説明まで含みます。" },
-  { name: "定期診断", price: "年額12万円（税別）", sub: "契約期間1年", note: "1日あたり約330円（税別）で、毎週外から点検し直します。変化があったときだけ川端がメールでお知らせします。改修（直す作業）は含みません。" },
+  { name: "定期診断", price: "年額12万円（税別）", sub: "契約期間1年", note: "1日あたり約330円（税別）で、毎週外から点検し直します。変化があったときだけ川端がメールでお知らせします。改修は含みません。" },
   { name: "詳細診断と報告会・改修・保守", price: "お見積り", note: "必要な作業と費用をお伝えし、お見積りを見てからご判断いただけます。" },
 ];
 
 const faq = [
-  { q: "PHPチェッカーは、PHPだけを調べるのですか？", a: "PHPを入り口に、サイト全体を外から見える範囲で点検します。WordPress・追加機能の版と既知の弱点、SSL（通信の暗号化）と証明書、公開されてはいけないファイル、管理画面の露出、セキュリティ関連の設定も対象です。なりすましメール対策は、そのドメインの公開DNS（ドメインの管理設定）で確認し、メールの送受信は行いません。" },
-  { q: "所有者確認は、どのように行いますか？", a: "ご入力のメールアドレスのドメイン（@以降）が対象サイトと同じ場合は、そのまま点検へ進みます。異なる場合は、確認用の文字列をトップページかDNS（ドメインの管理設定）に置いていただきます。確認できないサイトは診断しません。" },
+  { q: "PHPチェッカーは、PHPだけを調べるのですか？", a: "PHPを入り口に、サイト全体を外から見える範囲で点検します。WordPress・追加機能の版と既知の弱点、SSLと証明書、公開されてはいけないファイル、管理画面の露出、セキュリティ関連の設定も対象です。なりすましメール対策は、そのドメインの公開DNSで確認し、メールの送受信は行いません。" },
+  { q: "所有者確認は、どのように行いますか？", a: "ご入力のメールアドレスのドメイン（@以降）が対象サイトと同じ場合は、そのまま点検へ進みます。異なる場合は、確認用の文字列をトップページかDNSに置いていただきます。確認できないサイトは診断しません。" },
   { q: "見つかった箇所の対応も頼めますか？", a: "詳細診断と報告会、改修、保守も承ります。ご利用は任意ですので、お見積りを見てからご判断いただけます。" },
   { q: "古いPHPのサイトでも対応できますか？", a: "まず現在の構成を確認し、更新による影響を調べます。そのうえで、移行も含めた対応方法を検討します。" },
   { q: "制作会社と連絡が取れません。", a: "サーバー契約や管理画面へのアクセス状況から、確認できることを探します。資料がそろっていなくても、手元にある情報でご相談ください。" },
   { q: "レンタルサーバーでも確認は必要ですか？", a: "レンタルサーバーでも、利用中のPHPが今回の脆弱性の影響を受けるか確認が必要です。サーバー会社の対応状況と、ご自身で必要な設定変更を確認します。" },
   { q: "PHPチェッカーの費用はいくらですか？", a: "PHPチェッカーによるWebサイトの簡易診断は無料です。" },
-  { q: "定期診断は、どのようなサービスですか？", a: "定期診断は、無料のPHPチェッカーで所有者確認が済んだサイトを毎週、外から点検し直すサービスです。年額12万円（税別）で、契約期間は1年です。改修（直す作業）は含みません。ログインの試行や攻撃にあたる検査は行いません。" },
+  { q: "定期診断は、どのようなサービスですか？", a: "定期診断は、無料のPHPチェッカーで所有者確認が済んだサイトを毎週、外から点検し直すサービスです。年額12万円（税別）で、契約期間は1年です。改修は含みません。ログインの試行や攻撃にあたる検査は行いません。" },
 ];
 ---
 <Layout
@@ -92,7 +92,7 @@ const faq = [
           <div class="sp-php__fvcopy">
             <p class="sp-php__label" data-reveal>2026年10月21日 PHPに緊急の脆弱性</p>
             <h1 class="sp-php__ttl" id="sp-php-ttl" data-reveal style="--d: .1s"><span class="sp-php__nb">あなたのWebサイト、</span><span class="sp-php__nb"><em>PHP</em>使ってないですか？</span></h1>
-            <p class="sp-php__sub" data-reveal style="--d: .2s">PHPチェッカーは、PHP（サイトを動かす仕組み）やWordPressで作った自社サイトを、外から無料で簡易診断します。結果はその場で画面に出ます。</p>
+            <p class="sp-php__sub" data-reveal style="--d: .2s">PHPチェッカーは、PHPやWordPressで作った自社サイトを、外から無料で簡易診断します。結果はその場で画面に出ます。</p>
             <div class="sp-cta sp-cta--fv" data-reveal style="--d: .3s">
               <a href="#contact" class="sp-cta__btn">無料で簡易診断する</a>
               <p class="sp-cta__note">4つ入れるだけ。攻撃にあたる検査はしません。</p>
@@ -127,15 +127,21 @@ const faq = [
       </div>
     </section>
 
-    <!-- 3. 何が起きたか（事実・出典・日付） -->
-    <section class="cp-sec cp-sec--gray" aria-labelledby="sp-what-ttl">
-      <div class="cp-container">
-        <div class="sp-php__more" data-reveal>
+    <!-- 3. 何が起きたか（事実・出典・日付）。2026-11-03 本人指示でイラストを追加 -->
+    <section class="cp-sec cp-sec--gray sp-split-sec" aria-labelledby="sp-what-ttl">
+      <div class="cp-container sp-split">
+        <div class="sp-split__txt sp-php__more" data-reveal>
           <h2 class="sp-php__h" id="sp-what-ttl">PHPを皮切りに、弱点の公表が日々続く</h2>
           <p>2026年10月21日、PHPに緊急レベルの脆弱性が公表されました。外からプログラムを実行されてサーバーを乗っ取られるおそれがあり、WordPressで作ったサイトやPHPのお問い合わせフォームも対象です。PHP 8.1以前には公式の修正版がなく、プラグインの更新だけでは直りません。</p>
           <p>PHPだけの話ではありません。Python・Node.js、WordPress・Laravel・Next.jsなど、ほぼすべての言語・部品で弱点の公表が続いています。私たちが使うインターネット全体の話です。</p>
           <p class="sp-php__src">出典：<a href="https://www.php.net/archive/2026.php#2026-10-21-5" target="_blank" rel="noopener">PHP公式の告知（2026年10月21日）</a>。修正版は 8.5.12／8.4.27／8.3.36／8.2.35 以上。<time datetime="2026-10-23">2026年10月23日</time>時点の情報です。</p>
         </div>
+        <figure class="sp-split__img" data-reveal style="--d: .1s">
+          <picture>
+            <source srcset="/assets/images/corp/security-lp-wave.webp" type="image/webp" />
+            <img src="/assets/images/corp/security-lp-wave.jpg" alt="サイトを支える部品に、次々と警告マークが点き、カレンダーの毎日にも警告が並ぶイラスト" width="1536" height="1024" loading="lazy" decoding="async" />
+          </picture>
+        </figure>
       </div>
     </section>
 
@@ -166,7 +172,7 @@ const faq = [
             <div>
               <h3 class="sp-diag__h">本診断で点検する6つの項目</h3>
               <ul class="sp-diag__checks">
-                {diagChecks.map((c) => <li><b>{c.name}</b>{c.txt}</li>)}
+                {diagChecks.map((c) => <li class="sp-diag__check"><LineIcon name={c.icon} size={36} /><b>{c.name}</b>{c.txt}</li>)}
               </ul>
             </div>
             <!-- 結果の見本：その場で出る簡易結果（DiagnosisForm の3項目と同じ並び）。架空の結果と分かるよう「見本」と明記 -->
@@ -233,7 +239,7 @@ const faq = [
           <header class="cp-head" data-reveal>
             <p class="cp-head__en eng">Engineer</p>
             <h2 class="cp-head__ttl" id="sp-who-ttl">現役エンジニアの私が<br />直接点検します</h2>
-            <p class="cp-head__lead">DDDynamis代表の川端康平です。自社の本番サーバーも、私自身が設計・運用しています。SSH（サーバーへの入口）を開けず、保存データとバックアップを暗号化し、毎日バックアップを取って、復元できることも確認しています。</p>
+            <p class="cp-head__lead">DDDynamis代表の川端康平です。自社の本番サーバーも、私自身が設計・運用しています。サーバーへの入口を開けず、保存データとバックアップを暗号化し、毎日バックアップを取って、復元できることも確認しています。</p>
           </header>
           <p class="sp-who__end" data-reveal>結果は、専門用語だけで済ませず、何をどう見直すかが分かる言葉でお伝えします。</p>
           <div class="sp-cta sp-cta--left" data-reveal>

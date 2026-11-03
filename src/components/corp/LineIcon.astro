@@ -214,4 +214,78 @@ const { name, size = 48 } = Astro.props;
       <path d="M18 30l4 4 8-8" />
     </>
   )}
+  {/* /security の PHPチェッカー6項目（2026-11-03）：鍵・扉・封筒 */}
+  {name === "lock" && (
+    <>
+      <rect x="11" y="21" width="26" height="20" rx="2" />
+      <path d="M16 21v-6a8 8 0 0 1 16 0v6" />
+      <circle cx="24" cy="30" r="2.5" />
+      <path d="M24 32.5V36" />
+    </>
+  )}
+  {name === "door" && (
+    <>
+      <path d="M12 42V8h20v34" />
+      <path d="M32 12h6v30" />
+      <path d="M6 42h36" />
+      <circle cx="27" cy="26" r="1.5" />
+    </>
+  )}
+  {name === "mail" && (
+    <>
+      <rect x="6" y="12" width="36" height="24" rx="2" />
+      <path d="M6 14l18 13 18-13" />
+    </>
+  )}
+  {/* /security/ai-app（2026-11-03）：公開前の3つ・持たない見せない直し続ける戻せる・保守の流れ */}
+  {name === "key" && (
+    <>
+      <circle cx="15" cy="24" r="7" />
+      <path d="M22 24h20M36 24v6M41 24v4" />
+    </>
+  )}
+  {name === "db" && (
+    <>
+      <ellipse cx="24" cy="11" rx="14" ry="5" />
+      <path d="M10 11v26c0 2.8 6.3 5 14 5s14-2.2 14-5V11" />
+      <path d="M10 24c0 2.8 6.3 5 14 5s14-2.2 14-5" />
+    </>
+  )}
+  {name === "box" && (
+    <>
+      <path d="M6 14h36v8H6z" />
+      <path d="M9 22v18h30V22" />
+      <path d="M19 29h10" />
+    </>
+  )}
+  {name === "refresh" && (
+    <>
+      <path d="M38 18a15 15 0 0 0-27-3" />
+      <path d="M10 8v7h7" />
+      <path d="M10 30a15 15 0 0 0 27 3" />
+      <path d="M38 40v-7h-7" />
+    </>
+  )}
+  {name === "restore" && (
+    <>
+      <path d="M12 10h17l8 8v22H12z" />
+      <path d="M29 10v8h8" />
+      <path d="M29 31a6 6 0 1 1-2-4.5" />
+      <path d="M28 23v4h-4" />
+    </>
+  )}
+  {name === "alert" && (
+    <>
+      <path d="M24 7L4 41h40z" />
+      <path d="M24 19v11" />
+      <circle cx="24" cy="35" r="1" />
+    </>
+  )}
+  {name === "monitor" && (
+    <>
+      <rect x="6" y="9" width="36" height="24" rx="2" />
+      <path d="M18 41h12M24 33v8" />
+      <path d="M11 22h7l3-6 5 12 3-6h8" />
+    </>
+  )}
 </svg>

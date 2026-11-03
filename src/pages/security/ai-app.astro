@@ -1,423 +1,453 @@
 ---
 /*
-  AIで作ったアプリの公開前チェック・公開・保守（2026-11-03 本人指示で /security から分離）。
-  /security は PHPチェッカー（無料の簡易診断）の LP に絞り、客層と価格帯の違うこちらを別ページにした。
-  根拠：営業/広告/2026-10_PHP緊急脆弱性/LP研究_日本LPの力学_20261103.md §0・§9。
-  FV の「インターネット通信は戦争状態」は /security の FV から移した（本人指示 2026-11-03）。
-  中身の経緯（10/08 新設〜11/02 保守・Dynamis ネットワーク）は各ブロックのコメントのとおり。スタイルは _corp-security.scss。
+  AIで作ったアプリの公開・保守（/security/ai-app）。2026-11-03 /security から分離。
+  2026-11-03 作り直し（本人指示）：勉強会資料「インターネットの今」v4（AI活用支援/勉強会_インターネットの今_202611/インターネットの今_勉強会_v4.pptx の2〜9枚目、同業向け）の論理を、
+  クライアント向けに組み直した。用語のかっこ書きは入れない（本人指示）。自社の構成は資料5枚目の「やりがち→こうする」で短く。
+  文言は Codex（scratchpad/codex_aiapp/copy.json）を手直し。FV・図はChatGPT（白・青・金、文字なし。原本 GD/営業/サイト素材/LP_ChatGPT_20261103/）。
+  FV は日本の企業LPの型：横幅いっぱいのメインビジュアルに見出しとCTAを重ねる（LP研究_日本LPの力学_20261103 §2・§7）。
+  スタイルは _corp-security.scss の .aa-*。
 */
 import Layout from "../../layouts/Layout.astro";
 import LineIcon from "../../components/corp/LineIcon.astro";
 import ConsultForm from "../../components/consultation/ConsultForm.jsx";
 
-/* FV の右：インターネット通信が戦争状態であること（勉強会「インターネットの今」v4 の2枚目） */
-const warFacts = [
-  { name: "宣戦布告がない", txt: "国家が関わるサイバー攻撃が、平時から続いています。" },
-  { name: "狙われるのは民間", txt: "金融・医療・物流・製造など、企業の仕組みが標的です。" },
-  { name: "欧州は備えを始めた", txt: "市民に、最低72時間の自立を呼びかけています。" },
-];
-
-/* インターネットの向こう側の今（数字は確かな出典がないので使わない） */
-const threats = [
-  { name: "24時間、自動で探される", txt: "攻撃は自動化されています。公開されたサーバーやアプリは、昼も夜も弱点を探され続けます。" },
-  { name: "攻撃にもAIが使われる", txt: "最近の報道では、攻撃にAIが悪用されている可能性が指摘されています。" },
-  { name: "中小企業も狙われる", txt: "大企業だけではありません。使っているサービスを経由して、中小の事業者も被害に遭っています。" },
-];
-
-const forWho = [
-  { icon: "laptop", name: "自分で作った方", txt: "アプリは動いたものの、公開してよいか迷っている方へ。" },
-  { icon: "idea", name: "これから作る方", txt: "業務で使う前提で、気をつける点を先に知っておきたい方へ。" },
-  { icon: "handshake", name: "外注で作った方", txt: "納品されたアプリの設定を、自社では確かめきれない方へ。" },
-];
-
-const holes = [
-  { name: "APIキーの直書き", txt: "APIキーは、外部サービスを使うための認証情報です。動かすためにプログラムへ直接書き、そのまま公開すると、第三者に知られるおそれがあります。" },
-  { name: "設定ファイルの公開", txt: "「.env」などの設定ファイルには、パスワードなどが入ることがあります。公開するファイルから除き忘れると、中身が見えてしまいます。" },
-  { name: "ログインなしの管理画面", txt: "管理機能が動いても、ログインを求める仕組みがなければ、URLを知る人が開けてしまいます。" },
-  { name: "外から見えるデータベース", txt: "データベースは、アプリの情報を保存する場所です。接続を許す相手の設定が広すぎると、外から情報を見られるおそれがあります。" },
-];
-
-const checks = [
-  { name: "APIキー・パスワードの置き場所", txt: "認証情報の保管先と、それを見られる人を確認します。公開するファイルに紛れ込んでいないかも調べます。" },
-  { name: "ログインと権限", txt: "利用者ごとに、見られる情報と操作できる範囲を確認します。必要な人に、必要な分だけを許す設定かを見ます。" },
-  { name: "データベースの公開設定", txt: "保存した情報を、誰が読めて、誰が書き換えられるかを確認します。" },
-  { name: "更新の当て忘れ", txt: "アプリやサーバーで使うソフトウェアに、適用していない修正プログラムがないかを確認します。" },
-  { name: "バックアップと戻し方", txt: "データの控えを取る頻度と保存先、止まったときに戻す手順を確認します。" },
-  { name: "通信の暗号化（SSL）", txt: "画面とサーバーの間でやり取りする情報が、暗号化される設定かを確認します。" },
-  { name: "持たなくていいデータ", txt: "本人確認書類の画像やパスワードなどを、必要以上に保存していないかを確認し、持つ必要があるかを見直します。" },
-];
-
-const menu = [
-  { icon: "measure", name: "公開前チェック", txt: "アプリの設定を確認し、見直す点を報告します。" },
-  { icon: "code", name: "修正", txt: "直し方の提案と、修正作業を行います。" },
-  { icon: "layers", name: "インフラの選定・設計・構築", txt: "利用人数や扱うデータに合わせて、サーバーやクラウドの構成を選び、設計・構築します。" },
-  { icon: "gear", name: "公開後の運用", txt: "アプリの稼働状況と、必要な更新を見守ります。" },
-  { icon: "app", name: "アプリ公開・セキュリティ保守", txt: "AIで作ったアプリをサーバーへ公開し、その後の保守まで承ります。" },
-];
-
-/* アプリ公開・セキュリティ保守（2026-11-02 本人指示：エスエーライン坂中会長の面談で「月20万円で実装とセキュリティ保守を継続で受ける」需要を確認。
-   金額は 運用商品の定義（A/B 保守 2〜7万円・案）が未決のため、本人の目安どおり月20万円〜。
-   「外の業者に中身を持っていかれる」不安には、こちらがデータの中身を見られない構成で応える。文言は Codex（scratchpad/codex/out_1102.json）） */
-const maintPoints = [
-  { name: "保存データの暗号化と鍵の管理", txt: "データは暗号化して保存し、鍵はお客様が管理します。当方が保存データの中身を閲覧できない構成を設計します。" },
-  { name: "お客様の環境内での作業", txt: "お客様の会社のPC・アカウント内で作業し、当方の手元にはデータを残しません。" },
-  { name: "守秘義務契約", txt: "作業を始める前に、社内情報やアプリの内容・ノウハウを対象とする守秘義務契約を結びます。" },
-  { name: "確認できる作業記録", txt: "誰が、いつ、何をしたかを記録し、お客様が確認できる形で共有します。" },
-  { name: "所有権と引き継ぎ", txt: "アプリはお客様の持ち物のままです。構成や運用手順を整理し、ご希望の時点で他の担当者へ引き継げるようにします。" },
-];
-
-const steps = [
-  { name: "初回相談", txt: "無料の初回相談で、アプリの用途と気になる点を伺います。" },
-  { name: "アプリの共有", txt: "画面共有などで、相談して決めた範囲を見せていただきます。" },
-  { name: "結果の報告", txt: "確認結果を、直す優先順位とともにお伝えします。" },
-  { name: "修正", txt: "自社で直すか、修正を任せるかを選べます。" },
-  { name: "公開", txt: "修正後の状態を確認し、公開へ進みます。" },
-  { name: "運用", txt: "公開後も、必要な分だけ運用を依頼できます。" },
-];
-
-/* チェックだけでは足りない：規模とデータでインフラを選ぶ（2026-10-08 本人指示） */
-const tiers = [
-  { name: "小さく始める", fit: "社内の数人で使い、公開してよい情報を中心に扱うアプリ。", how: "必要な機能と管理の手間を見極め、小さな構成から始めます。" },
-  { name: "しっかり守る", fit: "社外の人も使い、顧客情報を扱うアプリ。", how: "利用者ごとに閲覧・編集できる情報を整理し、通信と保存データの暗号化、バックアップの保存先・頻度まで設計します。" },
-  { name: "止めない・漏らさない", fit: "業務の要になり、多くの個人情報を扱うアプリ。", how: "管理用の入口と権限を絞り、複数台・複数拠点への冗長化、通信・保存データ・バックアップの暗号化、障害時の切り替えと復元手順まで設計します。" },
-];
-
-/* 自社の本番構成（根拠：本人の note「AWS推奨のSession Manager運用。その先で、本番サーバーからcronもなくしてみた」2026-08-07） */
-const ownSetup = [
-  { name: "管理用の入口を開けない（SSM）", txt: "サーバーに入るための入口（SSH）を外に開けず、鍵も配りません。誰が入れるかはAWSの権限設定で管理します。" },
-  { name: "アプリの定期処理（cron）は本番に置かない", txt: "アプリの定期処理は手元のMacから呼び出すだけにし、本番サーバーは届いたリクエストを処理するだけの受け身にしています。" },
-  { name: "呼び出し口を4重に絞る", txt: "接続元のIP制限・認証・POSTのみ許可・何度やり直しても同じ結果になる設計（冪等性）を組み合わせています。" },
-  { name: "権限は必要最小限", txt: "作業に必要な範囲だけ、操作やアクセスを許可しています。" },
-  { name: "変更の記録を残して公開", txt: "Gitで変更履歴を管理し、何を変えたかが残る方法で公開・更新しています。" },
-  { name: "通信・保存データの暗号化と復元の備え", txt: "SSLで通信を暗号化し、保存データとバックアップも暗号化したうえで毎日バックアップを取り、実際に復元できることを確認済みです。" },
-];
-
-/* 提案：冗長化とデータの暗号化（2026-10-08 本人：自社は1台構成なので「提案」として強めに出す） */
-const strongProposal = [
-  { name: "サーバーの冗長化", txt: "複数台を複数拠点に配置し、障害時に処理を切り替える構成を提案します。" },
-  { name: "データベースの分離と冗長化", txt: "データベース（情報を保存・管理する仕組み）をアプリとは別のサーバーに分け、複数拠点で引き継げる構成を提案します。" },
-  { name: "データの暗号化", txt: "SSL（通信を暗号化する仕組み）に加え、ディスク（保存領域）・データベース・バックアップの暗号化を提案します。" },
-  { name: "鍵と権限の管理", txt: "暗号を解く鍵の保管先と使える人を定め、データに触れる権限を必要最小限に絞る設計を提案します。" },
-];
-
-const phpAfter = [
-  { name: "常時バックアップ", txt: "データの控えを、別の場所に取り続ける" },
-  { name: "DBの冗長化", txt: "データの保管先を複数で動かす" },
-  { name: "復旧手順", txt: "誰が何を戻すか決め、実際に試す" },
-  { name: "秘密鍵の管理", txt: "置き場所と使う人を絞り、漏れたら交換" },
-  { name: "個人情報を置かない構成", txt: "公開サーバーに個人情報を残さない" },
-];
-
-/* 本番の置き場所：Dynamis ネットワーク（2026-11-02 本人指示「今後の本体商品のホスティング事業」）。
-   中身の正本は 営業/勝ち筋分析/運用商品の定義（v0.5 §1-2）。DPN の資料（社外秘）の技術構成・競合・原価は載せない。文言は Codex（scratchpad/codex/out_dpn.json） */
-const places = [
-  {
-    name: "お客様のサーバー（公開）",
-    rows: [
-      ["置き場所", "お客様名義のサーバーで、インターネットに公開します。"],
-      ["守り方", "被害を受けた後に戻せる状態を中心に備えます。更新で直し忘れをなくします。"],
-      ["Dynamisの役割", "バックアップの取得・保管、復元の準備、被害時の復旧、更新を担当します。冗長化・鍵管理・監視の設計や設定は時間制で手伝います。"],
-      ["責任", "Dynamisはご依頼いただいた保守と作業を担います。保守はいつでもやめられます。"],
-      ["向いているアプリ", "不特定多数の一般の方が、ログインせずに使うアプリに向いています。"],
+const C = {
+  "fv": {
+    "label": "AI TANK｜AIで作ったアプリの公開・保守",
+    "h1": "インターネットは、\nすでに戦争状態にある",
+    "sub": "AIで作った業務アプリも、この環境で使い続けることになります。公開前のチェックから公開後の保守まで、現役Webエンジニアが直接対応します。",
+    "cta": "無料で相談する",
+    "facts": [
+      {
+        "name": "宣戦布告のない攻撃",
+        "txt": "国家が関わるサイバー攻撃が、平時から続いています。"
+      },
+      {
+        "name": "企業の仕組みが標的",
+        "txt": "金融・医療・物流・製造など、民間企業の仕組みが狙われています。"
+      },
+      {
+        "name": "欧州の備え",
+        "txt": "市民に、最低72時間は自力で生活できる備えを呼びかけています。"
+      }
     ],
+    "quote": "NATOの言葉：「戦争ではない。しかし平和でもない。」"
   },
-  {
-    name: "Dynamis ネットワーク（非公開）",
-    rows: [
-      ["置き場所", "アプリをインターネットに公開せず、使う人が一人ずつログインして入る非公開の入口に置きます。"],
-      ["守り方", "外から見える入口をなくして、やられにくくします。データは暗号化し、お客様が鍵を持ち、Dynamisが中身を見られない構成と組み合わせます。"],
-      ["Dynamisの役割", "管理者として入り、運用範囲を定めます。入口、利用者の追加・削除、更新、バックアップと復元テスト、監視、ログ、権限の棚卸しを管理します。"],
-      ["責任", "契約で決めた範囲の責任をDynamisが負います。漏えいしないことは約束しません。"],
-      ["向いているアプリ", "使う人を限定し、全員にログインしてもらえるアプリに向いています。"],
+  "ai": {
+    "h2": "攻撃側のAIに、守る側のAIでは勝てない",
+    "lead": "攻撃する側と守る側では、条件が違います。「こちらもAIを使えば大丈夫」で済ませず、侵入された後まで考えて備える必要があります。",
+    "cards": [
+      {
+        "name": "攻撃側のAI",
+        "txt": "悪用を抑える制限のないAIも使い、休まずすべての入口を試します。ひとつ当たれば足ります。"
+      },
+      {
+        "name": "守る側のAI",
+        "txt": "悪用を抑える制限のあるAIを使いながら、すべての入口を守り続けなければなりません。"
+      }
     ],
+    "premises": [
+      {
+        "name": "入られない前提",
+        "txt": "侵入を食い止めることだけを考えると、突破された後の備えが抜け落ちます。"
+      },
+      {
+        "name": "入られても被害を小さく、戻せる前提",
+        "txt": "入口を減らす対策に加え、被害が及ぶ範囲を絞り、業務を戻す手順まで用意します。"
+      }
+    ]
   },
-];
-const placeNotes = [
-  "ログインさせられない不特定多数が使う部分は、Dynamis ネットワークに置けません。公開するアプリでも、管理画面などログインする人だけが使う部分は同じ方式で非公開にできます。",
-  "どちらも公開前チェックが必須です。非公開でも残る、認証なしのAPI、他人のデータの閲覧、秘密情報の置き場所の問題を確認し、通らないものはどちらにも載せません。",
-  "お客様のサーバーの保守も、Dynamis ネットワークも月額です。Dynamis ネットワークのほうが高く、金額はお見積りでお伝えします。",
-];
+  "open": {
+    "h2": "公開は、世界中に入口を開くこと",
+    "lead": "手元でアプリが動くことと、外から使える状態にすることは別です。利用者に届けるために開いた入口には、攻撃する側も来られます。",
+    "steps": [
+      {
+        "name": "手元で作る",
+        "txt": "自分のPCの中で、アプリが思いどおりに動くかを確かめます。"
+      },
+      {
+        "name": "サーバーに置く",
+        "txt": "利用者が使えるように、アプリを動かすサーバーへ移します。"
+      },
+      {
+        "name": "誰でも開ける",
+        "txt": "インターネットに公開すると、世界中からそのURLにアクセスできる状態になります。"
+      }
+    ]
+  },
+  "three": {
+    "h2": "公開前に確かめる、3つのこと",
+    "lead": "AIは、頼まれていない守りを入れないことがあります。動いたところで終わらせず、秘密情報の置き場所、管理画面の入口、データの備えを確かめます。",
+    "items": [
+      {
+        "name": "APIキー",
+        "mistake": "プログラムに直接書き、そのまま公開してしまいます。",
+        "fix": "プログラムと分けて保管し、公開するファイルに含めないようにします。"
+      },
+      {
+        "name": "管理画面",
+        "mistake": "ログイン画面までは、誰でもたどり着ける状態にしてしまいます。",
+        "fix": "決めた接続元からだけ開けるように、入口を絞ります。"
+      },
+      {
+        "name": "データベース",
+        "mistake": "1か所だけに置き、そこが止まると業務も止まる状態にしてしまいます。",
+        "fix": "バックアップを別に保管し、業務への影響に応じて複数の場所で動かす構成を提案します。"
+      }
+    ],
+    "own": "自社でも、管理用の入口を外に開けず、毎日のバックアップと復元の確認を行う形で動かしています。"
+  },
+  "four": {
+    "h2": "持たない・見せない・直し続ける・戻せる",
+    "lead": "業務アプリの守りは、使い始めてからも続きます。この4つを軸に、必要な仕組みと日々の運用を整えます。",
+    "items": [
+      {
+        "name": "持たない",
+        "txt": "業務に要らない個人情報は、アプリに保存しません。"
+      },
+      {
+        "name": "見せない",
+        "txt": "社内用のアプリは、使う人だけが入れる場所に置きます。"
+      },
+      {
+        "name": "直し続ける",
+        "txt": "使い始めた後も、必要な修正を当て続けます。"
+      },
+      {
+        "name": "戻せる",
+        "txt": "復元用のコピーを取り、実際に戻せるかを試します。"
+      }
+    ]
+  },
+  "maint": {
+    "h2": "公開して終わりにしない",
+    "lead": "公開後の更新や点検を、社内だけで抱える必要はありません。誰が何を担当するかを最初に決め、情報システム担当の方と連携して保守を続けます。",
+    "timeline": [
+      {
+        "name": "公開",
+        "txt": "設定と権限を確認してサーバーへ公開し、この日から保守を始めます。"
+      },
+      {
+        "name": "更新",
+        "txt": "アプリやサーバーで使うソフトウェアの修正を反映します。"
+      },
+      {
+        "name": "バックアップ",
+        "txt": "データの控えを取り、復元できることを確かめます。"
+      },
+      {
+        "name": "監視",
+        "txt": "アプリが動き続けているか、異常がないかを見守ります。"
+      },
+      {
+        "name": "弱点が公表されたとき",
+        "txt": "お客様のアプリへの影響を確かめ、必要な修正を進めます。"
+      }
+    ],
+    "price": "月額20万円〜（税別）。アプリの数・扱うデータ・利用人数をもとにお見積もりします。",
+    "trust": [
+      {
+        "name": "データの中身を見られない構成",
+        "txt": "保存データを暗号化し、お客様が鍵を管理することで、当方が中身を閲覧できない構成を設計します。"
+      },
+      {
+        "name": "お客様の環境で作業",
+        "txt": "社内情報やアプリの内容・ノウハウを対象とする守秘義務契約を結び、お客様のPC・アカウント内で作業して、当方の手元にデータを残しません。"
+      },
+      {
+        "name": "作業記録と引き継ぎ",
+        "txt": "誰が、いつ、何をしたかを共有し、お客様の持ち物であるアプリを他の担当者へ引き継げるよう、構成と運用手順を整理します。"
+      }
+    ]
+  },
+  "next": {
+    "h2": "公開してつなぐから、閉じてつなぐへ",
+    "lead": "使う人が決まっている業務アプリまで、全世界に入口を開く必要はありません。これからは、つなぐ相手とデータを置く場所を選ぶ考え方が大切になります。",
+    "before": [
+      "全世界から開ける場所に置き、ログインだけで守ります。",
+      "データをクラウドに集めて置きます。"
+    ],
+    "after": [
+      "利用を認めた人だけが通れる入口でつなぎます。",
+      "手元で動くAIを使い、データを外に出さずに処理する方法を選びます。",
+      "データを分けて置き、通信が途切れても業務を続けられる形を考えます。"
+    ],
+    "line": "つながりを守るために、閉じるという選択です。"
+  },
+  "network": {
+    "h2": "Dynamisネットワーク：サイバー戦争時代のシェルター",
+    "lead": "アプリをインターネットに公開せずに使うための置き場所を、これから用意します。入口や利用者の管理から日々の運用まで、契約で決めた範囲をDDDynamisが担います。",
+    "items": [
+      {
+        "name": "入口をなくす",
+        "txt": "インターネット上の誰もがアクセスできる場所には、アプリの入口を置きません。"
+      },
+      {
+        "name": "やられにくくする",
+        "txt": "利用を認めた人だけが、一人ずつログインして入る仕組みにします。"
+      },
+      {
+        "name": "被害を小さくする",
+        "txt": "利用者ごとに触れられる情報や操作を絞り、侵入されても被害が広がりにくい構成を設計します。"
+      }
+    ],
+    "note": "これから立ち上げる事業で、料金は月額・個別のお見積りとなり、ログインして使う人が決まっているアプリに向いています。非公開でも利用開始前のチェックは必要で、漏えいしないことは約束しません。"
+  },
+  "steps": {
+    "h2": "ご相談から運用までの進め方",
+    "lead": "アプリの状況を伺い、確認する範囲と進め方を相談して決めます。",
+    "items": [
+      {
+        "name": "初回相談",
+        "txt": "無料で、アプリの用途と気になる点を伺います。"
+      },
+      {
+        "name": "アプリの共有",
+        "txt": "画面共有などで、相談して決めた範囲を見せていただきます。"
+      },
+      {
+        "name": "結果の報告",
+        "txt": "確認結果を、直す優先順位とともにお伝えします。"
+      },
+      {
+        "name": "修正",
+        "txt": "自社で直すか、当方に任せるかを選べます。"
+      },
+      {
+        "name": "公開",
+        "txt": "修正後の状態を確認し、公開へ進みます。"
+      },
+      {
+        "name": "運用",
+        "txt": "公開後も、必要な範囲の運用をご依頼いただけます。"
+      }
+    ]
+  },
+  "faq": {
+    "h2": "よくあるご質問",
+    "lead": "費用や情報の共有など、ご相談前に気になる点をまとめました。",
+    "items": [
+      {
+        "q": "保守を頼むと、社内データの中身まで見られますか？",
+        "a": "当方が保存データの中身を閲覧できない構成を設計し、保守を行います。"
+      },
+      {
+        "q": "費用には何が含まれますか？",
+        "a": "アプリ公開・セキュリティ保守は月額20万円〜（税別）で、公開作業と日々の更新・点検を含みます。アプリの数、扱うデータ、利用人数をもとにお見積もりします。Dynamisネットワークは個別にお見積もりします。"
+      },
+      {
+        "q": "外注先が作ったアプリでも相談できますか？",
+        "a": "はい、外注先が作ったアプリも対象です。"
+      },
+      {
+        "q": "すでに公開しているアプリでも相談できますか？",
+        "a": "はい、現在の設定の確認や見直しをご相談いただけます。"
+      },
+      {
+        "q": "どのAIで作ったものでも相談できますか？",
+        "a": "はい、Claude Code・ChatGPTなど、使ったAIは問いません。"
+      },
+      {
+        "q": "コードや画面を見せるのが不安です。",
+        "a": "最初からすべてを見せていただく必要はありません。共有する範囲と方法を相談して決め、その範囲で確認できることをお伝えします。"
+      }
+    ]
+  },
+  "final": {
+    "h2": "作ったアプリを、業務で使い続けるために",
+    "txt": "これから作るアプリのことも、公開や保守で迷っていることも、まずは無料でご相談ください。DDDynamis代表・現役Webエンジニアの川端康平が、お話を伺います。"
+  }
+};
 
-const faq = [
-  { q: "保守を頼むと、社内データの中身まで見られますか？", a: "保存データは暗号化し、鍵はお客様が管理するため、当方は中身を見られない構成にします。作業もお客様のPC・アカウントの中で行い、当方の手元にデータを残しません。" },
-  { q: "アプリ公開・セキュリティ保守の費用は？", a: "月額20万円〜（税別）です。アプリの数、扱うデータ、利用人数をもとにお見積もりします。定期診断（年額12万円）とは別のメニューで、公開作業と日々の更新・点検を含みます。" },
-  { q: "外注先が作ったアプリでも相談できますか？", a: "はい。外注先が作ったアプリも対象です。" },
-  { q: "すでに公開しているアプリでも相談できますか？", a: "はい。公開済みのアプリについても、設定の確認や見直しをご相談いただけます。" },
-  { q: "どのAIで作ったものでも相談できますか？", a: "はい。Claude Code・ChatGPTなど、使ったAIは問いません。" },
-  { q: "コードや画面を見せるのが不安です。", a: "最初からすべてを見せていただく必要はありません。共有する範囲と方法を相談して決め、その範囲で確認できることをお伝えします。" },
-];
+/* 節ごとのアイコン（LineIcon） */
+const threeIcons = ["key", "door", "db"];
+const fourIcons = ["box", "lock", "refresh", "restore"];
+const maintIcons = ["app", "refresh", "db", "monitor", "alert"];
+const networkIcons = ["lock", "nologin", "layers"];
 ---
 
 <Layout
-  title="AIで作ったアプリの公開前チェック・公開・保守｜DDDynamis・AI TANK"
-  description="宣戦布告のないサイバー攻撃が平時から続き、狙われているのは民間企業の仕組みです。AIで作ったアプリの公開前チェック、インフラの選定・設計、公開とセキュリティ保守まで、現役Webエンジニアが直接対応します。"
+  title="AIで作ったアプリの公開・保守｜インターネットは、すでに戦争状態にある｜DDDynamis・AI TANK"
+  description="宣戦布告のないサイバー攻撃が平時から続いています。AIで作った業務アプリの公開前チェック、公開、月額の保守、公開しない置き場所のDynamisネットワークまで、現役Webエンジニアが直接対応します。"
   corp
   lp
   lpCta={{ header: "無料で相談する", sticky: "無料で相談する" }}
-  lpNav={[{ href: "/security", label: "PHPチェッカー" }, { href: "#maintenance", label: "アプリ公開サービス" }]}
+  lpNav={[{ href: "/security", label: "PHPチェッカー" }, { href: "#maintenance", label: "保守" }, { href: "#network", label: "Dynamisネットワーク" }]}
   lpTagline="現役Webエンジニアが直接対応します。"
 >
-  <main id="corp-page" class="corp-page cp-security-page" role="main">
-    <!-- FV：インターネット通信は戦争状態（勉強会「インターネットの今」v4。2026-11-03 /security から移設） -->
-    <section class="sp-php" aria-labelledby="sp-php-ttl">
+  <main id="corp-page" class="corp-page cp-security-page aa-page" role="main">
+    <!-- 1. FV：資料2枚目。横幅いっぱいのメインビジュアルに見出しとCTAを重ねる -->
+    <section class="aa-fv" aria-labelledby="aa-fv-ttl">
+      <picture class="aa-fv__bg">
+        <source srcset="/assets/images/corp/aiapp-fv.webp" type="image/webp" />
+        <img src="/assets/images/corp/aiapp-fv.jpg" alt="攻撃の矢が一斉に向かう会社のビルの前で、盾を構えた聖騎士が矢を防いでいるイラスト" width="1672" height="941" decoding="async" fetchpriority="high" />
+      </picture>
+      <div class="cp-container aa-fv__in">
+        <p class="aa-fv__label" data-reveal>{C.fv.label}</p>
+        <h1 class="aa-fv__ttl" id="aa-fv-ttl" data-reveal style="--d: .1s">{C.fv.h1.split("\n").map((l) => <span>{l}</span>)}</h1>
+        <p class="aa-fv__sub" data-reveal style="--d: .2s">{C.fv.sub}</p>
+        <div class="sp-cta sp-cta--fv" data-reveal style="--d: .3s">
+          <a href="#contact" class="sp-cta__btn">{C.fv.cta}</a>
+        </div>
+      </div>
       <div class="cp-container">
-        <div class="sp-php__fv">
-          <div class="sp-php__fvcopy">
-            <p class="sp-php__label" data-reveal>インターネットの今｜2026年11月</p>
-            <h1 class="sp-php__ttl" id="sp-php-ttl" data-reveal style="--d: .1s"><span class="sp-php__nb">インターネット通信は、</span><span class="sp-php__nb">もう<em>安全ではありません</em></span></h1>
-            <p class="sp-php__sub" data-reveal style="--d: .2s">宣戦布告のないサイバー攻撃が、平時から続いています。狙われているのは、民間企業の仕組みです。AIで作ったアプリを公開する前に、一度確かめましょう。</p>
-            <div class="sp-cta sp-cta--fv" data-reveal style="--d: .3s">
-              <a href="#contact" class="sp-cta__btn">無料で相談する</a>
-            </div>
+        <ul class="aa-fv__facts" data-reveal style="--d: .2s">
+          {C.fv.facts.map((f) => <li><b>{f.name}</b>{f.txt}</li>)}
+          <li class="aa-fv__quote">{C.fv.quote}</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 2. 攻撃側のAIに、守る側のAIでは勝てない（資料3枚目） -->
+    <section class="cp-sec cp-sec--gray" aria-labelledby="aa-ai-ttl">
+      <div class="cp-container">
+        <div class="sp-split">
+          <div class="sp-split__txt">
+            <h2 class="aa-h" id="aa-ai-ttl" data-reveal>{C.ai.h2}</h2>
+            <p class="aa-lead" data-reveal>{C.ai.lead}</p>
+            <ul class="aa-vs" data-reveal>
+              {C.ai.cards.map((c, i) => <li class={i === 0 ? "is-red" : undefined}><b>{c.name}</b>{c.txt}</li>)}
+            </ul>
           </div>
-          <ul class="sp-php__facts" data-reveal style="--d: .2s">
-            {warFacts.map((f) => <li><b>{f.name}</b>{f.txt}</li>)}
-            <li class="sp-php__quote">NATOの言葉：「戦争ではない。しかし平和でもない。」</li>
-          </ul>
+          <figure class="sp-split__img" data-reveal style="--d: .1s">
+            <picture>
+              <source srcset="/assets/images/corp/aiapp-scale.webp" type="image/webp" />
+              <img src="/assets/images/corp/aiapp-scale.jpg" alt="攻撃側のAIに大きく傾いた天秤のイラスト" width="1536" height="1024" loading="lazy" decoding="async" />
+            </picture>
+          </figure>
         </div>
-        <div class="sp-php__more" data-reveal>
-          <h2 class="sp-php__h">攻撃側のAIに、人の手では追いつけない</h2>
-          <p>攻撃する側は、休まず自動で、悪用を抑える制限のないAIも使って弱点を探しています。守る側が人の手で更新と確認を続けるだけでは、守り切れません。入られない前提で入口を減らし、入られても被害を小さく、戻せる前提で備えます。</p>
-          <ul class="sp-php__after">
-            {phpAfter.map((a) => <li><b>{a.name}</b>{a.txt}</li>)}
-          </ul>
+        <div class="aa-premise" data-reveal>
+          <div><b>{C.ai.premises[0].name}</b>{C.ai.premises[0].txt}</div>
+          <span class="aa-premise__arrow" aria-hidden="true">→</span>
+          <div class="is-on"><b>{C.ai.premises[1].name}</b>{C.ai.premises[1].txt}</div>
         </div>
-
       </div>
     </section>
 
-    <header class="cp-page-head">
+    <!-- 3. 公開は、世界中に入口を開くこと（資料4枚目） -->
+    <section class="cp-sec" aria-labelledby="aa-open-ttl">
       <div class="cp-container">
-        <p class="cp-head__en eng" data-reveal>AI app security</p>
-        <h2 class="cp-page-head__ttl" data-reveal style="--d: .1s">AIで作ったアプリの、<br class="sp_only" />公開前チェック</h2>
-        <p class="cp-page-head__lead" data-reveal style="--d: .2s">サイバー被害が激増しています。<br />AIで業務に合うアプリを自分たちで作れるようになった今、公開の前に一度確かめましょう。</p>
-      </div>
-    </header>
-
-    <!-- インターネットの向こう側の今（2026-10-08 本人指示：煽り気味に。本人は年末年始に複数回サーバーを潰された経験があり、誇張ではない） -->
-    <section class="cp-sec sp-threat" aria-labelledby="sp-threat-ttl">
-      <div class="cp-container">
-        <header class="cp-head" data-reveal>
-          <p class="cp-head__en eng">Threats</p>
-          <h2 class="cp-head__ttl" id="sp-threat-ttl">公開したその日から、<br />狙われています。</h2>
-        </header>
-        <figure class="sp-fig sp-threat__fig" data-reveal>
-          <a href="/assets/images/corp/security-threats.jpg" target="_blank" rel="noopener" class="zoom-link" aria-label="図を拡大して見る"><picture>
-            <source srcset="/assets/images/corp/security-threats.webp" type="image/webp" />
-            <img src="/assets/images/corp/security-threats.jpg" alt="公開したアプリを、自動で弱点を探すプログラム、AIを悪用した攻撃、身代金ウイルス、なりすましメール、流出したパスワードが24時間365日取り囲んでいる図。" width="1600" height="900" loading="lazy" decoding="async" />
-          </picture><span class="zoom-link__hint">タップで拡大</span></a>
+        <h2 class="aa-h aa-h--center" id="aa-open-ttl" data-reveal>{C.open.h2}</h2>
+        <p class="aa-lead aa-lead--center" data-reveal>{C.open.lead}</p>
+        <figure class="aa-wide" data-reveal>
+          <picture>
+            <source srcset="/assets/images/corp/aiapp-open.webp" type="image/webp" />
+            <img src="/assets/images/corp/aiapp-open.jpg" alt="手元のPCで作ったアプリをサーバーに置くと、世界中の誰でも開けるようになり、攻撃する人も来られることを表したイラスト" width="1672" height="713" loading="lazy" decoding="async" />
+          </picture>
         </figure>
-        <ul class="sp-threat__facts">
-          {threats.map((t, i) => (
-            <li data-reveal style={`--d: ${i * 0.08}s`}><p class="sp-threat__name">{t.name}</p><p class="sp-threat__txt">{t.txt}</p></li>
-          ))}
-        </ul>
-      </div>
-    </section>
-
-    <!-- こんな方へ -->
-    <section class="cp-sec" aria-labelledby="sp-for-ttl">
-      <div class="cp-container">
-        <h2 class="visually-hidden" id="sp-for-ttl">こんな方へ</h2>
-        <ul class="sp-for">
-          {forWho.map((f, i) => (
-            <li data-reveal style={`--d: ${i * 0.08}s`}>
-              <LineIcon name={f.icon} size={44} />
-              <p class="sp-for__name">{f.name}</p>
-              <p class="sp-for__txt">{f.txt}</p>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
-
-    <!-- AIで作ったアプリに多い穴 -->
-    <section class="cp-sec cp-sec--gray" aria-labelledby="sp-holes-ttl">
-      <span class="cp-watermark eng" aria-hidden="true">RISK</span>
-      <div class="cp-container">
-        <header class="cp-head" data-reveal>
-          <p class="cp-head__en eng">Common holes</p>
-          <h2 class="cp-head__ttl" id="sp-holes-ttl">AIで作ったアプリに多い穴</h2>
-          <p class="cp-head__lead">AIは「動くもの」を作るのは得意ですが、公開してよい作りかどうかは、指示しないと確かめないことが多くあります。</p>
-        </header>
-        <figure class="sp-fig" data-reveal>
-          <a href="/assets/images/corp/security-holes.jpg" target="_blank" rel="noopener" class="zoom-link" aria-label="図を拡大して見る"><picture>
-            <source srcset="/assets/images/corp/security-holes.webp" type="image/webp" />
-            <img src="/assets/images/corp/security-holes.jpg" alt="AIで作ったアプリに多い穴：APIキーの直書き、設定ファイルの公開、ログインなしの管理画面、外から見えるデータベース。" width="1600" height="900" loading="lazy" decoding="async" />
-          </picture><span class="zoom-link__hint">タップで拡大</span></a>
-        </figure>
-        <dl class="sp-defs sp-defs--2">
-          {holes.map((h, i) => (
-            <div data-reveal style={`--d: ${(i % 2) * 0.08}s`}><dt>{h.name}</dt><dd>{h.txt}</dd></div>
-          ))}
-        </dl>
-      </div>
-    </section>
-
-    <!-- 公開前に確認すること -->
-    <section class="cp-sec" aria-labelledby="sp-check-ttl">
-      <span class="cp-watermark eng" aria-hidden="true">CHECK</span>
-      <div class="cp-container">
-        <header class="cp-head" data-reveal>
-          <p class="cp-head__en eng">Before release</p>
-          <h2 class="cp-head__ttl" id="sp-check-ttl">公開前に確認すること</h2>
-        </header>
-        <figure class="sp-fig" data-reveal>
-          <a href="/assets/images/corp/security-check.jpg" target="_blank" rel="noopener" class="zoom-link" aria-label="図を拡大して見る"><picture>
-            <source srcset="/assets/images/corp/security-check.webp" type="image/webp" />
-            <img src="/assets/images/corp/security-check.jpg" alt="公開前に確認すること7項目の図。" width="1600" height="900" loading="lazy" decoding="async" />
-          </picture><span class="zoom-link__hint">タップで拡大</span></a>
-        </figure>
-        <ol class="sp-checks">
-          {checks.map((c, i) => (
-            <li data-reveal style={`--d: ${(i % 2) * 0.06}s`}><p class="sp-checks__name">{c.name}</p><p class="sp-checks__txt">{c.txt}</p></li>
-          ))}
+        <ol class="aa-steps3">
+          {C.open.steps.map((s, i) => <li data-reveal style={`--d: ${i * 0.08}s`}><span class="eng">{String(i + 1).padStart(2, "0")}</span><b>{s.name}</b>{s.txt}</li>)}
         </ol>
       </div>
     </section>
 
-    <!-- チェックだけでは足りない：インフラの選定・設計（2026-10-08） -->
-    <section class="cp-sec cp-sec--gray" aria-labelledby="sp-tier-ttl">
-      <span class="cp-watermark eng" aria-hidden="true">DESIGN</span>
+    <!-- 4. 公開前に確かめる3つ（資料5枚目）。自社の構成もこの形で短く示す（本人指示：冗長なので簡単に） -->
+    <section class="cp-sec cp-sec--gray" aria-labelledby="aa-three-ttl">
       <div class="cp-container">
-        <header class="cp-head" data-reveal>
-          <p class="cp-head__en eng">Infrastructure design</p>
-          <h2 class="cp-head__ttl" id="sp-tier-ttl">チェックだけでは、<br class="sp_only" />足りません。</h2>
-          <p class="cp-head__lead">公開前のチェックは、多くのAI事業者も行う基本の対応です。本当に差が出るのは、アプリの規模と扱うデータに合わせて、インフラ（アプリを動かすサーバーやクラウドの構成）を選び、設計できるかです。</p>
-        </header>
-        <figure class="sp-fig" data-reveal>
-          <a href="/assets/images/corp/security-tiers.jpg" target="_blank" rel="noopener" class="zoom-link" aria-label="図を拡大して見る"><picture>
-            <source srcset="/assets/images/corp/security-tiers.webp" type="image/webp" />
-            <img src="/assets/images/corp/security-tiers.jpg" alt="アプリの規模（社内の数人から社外の顧客）とデータの重さ（公開してよい情報から個人情報・顧客情報）で、小さく始める・しっかり守る・止めない・漏らさないの3段階からインフラを選ぶ図。" width="1600" height="900" loading="lazy" decoding="async" />
-          </picture><span class="zoom-link__hint">タップで拡大</span></a>
-        </figure>
-        <ol class="sp-tiers">
-          {tiers.map((t, i) => (
-            <li class={i === 2 ? "is-top" : undefined} data-reveal style={`--d: ${i * 0.08}s`}>
-              <p class="sp-tiers__name">{t.name}</p>
-              <p class="sp-tiers__fit">{t.fit}</p>
-              <p class="sp-tiers__how">{t.how}</p>
-            </li>
-          ))}
-        </ol>
-      </div>
-    </section>
-
-    <!-- 自社ではこんな構成です：実績で見せる（根拠は本人の note 記事） -->
-    <section class="cp-sec sp-own" aria-labelledby="sp-own-ttl">
-      <span class="cp-watermark eng" aria-hidden="true">PROOF</span>
-      <div class="cp-container">
-        <header class="cp-head" data-reveal>
-          <p class="cp-head__en eng">Our setup</p>
-          <h2 class="cp-head__ttl" id="sp-own-ttl">自社では、<br class="sp_only" />こんな構成で動かしています。</h2>
-          <p class="cp-head__lead">言葉で「できます」と書くのは簡単です。だから、自社のサーバー（AWS）で実際に動かしている構成をお見せします。</p>
-        </header>
-        <figure class="sp-fig" data-reveal>
-          <a href="/assets/images/corp/security-own.jpg" target="_blank" rel="noopener" class="zoom-link" aria-label="図を拡大して見る"><picture>
-            <source srcset="/assets/images/corp/security-own.webp" type="image/webp" />
-            <img src="/assets/images/corp/security-own.jpg" alt="自社の本番構成。利用者は暗号化された通信でサーバーに接続。管理者はSSMで接続し、SSHの入口は開けていない。定期処理は手元のMacからHTTPSで呼び出し、本番サーバーにはアプリの定期処理を置かない。保存データも暗号化している。変更はGitから反映し、バックアップを取っている。" width="1600" height="900" loading="lazy" decoding="async" />
-          </picture><span class="zoom-link__hint">タップで拡大</span></a>
-        </figure>
-        <dl class="sp-defs sp-defs--3">
-          {ownSetup.map((o, i) => (
-            <div data-reveal style={`--d: ${(i % 3) * 0.06}s`}><dt>{o.name}</dt><dd>{o.txt}</dd></div>
-          ))}
-        </dl>
-        <!-- 提案：冗長化とデータの暗号化（自社の1台構成とは分けて、提案として強く出す） -->
-        <div class="sp-cron sp-cron--strong" data-reveal>
-          <p class="sp-cron__label eng">Proposal</p>
-          <h3 class="sp-cron__ttl">業務を支える設計：冗長化と暗号化を備えます。</h3>
-          <p class="sp-cron__txt">1台構成では、その1台が止まるとアプリを使う業務も止まります。暗号化せずに保存した顧客情報は、漏れたときに内容を読まれるおそれがあります。公開前の設定確認に加え、冗長化（1台が止まっても別のサーバーが引き継ぐ構成）と暗号化を最初から設計に織り込みます。</p>
-          <ul class="sp-cron__list">
-            {strongProposal.map((o) => (
-              <li><b>{o.name}</b>{o.txt}</li>
-            ))}
-          </ul>
-          <p class="sp-cron__fit">すべてを最初から導入する必要はなく、顧客情報を扱うアプリや業務の要になるアプリから、規模とデータに合わせて段階的に整えます。</p>
-        </div>
-        <!-- 次世代のcron（2026-10-08 本人：ローカルPCを起爆剤にルーティンを回すのはエージェント活用と親和性が高い。向き不向きは note の記述どおり） -->
-        <div class="sp-cron" data-reveal>
-          <p class="sp-cron__label eng">Proposal</p>
-          <h3 class="sp-cron__ttl">次世代のcron：手元のPCを起点に、ルーティンを回す。</h3>
-          <p class="sp-cron__txt">アプリの定期処理を本番サーバーに持たせず、手元のPCが「いつ実行するか」を決めて呼び出します。本番サーバーは受け身になり、守るべき入口が減ります。手元のPCではAIエージェントも動かせるので、毎日のルーティンをAIに任せる仕組みとも相性のよい構成です。</p>
-          <p class="sp-cron__fit">向いているのは、日次・週次の処理や小〜中規模のサービスです。分単位の実行や、24時間止められないシステムでは、クラウドの定期実行サービスを組み合わせます。</p>
-        </div>
-        <p class="sp-own__note" data-reveal>設計の考え方は、noteで詳しく公開しています。<a href="https://note.com/kohei_dynamis/n/n4df0289cf640" target="_blank" rel="noopener">AWS推奨のSession Manager運用。その先で、本番サーバーからcronもなくしてみた</a></p>
-      </div>
-    </section>
-
-    <!-- 本番の置き場所：Dynamis ネットワーク（2026-11-02 本人指示：今後の本体商品のホスティング事業） -->
-    <section class="cp-sec" id="dynamis-network" aria-labelledby="sp-place-ttl">
-      <span class="cp-watermark eng" aria-hidden="true">NETWORK</span>
-      <div class="cp-container">
-        <header class="cp-head" data-reveal>
-          <p class="cp-head__en eng">Dynamis Network</p>
-          <h2 class="cp-head__ttl" id="sp-place-ttl">本番の置き場所と<br class="sp_only" />守り方を選ぶ</h2>
-          <p class="cp-head__lead">AIで作ったアプリの本番の置き場所は、2つからお客様が選びます。違いをご説明します。Dynamis ネットワークもお客様名義のアカウントを基本とし、ご希望があれば引き継ぎ資料を渡して移せます。</p>
-        </header>
-        <div class="sp-place">
-          {places.map((p, i) => (
-            <article class={i === 1 ? "is-top" : undefined} data-reveal style={`--d: ${i * 0.08}s`}>
-              <h3 class="sp-place__name">{p.name}</h3>
-              <dl>
-                {p.rows.map(([k, v]) => (<div><dt>{k}</dt><dd>{v}</dd></div>))}
-              </dl>
-            </article>
-          ))}
-        </div>
-        <ul class="sp-place__notes" data-reveal>{placeNotes.map((n) => <li>{n}</li>)}</ul>
-      </div>
-    </section>
-
-    <!-- 頼めること・進め方 -->
-    <section class="cp-sec cp-sec--gray" aria-labelledby="sp-menu-ttl">
-      <div class="cp-container">
-        <header class="cp-head" data-reveal>
-          <p class="cp-head__en eng">What we do</p>
-          <h2 class="cp-head__ttl" id="sp-menu-ttl">頼めること</h2>
-        </header>
-        <ul class="sp-menu">
-          {menu.map((m, i) => (
+        <h2 class="aa-h aa-h--center" id="aa-three-ttl" data-reveal>{C.three.h2}</h2>
+        <p class="aa-lead aa-lead--center" data-reveal>{C.three.lead}</p>
+        <ul class="aa-three">
+          {C.three.items.map((t, i) => (
             <li data-reveal style={`--d: ${i * 0.08}s`}>
-              <LineIcon name={m.icon} size={40} />
-              <p class="sp-menu__name">{m.name}</p>
-              <p class="sp-menu__txt">{m.txt}</p>
+              <p class="aa-three__name"><LineIcon name={threeIcons[i]} size={36} />{t.name}</p>
+              <div class="aa-three__ng"><span>やりがち</span>{t.mistake}</div>
+              <div class="aa-three__ok"><span>こうする</span>{t.fix}</div>
             </li>
           ))}
         </ul>
+        <p class="aa-own" data-reveal>{C.three.own}</p>
+      </div>
+    </section>
 
-        <!-- アプリ公開・セキュリティ保守（2026-11-02 本人指示。データの中身を見られない構成で「持っていかれる」不安に応える） -->
-        <div class="sp-cron sp-cron--strong" id="maintenance" data-reveal>
-          <p class="sp-cron__label eng">Hosting &amp; maintenance</p>
-          <h3 class="sp-cron__ttl">作ったアプリの公開と、日々の保守を任せる</h3>
-          <p class="sp-cron__txt">社内ポータルやLINE連携の業務アプリなど、AIで作ったアプリの公開作業とセキュリティ保守を承ります。公開前に設定や権限を確認し、サーバーへアップロードします。公開後も毎日、必要な更新と点検を行い、その結果を専門家が確認します。情報システム担当の方と連携して進めます。</p>
-          <p class="sp-cron__txt"><b>月額20万円〜（税別）</b>。アプリの数、扱うデータ、利用人数をもとにお見積もりします。</p>
-          <p class="sp-cron__txt">「外の業者に頼むと、社内のデータやアプリの中身を持っていかれるのでは」という不安に、次の構成でお応えします。</p>
-          <ul class="sp-cron__list">
-            {maintPoints.map((o) => (
-              <li><b>{o.name}</b>{o.txt}</li>
-            ))}
+    <!-- 5. 持たない・見せない・直し続ける・戻せる（資料6枚目） -->
+    <section class="cp-sec" aria-labelledby="aa-four-ttl">
+      <div class="cp-container">
+        <h2 class="aa-h aa-h--center" id="aa-four-ttl" data-reveal>{C.four.h2}</h2>
+        <p class="aa-lead aa-lead--center" data-reveal>{C.four.lead}</p>
+        <ul class="aa-four">
+          {C.four.items.map((f, i) => (
+            <li data-reveal style={`--d: ${i * 0.08}s`}><LineIcon name={fourIcons[i]} size={52} /><b>{f.name}</b>{f.txt}</li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- 6. 公開して終わりにしない：保守（資料7枚目＋月額20万円〜） -->
+    <section class="cp-sec cp-sec--gray" id="maintenance" aria-labelledby="aa-maint-ttl">
+      <div class="cp-container">
+        <h2 class="aa-h aa-h--center" id="aa-maint-ttl" data-reveal>{C.maint.h2}</h2>
+        <p class="aa-lead aa-lead--center" data-reveal>{C.maint.lead}</p>
+        <ol class="aa-timeline">
+          {C.maint.timeline.map((t, i) => (
+            <li data-reveal style={`--d: ${i * 0.06}s`}><LineIcon name={maintIcons[i]} size={40} /><b>{t.name}</b>{t.txt}</li>
+          ))}
+        </ol>
+        <div class="aa-maint" data-reveal>
+          <p class="aa-maint__price">{C.maint.price}</p>
+          <ul class="aa-maint__trust">
+            {C.maint.trust.map((t) => <li><b>{t.name}</b>{t.txt}</li>)}
           </ul>
-          <p class="sp-cron__fit">情報システム担当はいるものの、専任のエンジニアを置くのが難しく、社内で作ったアプリの公開と保守を任せたい会社に向いています。</p>
         </div>
+      </div>
+    </section>
 
-        <h3 class="sp-subhead" data-reveal>進め方</h3>
-        <figure class="sp-fig sp-fig--steps" data-reveal>
-          <a href="/assets/images/corp/security-steps.jpg" target="_blank" rel="noopener" class="zoom-link" aria-label="図を拡大して見る"><picture>
+    <!-- 7. 公開してつなぐから、閉じてつなぐへ（資料8枚目） -->
+    <section class="cp-sec" aria-labelledby="aa-next-ttl">
+      <div class="cp-container">
+        <h2 class="aa-h aa-h--center" id="aa-next-ttl" data-reveal>{C.next.h2}</h2>
+        <p class="aa-lead aa-lead--center" data-reveal>{C.next.lead}</p>
+        <div class="aa-next" data-reveal>
+          <div class="aa-next__col"><p class="aa-next__ttl">今まで</p><ul>{C.next.before.map((b) => <li>{b}</li>)}</ul></div>
+          <span class="aa-premise__arrow" aria-hidden="true">→</span>
+          <div class="aa-next__col is-on"><p class="aa-next__ttl">これから</p><ul>{C.next.after.map((b) => <li>{b}</li>)}</ul></div>
+        </div>
+        <p class="aa-band" data-reveal>{C.next.line}</p>
+      </div>
+    </section>
+
+    <!-- 8. Dynamisネットワーク（資料9枚目） -->
+    <section class="cp-sec cp-sec--gray" id="network" aria-labelledby="aa-net-ttl">
+      <div class="cp-container">
+        <div class="sp-split sp-split--rev">
+          <div class="sp-split__txt">
+            <h2 class="aa-h" id="aa-net-ttl" data-reveal>{C.network.h2}</h2>
+            <p class="aa-lead" data-reveal>{C.network.lead}</p>
+            <ul class="aa-net" data-reveal>
+              {C.network.items.map((n, i) => <li><LineIcon name={networkIcons[i]} size={32} /><b>{n.name}</b>{n.txt}</li>)}
+            </ul>
+          </div>
+          <figure class="sp-split__img" data-reveal style="--d: .1s">
+            <picture>
+              <source srcset="/assets/images/corp/aiapp-shelter.webp" type="image/webp" />
+              <img src="/assets/images/corp/aiapp-shelter.jpg" alt="外からの矢を通さない、閉じたシェルターの中で社員が業務アプリを使っているイラスト" width="1536" height="1024" loading="lazy" decoding="async" />
+            </picture>
+          </figure>
+        </div>
+        <p class="aa-note" data-reveal>{C.network.note}</p>
+      </div>
+    </section>
+
+    <!-- 9. 進め方 -->
+    <section class="cp-sec" aria-labelledby="aa-steps-ttl">
+      <div class="cp-container">
+        <h2 class="aa-h aa-h--center" id="aa-steps-ttl" data-reveal>{C.steps.h2}</h2>
+        <p class="aa-lead aa-lead--center" data-reveal>{C.steps.lead}</p>
+        <figure class="aa-wide" data-reveal>
+          <picture>
             <source srcset="/assets/images/corp/security-steps.webp" type="image/webp" />
-            <img src="/assets/images/corp/security-steps.jpg" alt="進め方：初回相談（無料）、アプリを見せてもらう、確認結果の報告、修正、公開、運用。" width="1600" height="441" loading="lazy" decoding="async" />
-          </picture><span class="zoom-link__hint">タップで拡大</span></a>
+            <img src="/assets/images/corp/security-steps.jpg" alt="進め方：初回相談（無料）、アプリの共有、結果の報告、修正、公開、運用。" width="1600" height="441" loading="lazy" decoding="async" />
+          </picture>
         </figure>
         <ol class="sp-steps">
-          {steps.map((s, i) => (
+          {C.steps.items.map((s, i) => (
             <li data-reveal style={`--d: ${(i % 3) * 0.06}s`}><span class="sp-steps__no eng">{String(i + 1).padStart(2, "0")}</span><p class="sp-steps__name">{s.name}</p><p class="sp-steps__txt">{s.txt}</p></li>
           ))}
         </ol>
       </div>
     </section>
 
-    <!-- 担当するのは -->
-    <section class="cp-sec" aria-labelledby="sp-who-ttl">
+    <!-- 10. 担当するのは -->
+    <section class="cp-sec cp-sec--gray" aria-labelledby="sp-who-ttl">
       <div class="cp-container sp-who">
         <picture class="sp-who__photo" data-reveal>
           <source srcset="/assets/images/consultation/profile-kawabata.webp" type="image/webp" />
@@ -427,26 +457,24 @@ const faq = [
           <header class="cp-head" data-reveal>
             <p class="cp-head__en eng">Engineer</p>
             <h2 class="cp-head__ttl" id="sp-who-ttl">現役エンジニアの私が<br />直接対応します</h2>
-            <p class="cp-head__lead">DDDynamis代表の川端康平です。自社の本番サーバーも、私自身が設計・運用しています。SSHを開けず、SSMで管理しています。保存データとバックアップを暗号化し、毎日バックアップを取り、復元できることも確認済みです。</p>
+            <p class="cp-head__lead">DDDynamis代表の川端康平です。自社の本番サーバーも、私自身が設計・運用しています。結果は、何をどう見直すかが分かる言葉でお伝えします。</p>
           </header>
-          <p class="sp-who__end" data-reveal>確認結果は、専門用語だけで済ませず、何をどう見直すかが分かる言葉でお伝えします。</p>
           <div class="sp-cta sp-cta--left" data-reveal>
-            <p class="sp-cta__lead">専門用語に直さず、そのままどうぞ</p>
             <a href="#contact" class="sp-cta__btn">無料で相談する</a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- よくある質問 -->
-    <section class="cp-sec cp-sec--gray" aria-labelledby="sp-faq-ttl">
+    <!-- 11. よくある質問 -->
+    <section class="cp-sec" aria-labelledby="sp-faq-ttl">
       <div class="cp-container">
         <header class="cp-head cp-head--center" data-reveal>
           <p class="cp-head__en eng">FAQ</p>
-          <h2 class="cp-head__ttl" id="sp-faq-ttl">よくある質問</h2>
+          <h2 class="cp-head__ttl" id="sp-faq-ttl">{C.faq.h2}</h2>
         </header>
         <div class="sp-faq" data-reveal>
-          {faq.map((f) => (
+          {C.faq.items.map((f) => (
             <details class="sp-faq__item">
               <summary><span class="sp-faq__q eng">Q</span><span>{f.q}</span></summary>
               <p class="sp-faq__body"><span class="sp-faq__a eng">A</span><span>{f.a}</span></p>
@@ -456,6 +484,13 @@ const faq = [
       </div>
     </section>
 
+    <!-- 12. 最終CTA＋相談フォーム -->
+    <section class="cp-sec sp-final" aria-labelledby="sp-final-ttl">
+      <div class="cp-container" data-reveal>
+        <h2 class="sp-final__ttl" id="sp-final-ttl">{C.final.h2}</h2>
+        <p class="sp-final__txt">{C.final.txt}</p>
+      </div>
+    </section>
     <div class="sp-form" id="consultation-page">
       <ConsultForm
         client:load

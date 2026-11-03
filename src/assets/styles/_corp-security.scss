@@ -2913,3 +2913,622 @@ $gray: #f4f6f9;
     }
   }
 }
+
+/* PHPチェッカー6項目のアイコン（2026-11-03 本人指示：リストにあしらい） */
+#corp-page.cp-security-page .sp-diag__check {
+  position: relative;
+  padding-left: 66px !important;
+  border-left: 3px solid $navy;
+
+  .cp-icon {
+    position: absolute;
+    left: 16px;
+    top: 16px;
+    color: $navy;
+  }
+}
+
+/* /security/ai-app 作り直し（2026-11-03）：勉強会資料 v4 の論理を1節1ビジュアルで。FV は横幅いっぱいのメインビジュアル */
+#corp-page.aa-page {
+  .aa-fv {
+    position: relative;
+    overflow: hidden;
+    background-color: white;
+    border-top: 4px solid $navy;
+
+    &__bg img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    &__label {
+      display: inline-block;
+      border: 1px solid $navy;
+      color: $navy;
+      font-weight: bold;
+      letter-spacing: 0.06em;
+    }
+
+    &__ttl {
+      color: $navy;
+      font-weight: 900;
+      line-height: 1.3;
+
+      span {
+        display: block;
+      }
+    }
+
+    &__sub {
+      color: $body;
+      font-weight: bold;
+      line-height: 1.8;
+    }
+
+    &__facts {
+      display: grid;
+      list-style: none;
+      background-color: white;
+      border-top: 4px solid $navy;
+      box-shadow: 0 12px 32px rgba(23, 36, 57, 0.12);
+
+      li {
+        padding: 18px 22px;
+        color: $body;
+        font-size: 1.4rem;
+        line-height: 1.7;
+      }
+
+      b {
+        display: block;
+        color: $navy;
+        font-size: 1.6rem;
+      }
+    }
+
+    &__quote {
+      background-color: $navy;
+      color: white !important;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  // 見出しは読点で折り返す（語の途中で切らない）
+  .aa-h,
+  .aa-fv__ttl span {
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+  }
+
+  .aa-h {
+    color: $navy;
+    font-weight: 900;
+    line-height: 1.45;
+
+    &--center {
+      text-align: center;
+    }
+  }
+
+  .aa-lead {
+    margin-top: 16px;
+    color: $body;
+    line-height: 1.9;
+
+    &--center {
+      max-width: 760px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+  }
+
+  // 攻撃側／守る側
+  .aa-vs {
+    display: grid;
+    gap: 12px;
+    margin-top: 24px;
+    list-style: none;
+
+    li {
+      padding: 16px 20px;
+      background-color: white;
+      border-left: 4px solid $navy;
+      color: $body;
+      line-height: 1.7;
+
+      &.is-red {
+        border-left-color: $red;
+
+        b {
+          color: $red;
+        }
+      }
+    }
+
+    b {
+      display: block;
+      color: $navy;
+      font-size: 1.7rem;
+    }
+  }
+
+  // 前提の切り替え（左→右）
+  .aa-premise,
+  .aa-next {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 40px;
+
+    > div {
+      flex: 1 1 300px;
+      min-width: 0;
+      max-width: 460px;
+      padding: 20px 24px;
+      background-color: white;
+      border: 1px solid $line;
+      color: $body;
+      line-height: 1.8;
+
+      &.is-on {
+        border: 2px solid $navy;
+      }
+    }
+
+    b {
+      display: block;
+      color: $navy;
+      font-size: 1.7rem;
+    }
+  }
+
+  .aa-premise__arrow {
+    align-self: center;
+    color: $navy;
+    font-size: 2.8rem;
+    font-weight: bold;
+  }
+
+  .aa-wide {
+    max-width: 1000px;
+    margin: 32px auto 0;
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 6px;
+    }
+  }
+
+  .aa-steps3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    max-width: 1000px;
+    margin: 24px auto 0;
+    list-style: none;
+
+    li {
+      padding: 18px 20px;
+      background-color: $gray;
+      color: $body;
+      font-size: 1.4rem;
+      line-height: 1.7;
+    }
+
+    span {
+      display: block;
+      color: $navy;
+      font-weight: bold;
+    }
+
+    b {
+      display: block;
+      color: $navy;
+      font-size: 1.7rem;
+    }
+  }
+
+  // 公開前の3つ：やりがち→こうする
+  .aa-three {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    margin-top: 32px;
+    list-style: none;
+
+    li {
+      padding: 22px 20px;
+      background-color: white;
+      border-top: 4px solid $navy;
+    }
+
+    &__name {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: $navy;
+      font-size: 2rem;
+      font-weight: bold;
+    }
+
+    &__ng,
+    &__ok {
+      position: relative;
+      margin-top: 14px;
+      padding: 14px 16px;
+      color: $ink;
+      font-size: 1.4rem;
+      line-height: 1.7;
+
+      span {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 1.3rem;
+        font-weight: bold;
+      }
+    }
+
+    &__ng {
+      background-color: #fdeeee;
+
+      span {
+        color: $red;
+      }
+    }
+
+    &__ok {
+      margin-top: 26px;
+      background-color: #eaf0fa;
+
+      span {
+        color: $navy;
+      }
+
+      &::before {
+        content: "▼";
+        position: absolute;
+        top: -22px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: $navy;
+        font-size: 1.4rem;
+      }
+    }
+  }
+
+  .aa-own,
+  .aa-note {
+    max-width: 860px;
+    margin: 24px auto 0;
+    padding: 16px 20px;
+    border-left: 4px solid $navy;
+    background-color: white;
+    color: $ink;
+    font-weight: bold;
+    line-height: 1.8;
+  }
+
+  .aa-note {
+    font-weight: normal;
+    color: $body;
+  }
+
+  // 持たない・見せない・直し続ける・戻せる
+  .aa-four {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-top: 32px;
+    list-style: none;
+
+    li {
+      padding: 26px 20px;
+      background-color: $gray;
+      color: $body;
+      line-height: 1.7;
+      text-align: center;
+    }
+
+    .cp-icon {
+      display: block;
+      margin: 0 auto;
+      color: $navy;
+    }
+
+    b {
+      display: block;
+      margin: 12px 0 6px;
+      color: $navy;
+      font-size: 2rem;
+    }
+  }
+
+  // 保守の流れ（横の時間軸）
+  .aa-timeline {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 32px;
+    list-style: none;
+
+    li {
+      position: relative;
+      padding: 20px 16px;
+      background-color: white;
+      border-bottom: 3px solid $navy;
+      color: $body;
+      font-size: 1.3rem;
+      line-height: 1.7;
+    }
+
+    .cp-icon {
+      display: block;
+      color: $navy;
+    }
+
+    b {
+      display: block;
+      margin: 8px 0 4px;
+      color: $navy;
+      font-size: 1.6rem;
+    }
+  }
+
+  .aa-maint {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 32px;
+    margin-top: 24px;
+    padding: 24px 28px;
+    background-color: white;
+    border: 2px solid $navy;
+
+    &__price {
+      flex: 1 1 260px;
+      min-width: 0;
+      color: $navy;
+      font-size: 1.8rem;
+      font-weight: 900;
+      line-height: 1.6;
+    }
+
+    &__trust {
+      flex: 2 1 420px;
+      min-width: 0;
+      list-style: none;
+
+      li {
+        padding: 8px 0;
+        border-bottom: 1px solid $line;
+        color: $body;
+        font-size: 1.4rem;
+        line-height: 1.7;
+      }
+
+      b {
+        display: block;
+        color: $navy;
+      }
+    }
+  }
+
+  // 今まで／これから
+  .aa-next {
+    &__ttl {
+      color: $navy;
+      font-size: 1.8rem;
+      font-weight: 900;
+    }
+
+    ul {
+      margin-top: 8px;
+      list-style: none;
+    }
+
+    li {
+      position: relative;
+      padding: 6px 0 6px 18px;
+
+      &::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 1.05em;
+        width: 8px;
+        height: 8px;
+        background-color: $navy;
+      }
+    }
+  }
+
+  .aa-band {
+    max-width: 960px;
+    margin: 24px auto 0;
+    padding: 14px 20px;
+    background-color: $navy;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .aa-net {
+    margin-top: 20px;
+    list-style: none;
+
+    li {
+      position: relative;
+      padding: 12px 0 12px 46px;
+      border-bottom: 1px solid $line;
+      color: $body;
+      line-height: 1.7;
+    }
+
+    .cp-icon {
+      position: absolute;
+      left: 0;
+      top: 14px;
+      color: $navy;
+    }
+
+    b {
+      display: block;
+      color: $navy;
+      font-size: 1.6rem;
+    }
+  }
+}
+
+@media screen and (min-width: 769px) {
+  #corp-page.aa-page {
+    // 画像の左45%は余白なので、そこに文字を重ねる
+    .aa-fv {
+      // 文字の下は白く抜く（建物が文字にかからないように）
+      &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, white 0%, white 34%, rgba(255, 255, 255, 0.85) 44%, rgba(255, 255, 255, 0) 58%);
+        pointer-events: none;
+      }
+
+      &__bg {
+        position: absolute;
+        inset: 0;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: right center;
+        }
+      }
+
+      &__in {
+        position: relative;
+        padding-top: 72px;
+        padding-bottom: 40px;
+
+        z-index: 1;
+
+        > * {
+          max-width: 44%;
+        }
+      }
+
+      &__label {
+        padding: 6px 14px;
+        font-size: 1.3rem;
+      }
+
+      &__ttl {
+        margin-top: 18px;
+        font-size: 4.2rem;
+      }
+
+      &__sub {
+        margin-top: 18px;
+        font-size: 1.6rem;
+      }
+
+      &__facts {
+        position: relative;
+        z-index: 1;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        margin-bottom: 48px;
+      }
+    }
+
+    .aa-h {
+      font-size: 3rem;
+    }
+
+    .aa-lead {
+      font-size: 1.6rem;
+    }
+  }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1100px) {
+  #corp-page.aa-page {
+    .aa-fv__ttl {
+      font-size: 3.2rem;
+    }
+
+    .aa-fv__facts {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .aa-timeline {
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #corp-page.aa-page {
+    .aa-fv {
+      &__in {
+        padding-top: 24px;
+      }
+
+      &__label {
+        padding: 4px 10px;
+        font-size: 1.2rem;
+      }
+
+      &__ttl {
+        margin-top: 14px;
+        font-size: 2.6rem;
+      }
+
+      &__sub {
+        margin-top: 14px;
+        font-size: 1.4rem;
+      }
+
+      &__facts {
+        grid-template-columns: 1fr;
+        margin: 28px 0 40px;
+      }
+    }
+
+    .aa-h {
+      font-size: 2.2rem;
+    }
+
+    .aa-lead {
+      font-size: 1.4rem;
+    }
+
+    .aa-premise,
+    .aa-next {
+      flex-direction: column;
+      align-items: stretch;
+
+      > div {
+        max-width: none;
+      }
+    }
+
+    .aa-premise__arrow {
+      transform: rotate(90deg);
+    }
+
+    .aa-timeline {
+      grid-template-columns: 1fr;
+    }
+
+    .aa-maint {
+      padding: 18px;
+    }
+  }
+}
