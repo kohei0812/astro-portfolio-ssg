@@ -33,10 +33,13 @@
     border-left: 1px solid rgba(23, 36, 57, 0.25);
   }
 
+  // ロゴはトップへのリンク（2026-11-03）
   &__logo {
+    display: inline-block;
     color: v.$color-primary;
     font-weight: 700;
     letter-spacing: 0.02em;
+    text-decoration: none;
   }
 
   &__nav {
