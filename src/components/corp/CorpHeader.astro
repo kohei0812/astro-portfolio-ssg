@@ -2,6 +2,7 @@
 //src/components/corp/CorpHeader.astro
 // コーポレートサイト用のヘッダー（白地＋紺）。申込の導線は右端の「初回相談」1本だけ。
 // 英語版は作り直すまで切替リンクを出さない（2026-10-02 本人判断）。
+// ロゴは正式ロゴの画像（2026-11-07 差し替え。元データ：営業/DDDynamis_logo2_echo/DDDynamis_logo2_echo.ai）
 const path = Astro.url.pathname.replace(/\/$/, "") || "/";
 const nav = [
   { href: "/about", label: "私たちについて" },
@@ -13,7 +14,7 @@ const nav = [
 ---
 <header class="corp-header" id="corp-header" role="banner">
   <div class="corp-header__inner">
-    <a href="/" class="corp-header__logo eng" aria-label="トップページへ">DDDynamis</a>
+    <a href="/" class="corp-header__logo" aria-label="トップページへ"><picture><source srcset="/assets/images/logo.webp" type="image/webp" /><img src="/assets/images/logo.png" alt="DDDynamis" width="610" height="180" /></picture></a>
     <nav class="corp-header__nav" aria-label="メインメニュー">
       <ul>
         {nav.map((n) => (

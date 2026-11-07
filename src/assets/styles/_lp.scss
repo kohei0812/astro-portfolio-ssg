@@ -203,3 +203,17 @@
   opacity: 0;
   pointer-events: none;
 }
+
+/* 正式ロゴ（画像）に差し替え（2026-11-07）。ヘッダー 72px／SP 56px */
+.lp-header__logo {
+  line-height: 0;
+
+  img {
+    display: block;
+    width: auto;
+    height: 44px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .lp-header__logo img { height: 34px; }
+}

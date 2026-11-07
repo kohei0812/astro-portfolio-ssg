@@ -4058,3 +4058,22 @@ $ease: cubic-bezier(0.22, 1, 0.36, 1);
     margin-top: 4px;
   }
 }
+
+/* 正式ロゴ（画像）に差し替え（2026-11-07）。ヘッダー 76px／SP 60px、フッターは少し大きめ */
+.corp-header__logo,
+.corp-footer__logo {
+  display: block;
+  line-height: 0;
+  flex-shrink: 0;
+
+  img {
+    display: block;
+    width: auto;
+  }
+}
+.corp-header__logo img { height: 46px; }
+.corp-footer__logo img { height: 56px; }
+@media screen and (max-width: 768px) {
+  .corp-header__logo img { height: 36px; }
+  .corp-footer__logo img { height: 46px; }
+}
