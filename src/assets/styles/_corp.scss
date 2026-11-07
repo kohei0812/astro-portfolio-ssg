@@ -4077,3 +4077,38 @@ $ease: cubic-bezier(0.22, 1, 0.36, 1);
   .corp-header__logo img { height: 36px; }
   .corp-footer__logo img { height: 46px; }
 }
+
+/* 読み仮名「デュナミス」（2026-11-07 本人指示：読み方が分からないため全媒体に添える）。
+   ヘッダーはロゴの右に細い区切り線つきで小さく、フッターはロゴの下に字間を空けて置く */
+.brand-kana {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  line-height: 1;
+  color: #6b7488;
+  white-space: nowrap;
+}
+.corp-header__logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  .brand-kana {
+    padding-left: 14px;
+    border-left: 1px solid #d5d9e2;
+  }
+}
+.corp-footer__logo {
+  .brand-kana {
+    display: block;
+    margin: 8px 0 14px;
+    padding-left: 63px; /* 文字ロゴ「DDDynamis」の書き出し（ロゴ幅の 33%）に揃える */
+    color: inherit;
+    opacity: 0.7;
+  }
+}
+@media screen and (max-width: 768px) {
+  .corp-header__logo { gap: 10px; }
+  .corp-header__logo .brand-kana { font-size: 10px; padding-left: 10px; letter-spacing: 0.2em; }
+  .corp-footer__logo .brand-kana { padding-left: 52px; }
+}
