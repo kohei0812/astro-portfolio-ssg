@@ -16,6 +16,7 @@
   イラストは ChatGPT（白・青・金、文字なし）、代表は実写（8/3 撮影）。フォームは現行の4項目・1画面・その場で簡易結果のまま（本人指示）。
 */
 import Layout from "../layouts/Layout.astro";
+import PartnerTechnoKuro from "../components/corp/PartnerTechnoKuro.astro";
 import LineIcon from "../components/corp/LineIcon.astro";
 import DiagnosisForm from "../components/consultation/DiagnosisForm.jsx";
 
@@ -285,6 +286,9 @@ const faq = [
       </div>
     </section>
 
+    <!-- 相互リンク：TechnoKuRo（2026-11-09 提案用の仮置き） -->
+    <PartnerTechnoKuro variant="section" />
+
     <!-- 11. よくある質問（PHPチェッカー関連だけ。AIアプリ関連は /security/ai-app へ移した） -->
     <section class="cp-sec cp-sec--gray" aria-labelledby="sp-faq-ttl">
       <div class="cp-container">
@@ -323,6 +327,7 @@ const faq = [
       {/* 簡易診断フォーム（2026-11-03：4項目・2列・その場で結果。本診断はメールで所有者確認→結果を持参） */}
       <DiagnosisForm client:load />
     </div>
+    <PartnerTechnoKuro variant="float" />
   </main>
 
   <script is:inline>

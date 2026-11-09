@@ -8,6 +8,7 @@
   スタイルは _corp-security.scss の .aa-*。
 */
 import Layout from "../../layouts/Layout.astro";
+import PartnerTechnoKuro from "../../components/corp/PartnerTechnoKuro.astro";
 import LineIcon from "../../components/corp/LineIcon.astro";
 import ConsultForm from "../../components/consultation/ConsultForm.jsx";
 
@@ -509,6 +510,9 @@ const networkIcons = ["lock", "nologin", "layers"];
       </div>
     </section>
 
+    <!-- 相互リンク：TechnoKuRo（2026-11-09 提案用の仮置き） -->
+    <PartnerTechnoKuro variant="section" />
+
     <!-- 11. よくある質問 -->
     <section class="cp-sec" aria-labelledby="sp-faq-ttl">
       <div class="cp-container">
@@ -546,6 +550,7 @@ const networkIcons = ["lock", "nologin", "layers"];
         doneText="内容を確認のうえ、ご記入の連絡先へご連絡します。"
       />
     </div>
+    <PartnerTechnoKuro variant="float" />
   </main>
 
   <script is:inline>
