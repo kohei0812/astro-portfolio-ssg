@@ -1,22 +1,22 @@
 ---
 /*
-  相互リンク：合同会社TechnoKuRo（https://techno-kuro.com/）のバナーと紹介文（2026-11-09 本人指示・先方へ提案用の仮置き。push しない）
+  相互リンク：合同会社TechnoKuRo（https://techno-kuro.com/）のバナーと紹介文（2026-11-09 公開。2026-11-13 先方の依頼で節を先方支給の HTML に差し替え、リンク先を /security-consulting/ に）
   使い方：/security と /security/ai-app に置く。
     <PartnerTechnoKuro variant="section" /> … FAQ の前の節（バナー＋紹介文）
     <PartnerTechnoKuro variant="float" />   … 追従CTAの上に小さく出すバナー（表示・非表示は追従CTAに合わせる。×で閉じられる）
-  紹介文の事実は先方サイト（トップ・代表紹介）から：ISMS/Pマークの取得・運用、情報セキュリティ顧問、情報処理安全確保支援士、IRCA ISMS准審査員、元警察官。
+  節の文言は先方支給（~/Downloads/xxx.html、2026-11-13）。和文の改行が空白にならないよう1行にまとめただけで、文言は変えていない。
   スタイルは _corp-security.scss 末尾「相互リンク（TechnoKuRo）」。
 */
 const { variant = "section" } = Astro.props;
-const URL = "https://techno-kuro.com/";
+const URL = "https://techno-kuro.com/security-consulting/";
 ---
 {variant === "section" ? (
   <section class="cp-sec pt-sec" aria-labelledby="pt-ttl">
     <div class="cp-container">
       <header class="cp-head cp-head--center" data-reveal>
         <p class="cp-head__en eng">Partner</p>
-        <h2 class="cp-head__ttl" id="pt-ttl">会社の情報セキュリティは、パートナーと一緒に</h2>
-        <p class="cp-head__lead">サイトやアプリの点検はDDDynamisが行います。ISMS・Pマークのように、会社としてのルールや運用を整えるご相談は、合同会社TechnoKuRoをご紹介しています。</p>
+        <h2 class="cp-head__ttl" id="pt-ttl">技術対策の次は、組織全体の備えを。</h2>
+        <p class="cp-head__lead">社内ルール・社員教育・物理環境まで含めて対策を見直したい方へ。DDDynamisの外部パートナー、合同会社TechnoKuRoのセキュリティヘルスチェック・体制づくり支援をご紹介します。</p>
       </header>
       <a href={URL} class="pt-card" target="_blank" rel="noopener" data-reveal>
         <picture class="pt-card__logo">
@@ -24,10 +24,12 @@ const URL = "https://techno-kuro.com/";
           <img src="/assets/images/partner/technokuro-logo.png" alt="TechnoKuRo" width="160" height="160" loading="lazy" decoding="async" />
         </picture>
         <span class="pt-card__body">
-          <span class="pt-card__tag">ISMS・Pマーク／情報セキュリティ顧問</span>
+          <span class="pt-card__tag">セキュリティヘルスチェック・体制づくり支援</span>
           <span class="pt-card__name">合同会社TechnoKuRo</span>
-          <span class="pt-card__txt">情報処理安全確保支援士・ISMS准審査員の資格を持つ、元警察官のエンジニアが代表です。審査で説明でき、現場で続けやすい運用づくりを、取得から運用まで支援しています。</span>
-          <span class="pt-card__more">TechnoKuRoのサイトを見る</span>
+          <span class="pt-card__txt">組織・人・物理環境・技術の観点から、今の対策と運用を点検。自社の課題と改善の優先順位を整理し、必要に応じてセキュリティの体制づくりも支援します。</span>
+          <span class="pt-card__txt">診断の確認・レビュー担当：<br />情報処理安全確保支援士 第004614号<br />IRCA ISMS審査員補（ISMS2022 Associate Auditor）No.6153461</span>
+          <span class="pt-card__txt">本サービスは、DDDynamisとは別法人の外部パートナーである合同会社TechnoKuRoが提供します。</span>
+          <span class="pt-card__more">セキュリティヘルスチェックを見る（別タブ）</span>
         </span>
       </a>
     </div>
@@ -36,7 +38,7 @@ const URL = "https://techno-kuro.com/";
   <aside class="pt-float" id="js-pt-float" aria-label="パートナーのご紹介">
     <a href={URL} class="pt-float__link" target="_blank" rel="noopener">
       <img src="/assets/images/partner/technokuro-logo.png" alt="" width="40" height="40" loading="lazy" decoding="async" />
-      <span class="pt-float__txt"><small>ISMS・Pマークのご相談は</small>TechnoKuRo</span>
+      <span class="pt-float__txt"><small>組織のセキュリティ見直しは</small>TechnoKuRo</span>
     </a>
     <button type="button" class="pt-float__close" aria-label="閉じる">×</button>
   </aside>
